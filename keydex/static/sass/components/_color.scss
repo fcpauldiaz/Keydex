@@ -279,6 +279,10 @@ $blue-paypal: (
   "base":       #177FEF
 );
 
+$main-grey: (
+  "base":     #4D4E4F
+);
+
 $deep-orange: (
   "base":       #ff5722,
   "lighten-5":  #fbe9e7,
@@ -363,7 +367,8 @@ $colors: (
   "blue-grey": $blue-grey,
   "grey": $grey,
   "shades": $shades,
-  "blue-paypal": $blue-paypal
+  "blue-paypal": $blue-paypal,
+  "main-grey": $main-grey
 ) !default;
 
 
