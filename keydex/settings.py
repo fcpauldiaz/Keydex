@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 import dj_database_url
-
+from mongoengine import connect
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -81,16 +81,17 @@ WSGI_APPLICATION = 'keydex.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'keydex',
-        'USERNAME': '',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-
+        'ENGINE': '',  
     }
 }
-
+_MONGODB_USER=' '
+_MONGODB_PASSWD=' '
+_MONGODB_HOST='localhost:27017'
+_MONGODB_NAME='keydex'
+_MONGODB_DATABASE_HOST= \
+ 'mongodb://%s:%s@%s/%s' \
+ % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
+connect('keydex', username='', password='')
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -105,7 +106,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend'
+)
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
