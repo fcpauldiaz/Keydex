@@ -27,3 +27,12 @@ class Product(Document):
 class HistoricProducts(Document):
   indexDate = DateTimeField(required=True)
   indexRate = DecimalField(required=True)
+
+class Subscription(Document):
+  user = ReferenceField(User)
+  validPayment = BooleanField(User)
+  trialUser = BooleanField(User)
+  creditCard = StringField(max_length=19)
+  expirationCardDate = StringField()
+  securityCode = StringField()
+  billingAddress = StringFiled(required=True)
