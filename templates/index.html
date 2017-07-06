@@ -1,101 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Keydex</title>
-
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  {% load sass_tags %}
-  {% load static %}
-
-  <link href="{% sass_src 'sass/materialize.scss' %}" rel="stylesheet" type="text/css" />
-</head>
-<body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a class="btn-paypal waves-effect waves-light" href="#">Log In</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a class="btn-paypal waves-effect waves-light" href="#">Log In</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center main-grey-text">Are your keywords indexing?</h1>
-      <div class="row center">
-        <h5 class="header col s12 main-grey-text light">We'll check for you everyday!</h5>
-      </div>
-      <div class="row center">
-        <a href="" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
-      </div>
-      <br><br>
-      <div class="row center">
-        <div class="col s12">
-          <p class="light">Don't have an account yet? <a href="">Sign up now.</a></p>
-        </div>
-      </div>
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <br><br>
+  <h1 class="header center main-grey-text">Are your keywords indexing</h1>
+  <h1 class="header center main-grey-text">for search results?</h1> 
+  <div class="row center">
+    <h5 class="header col s8 offset-s2 main-grey-text light justify">This tool automatically checks for you every day and sends you a report if the stop indexing, sot that you can take inmediate action!</h5>
+    <h5 class="header col s8 offset-s2 light justify blue-paypal-text">We are giving Check My Keywords for FREE for the first 500 users. forever.</h5>
+  </div>
+  <div class="row center">
+    <a href="" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
+  </div>
+  <br><br>
+  <div class="row center">
+    <div class="col s12">
+      <p class="light">Don't have an account yet? <a href="">Sign up now.</a></p>
     </div>
   </div>
-
-
-  <div class="container">
-    <div class="section">
-
-      <!--   Icon Section   -->
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Automatic</h5>
-
-            <p class="light">We will automatically check your indexing percentage for each product and keywords.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">User Experience Focused</h5>
-
-            <p class="light">Easy to use, everyday.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to work with</h5>
-
-            <p class="light">Just type your ASIN and your keywords, just one time.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <br><br>
-  </div>
-
-  <footer class="page-footer blue-paypal">
-    </div>
-    <div class="footer-copyright">
-      <div class="container">
-      Powered by <a class="orange-text text-lighten-3" href="#">Keydex</a>
-      </div>
-    </div>
-  </footer>
-
-
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="{% static 'js/bin/materialize.min.js' %}"></script>
-  <script src="{% static 'js/initial.js' %}"></script>
-
-  </body>
-</html>
+</div>
+</div>
+{% endblock %}

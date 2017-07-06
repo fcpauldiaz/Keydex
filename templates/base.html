@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Keydex | {% block title %} {% endblock %}</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  {% load sass_tags %}
+  {% load static %}
+
+  <link href="{% sass_src 'sass/materialize.scss' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  {% include 'navbar.html' %}
+  <div class="section no-pad-bot" id="index-banner">
+   {% block content %}
+   {% endblock %}
+  </div>
+
+
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/bin/materialize.min.js' %}"></script>
+  <script src="{% static 'js/initial.js' %}"></script>
+  {% block js %}
+  {% endblock js %}
+
+  </body>
+</html>

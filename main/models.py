@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from datetime import datetime
 from django.db import models
+from mongoengine import *
 
 # Create your models here.
 class User(Document):
@@ -11,6 +12,9 @@ class User(Document):
     createdAt = DateTimeField(required=True, default=datetime.now())
     updatedAt = DateTimeField(required=True, default=datetime.now())
     
+class HistoricProducts(Document):
+  indexDate = DateTimeField(required=True)
+  indexRate = DecimalField(required=True)
 
 class Product(Document):
   ASIN = StringField(max_length=40, required=True)
@@ -24,15 +28,13 @@ class Product(Document):
   
   meta = {'allow_inheritance': True}
 
-class HistoricProducts(Document):
-  indexDate = DateTimeField(required=True)
-  indexRate = DecimalField(required=True)
 
 class Subscription(Document):
   user = ReferenceField(User)
-  validPayment = BooleanField(User)
-  trialUser = BooleanField(User)
+  validPayment = BooleanField()
+  trialUser = BooleanField()
   creditCard = StringField(max_length=19)
   expirationCardDate = StringField()
   securityCode = StringField()
-  billingAddress = StringFiled(required=True)
+  billingAddress = StringField(required=True)
+  meta = {'allow_inheritance': True}

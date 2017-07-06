@@ -222,3 +222,33 @@ nav {
     height: $navbar-height;
   }
 }
+// .trapezoid {
+//   display: inline-block;
+//   overflow: hidden;
+//   margin: 0 3em;
+//   /**outline: solid 1px;/**/
+//   width: 10em;
+// }
+// .trapezoid:first-child {
+//   height: 8.66em;
+//   transform: rotate(271.5deg) skewX(50deg) translateY(60px);
+// }
+
+// .trapezoid:before {
+//   display: block;
+//   background: linear-gradient(270deg, #32E0DA, #209CF0);
+//   content: '';
+// }
+// .trapezoid:first-child:before {
+//   width: inherit; height: 50%;
+//   transform: skewX(-30deg) rotate(-60deg) translate(-1.25em);
+// }
+// .trapezoid:nth-child(2) {
+//   height: 8.66em;
+//   transform: rotate(271.5deg) skewX(50deg) translateY(-200px) translateX(230px);
+// }
+// .trapezoid:nth-child(2):before {
+//  width: inherit; height: 50%;
+//  transform: skewX(-30deg) rotate(-60deg) translate(-1.25em);
+// }
+
