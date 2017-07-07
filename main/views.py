@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from forms import SignUpForm
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
@@ -21,6 +23,11 @@ def createUser(request):
       # hash password with default pdfk algorithm
       user.set_password(user.password)
       user.save()
+      auth_user = authenticate(
+        username=user.username,
+        password=user_form.cleaned_data['password'],
+      )
+      login(request, auth_user)
       user_form = SignUpForm()
   else:
       pass
