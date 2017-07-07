@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from forms import SignUpForm
-from django.contrib.auth import authenticate, login
+from forms import SignUpForm, LoginForm
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -9,6 +9,37 @@ def index(request):
     request,
     'index.html'
   )
+
+def loginUser(request):
+  if request.method == 'GET':
+    form = LoginForm()
+    return render(
+      request,
+      'login.html',
+      {
+          'form': form
+      }
+    )
+  elif request.method == 'POST':
+    form = LoginForm(request.POST)
+    user = authenticate(
+      username=request.POST['username'],
+      password=request.POST['password'],
+    )
+    if user is not None:
+        login(request, user)
+        return render(
+          request,
+          'index.html'
+        )
+    else:
+      #not valid credentials
+      return render(
+        request,
+        'index.html'
+      )
+  else:
+    "other method"
 
 def createUser(request):
   message = ''
@@ -38,5 +69,12 @@ def createUser(request):
           'user_form': user_form,
           'message': message
       }
+  )
+
+def logout_view(request):
+  logout(request)
+  return render(
+    request,
+    'index.html',
   )
 

@@ -10,12 +10,12 @@
     <h5 class="header col s8 offset-s2 light justify blue-paypal-text">We are giving Check My Keywords for FREE for the first 500 users. forever.</h5>
   </div>
   <div class="row center">
-    <a href="{% url 'users_create_user' %}" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
+    <a href="{% url 'users_login_user' %}" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
   </div>
   <br><br>
   <div class="row center">
     <div class="col s12">
-      <p class="light">Don't have an account yet? <a href="">Sign up now.</a></p>
+      <p class="light">Don't have an account yet? <a href="{% url 'users_create_user' %}">Sign up now.</a></p>
     </div>
   </div>
 </div>

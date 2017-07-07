@@ -9,3 +9,8 @@ class SignUpForm(ModelForm):
     model = User
     fields = ['first_name', 'last_name', 'username','email', 'password']
 
+class LoginForm(ModelForm):
+  password = CharField(widget=PasswordInput)
+  class Meta:
+    model = User
+    fields = ['username','password']
