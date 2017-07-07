@@ -5,5 +5,9 @@ urlpatterns = [
   url(
     r'^$',
     main_views.index,
-    name='main_index')
+    name='main_index'),
+  url(
+    r'^user/create$',
+    main_views.createUser,
+    name='users_create_user'),
 ]

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 import dj_database_url
-from mongoengine import connect
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -81,17 +81,24 @@ WSGI_APPLICATION = 'keydex.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': '',  
+        'ENGINE': 'django.db.backends.postgresql',  
+        'NAME': 'keydex',                      
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-_MONGODB_USER=' '
-_MONGODB_PASSWD=' '
-_MONGODB_HOST='localhost:27017'
-_MONGODB_NAME='keydex'
-_MONGODB_DATABASE_HOST= \
- 'mongodb://%s:%s@%s/%s' \
- % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
-connect('keydex', username='', password='')
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.SHA1PasswordHasher',
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+    'django.contrib.auth.hashers.CryptPasswordHasher',
+)
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -106,9 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-AUTHENTICATION_BACKENDS = (
-    'mongoengine.django.auth.MongoEngineBackend'
-)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 

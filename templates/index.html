@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} Welcome ! {% endblock %}
 {% block content %}
 <div class="container">
   <br><br>
@@ -9,7 +10,7 @@
     <h5 class="header col s8 offset-s2 light justify blue-paypal-text">We are giving Check My Keywords for FREE for the first 500 users. forever.</h5>
   </div>
   <div class="row center">
-    <a href="" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
+    <a href="{% url 'users_create_user' %}" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
   </div>
   <br><br>
   <div class="row center">

@@ -1,40 +1,37 @@
 from __future__ import unicode_literals
 from datetime import datetime
 from django.db import models
-from mongoengine import *
+from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import User
 
-# Create your models here.
-class User(Document):
-    firstName = StringField(max_length=20, required=True)
-    lastName = StringField(max_length=20, required=True)
-    email = EmailField(max_length=30, required=True)
-    password = StringField(max_length=100, required=True)
-    createdAt = DateTimeField(required=True, default=datetime.now())
-    updatedAt = DateTimeField(required=True, default=datetime.now())
-    
-class HistoricProducts(Document):
-  indexDate = DateTimeField(required=True)
-  indexRate = DecimalField(required=True)
+class HistoricProducts(models.Model):
+  index_date = models.DateTimeField()
+  index_rate = models.DecimalField(decimal_places=2, max_digits=3)
 
-class Product(Document):
-  ASIN = StringField(max_length=40, required=True)
-  user = ReferenceField(User)
-  keywords = ListField(StringField(required=True))
-  reportingPeriod = StringField()
-  reportingPercentage = DecimalField()
-  historicRef = ReferenceField(HistoricProducts)
-  createdAt = DateTimeField(required=True, default=datetime.now())
-  updatedAt = DateTimeField(required=True, default=datetime.now())
+class Product(models.Model):
+  asin = models.CharField(max_length=40)
+  user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+  keywords = ArrayField(models.CharField(max_length=100))
+  reporting_period = models.CharField(max_length=100)
+  reporting_percentage = models.DecimalField(decimal_places=2, max_digits=3)
+  historic_ref = models.ForeignKey(HistoricProducts, null=True, on_delete=models.SET_NULL)
+  createdAt = models.DateTimeField(auto_now_add=True)
+  updatedAt = models.DateTimeField(auto_now=True)
   
-  meta = {'allow_inheritance': True}
+  
+class Subscription(models.Model):
+  user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+  valid_payment = models.BooleanField()
+  trialUser = models.BooleanField()
+  creditCard = models.CharField(max_length=19)
+  expiration_card_date = models.CharField(max_length=5)
+  security_code = models.CharField(max_length=5)
+  billing_address = models.CharField(max_length=100)
+  createdAt = models.DateTimeField(auto_now_add=True)
+  updatedAt = models.DateTimeField(auto_now=True)
+  
 
-
-class Subscription(Document):
-  user = ReferenceField(User)
-  validPayment = BooleanField()
-  trialUser = BooleanField()
-  creditCard = StringField(max_length=19)
-  expirationCardDate = StringField()
-  securityCode = StringField()
-  billingAddress = StringField(required=True)
-  meta = {'allow_inheritance': True}
+class HistoricSubscription(models.Model):
+  subscription = models.ForeignKey(Subscription, null=True, on_delete=models.SET_NULL)
+  createdAt = models.DateTimeField(auto_now_add=True)
+  updatedAt = models.DateTimeField(auto_now=True)
