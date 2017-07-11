@@ -17,5 +17,10 @@ urlpatterns = [
   url(
     r'^user/logout$',
     main_views.logout_view,
-    name='users_logout_user')
+    name='users_logout_user'),
+  url(
+    r'^user/reset/password$',
+    main_views.reset_password,
+    name='users_reset_password')
+
 ]

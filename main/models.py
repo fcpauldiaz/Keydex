@@ -4,6 +4,12 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 
+
+class Profile(models.Model):
+  user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+  password_reset_token = models.CharField(max_length=150, null=True)
+  password_reset_token_expiration = models.DateTimeField(null=True) 
+
 class HistoricProducts(models.Model):
   index_date = models.DateTimeField()
   index_rate = models.DecimalField(decimal_places=2, max_digits=3)

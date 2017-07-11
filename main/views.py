@@ -1,7 +1,13 @@
-from django.shortcuts import render
-from forms import SignUpForm, LoginForm
+from django.shortcuts import render, redirect
+from forms import SignUpForm, LoginForm, ResetPasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.utils import timezone
+from models import Profile
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+import uuid
 
 # Create your views here.
 def index(request):
@@ -43,7 +49,7 @@ def loginUser(request):
 
 def createUser(request):
   message = ''
-  if request.method == 'GET':
+  if request.messagethod == 'GET':
       user_form = SignUpForm()
 
   elif request.method == 'POST':
@@ -77,4 +83,46 @@ def logout_view(request):
     request,
     'index.html',
   )
+
+def reset_password(request):
+  if request.method == 'GET':
+    form = ResetPasswordForm()
+    return render(
+      request,
+      'reset_password.html',
+      {
+          'form': form
+      }
+    )
+  else:
+    user = User.objects.get(username=request.POST['username'])
+    #print request.META['HTTP_HOST']
+    if user == None:
+      return not found
+    if hasattr(user, 'profile'): 
+      dt = timezone.now() - user.profile.password_reset_token_expiration
+      hours = dt.seconds/60/60
+      print hours >= 1
+      if hours >= 1:
+        user.profile.password_reset_token = uuid.uuid4()
+        user.profile.password_reset_token_expiration = timezone.now()
+        user.profile.save()
+        return redirect('main_index')
+      else:
+        #wait one hour before ask for another reset password token
+        return redirect('users_reset_password')
+    profile = Profile()
+    profile.password_reset_token = uuid.uuid4()
+    profile.password_reset_token_expiration = timezone.now()
+    user.profile = profile
+    profile.save()
+    user.save()
+    send_mail(
+      'Reset password Keydex',
+      'http://' + request.META['HTTP_HOST'] + '/users/token/' + str(profile.password_reset_token),
+      'do-not-reply@keydex.com',
+      [user.email],
+      fail_silently=False,
+    )
+    return redirect('main_index')
 
