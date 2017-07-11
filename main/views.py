@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from forms import SignUpForm, LoginForm, ResetPasswordForm
+from forms import SignUpForm, LoginForm, ResetPasswordForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
@@ -96,10 +96,13 @@ def reset_password(request):
     )
   else:
     user = User.objects.get(username=request.POST['username'])
-    #print request.META['HTTP_HOST']
+    # if user is not found
     if user == None:
-      return not found
-    if hasattr(user, 'profile'): 
+      return redirect('users_reset_password') 
+
+
+    # if user already has a profile attached  
+    if hasattr(user, 'profile') and user.profile.password_reset_token != None: 
       dt = timezone.now() - user.profile.password_reset_token_expiration
       hours = dt.seconds/60/60
       print hours >= 1
@@ -107,16 +110,32 @@ def reset_password(request):
         user.profile.password_reset_token = uuid.uuid4()
         user.profile.password_reset_token_expiration = timezone.now()
         user.profile.save()
+        send_mail(
+          'Reset password Keydex',
+          'http://' + request.META['HTTP_HOST'] + '/users/token/' + str(user.profile.password_reset_token),
+          'do-not-reply@keydex.com',
+          [user.email],
+          fail_silently=False,
+        )
         return redirect('main_index')
       else:
-        #wait one hour before ask for another reset password token
-        return redirect('users_reset_password')
-    profile = Profile()
+        # wait one hour before ask for another reset password token
+        return redirect('users_reset_password') 
+    if hasattr(user, 'profile') and user.profile.password_reset_token == None: 
+      #update existing profile
+      profile = user.profile
+      addNewProfile = False
+    else:
+      #create new profile
+      profile = Profile()
+      addNewProfile = True
     profile.password_reset_token = uuid.uuid4()
     profile.password_reset_token_expiration = timezone.now()
-    user.profile = profile
-    profile.save()
-    user.save()
+    if addNewProfile == True:
+      user.profile = profile
+    profile.save() # save profile 
+    user.save() # save user
+    # send confirmation email
     send_mail(
       'Reset password Keydex',
       'http://' + request.META['HTTP_HOST'] + '/users/token/' + str(profile.password_reset_token),
@@ -124,5 +143,26 @@ def reset_password(request):
       [user.email],
       fail_silently=False,
     )
+    return redirect('main_index')
+
+def change_password(request, token):
+  if request.method == 'GET':
+    # render form to ask new password
+    form = ChangePasswordForm()
+    return render(request, 'change_password.html', { 'form': form })
+  else:  # request.method == 'POST'
+    if (request.POST['password'] != request.POST['password_repeated']):
+      # passwords dont match
+      return redirect('users_reset_password') 
+    profile = Profile.objects.get(password_reset_token=token)
+    if profile == None:
+      # token not valid
+      return redirect('users_reset_password') 
+    user = User.objects.get(profile=profile)
+    user.set_password(request.POST['password'])
+    user.save()
+    user.profile.password_reset_token = None
+    user.profile.password_reset_token_expiration = None
+    user.profile.save()
     return redirect('main_index')
 

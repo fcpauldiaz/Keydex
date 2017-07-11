@@ -23,3 +23,8 @@ class ResetPasswordForm(ModelForm):
   class Meta:
     model = User
     fields = ['username']
+
+class ChangePasswordForm(Form):
+  password = CharField(widget=PasswordInput)
+  password_repeated = CharField(widget=PasswordInput)
+

@@ -21,6 +21,11 @@ urlpatterns = [
   url(
     r'^user/reset/password$',
     main_views.reset_password,
-    name='users_reset_password')
+    name='users_reset_password'),
+  url(
+    r'^user/change/password/(?P<token>[0-9A-Fa-f-]+)', 
+    main_views.change_password,
+    name='users_change_password'
+  ),
 
 ]

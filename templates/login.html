@@ -2,16 +2,16 @@
 {% block title %} Login{% endblock %}
 {% block content %}
 <div class="row">
-    <form class="col s12" method="post">
+    <form class="col s12 center" method="post">
      {% csrf_token %}
       <div class="row">
-        <div class="input-field col s6">
+        <div class="input-field col offset-s3 s6">
           {{ form.username }}
           <label data-error="wrong format" for="username">Username</label>
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col offset-s3 s6">
           {{ form.password }}
           <label for="password">Password</label>
         </div>
@@ -36,5 +36,10 @@
         {% endfor %}
       {% endif %}
     </form>
+    <div class="row center">
+      <div class="col s12">
+        <p class="light"><a href="{% url 'users_reset_password' %}">Recover your password.</a></p>
+      </div>
+    </div>
   </div>
 {% endblock %}
