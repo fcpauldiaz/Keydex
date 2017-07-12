@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from forms import AsinForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils import timezone
 from models import Profile
@@ -11,7 +12,7 @@ from django.template import loader
 from django.forms import formset_factory
 import uuid
 
-
+@login_required
 def add_product(request):
   if request.method == 'POST':
     asin = request.POST['asin']
@@ -49,7 +50,7 @@ def add_product(request):
   
 #   return render(request, 'step_1.html', {'form': formset})
 
-
+@login_required
 def add_keywords(request):
   asin = request.GET["q"]
   #start scraping amazon

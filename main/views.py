@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from forms import SignUpForm, LoginForm, ResetPasswordForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.utils import timezone
+from django.utils import timezone, http
 from models import Profile
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
@@ -20,6 +20,13 @@ def index(request):
 def loginUser(request):
   if request.user.is_authenticated():
       return redirect('products_add_product')
+  #to redirect after login to other view
+  redirect_to = None
+  if (next in request.GET):
+    print request.GET['next'], "requst"
+    redirect_to = request.GET['next']
+
+  print redirect_to
   if request.method == 'GET':
     form = LoginForm()
     return render(
@@ -29,26 +36,24 @@ def loginUser(request):
           'form': form
       }
     )
-  elif request.method == 'POST':
+  else:
+   #request.method == 'POST':
     form = LoginForm(request.POST)
     user = authenticate(
       username=request.POST['username'],
       password=request.POST['password'],
     )
+    print "before", redirect_to
+    if redirect_to != None:
+      return HttpResponseRedirect(next)
     if user is not None:
         login(request, user)
-        return render(
-          request,
-          'step_2.html'
-        )
-    else:
-      #not valid credentials
-      return render(
-        request,
-        'login.html'
-      )
-  else:
-    "other method"
+        return redirect('products_add_product')
+    #not valid credentials
+    return render(
+      request,
+      'login.html'
+    )
 
 def createUser(request):
   message = ''
@@ -141,7 +146,7 @@ def reset_password(request):
     # send confirmation email
     send_mail(
       'Reset password Keydex',
-      'http://' + request.META['HTTP_HOST'] + '/users/token/' + str(profile.password_reset_token),
+      'http://' + request.META['HTTP_HOST'] + '/user/change/password/' + str(profile.password_reset_token),
       'do-not-reply@keydex.com',
       [user.email],
       fail_silently=False,
