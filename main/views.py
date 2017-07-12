@@ -7,9 +7,10 @@ from django.utils import timezone
 from models import Profile
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from django.template import loader
 import uuid
 
-# Create your views here.
+
 def index(request):
   return render(
     request,
@@ -17,6 +18,8 @@ def index(request):
   )
 
 def loginUser(request):
+  if request.user.is_authenticated():
+      return redirect('products_save_product')
   if request.method == 'GET':
     form = LoginForm()
     return render(
@@ -36,13 +39,13 @@ def loginUser(request):
         login(request, user)
         return render(
           request,
-          'index.html'
+          'step_2.html'
         )
     else:
       #not valid credentials
       return render(
         request,
-        'index.html'
+        'login.html'
       )
   else:
     "other method"
@@ -122,7 +125,7 @@ def reset_password(request):
         # wait one hour before ask for another reset password token
         return redirect('users_reset_password') 
     if hasattr(user, 'profile') and user.profile.password_reset_token == None: 
-      #update existing profile
+      # update existing profile
       profile = user.profile
       addNewProfile = False
     else:
@@ -166,3 +169,5 @@ def change_password(request, token):
     user.profile.save()
     return redirect('main_index')
 
+def save_product(request):
+  return render(request, 'step_2.html')

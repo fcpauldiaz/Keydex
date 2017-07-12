@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from main import views as main_views
+from main import product_views
 
 urlpatterns = [
   url(
@@ -26,6 +27,11 @@ urlpatterns = [
     r'^user/change/password/(?P<token>[0-9A-Fa-f-]+)', 
     main_views.change_password,
     name='users_change_password'
+  ),
+  url(
+    r'^product/asin', 
+    product_views.save_product,
+    name='products_save_product'
   ),
 
 ]
