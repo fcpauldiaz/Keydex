@@ -19,7 +19,7 @@ def index(request):
 
 def loginUser(request):
   if request.user.is_authenticated():
-      return redirect('products_save_product')
+      return redirect('products_add_product')
   if request.method == 'GET':
     form = LoginForm()
     return render(
@@ -171,3 +171,13 @@ def change_password(request, token):
 
 def save_product(request):
   return render(request, 'step_2.html')
+
+def send_html_email(request):
+  html_message = loader.render_to_string(
+      'path/to/your/htm_file.html',
+      {
+        'user_name': user.name,
+        'subject':  'Thank you from' 
+      }
+  )
+  send_mail(subject,message,from_email,to_list,fail_silently=True,html_message=html_message)

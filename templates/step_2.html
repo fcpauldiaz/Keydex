@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Save Products {% endblock %}
+{% block content %}
+<div class="row">
+    <form class="col center s8 offset-s2" method="post">
+     {% csrf_token %}
+      <div class="chips"></div>
+      <button class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Submit
+      <i class="material-icons right">send</i>
+      </button>
+      {% if user_form.errors %}
+        {% for field in user_form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    {{field.name}}
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in user_form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{field.name}}
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+      {% endif %}
+    </form>
+  </div>
+{% endblock %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/asins.js' %}"></script>
+{% endblock js %}

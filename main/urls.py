@@ -29,9 +29,14 @@ urlpatterns = [
     name='users_change_password'
   ),
   url(
-    r'^product/asin', 
-    product_views.save_product,
-    name='products_save_product'
+    r'^product/add', 
+    product_views.add_product,
+    name='products_add_product'
+  ),
+  url(
+    r'^product/keywords/', 
+    product_views.add_keywords,
+    name='products_add_keywords'
   ),
 
 ]

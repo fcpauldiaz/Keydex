@@ -28,3 +28,5 @@ class ChangePasswordForm(Form):
   password = CharField(widget=PasswordInput)
   password_repeated = CharField(widget=PasswordInput)
 
+class AsinForm(Form):
+  asin = CharField(widget=TextInput(attrs={'placeholder':'Eg: 3801209'}))

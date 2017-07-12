@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Save Products {% endblock %}
+{% block content %}
+<div class="row">
+  <h1 class="header center main-grey-text">Add your product in 3 easy steps</h1>
+  <div class="col s6 offset-s3">
+      <div class="card-content">
+        <ul class="stepper horizontal" id="horizontal">
+           <li class="step active">
+              <!--data-step-label="To step-title!" -->
+              <div class="step-title waves-effect waves-dark">Step 1</div>
+           </li>
+           <li class="step">
+              <div class="step-title waves-effect waves-dark">Step 2</div>
+           </li>
+           <li class="step">
+              <div class="step-title waves-effect waves-dark">Step 3</div>
+           </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col s12">
+    <form class="col center s8 offset-s2" method="post">
+     {% csrf_token %}
+      <div class="input-field col s12">
+        <label for="asin" class="active">Your product's asin</label>
+        {{ form.asin }}
+      </div>
+      <button class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Next
+      </button>
+      {% if user_form.errors %}
+        {% for field in user_form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    {{field.name}}
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in user_form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{field.name}}
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+      {% endif %}
+    </form>
+  </div>
+</div>
+{% endblock %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/asins.js' %}"></script>
+{% endblock js %}
