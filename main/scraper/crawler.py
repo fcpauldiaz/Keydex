@@ -14,43 +14,15 @@ pool = eventlet.GreenPool(settings.max_threads)
 pile = eventlet.GreenPile(pool)
 
 
-def begin_crawl():
-
-    # explode out all of our category `start_urls` into subcategories
-    with open(settings.start_file, "r") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue  # skip blank and commented out lines
-            print enqueue_url(line)
-            # page, html = make_request(line)
-
-            1/0
-            count = 0
-
-            # # look for subcategory links on this page
-            # image_product = page.find('img', {'class': 's-access-image cfMarker'})  # find product image
-            # #find no indexing tag
-            # product_indexing = soup.find('h1', {'id': 'noResultsTitle'}) 
-            # print image_product['src']
-            
-           
-
-            # for subcategory in subcategories:
-            #     link = subcategory.find("a")
-            #     if not link:
-            #         continue
-            #     link = link["href"]
-            #     count += 1
-            #     enqueue_url(link)
-
-            log("Found {} subcategories on {}".format(count, line))
+def begin_crawl(ASIN):
+    url = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+ASIN
+    #return enqueue_url(url)
 
 
-def fetch_listing():
+def fetch_listing(ASIN):
 
     global crawl_time
-    url = dequeue_url()
+    url = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+ASIN
     if not url:
         log("WARNING: No URLs {} found in the queue. Retrying...".format(url))
         #pile.spawn(fetch_listing)
@@ -80,7 +52,8 @@ def fetch_listing():
         crawl_time=crawl_time
 
     )
-    product_id = product.save()
+    return product
+    #product_id = product.save()
     #download_image(product_image, product_id)
 
     # add next page to queue

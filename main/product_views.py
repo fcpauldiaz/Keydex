@@ -10,13 +10,17 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.template import loader
 from django.forms import formset_factory
+from scraper.crawler import begin_crawl, fetch_listing
 import uuid
 
 @login_required
 def add_product(request):
   if request.method == 'POST':
-    asin = request.POST['asin']
-    return redirect('keywords/?q=%s' % asin )
+    form = AsinForm(request.POST)
+    if form.is_valid():
+      asin = request.POST['asin']
+      return redirect('keywords/?q=%s' % asin )
+    return render(request, 'step_1.html', {'form': form}) 
   else:
     form = AsinForm()
     return render(request, 'step_1.html', {'form': form})
@@ -52,6 +56,8 @@ def add_product(request):
 
 @login_required
 def add_keywords(request):
-  asin = request.GET["q"]
-  #start scraping amazon
-  return render(request, 'step_2.html')
+  asin = request.GET['q']
+  asin = asin.strip()
+  product = fetch_listing(asin)
+  print product
+  return render(request, 'step_2.html', {'product':product})
