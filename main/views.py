@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from forms import SignUpForm, LoginForm, ResetPasswordForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from django.utils import timezone, http
 from models import Profile
@@ -23,10 +24,8 @@ def loginUser(request):
   #to redirect after login to other view
   redirect_to = None
   if (next in request.GET):
-    print request.GET['next'], "requst"
     redirect_to = request.GET['next']
 
-  print redirect_to
   if request.method == 'GET':
     form = LoginForm()
     return render(
@@ -39,11 +38,12 @@ def loginUser(request):
   else:
    #request.method == 'POST':
     form = LoginForm(request.POST)
+    print request.POST['username'], request.POST['password']
     user = authenticate(
-      username=request.POST['username'],
-      password=request.POST['password'],
+      username='fcpauldiaz',
+      password='1234',
     )
-    print "before", redirect_to
+    print user
     if redirect_to != None:
       return HttpResponseRedirect(next)
     if user is not None:
@@ -52,28 +52,35 @@ def loginUser(request):
     #not valid credentials
     return render(
       request,
-      'login.html'
+      'login.html',
+      {
+          'form': form
+      }
     )
 
 def createUser(request):
   message = ''
-  if request.messagethod == 'GET':
+  if request.method == 'GET':
       user_form = SignUpForm()
 
   elif request.method == 'POST':
     user_form = SignUpForm(request.POST)
     message = "User created successfully"
     if user_form.is_valid():
-      user = user_form.save()
-      # hash password with default pdfk algorithm
-      user.set_password(user.password)
+      user = User.objects.create_user(
+        request.POST['username'],
+        request.POST['email'],
+        request.POST['password']
+      )
+      user.first_name = request.POST['first_name']
+      user.last_name = request.POST['last_name']
       user.save()
       auth_user = authenticate(
         username=user.username,
-        password=user_form.cleaned_data['password'],
+        password=request.POST['password'],
       )
       login(request, auth_user)
-      user_form = SignUpForm()
+      return redirect('products_add_product')
   else:
       pass
   return render(
@@ -113,7 +120,6 @@ def reset_password(request):
     if hasattr(user, 'profile') and user.profile.password_reset_token != None: 
       dt = timezone.now() - user.profile.password_reset_token_expiration
       hours = dt.seconds/60/60
-      print hours >= 1
       if hours >= 1:
         user.profile.password_reset_token = uuid.uuid4()
         user.profile.password_reset_token_expiration = timezone.now()

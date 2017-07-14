@@ -1,32 +1,28 @@
 from __future__ import unicode_literals
 
-from django.forms import ModelForm, PasswordInput, CharField, TextInput, Form
+import django.forms as forms
 from main.models import User
 from registration.forms import RegistrationForm
 
-class SignUpForm(ModelForm):
-  first_name = CharField(widget=TextInput())
-  last_name = CharField(widget=TextInput())
+class SignUpForm(forms.ModelForm):
   class Meta:
     model = User
-    fields = ['username', 'password', 'email', 'first_name', 'last_name']
+    fields = ['username', 'email', 'password', 'first_name', 'last_name']
 
-class LoginForm(ModelForm):
-  password = CharField(widget=PasswordInput)
+class LoginForm(forms.ModelForm):
   class Meta:
     model = User
     fields = ['username','password']
 
-class ResetPasswordForm(ModelForm):
-  username = CharField(widget=TextInput())
-# class ForgotForm(ModelForm)
+class ResetPasswordForm(forms.ModelForm):
+  username = forms.CharField(widget=forms.TextInput())
   class Meta:
     model = User
     fields = ['username']
 
-class ChangePasswordForm(Form):
-  password = CharField(widget=PasswordInput)
-  password_repeated = CharField(widget=PasswordInput)
+class ChangePasswordForm(forms.Form):
+  password = forms.CharField(widget=forms.PasswordInput)
+  password_repeated = forms.CharField(widget=forms.PasswordInput)
 
-class AsinForm(Form):
-  asin = CharField(widget=TextInput(attrs={'placeholder':'Eg: 3801209'}))
+class AsinForm(forms.Form):
+  asin = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Eg: 3801209'}))
