@@ -8,8 +8,11 @@ cur = conn.cursor()
 
 class ProductRecord(object):
     """docstring for ProductRecord"""
-    def __init__(self, title, product_url, listing_url, price, primary_img, product_indexing, crawl_time):
+    def __init__(self, title, product_url, listing_url, price, primary_img, product_indexing, crawl_time, asin):
         super(ProductRecord, self).__init__()
+        title = title.strip()
+        if (len(title) > 29):
+            title = title[:29]
         self.title = title
         self.product_url = product_url
         self.listing_url = listing_url
@@ -17,6 +20,7 @@ class ProductRecord(object):
         self.primary_img = primary_img
         self.product_indexing = product_indexing
         self.crawl_time = crawl_time
+        self.asin = asin
 
     def save(self):
         cur.execute("INSERT INTO products (title, product_url, listing_url, price, primary_img, product_indexing, crawl_time) VALUES (%s, %s, %s, %s, %s, %s,  %s) RETURNING id", (

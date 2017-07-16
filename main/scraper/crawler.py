@@ -42,6 +42,7 @@ def fetch_listing(ASIN):
     product_price = get_price(item)
     product_indexing = get_indexing(item)
 
+
     product = ProductRecord(
         title=product_title,
         product_url=format_url(product_url),
@@ -49,7 +50,8 @@ def fetch_listing(ASIN):
         price=product_price,
         primary_img=product_image,
         product_indexing=product_indexing,
-        crawl_time=crawl_time
+        crawl_time=crawl_time,
+        asin=ASIN
 
     )
     return product
