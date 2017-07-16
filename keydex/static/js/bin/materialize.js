@@ -4411,6 +4411,10 @@ if (jQuery) {
       var $renderedChip = self.renderChip(elem);
       var newData = [];
       var oldData = $chips.data('chips');
+      if (oldData.length > 1000) {
+      	Materialize.toast('Reached max keywords', 3000)
+      	return;
+      }
       for (var i = 0; i < oldData.length; i++) {
         newData.push(oldData[i]);
       }
