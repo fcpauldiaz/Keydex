@@ -120,10 +120,11 @@ $collapsible-border-color: #ddd !default;
 // 6. Chips
 // ==========================================================================
 
-$chip-bg-color: #e4e4e4 !default;
+$chip-bg-color: #D1E5FC !default;
 $chip-border-color: #9e9e9e !default;
 $chip-selected-color: #26a69a !default;
 $chip-margin: 5px !default;
+$chip-text-color: #187FEE;
 
 
 // 7. Date + Time Picker
@@ -181,7 +182,7 @@ $input-invalid-border: 1px solid $input-error-color !default;
 $placeholder-text-color: lighten($input-border-color, 20%) !default;
 
 // Radio Buttons
-$radio-fill-color: $secondary-color !default;
+$radio-fill-color: $button-paypal-main-color !default;
 $radio-empty-color: #5a5a5a !default;
 $radio-border: 2px solid $radio-fill-color !default;
 

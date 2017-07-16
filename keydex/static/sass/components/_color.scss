@@ -283,6 +283,10 @@ $main-grey: (
   "base":     #4D4E4F
 );
 
+$disabled-text: (
+  "base": #9298A1
+);
+
 $deep-orange: (
   "base":       #ff5722,
   "lighten-5":  #fbe9e7,
@@ -368,7 +372,8 @@ $colors: (
   "grey": $grey,
   "shades": $shades,
   "blue-paypal": $blue-paypal,
-  "main-grey": $main-grey
+  "main-grey": $main-grey,
+  "disabled-text": $disabled-text
 ) !default;
 
 

@@ -114,7 +114,7 @@ i {
     margin-left: 15px;
   }
   &.tiny {
-    font-size: 1rem;
+    font-size: 10px !important;
   }
   &.small {
     font-size: 2rem;
@@ -130,8 +130,8 @@ i {
 // Images
 img.responsive-img,
 video.responsive-video {
-  max-width: 100%;
-  height: auto;
+  max-width: 200px;
+  height: 200px;
 }
 
 

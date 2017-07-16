@@ -3,4 +3,22 @@
   text-rendering: optimizeLegibility;
   font-feature-settings: 'liga';
   font-size: 45px;
+  color: $button-paypal-main-color;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
 }
+@media #{$medium-and-up} {
+  .navbar-icons {
+    position: absolute;
+    right: -60px;
+    display: flex;
+  } 
+}
+@media #{$medium-and-down} {
+  .navbar-icons {
+    display: none;
+  } 
+}
+
+
