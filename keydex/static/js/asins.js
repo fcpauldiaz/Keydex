@@ -1,7 +1,5 @@
 $('.chips').material_chip();
-$( document ).ready(function() {
-  $('.asin-formset').formset({
-    addText: 'Add ASIN',
-    deleteText: 'Remove ASIN'
-  });
+$('.chips-placeholder').material_chip({
+  placeholder: '+Keyword',
+  secondaryPlaceholder: 'Enter a keyword',
 });
