@@ -2,11 +2,48 @@
 {% block title %} Save Products {% endblock %}
 {% block content %}
 <div class="row">
-    <form class="col center s8 offset-s2" method="post">
+  <div class="col l6 offset-l3 s12 m8 offset-m2">
+    <div class="card-content">
+      <ul class="stepper horizontal" id="horizontal">
+         <li class="step active">
+            <!--data-step-label="To step-title!" -->
+            <div class="step-title waves-effect waves-dark">Step 1</div>
+         </li>
+         <li class="step active">
+            <div class="step-title waves-effect waves-dark">Step 2</div>
+         </li>
+         <li class="step">
+            <div class="step-title waves-effect waves-dark">Step 3</div>
+         </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col s3 offset-s1">
+      <div class="card-image">
+        <img class="responsive-img" src="{{ product.primary_img}}">
+      </div>
+  </div>
+  <div class="col s6">
+    <h3 class="main-grey-text light">
+      {{product.title}}
+    </h3>
+    <h7 class="disabled-text-text">
+      ASIN: {{ product.asin }}
+    </h7>
+  </div>
+</div>
+<div class="row">
+  <div>
+    <h6 class="main-grey-text center">Keywords</h6>
+  </div>
+  <form id="chips-form" class="col center s8 offset-s2" data-keywords-url="{% url 'products_add_keywords' %}" method="post">
      {% csrf_token %}
-      <div class="chips"></div>
-      <button class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Submit
-      <i class="material-icons right">send</i>
+      <div class="card">
+        <div class="chips chips-placeholder"></div>
+      </div>
+      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Next
       </button>
       {% if user_form.errors %}
         {% for field in user_form %}
@@ -30,4 +67,54 @@
 {% load static %}
 {% block js %}
 <script src="{% static 'js/asins.js' %}"></script>
+<script>
+  //For getting CSRF token
+function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+               var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) == (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+             }
+          }
+      }
+ return cookieValue;
+}
+</script>
+<script>
+  $("#chip-button").on("click", function (e) {
+    e.preventDefault();
+    var form = $('#chips-form');
+    var chips = $('.chip');
+    var keywords = [];
+    for (i = 0; i < chips.length; i++) {
+      var chip = chips[i].innerText;
+      var input = chip.slice(0, chip.length-5);
+      keywords.push(input);
+    }
+    $.ajax({
+      url: form.attr("data-keywords-url"),
+      type : "POST",
+      data: { 
+        csrfmiddlewaretoken : getCookie('csrftoken'), 
+        chips: JSON.stringify(keywords) },
+      dataType: 'json',
+      success: function (data) {
+        var data = JSON.parse(data.data);
+        console.log(data);
+        if (data.length === 0) {
+          Materialize.toast('Please add some keywords', 3000);
+        }
+        else {
+          window.location.href = '/product/save/';
+        }
+      }
+    });
+
+  });
+</script>
 {% endblock js %}
