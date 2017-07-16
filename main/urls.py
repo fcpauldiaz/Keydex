@@ -38,5 +38,10 @@ urlpatterns = [
     product_views.add_keywords,
     name='products_add_keywords'
   ),
+  url(
+    r'^product/save/', 
+    product_views.save_product,
+    name='products_save_product'
+  ),
 
 ]

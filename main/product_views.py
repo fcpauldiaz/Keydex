@@ -9,9 +9,11 @@ from models import Profile
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.template import loader
+from django.http import JsonResponse
 from django.forms import formset_factory
 from scraper.crawler import begin_crawl, fetch_listing
 import uuid
+import json
 
 @login_required
 def add_product(request):
@@ -56,8 +58,28 @@ def add_product(request):
 
 @login_required
 def add_keywords(request):
-  asin = request.GET['q']
-  asin = asin.strip()
-  product = fetch_listing(asin)
-  print product
-  return render(request, 'step_2.html', {'product':product})
+  if request.method == 'GET':
+    asin = request.GET['q']
+    asin = asin.strip()
+    product = fetch_listing(asin)
+    print product, "product"
+    request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
+    return render(request, 'step_2.html', {'product':product})
+  else:
+    data = request.POST.get('chips', [])
+    request.session['keywords'] = data
+    return JsonResponse({'data': data})
+  
+
+@login_required
+def save_product(request):
+  data = {
+    'keywords': request.session['keywords'],
+    'product': request.session['product']
+  }
+  return render(request, 'step_3.html', data)
+
+def datetime_handler(x):
+  if isinstance(x, datetime):
+      return x.isoformat()
+  raise TypeError("Unknown type")

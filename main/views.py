@@ -180,8 +180,6 @@ def change_password(request, token):
     user.profile.save()
     return redirect('main_index')
 
-def save_product(request):
-  return render(request, 'step_2.html')
 
 def send_html_email(request):
   html_message = loader.render_to_string(
