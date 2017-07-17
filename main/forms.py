@@ -10,9 +10,10 @@ class SignUpForm(forms.ModelForm):
     fields = ['username', 'email', 'password', 'first_name', 'last_name']
 
 class LoginForm(forms.ModelForm):
+  password = forms.CharField(widget=forms.PasswordInput())
   class Meta:
     model = User
-    fields = ['username','password']
+    fields = ['username']
 
 class ResetPasswordForm(forms.ModelForm):
   username = forms.CharField(widget=forms.TextInput())

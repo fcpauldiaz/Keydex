@@ -32,16 +32,15 @@ def loginUser(request):
       request,
       'login.html',
       {
-          'form': form
+        'form': form
       }
     )
   else:
    #request.method == 'POST':
     form = LoginForm(request.POST)
-    print request.POST['username'], request.POST['password']
     user = authenticate(
-      username='fcpauldiaz',
-      password='1234',
+      username=request.POST['username'],
+      password=request.POST['password'],
     )
     print user
     if redirect_to != None:
@@ -94,10 +93,7 @@ def createUser(request):
 
 def logout_view(request):
   logout(request)
-  return render(
-    request,
-    'index.html',
-  )
+  return redirect('main_index')
 
 def reset_password(request):
   if request.method == 'GET':
