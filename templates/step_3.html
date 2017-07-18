@@ -23,60 +23,38 @@
   <div class="col offset-s2">
     <h6 class="main-grey-text">How often do you want to check your product for indexation?</h6>
   </div>
-  <form id="chips-form" class="col center s8 offset-s2" data-keywords-url="{% url 'products_add_keywords' %}" method="post">
-     {% csrf_token %}
+  <form class="col center s8 offset-s2" method="POST">
+    {% csrf_token %}
+      {% for choice in form.choices_group1 %}
+      <p>
+        {{ choice.tag }}
+        <label for="id_choices_group1_{{ forloop.counter0 }}">{{ choice.choice_label }}</label>
+      </p>
+      {% endfor %}
+      <div>
+        <h6 class="main-grey-text left">Do you wish to receive an email each time the report is run automatically?</h6>
+      </div>
+      <br>
+      {% for choice in form.choices_group2 %}
+      <p>
+        {{ choice.tag }}
+        <label for="id_choices_group2_{{ forloop.counter0 }}">{{ choice.choice_label }}</label>
+      </p>
+      {% endfor %}
+      <div style="padding-left: 20px">
+        {% for choice in form.choices_group3 %}
         <p>
-     <input class="with-gap" name="group1" type="radio" id="type1"  />
-      <label for="type1">Every Night</label>
-    </p>
-    <p>
-     <input class="with-gap" name="group1" type="radio" id="type2"  checked/>
-      <label for="type2">Every week, on Sundays</label>
-    </p>
-    <p>
-      <input class="with-gap" name="group1" type="radio" id="type3"  />
-      <label for="type3">Every month, on the 1st</label>
-    </p>
-    <p>
-    <input class="with-gap" name="group1" type="radio" id="type4"  />
-      <label for="type4">Do not check automatically, I will do it manually when I want</label>
-    </p>
-    <div>
-      <h6 class="main-grey-text left">Do you wish to receive an email each time the report is run automatically?</h6>
-    </div>
-    <br>
-    <p>
-    <input class="with-gap" name="group2" type="radio" id="type5"  />
-      <label for="type5">Always</label>
-    </p>
-    <p>
-    <input class="with-gap" name="group2" type="radio" id="type6"  checked/>
-      <label for="type6">Only send me an email falls below</label>
-    </p>
-    <div style="padding-left: 20px">
-      <p>
-      <input class="with-gap" name="group3" type="radio" id="type7"  />
-        <label for="type7">95%</label>
-      </p>
-      <p>
-      <input class="with-gap" name="group3" type="radio" id="type8"  />
-        <label for="type8">80%</label>
-      </p>
-      <p>
-      <input class="with-gap" name="group3" type="radio" id="type9"  />
-        <label for="type9">70%</label>
-      </p>
-      <p>
-      <input class="with-gap" name="group3" type="radio" id="type10"  />
-        <label for="type10">50%</label>
-      </p>
-    </div>
-      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Save Product
+          {{ choice.tag }}
+          <label for="id_choices_group3_{{ forloop.counter0 }}">{{ choice.choice_label }}</label>
+        </p>
+        {% endfor %}
+      </div>
+      <button class="btn waves-effect waves-light blue-paypal" type="submit" value="saveProduct">Save Product
       </button>
-      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Save and run indexation now
-      </button>
-      {% if user_form.errors %}
-        {% for field in user_form %}
+      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" value="saveAndRun" name="action">Save and run indexation now</button>
+
+      {% if form.errors %}
+        {% for field in form %}
             {% for error in field.errors %}
                 <div class="alert alert-danger">
                     {{field.name}}
@@ -84,7 +62,7 @@
                 </div>
             {% endfor %}
         {% endfor %}
-        {% for error in user_form.non_field_errors %}
+        {% for error in form.non_field_errors %}
             <div class="alert alert-danger">
                 {{field.name}}
                 <strong>{{ error|escape }}</strong>
@@ -93,4 +71,8 @@
       {% endif %}
     </form>
   </div>
+{% endblock %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/radio_buttons.js' %}"></script>
 {% endblock %}
