@@ -1,3 +1,6 @@
 from django.contrib import admin
+from main.models import Product, ReportingPeriod, Profile
 
-# Register your models here.
+admin.site.register(Product)
+admin.site.register(ReportingPeriod)
+admin.site.register(Profile)
