@@ -42,7 +42,6 @@ def loginUser(request):
       username=request.POST['username'],
       password=request.POST['password'],
     )
-    print user
     if redirect_to != None:
       return HttpResponseRedirect(next)
     if user is not None:
