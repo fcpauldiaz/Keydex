@@ -31,7 +31,10 @@ def get_price(item):
     price = item.find("span", "s-price")
     if price:
         return parse_price(price.text)
-    return None
+    price = item.select(".a-size-base.a-color-base")[0].text.strip()
+    if price:
+        return price
+    return ""
 
 
 def get_primary_img(item):

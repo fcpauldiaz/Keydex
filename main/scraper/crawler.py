@@ -7,6 +7,7 @@ import settings
 from models import ProductRecord
 from helpers import make_request, log, format_url, enqueue_url, dequeue_url
 from extractors import get_title, get_url, get_price, get_primary_img, get_indexing
+from time import sleep
 
 crawl_time = datetime.now()
 
@@ -14,9 +15,22 @@ pool = eventlet.GreenPool(settings.max_threads)
 pile = eventlet.GreenPile(pool)
 
 
-def begin_crawl(ASIN):
-    url = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+ASIN
-    #return enqueue_url(url)
+def begin_crawl(product):
+    returnDictionary = {}
+    baseUrl = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+product.asin
+    for keyword in product.keywords:
+        url = baseUrl+"+"+keyword
+        page, html = make_request(url)
+        if not page:
+            log("WARNING: Error in {} found in the extraction.".format(url))
+            return
+
+        item = page
+        product_indexing = get_indexing(item)
+        returnDictionary[keyword] = product_indexing
+        sleep(5)
+        print "sleeping"
+    return returnDictionary
 
 
 def fetch_listing(ASIN):

@@ -49,9 +49,9 @@
         </p>
         {% endfor %}
       </div>
-      <button class="btn waves-effect waves-light blue-paypal" type="submit" value="saveProduct">Save Product
+      <button class="btn waves-effect waves-light blue-paypal" type="submit" value="saveProduct" name="saveProduct">Save Product
       </button>
-      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" value="saveAndRun" name="action">Save and run indexation now</button>
+      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" value="saveAndRun" name="saveAndRun">Save and run indexation now</button>
 
       {% if form.errors %}
         {% for field in form %}

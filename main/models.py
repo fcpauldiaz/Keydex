@@ -10,9 +10,6 @@ class Profile(models.Model):
   password_reset_token = models.CharField(max_length=150, null=True)
   password_reset_token_expiration = models.DateTimeField(null=True) 
 
-class HistoricProducts(models.Model):
-  index_date = models.DateTimeField()
-  index_rate = models.DecimalField(decimal_places=2, max_digits=3)
 
 class ReportingPeriod(models.Model):
   #text to show user
@@ -36,15 +33,19 @@ class Product(models.Model):
   listing_url = models.CharField(max_length=2056)
   price = models.CharField(max_length=128)
   primary_img = models.CharField(max_length=2056)
-  crawl_time = models.DateTimeField()
+  crawl_time = models.DateTimeField(auto_now_add=True)
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
   keywords = ArrayField(models.CharField(max_length=100))
   reporting_period = models.ForeignKey(ReportingPeriod)
   reporting_percentage = models.DecimalField(decimal_places=2, max_digits=5)
-  historic_ref = models.ForeignKey(HistoricProducts, null=True, on_delete=models.SET_NULL)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
   
+class Keywords(models.Model):
+  keyword = models.CharField(max_length=250)
+  indexing = models.BooleanField()
+  index_date = models.DateTimeField(auto_now_add=True)
+  product = models.ForeignKey(Product, related_name="product_keywords")
 
 
 class Subscription(models.Model):

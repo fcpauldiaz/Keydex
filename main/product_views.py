@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils import timezone
-from models import Profile, Product, ReportingPeriod
+from models import Profile, Product, ReportingPeriod, Keywords
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.template import loader
@@ -93,14 +93,12 @@ def save_product(request):
       )
       product_json = json.loads(data['product'])
       keywords = json.loads(data['keywords'])
-      print product_json
       product = Product(
         asin= product_json['asin'],
         product_name= product_json['title'],
         product_url= product_json['product_url'],
         price= product_json['price'],
         primary_img= product_json['primary_img'],
-        crawl_time= product_json['crawl_time'],
         keywords=keywords,
         reporting_period=reporting_period,
         reporting_percentage=percentage_report,
@@ -108,7 +106,14 @@ def save_product(request):
       )
       product_id = product.save() 
       if 'saveAndRun' in request.POST:
-        print 'run'
+        result = begin_crawl(product)
+        for keyword, indexing in result.items():
+          keyword_entity = Keywords(
+            keyword=keyword,
+            indexing=indexing,
+            product=product
+          )
+          keyword_entity.save()
       return redirect('main_index');
 
     else:
