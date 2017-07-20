@@ -21,7 +21,7 @@ def add_product(request):
     form = AsinForm(request.POST)
     if form.is_valid():
       asin = request.POST['asin']
-      return redirect('keywords/?q=%s' % asin )
+      return redirect(reverse('products_add_keywords') + '?q='+asin)
     return render(request, 'step_1.html', {'form': form}) 
   else:
     form = AsinForm()
