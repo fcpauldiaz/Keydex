@@ -15,7 +15,7 @@ import settings
 
 num_requests = 0
 
-redis = redis.StrictRedis(host=settings.redis_host, port=settings.redis_port, db=settings.redis_db)
+#redis = redis.StrictRedis(host=settings.redis_host, port=settings.redis_port, db=settings.redis_db)
 
 
 def make_request(url, return_soup=True):
@@ -31,11 +31,14 @@ def make_request(url, return_soup=True):
         raise Exception("Reached the max number of requests: {}".format(settings.max_requests))
 
     proxies = get_proxy()
+    print settings.headers
+    print chooseHeader(settings.headers)
     try:
-        r = requests.get(url, headers=settings.headers, proxies=proxies)
+        r = requests.get(url, headers=(settings.headers), proxies=proxies)
     except RequestException as e:
         log("WARNING: Request for {} failed, trying again.".format(url))
-        return make_request(url)  # try request again, recursively
+        return
+        #return make_request(url)  # try request again, recursively
 
     num_requests += 1
 
@@ -104,6 +107,10 @@ def enqueue_url(u):
 
 def dequeue_url():
     return redis.spop("listing_url_queue")
+
+def chooseHeader(header):
+    header['User-Agent'] = random.choice(settings.USER_AGENTS)['User-Agent']
+    return header
 
 
 if __name__ == '__main__':
