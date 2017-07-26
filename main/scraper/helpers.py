@@ -33,7 +33,7 @@ def make_request(asin, keyword=None, return_soup=True):
         url = "https://www.amazon.com/s/ref=nb_sb_noss"
         params = asin
         if keyword != None:
-            asin += " " + keyword
+            params += " " + keyword
         querystring = {"url":"search-alias=aps", "field-keywords": params }
 
         headers = {

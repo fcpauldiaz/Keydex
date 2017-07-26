@@ -18,7 +18,7 @@ pile = eventlet.GreenPile(pool)
 def begin_crawl(product):
     returnDictionary = {}
     for keyword in product.keywords:
-        page, html = make_request(product.asin, keyword)
+        page, html = make_request(asin=product.asin, keyword=keyword)
         if not page:
             log("WARNING: Error in {} found in the extraction.".format(url))
             sleep(3)
