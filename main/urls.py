@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from main import views as main_views
-from main import product_views
+from main import product_views, dashboard_views
 
 urlpatterns = [
   url(
@@ -47,6 +47,11 @@ urlpatterns = [
     r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)',
     product_views.product_detail,
     name='products_detail_product'
+  ),
+  url(
+    r'^dashboard/',
+    dashboard_views.dashboard,
+    name='dashboard'
   ),
 
 ]
