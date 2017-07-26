@@ -24,7 +24,7 @@ urlpatterns = [
     main_views.reset_password,
     name='users_reset_password'),
   url(
-    r'^user/change/password/(?P<token>[0-9A-Fa-f-]+)', 
+    r'^user/change/password/(?P<token>[0-9A-Za-z-]+)', 
     main_views.change_password,
     name='users_change_password'
   ),
@@ -34,7 +34,7 @@ urlpatterns = [
     name='products_add_product'
   ),
   url(
-    r'^product/keywords/', 
+    r'^product/keywords/(?P<asin>[0-9A-Za-z-]+)', 
     product_views.add_keywords,
     name='products_add_keywords'
   ),

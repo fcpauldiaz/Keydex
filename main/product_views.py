@@ -21,7 +21,7 @@ def add_product(request):
     form = AsinForm(request.POST)
     if form.is_valid():
       asin = request.POST['asin']
-      return redirect(reverse('products_add_keywords') + '?q='+asin)
+      return redirect('products_add_keywords', asin=asin)
     return render(request, 'step_1.html', {'form': form}) 
   else:
     form = AsinForm()
@@ -57,13 +57,14 @@ def add_product(request):
 #   return render(request, 'step_1.html', {'form': formset})
 
 @login_required
-def add_keywords(request):
+def add_keywords(request, asin):
   if request.method == 'GET':
-    asin = request.GET['q']
     asin = asin.strip()
+    print asin, "ASIN"
     product = fetch_listing(asin)
     print product, "product"
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
+    print request.session['product']
     return render(request, 'step_2.html', {'product':product})
   else:
     data = request.POST.get('chips', [])
