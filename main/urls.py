@@ -43,5 +43,10 @@ urlpatterns = [
     product_views.save_product,
     name='products_save_product'
   ),
+  url(
+    r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)',
+    product_views.product_detail,
+    name='products_detail_product'
+  ),
 
 ]

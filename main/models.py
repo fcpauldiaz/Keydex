@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
-
+import uuid
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
@@ -27,13 +27,13 @@ class ReportingPeriod(models.Model):
     db_table = 'main_reporting_period'
 
 class Product(models.Model):
+  uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
   asin = models.CharField(max_length=40)
   product_name = models.CharField(max_length=2056)
   product_url = models.CharField(max_length=2056)
   listing_url = models.CharField(max_length=2056)
   price = models.CharField(max_length=128)
   primary_img = models.CharField(max_length=2056)
-  crawl_time = models.DateTimeField(auto_now_add=True)
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
   keywords = ArrayField(models.CharField(max_length=100))
   reporting_period = models.ForeignKey(ReportingPeriod)

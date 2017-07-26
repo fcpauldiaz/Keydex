@@ -1600,6 +1600,24 @@
 .disabled-text-text {
   color: #9298A1 !important; }
 
+.detail-blue {
+  background-color: #137DEE !important; }
+
+.detail-blue-text {
+  color: #137DEE !important; }
+
+.detail-red {
+  background-color: #FA3607 !important; }
+
+.detail-red-text {
+  color: #FA3607 !important; }
+
+.detail-green {
+  background-color: #48D48D !important; }
+
+.detail-green-text {
+  color: #48D48D !important; }
+
 .black {
   background-color: #000000 !important; }
 
@@ -2228,13 +2246,13 @@ table {
   table.bordered > tbody > tr {
     border-bottom: 1px solid #d0d0d0; }
   table.striped > tbody > tr:nth-child(odd) {
-    background-color: #f2f2f2; }
+    background-color: #E7F2FD; }
   table.striped > tbody > tr > td {
     border-radius: 0; }
   table.highlight > tbody > tr {
     transition: background-color .25s ease; }
     table.highlight > tbody > tr:hover {
-      background-color: #f2f2f2; }
+      background-color: #E7F2FD; }
   table.centered thead tr th, table.centered tbody tr td {
     text-align: center; }
 
@@ -6915,3 +6933,13 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
+
+.card-margin {
+  margin-left: 5px;
+  margin-right: 130px; }
+
+.table-circle {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin-right: 10px; }

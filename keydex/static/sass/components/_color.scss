@@ -283,6 +283,18 @@ $main-grey: (
   "base":     #4D4E4F
 );
 
+$detail-green: (
+  "base":     #48D48D
+);
+
+$detail-red: (
+  "base":     #FA3607            
+);
+
+$detail-blue: (
+  "base": #137DEE
+);
+
 $disabled-text: (
   "base": #9298A1
 );
@@ -373,7 +385,10 @@ $colors: (
   "shades": $shades,
   "blue-paypal": $blue-paypal,
   "main-grey": $main-grey,
-  "disabled-text": $disabled-text
+  "disabled-text": $disabled-text,
+  "detail-blue": $detail-blue,
+  "detail-red": $detail-red,
+  "detail-green": $detail-green
 ) !default;
 
 

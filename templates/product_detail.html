@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %} Product {% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col l6 offset-l3 s12 m8 offset-m2">
+  <h6 class="blue-paypal-text center">Your product was added successfully!</h6>
+  <h5 class="main-grey-text center">Here are your results!</h5>
+  </div>
+</div>
+<div class="row container">
+    <div class="col card-panel l3 card-margin center">
+      <h3 class="detail-green-text">{{indexing_data.indexed}}%</h3>
+      <span class="main-grey-text"><strong>Indexed </strong></span>
+    </div>
+    <div class="col card-panel l3 card-margin center">
+      <h3 class="detail-red-text">{{indexing_data.not_indexed}}%</h3>
+      <span class="main-grey-text"><strong>Not indexed</strong></span>
+    </div>
+    <div class="col card-panel l3 center">
+      <h3 class="detail-blue-text">{{indexing_data.count}}</h3>
+      <span class="main-grey-text"><strong>All Keywords</strong></span>
+    </div>
+</div>
+<div class="row container">
+   <table class="bordered striped highlight responsive-table">
+        <thead class="detail-blue white-text">
+          <tr>
+            <th>#</th>
+            <th>Keywords</th>
+            <th>Indexed</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for keyword in keywords %}
+          <tr>
+            <td>
+              {% if keyword.indexing == True %}
+                <div class="green circle table-circle"></div>
+              {% else %}
+                <div class="red circle table-circle"></div>
+              {% endif %}
+              {{ forloop.counter }}
+            </td>
+            <td>{{ keyword.keyword }}</td>
+            <td>{{ keyword.indexing }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+<div class="row container center">
+  <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" value="saveAndRun" name="saveAndRun">Go to dashboard</button>
+</div>
+{% endblock %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/radio_buttons.js' %}"></script>
+{% endblock %}

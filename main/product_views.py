@@ -115,11 +115,34 @@ def save_product(request):
             product=product
           )
           keyword_entity.save()
-      return redirect('main_index');
+      return redirect('products_detail_product', uuid=product.uuid)
 
     else:
       return render(request, 'step_3.html', { 'form': form })
 
+@login_required
+def product_detail(request, uuid):
+  #check if user has permission to see this prodcut
+  product = Product.objects.get(uuid=uuid)
+  #user created this product
+  if (product.user_id == request.user.id):
+    keywords = Keywords.objects.filter(product=product).order_by('-indexing')
+    indexed = 0.0
+    indexing_data = {}
+    for keyword in keywords:
+      if (keyword.indexing == True):
+        indexed += 1
+    op = float(indexed)/float(len(keywords))
+    indexing_data['indexed'] = format(op, '.2f')
+    indexing_data['not_indexed'] = format(1 - op, '.2f')
+    indexing_data['count'] = len(keywords)
+    data =  { 
+      'product': product,
+      'keywords': keywords,
+      'indexing_data': indexing_data
+    }
+    return render(request, 'product_detail.html', data)
+  return render(request, 'product_detail.html')
 
 def datetime_handler(x):
   if isinstance(x, datetime):
