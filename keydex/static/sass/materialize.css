@@ -2565,9 +2565,32 @@ nav ul a span.badge {
     right: -60px;
     display: flex; } }
 
+@media only screen and (max-width: 600px) {
+  .card-margin {
+    margin-left: 5px;
+    margin-right: 5px !important; } }
+
+@media only screen and (min-width: 601px) {
+  .card-margin {
+    margin-left: 5px;
+    margin-right: 20px !important; } }
+
 @media only screen and (max-width: 992px) {
+  .card-margin {
+    margin-left: 5px;
+    margin-right: 80px !important; }
   .navbar-icons {
     display: none; } }
+
+@media only screen and (min-width: 993px) {
+  .card-margin {
+    margin-left: 5px;
+    margin-right: 130px !important; } }
+
+@media only screen and (min-width: 1201px) {
+  .card-margin {
+    margin-left: 5px;
+    margin-right: 130px !important; } }
 
 .container {
   margin: 0 auto;
@@ -6933,10 +6956,6 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
-
-.card-margin {
-  margin-left: 5px;
-  margin-right: 130px; }
 
 .table-circle {
   width: 15px;

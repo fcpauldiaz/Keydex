@@ -8,21 +8,21 @@
   </div>
 </div>
 <div class="row container">
-    <div class="col card-panel l3 card-margin center">
+    <div class="col card-panel l3 m3 s12 center">
       <h3 class="detail-green-text">{{indexing_data.indexed}}%</h3>
       <span class="main-grey-text"><strong>Indexed </strong></span>
     </div>
-    <div class="col card-panel l3 card-margin center">
+    <div class="col card-panel l3 m3 s12 center offset-l1 offset-m1">
       <h3 class="detail-red-text">{{indexing_data.not_indexed}}%</h3>
       <span class="main-grey-text"><strong>Not indexed</strong></span>
     </div>
-    <div class="col card-panel l3 center">
+    <div class="col card-panel l3 m3 s12 center offset-l1 offset-m1">
       <h3 class="detail-blue-text">{{indexing_data.count}}</h3>
       <span class="main-grey-text"><strong>All Keywords</strong></span>
     </div>
 </div>
 <div class="row container">
-   <table class="bordered striped highlight responsive-table">
+   <table class="bordered striped highlight">
         <thead class="detail-blue white-text">
           <tr>
             <th>#</th>
@@ -50,7 +50,7 @@
       </table>
 </div>
 <div class="row container center">
-  <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" value="saveAndRun" name="saveAndRun">Go to dashboard</button>
+  <a href="#" class="btn waves-effect waves-light blue-paypal">Go to dashboard</a>
 </div>
 {% endblock %}
 {% load static %}

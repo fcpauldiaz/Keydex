@@ -15,10 +15,39 @@
     display: flex;
   } 
 }
+
+@media #{$small-and-down} {
+  .card-margin { 
+    margin-left: 5px; 
+    margin-right:5px !important;
+  }
+}
+@media #{$medium-and-up} {
+  .card-margin {
+    margin-left: 5px; 
+    margin-right:20px !important;
+  }
+}
 @media #{$medium-and-down} {
+  .card-margin { 
+    margin-left: 5px; 
+    margin-right:80px !important;
+  }
   .navbar-icons {
     display: none;
   } 
+}
+@media #{$large-and-up} {
+  .card-margin { 
+    margin-left: 5px;
+    margin-right:130px !important;
+ }
+}
+@media #{$extra-large-and-up} {
+  .card-margin { 
+    margin-left: 5px; 
+    margin-right:130px !important;
+  }
 }
 
 
