@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import random
 from datetime import datetime
@@ -18,23 +19,30 @@ num_requests = 0
 #redis = redis.StrictRedis(host=settings.redis_host, port=settings.redis_port, db=settings.redis_db)
 
 
-def make_request(url, return_soup=True):
+def make_request(asin, keyword=None, return_soup=True):
     # global request building and response handling
 
-    url = format_url(url)
-    #print url
-    if "picassoRedirect" in url:
-        return None  # skip the redirect URLs
+    #url = format_url(url)
 
     global num_requests
     if num_requests >= settings.max_requests:
         raise Exception("Reached the max number of requests: {}".format(settings.max_requests))
 
-    proxies = get_proxy()
-    print settings.headers
-    print chooseHeader(settings.headers)
+    #proxies = get_proxy()
     try:
-        r = requests.get(url, headers=(settings.headers), proxies=proxies)
+        url = "https://www.amazon.com/s/ref=nb_sb_noss"
+        params = asin
+        if keyword != None:
+            asin += " " + keyword
+        querystring = {"url":"search-alias=aps", "field-keywords": params }
+
+        headers = {
+            'cache-control': "no-cache",
+            'user-agent': random.choice(settings.USER_AGENTS)['User-Agent']
+        }
+
+        r = requests.request("GET", url, headers=headers, params=querystring)
+        print r.url
     except RequestException as e:
         log("WARNING: Request for {} failed, trying again.".format(url))
         return

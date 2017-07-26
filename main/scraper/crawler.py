@@ -17,19 +17,16 @@ pile = eventlet.GreenPile(pool)
 
 def begin_crawl(product):
     returnDictionary = {}
-    baseUrl = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+product.asin
     for keyword in product.keywords:
-        url = baseUrl+"+"+keyword
-        page, html = make_request(url)
+        page, html = make_request(product.asin, keyword)
         if not page:
             log("WARNING: Error in {} found in the extraction.".format(url))
-            return
+            sleep(3)
+            begin_crawl(product)
 
         item = page
         product_indexing = get_indexing(item)
         returnDictionary[keyword] = product_indexing
-        sleep(5)
-        print "sleeping"
     return returnDictionary
 
 
@@ -42,10 +39,11 @@ def fetch_listing(ASIN):
         #pile.spawn(fetch_listing)
         return
 
-    page, html = make_request(url)
+    page, html = make_request(ASIN)
     if not page:
-        return
-
+        log("WARNING: No page. Retrying")
+        sleep(3)
+        pile.spawn(fetch_listing, ASIN)
     item = page
     product_image = get_primary_img(item)
     if not product_image:
