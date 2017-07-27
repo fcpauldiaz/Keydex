@@ -2594,6 +2594,26 @@ nav ul a span.badge {
     margin-left: 5px;
     margin-right: 130px !important; } }
 
+.capa1 {
+  position: absolute;
+  transform: rotate(-53deg);
+  top: 36px;
+  left: -42px; }
+
+.capa2 {
+  position: absolute;
+  width: 228px;
+  height: 160px;
+  transform: skewX(20deg);
+  background: linear-gradient(162deg, #32e1da, #32e1da 40%, #208cf0); }
+
+.text-logo {
+  position: absolute;
+  font-size: 14px;
+  color: white;
+  top: 5px;
+  left: 5px; }
+
 .container {
   margin: 0 auto;
   max-width: 1280px;
@@ -2612,7 +2632,7 @@ nav ul a span.badge {
   margin-right: -0.75rem; }
 
 .section {
-  padding-top: 1rem;
+  padding-top: 3rem;
   padding-bottom: 1rem; }
   .section.no-pad {
     padding: 0; }
@@ -3998,8 +4018,14 @@ button.btn-floating {
   .btn-large i {
     font-size: 1.6rem; }
 
-.btn-block {
-  display: block; }
+@media only screen and (max-width: 992px) {
+  .btn-block {
+    display: block; } }
+
+@media only screen and (max-width: 992px) {
+  .btn-block {
+    display: block;
+    width: 100%; } }
 
 .dropdown-content {
   background-color: #fff;

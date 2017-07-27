@@ -40,6 +40,19 @@ class Product(models.Model):
   reporting_percentage = models.DecimalField(decimal_places=2, max_digits=5)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
+
+  @property
+  def indexing(self):
+    keywords = Keywords.objects.filter(product=self.id).order_by('-indexing')
+    indexed = 0.0
+    indexing_data = {}
+    for keyword in keywords:
+      if (keyword.indexing == True):
+        indexed += 1
+    op = float(indexed)/float(len(keywords))*100
+    indexing_data = str(op)
+    return indexing_data+'%'
+
   
 class Keywords(models.Model):
   keyword = models.CharField(max_length=250)

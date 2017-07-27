@@ -306,6 +306,15 @@ button.btn-floating {
 }
 
 // Block button
-.btn-block {
-  display: block;
+@media #{$medium-and-down} {
+  .btn-block {
+    display: block;
+  }
+}
+
+@media #{$medium-and-down} {
+  .btn-block {
+    display: block;
+    width: 100%;
+  } 
 }

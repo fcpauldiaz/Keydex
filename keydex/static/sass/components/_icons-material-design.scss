@@ -52,5 +52,27 @@
     margin-right:130px !important;
   }
 }
+.capa1 {
+  position: absolute;
+  transform: rotate(-53deg);
+  top: 36px;
+  left: -42px;
+}
+
+.capa2 {
+  position: absolute;
+  width: 228px;
+  height: 160px;
+  transform: skewX(20deg);
+  background:linear-gradient(162deg , #32e1da,#32e1da 40%, #208cf0);
+}
+
+.text-logo {
+  position: absolute;
+  font-size: 14px;
+  color: white;
+  top: 5px;
+  left: 5px;
+}
 
 

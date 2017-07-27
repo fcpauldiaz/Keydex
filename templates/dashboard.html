@@ -2,20 +2,38 @@
 {% block title %} Dashboard {% endblock %}
 {% block content %}
 
+
 <div class="row container">
-  <div class="card col l3">
+  <div class="col l7 s12">
+    <h2 class="inline">Welcome back,</h2><h2 class="blue-paypal-text inline">&nbsp {{request.user.first_name}}</h2>
+  </div>
+  <div class="col l3 offset-l2 s12" style="line-height: 7">
+    <a href="{% url 'products_add_product' %}"class="btn-large waves-light waves-effect green btn-block">
+      + Add product
+    </a>
+  </div>
+</div>
+<div class="row container">
+  <div class="col l12">
+    <h5 class="inline">You have </h5><h5 class="blue-paypal-text inline">&nbsp {{ products |length}}</h5><h5 class="inline"> &nbsp products</h5>
+  </div>
+  </div>
+<div class="row container">
+  {% for product in products %}
+  <div class="card col l3 ">
     <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="https://images-na.ssl-images-amazon.com/images/I/41OF6pWOYeL.jpg">
+      <img class="activator" src="{{product.primary_img}}">
     </div>
     <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-      <p><a href="#" class="btn-large waves-light waves-effect green">This is a link</a></p>
+      <span class="card-title activator grey-text text-darken-4">{{product.product_name}}<i class="material-icons right">more_vert</i></span>
+      <p><button class="btn-large waves-light waves-effect green btn-block">{{product.indexing}} Indexing</button></p>
     </div>
     <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+      <span class="card-title grey-text text-darken-4">Product {{ forloop.counter }}<i class="material-icons right">close</i></span>
+      <p>{{product.product_name}}</p>
     </div>
   </div>
+  {% endfor %}
 </div>
 
 {% endblock %}
