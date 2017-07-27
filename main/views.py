@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from django.utils import timezone, http
-from models import Profile
+from models import Profile, Product
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.template import loader
@@ -47,14 +47,20 @@ def loginUser(request):
     if redirect_to != None:
       return HttpResponseRedirect(next)
     if user is not None:
-        login(request, user)
-        return redirect('products_add_product')
+      login(request, user)
+      if hasattr(request.user, 'profile'):
+        if (request.user.profile.account_confirmed == True):
+          countProducts = Product.objects.filter(user=request.user).count()
+          if (countProducts == 0):
+            return redirect('products_add_product')
+          #else
+          return redirect('dashboard')
     #not valid credentials
     return render(
       request,
       'login.html',
       {
-          'form': form
+        'form': form
       }
     )
 

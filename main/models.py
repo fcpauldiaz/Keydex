@@ -7,6 +7,7 @@ import uuid
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+  account_confirmed = models.BooleanField()
   password_reset_token = models.CharField(max_length=150, null=True)
   password_reset_token_expiration = models.DateTimeField(null=True) 
 
