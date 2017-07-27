@@ -11,7 +11,7 @@
     <li><h7 class="main-grey-text">Welcome, </h7><h7 class="blue-paypal-text">{{ request.user.first_name }} {{ request.user.last_name }}</h7></li>
     
     {% else %}
-    <li><a class="btn-paypal waves-effect waves-light" href="#">Log In</a></li>
+    <li><a class="btn-paypal waves-effect waves-light" href="{% url 'users_login_user' %}">Log In</a></li>
     {% endif %}
     </ul>
 
