@@ -4000,7 +4000,7 @@ button.btn-floating {
 .btn-flat {
   box-shadow: none;
   background-color: transparent;
-  color: #343434;
+  color: white;
   cursor: pointer;
   transition: background-color .2s; }
   .btn-flat:focus, .btn-flat:hover {
@@ -4026,6 +4026,10 @@ button.btn-floating {
   .btn-block {
     display: block;
     width: 100%; } }
+
+.button-card {
+  position: absolute !important;
+  z-index: 2 !important; }
 
 .dropdown-content {
   background-color: #fff;
@@ -5449,7 +5453,7 @@ input[type=range]:focus::-ms-fill-upper {
     .side-nav li > a.btn, .side-nav li > a.btn-large, .side-nav li > a.btn-large, .side-nav li > a.btn-floating {
       color: #fff; }
     .side-nav li > a.btn-flat {
-      color: #343434; }
+      color: white; }
     .side-nav li > a.btn:hover, .side-nav li > a.btn-large:hover, .side-nav li > a.btn-large:hover {
       background-color: #2bbbad; }
     .side-nav li > a.btn-floating:hover {

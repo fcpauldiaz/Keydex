@@ -318,3 +318,7 @@ button.btn-floating {
     width: 100%;
   } 
 }
+.button-card {
+  position: absolute !important;
+  z-index: 2 !important;
+}
