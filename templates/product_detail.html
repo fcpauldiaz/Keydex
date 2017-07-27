@@ -10,15 +10,15 @@
 <div class="row container">
     <div class="col card-panel l3 m3 s12 center">
       <h3 class="detail-green-text">{{indexing_data.indexed}}%</h3>
-      <span class="main-grey-text"><strong>Indexed </strong></span>
+      <span class="main-grey-text card-padding"><strong>Indexed ( {{indexing_data.indexed_count}} )</strong></span>
     </div>
     <div class="col card-panel l3 m3 s12 center offset-l1 offset-m1">
       <h3 class="detail-red-text">{{indexing_data.not_indexed}}%</h3>
-      <span class="main-grey-text"><strong>Not indexed</strong></span>
+      <span class="main-grey-text card-padding"><strong>Not indexed  ( {{indexing_data.not_indexed_count}} )</strong></span>
     </div>
     <div class="col card-panel l3 m3 s12 center offset-l1 offset-m1">
       <h3 class="detail-blue-text">{{indexing_data.count}}</h3>
-      <span class="main-grey-text"><strong>All Keywords</strong></span>
+      <span class="main-grey-text card-padding"><strong>All Keywords</strong></span>
     </div>
 </div>
 <div class="row container">
@@ -50,7 +50,11 @@
       </table>
 </div>
 <div class="row container center">
-  <a href="#" class="btn waves-effect waves-light blue-paypal">Go to dashboard</a>
+  
+    <a href="#" class="btn waves-effect waves-light green button-padding">Download results to Excel</a>
+    
+    <a href="#" class="btn waves-effect waves-light blue-paypal">Go to dashboard</a>
+  
 </div>
 {% endblock %}
 {% load static %}

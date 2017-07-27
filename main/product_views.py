@@ -107,6 +107,8 @@ def product_detail(request, uuid):
     indexing_data['indexed'] = format(op, '.2f')
     indexing_data['not_indexed'] = format(1 - op, '.2f')
     indexing_data['count'] = len(keywords)
+    indexing_data['indexed_count'] = int(indexed)
+    indexing_data['not_indexed_count'] = len(keywords) - int(indexed)
     data =  { 
       'product': product,
       'keywords': keywords,
