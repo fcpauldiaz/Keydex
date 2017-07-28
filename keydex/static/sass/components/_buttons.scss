@@ -11,6 +11,19 @@
   vertical-align: middle;
   // Gets rid of tap active state
   -webkit-tap-highlight-color: transparent;
+  &.float {
+    animation: MoveDown 3s linear;
+    margin-top: 5px;
+  }
+
+  @keyframes MoveDown {
+    0% {
+      margin-top: 0px;
+    }
+    20% {
+      margin-top: 5px;
+    }
+  }
 }
 
 // Disabled shared style
@@ -74,6 +87,18 @@
   &:hover {
     background-color: $button-raised-background-hover;
     @extend .z-depth-1-half;
+  }
+  &.right-move {
+    //animation: MoveLeft 2s linear;
+  }
+
+  @keyframes MoveLeft {
+    0% {
+      margin-left: 300px;
+    }
+    20% {
+      margin-left: 0px;
+    }
   }
 }
 
