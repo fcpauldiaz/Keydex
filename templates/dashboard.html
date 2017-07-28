@@ -7,8 +7,8 @@
   <div class="col l7 s12">
     <h2 class="inline">Welcome back,</h2><h2 class="blue-paypal-text inline">&nbsp {{request.user.first_name}}</h2>
   </div>
-  <div class="col l3 offset-l2 s12" style="line-height: 7">
-    <a href="{% url 'products_add_product' %}"class="btn-large waves-light waves-effect green btn-block">
+  <div class="col l3 offset-l3 s12" style="line-height: 7">
+    <a href="{% url 'products_add_product' %}"class="btn-large waves-light waves-effect green btn-block btn right-move  ">
       + Add product
     </a>
   </div>
@@ -20,17 +20,24 @@
   </div>
 <div class="row container">
   {% for product in products %}
-  <div class="card col l3 ">
-    <button class="button-card btn-flat waves-light waves-effect detail-green btn-block">{{product.indexing}} indexing</button>
+  <div class="card col l3 m6 s12">
+    <button class="button-card btn-flat waves-light waves-effect detail-green btn-block float">{{product.indexing}} indexing</button>
     <div class="card-image waves-effect waves-block waves-light">
       <img class="activator" src="{{product.primary_img}}">
     </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">{{product.product_name}}<i class="material-icons right">more_vert</i></span>
-      <p><button class="btn-large waves-light waves-effect blue-paypal btn-block">View Details</button></p>
+    <div class="card-content row">
+      <div class="col l10 m10 s10">
+        <span class="card-title activator grey-text text-darken-4">{{product.product_name}}</span>  
+      </div>
+      <div class="col l2 offset-l1 m2 s2">
+        <span class="activator"><i class="material-icons right">more_vert</i></span>
+      </div>
+      <div class="col l13 m13 s13">
+        <span class="card-subtitle center grey-text disabled-text-text">Asin: {{product.asin}}</span>
+      </div>
+      <p><a  href="{% url 'products_detail_product' product.uuid %}" class="btn-large waves-light waves-effect blue-paypal btn-block">View Details</a></p>
       <br>
-      <p><button class="btn-large waves-light waves-effect green btn-block">Check now</button></p>
-      
+      <p><a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn-large waves-light waves-effect green btn-block">Check now</a></p>
     </div>
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">Product {{ forloop.counter }}<i class="material-icons right">close</i></span>

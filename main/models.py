@@ -61,6 +61,12 @@ class Keywords(models.Model):
   index_date = models.DateTimeField(auto_now_add=True)
   product = models.ForeignKey(Product, related_name="product_keywords")
 
+class ProductHistoricIndexing(models.Model):
+  product = models.ForeignKey(Product)
+  indexing_rate = models.DecimalField(max_digits=5, decimal_places=2)
+  indexed_date = models.DateField(auto_now_add=True) 
+  class Meta:
+    db_table = 'main_product_historic_indexing'
 
 class Subscription(models.Model):
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

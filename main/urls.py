@@ -53,5 +53,10 @@ urlpatterns = [
     dashboard_views.dashboard,
     name='dashboard'
   ),
+  url(
+    r'^dashboard/product/(?P<uuid>[0-9A-Za-z-]+)',
+    dashboard_views.check_product_indexing,
+    name='dashboard_product_indexing'
+  ),
 
 ]
