@@ -103,9 +103,10 @@ def product_detail(request, uuid):
     for keyword in keywords:
       if (keyword.indexing == True):
         indexed += 1
-    op = float(indexed)/float(len(keywords))
+    op = float(indexed)/float(len(keywords))*100
+    print op
     indexing_data['indexed'] = format(op, '.2f')
-    indexing_data['not_indexed'] = format(1 - op, '.2f')
+    indexing_data['not_indexed'] = format(100 - op, '.2f')
     indexing_data['count'] = len(keywords)
     indexing_data['indexed_count'] = int(indexed)
     indexing_data['not_indexed_count'] = len(keywords) - int(indexed)
