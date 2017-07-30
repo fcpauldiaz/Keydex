@@ -30,22 +30,27 @@
           <label for="password">Password</label>
         </div>
       </div>
-      <button class="btn waves-effect waves-light blue-paypal center" type="submit" name="action">Submit
+      <div class="row">
+      <div class="col l13 m13 s13 center">
+        <button class="btn waves-effect waves-light blue-paypal center" type="submit" name="action">Save
+        </div>
+      </div>
       </button>
-      {% if user_form.errors %}
-        {% for field in user_form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    {{field.name}}
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
+      {% if form.errors %}
+        <p>asdfasjdfkasjdlkf</p>
+        {% for field in form %}
+          {% for error in field.errors %}
+           <div class="col l13 m13 s13"> 
+            <br>
+            <span class="center red-text"><strong>{{ error|escape }} </strong></span>
+          </div>
+          {% endfor %}
         {% endfor %}
-        {% for error in user_form.non_field_errors %}
-            <div class="alert alert-danger">
-                {{field.name}}
-                <strong>{{ error|escape }}</strong>
-            </div>
+        {% for error in form.non_field_errors %}
+          <div class="col l13 s13 m13"> 
+            <br>
+            <span class="center red-text"><strong>{{ error|escape }} </strong></span>
+          </div>
         {% endfor %}
       {% endif %}
     </form>

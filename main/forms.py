@@ -10,11 +10,9 @@ class SignUpForm(forms.ModelForm):
     model = User
     fields = ['username', 'email',  'first_name', 'last_name']
 
-class LoginForm(forms.ModelForm):
+class LoginForm(forms.Form):
+  username = forms.CharField(widget=forms.TextInput())
   password = forms.CharField(widget=forms.PasswordInput())
-  class Meta:
-    model = User
-    fields = ['username']
 
 class ResetPasswordForm(forms.ModelForm):
   username = forms.CharField(widget=forms.TextInput())
@@ -23,7 +21,7 @@ class ResetPasswordForm(forms.ModelForm):
     fields = ['username']
 
 class ChangePasswordForm(forms.Form):
-  password = forms.CharField(widget=forms.PasswordInput)
+  password = forms.CharField(widget=forms.PasswordInput())
   password_repeated = forms.CharField(widget=forms.PasswordInput)
 
 class AsinForm(forms.Form):

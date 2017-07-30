@@ -37,11 +37,11 @@ def loginUser(request):
         'form': form
       }
     )
-  else:
+  elif:
    #request.method == 'POST':
     form = LoginForm(request.POST)
     user = authenticate(
-      username=request.POST['username'],
+      username=request.POST['username'].lower(),
       password=request.POST['password'],
     )
     if redirect_to != None:
@@ -55,7 +55,10 @@ def loginUser(request):
             return redirect('products_add_product')
           #else
           return redirect('dashboard')
-    #not valid credentials
+        else:
+          logout(request)
+          return render(request, 'login.html', { 'form': form })
+    errors=form.add_error("username", "Invalid Credentials")
     return render(
       request,
       'login.html',
@@ -63,19 +66,25 @@ def loginUser(request):
         'form': form
       }
     )
+  raise ValueError('Invalid request type at login')
 
 def createUser(request):
-  message = ''
   if request.method == 'GET':
-      user_form = SignUpForm()
-
+    user_form = SignUpForm()
+    return render(
+      request,
+      'sign_up.html',
+      {
+        'user_form': user_form
+      }
+    )
   elif request.method == 'POST':
     user_form = SignUpForm(request.POST)
     message = "User created successfully"
     if user_form.is_valid():
       user = User.objects.create_user(
-        request.POST['username'],
-        request.POST['email'],
+        request.POST['username'].lower(),
+        request.POST['email'].lower(),
         request.POST['password']
       )
       user.first_name = request.POST['first_name']
@@ -86,17 +95,15 @@ def createUser(request):
         password=request.POST['password'],
       )
       login(request, auth_user)
-      return redirect('products_add_product')
-  else:
-      pass
-  return render(
+      return redirect('products_add_product')      
+    return render(
       request,
       'sign_up.html',
       {
-          'user_form': user_form,
-          'message': message
+        'user_form': user_form
       }
-  )
+    )
+  raise ValueError('Not valid request at signup')
 
 def logout_view(request):
   logout(request)
@@ -109,14 +116,17 @@ def reset_password(request):
       request,
       'reset_password.html',
       {
-          'form': form
+        'form': form
       }
     )
   else:
-    user = User.objects.get(username=request.POST['username'])
-    # if user is not found
-    if user == None:
-      return redirect('users_reset_password') 
+    form = ResetPasswordForm(request.POST)
+    try:
+      user = User.objects.get(username=request.POST['username'].lower())
+    except:
+      errors=form.add_error("", "Username " + request.POST['username'] + " not found")
+      data = { 'form': form }
+      return render(request, 'reset_password.html', data) 
 
 
     # if user already has a profile attached  
