@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from forms import SignUpForm, LoginForm, ResetPasswordForm, ChangePasswordForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
 from django.utils import timezone, http
 from models import Profile, Product
@@ -37,8 +37,7 @@ def loginUser(request):
         'form': form
       }
     )
-  elif:
-   #request.method == 'POST':
+  elif request.method == 'POST':
     form = LoginForm(request.POST)
     user = authenticate(
       username=request.POST['username'].lower(),
@@ -58,7 +57,7 @@ def loginUser(request):
         else:
           logout(request)
           return render(request, 'login.html', { 'form': form })
-    errors=form.add_error("username", "Invalid Credentials")
+    errors=form.add_error("password", "Invalid Credentials")
     return render(
       request,
       'login.html',
@@ -82,17 +81,12 @@ def createUser(request):
     user_form = SignUpForm(request.POST)
     message = "User created successfully"
     if user_form.is_valid():
-      user = User.objects.create_user(
-        request.POST['username'].lower(),
-        request.POST['email'].lower(),
-        request.POST['password']
-      )
-      user.first_name = request.POST['first_name']
-      user.last_name = request.POST['last_name']
-      user.save()
+      user_form.save()
+      username = user_form.cleaned_data.get('username')
+      raw_password = user_form.cleaned_data.get('password1')
       auth_user = authenticate(
-        username=user.username,
-        password=request.POST['password'],
+        username=username,
+        password=raw_password,
       )
       login(request, auth_user)
       return redirect('products_add_product')      

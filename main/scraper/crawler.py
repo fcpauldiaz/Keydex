@@ -44,6 +44,8 @@ def fetch_listing(ASIN):
         log("WARNING: No page. Retrying")
         sleep(3)
         pile.spawn(fetch_listing, ASIN)
+    if page == None:
+        return None
     item = page
     product_image = get_primary_img(item)
     if not product_image:

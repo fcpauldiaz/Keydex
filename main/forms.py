@@ -3,13 +3,15 @@ from __future__ import unicode_literals
 import django.forms as forms
 from main.models import User, ReportingPeriod
 from registration.forms import RegistrationForm
+from django.contrib.auth.forms import UserCreationForm
 
-class SignUpForm(forms.ModelForm):
-  password = forms.CharField(widget=forms.PasswordInput())
+class SignUpForm(UserCreationForm):
+  first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+  last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
+  email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
   class Meta:
-    model = User
-    fields = ['username', 'email',  'first_name', 'last_name']
-
+      model = User
+      fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', )
 class LoginForm(forms.Form):
   username = forms.CharField(widget=forms.TextInput())
   password = forms.CharField(widget=forms.PasswordInput())

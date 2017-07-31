@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
   <h1 class="header center main-grey-text">Add your product in 3 easy steps</h1>
-  <div class="col l6 offset-l3 s12 m8 offset-m2">
+  <div class="col l6 offset-l3 s13 m8 offset-m2">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
          <li class="step active">
@@ -21,15 +21,19 @@
   </div>
 </div>
 <div class="row">
-  <div class="col s12">
-    <form class="col center s8 offset-s2" method="post">
+  <div class="col s13 l13 m13">
+    <form class="col center s8 l8 offset-l3 offset-s2" method="post">
      {% csrf_token %}
-      <div class="input-field col s12">
+      <div class="input-field col s13 l13 ">
         <label for="asin" class="active">Your product's asin</label>
         {{ form.asin }}
       </div>
-      <button class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Next
-      </button>
+      <div class="row">
+      <div class="col l13 s13">
+        <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
+        </button>
+      </div>
+    </div>
       {% if user_form.errors %}
         {% for field in user_form %}
             {% for error in field.errors %}

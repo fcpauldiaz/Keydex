@@ -2,46 +2,34 @@
 {% block title %} Login{% endblock %}
 {% block content %}
 <div class="row">
-    <form class="col s12 center" method="post">
+    <form class="col l13 s13 center" method="post">
      {% csrf_token %}
-      <div class="row">
-        <div class="input-field col offset-s3 s6">
-          {{ form.username }}
-          <label data-error="wrong format" for="username">Username</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col offset-s3 s6">
-          {{ form.password }}
-          <label for="password">Password</label>
-        </div>
-      </div>
-      <button class="btn waves-effect waves-light blue-paypal" type="submit" name="action">Log In
-      </button>
-      <div class="row">
-      {% if form.errors %}
-        {% for field in form %}
-          {% for error in field.errors %}
-           <div class="col l13 m13 s13"> 
-            <br>
-            <span class="center red-text"><strong>{{ error|escape }} </strong></span>
-          </div>
-          {% endfor %}
+       {% for field in form %}
+      <div class="input-field col s13 l6 offset-l4">
+        {{ field }}
+        {{ field.label_tag }}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
         {% endfor %}
-        {% for error in form.non_field_errors %}
-          <div class="col l13 s13 m13"> 
-            <br>
-            <span class="center red-text"><strong>{{ error|escape }} </strong></span>
-          </div>
-        {% endfor %}
-      {% endif %}
+        {% if field.help_text %}
+          <p><small style="color: grey">{{ field.help_text }}</small></p>
+        {% endif %}
       </div>
+    {% endfor %}
+    <div class="row">
+      <div class="col l13 s13">
+        <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Log In
+        </button>
+      </div>
+    </div>
     </form>
     <div class="row center">
-     <div class="col s12">
+     <div class="col l13 s13 center">
         <p class="light"><a href="{% url 'users_create_user' %}">Create an account.</a></p>
       </div>
-      <div class="col s12">
+    </div>
+    <div class="row center">
+      <div class="col l13 s13">
         <p class="light"><a href="{% url 'users_reset_password' %}">Recover your password.</a></p>
       </div>
     </div>

@@ -32,6 +32,8 @@ def add_keywords(request, asin):
   if request.method == 'GET':
     asin = asin.strip()
     product = fetch_listing(asin)
+    if (product == None): #not parseable
+      redirect('products_add_product')
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     return render(request, 'step_2.html', {'product':product})
   elif request.method == 'POST':
@@ -115,3 +117,8 @@ def product_detail(request, uuid):
     }
     return render(request, 'product_detail.html', data)
   return render(request, 'product_detail.html')
+
+def datetime_handler(x):
+  if isinstance(x, datetime):
+      return x.isoformat()
+  raise TypeError("Unknown type")
