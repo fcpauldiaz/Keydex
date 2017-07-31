@@ -51,7 +51,7 @@ class Product(models.Model):
       if (keyword.indexing == True):
         indexed += 1
     op = float(indexed)/float(len(keywords))*100
-    indexing_data = str(op)
+    indexing_data = format(op, '.2f')
     return indexing_data+'%'
 
   
