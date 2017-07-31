@@ -3,13 +3,24 @@ from datetime import datetime
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.core.exceptions import ValidationError
 import uuid
+
+
+@receiver(post_save, sender=User)
+def update_user_profile(sender, instance, created, **kwargs):
+  if created:
+    Profile.objects.create(user=instance)
+  instance.profile.save()
 
 class Profile(models.Model):
   user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
-  account_confirmed = models.BooleanField()
+  account_confirmed = models.BooleanField(default=False)
   password_reset_token = models.CharField(max_length=150, null=True)
   password_reset_token_expiration = models.DateTimeField(null=True) 
+
 
 
 class ReportingPeriod(models.Model):

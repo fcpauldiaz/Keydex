@@ -4,11 +4,12 @@ import django.forms as forms
 from main.models import User, ReportingPeriod
 from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm
+from validator import validate_email_unique
 
 class SignUpForm(UserCreationForm):
   first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
   last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-  email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+  email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', validators=[validate_email_unique])
   class Meta:
       model = User
       fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', )
