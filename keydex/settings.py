@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'sass_processor',
-    'main'
+    'main',
+    'anymail'
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,14 @@ STATICFILES_DIRS = [
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+ANYMAIL = {
+    # (exact settings here depend on your ESP...)
+    "MAILGUN_API_KEY": "key-65265adea3b2c11f6282b435df3c7505",
+    "MAILGUN_SENDER_DOMAIN": 'mail.checkmykeywords.com',  # your Mailgun domain, if needed
+}
+EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
+DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'  # if you don't already have this in settings
+
+LOGIN_URL='/user/login'
+LOGIN_REDIRECT_URL='/user/login'
