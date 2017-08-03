@@ -15,7 +15,6 @@ eventlet==0.21.0
 greenlet==0.4.12
 gunicorn==19.6.0
 idna==2.5
-libsass==0.13.0
 lxml==3.8.0
 olefile==0.44
 pdfkit==0.6.1
@@ -24,10 +23,8 @@ psycopg2==2.7.1
 python-amazon-simple-product-api==2.2.11
 python-dateutil==2.6.1
 rcssmin==1.0.6
-redis==2.10.5
 requests==2.18.1
 rjsmin==1.0.12
-selenium==3.4.3
 six==1.10.0
 urllib3==1.21.1
 whitenoise==3.2
