@@ -95,15 +95,18 @@ def save_product(request):
   raise ValueError('Invalid request at save product')
 
 @login_required
-def product_detail(request, uuid):
+def product_detail(request, uuid, date):
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
-    historic = ProductHistoricIndexing.objects.get(product=product, indexed_date=datetime.now().date())
-    print historic
+    historic = ProductHistoricIndexing.objects.get(product=product, indexed_date= datetime.strptime(date, '%y-%m-%d'))
     keywords = Keywords.objects.filter(product=product).order_by('-indexing')
-    op = float(historic.indexing_rate)
+    indexed = 0.0
+    for keyword in keywords:
+      if (keyword.indexing == True):
+        indexed += 1
+    op = float(indexed)/float(len(keywords))*100
     indexing_data = {}
     indexing_data['indexed'] = format(op, '.2f')
     indexing_data['not_indexed'] = format(100 - op, '.2f')
@@ -122,3 +125,14 @@ def datetime_handler(x):
   if isinstance(x, datetime):
       return x.isoformat()
   raise TypeError("Unknown type")
+
+def product_overview(request, uuid):
+  #check if user has permission to see this prodcut
+  product = Product.objects.get(uuid=uuid)
+  #user created this product
+  if (product.user_id == request.user.id):
+    historic = ProductHistoricIndexing.objects.filter(product=product)
+    data = { 'data': historic, 'product': product }
+    return render(request, 'product_overview.html', data)
+
+

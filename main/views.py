@@ -90,15 +90,7 @@ def createUser(request):
       user = user_form.save(commit=False)
       user.is_active = False
       user.save()
-      current_site = get_current_site(request)
-      subject = 'Welcome to CheckMyKeywords'
-      message = loader.render_to_string('account_activation_email.html', {
-        'user': user,
-        'domain': current_site.domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
-      })
-      user.email_user(subject, message)
+      send_confirmation_email(request, user)
       return redirect('account_activation_sent')      
     return render(
       request,
@@ -198,22 +190,32 @@ def change_password(request, token):
     return redirect('main_index')
 
 
-def send_html_email(request):
+def send_confirmation_email(request, user):
+  current_site = get_current_site(request)
+  uid = urlsafe_base64_encode(force_bytes(user.pk))
+  token = account_activation_token.make_token(user)
   html_message = loader.render_to_string(
-      'path/to/your/htm_file.html',
-      {
-        'user_name': user.name,
-        'subject':  'Thank you from' 
-      }
+    'account_activation_email.html',
+    {
+      'user': user,
+      'domain': current_site.domain,
+      'uid': uid,
+      'token': token,
+    }
   )
-  send_mail(subject,message,from_email,to_list,fail_silently=True,html_message=html_message)
+  
+  message = 'http://' + request.META['HTTP_HOST'] + '/activate/' + str(uid) + '/' + str(token)
+  subject = 'Thank you for signing up! '
+  from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
+  send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
 
 
 
 def account_activation_sent(request):
   return render(request, 'account_activation_sent.html')
 
-
+#activate a user's account after confirming email
+#
 def activate(request, uidb64, token):
   try:
     uid = force_text(urlsafe_base64_decode(uidb64))

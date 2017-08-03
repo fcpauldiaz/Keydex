@@ -26,10 +26,6 @@ def delete_session(request):
   del request.session['keywords']
   del request.session['product']
 
-def datetime_handler(x):
-  if isinstance(x, datetime):
-      return x.isoformat()
-  raise TypeError("Unknown type")
 
 def select_email_reporting(value1, value2):
   if (value1 == "type5"):

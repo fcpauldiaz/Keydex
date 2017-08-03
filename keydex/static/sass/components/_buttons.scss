@@ -143,7 +143,7 @@
     i {
       line-height: $button-floating-large-size;
     }
-  }
+  } 
 
   &.halfway-fab {
     &.left {
@@ -330,6 +330,14 @@ button.btn-floating {
   }
 }
 
+.btn-small {
+  @extend .btn;
+  height: 30px;
+  line-height: 30px;
+  padding: 0px 1.5rem;
+  font-size: 13px;
+}
+
 // Block button
 @media #{$medium-and-down} {
   .btn-block {
@@ -337,10 +345,13 @@ button.btn-floating {
   }
 }
 
-@media #{$medium-and-down} {
+
+@media #{$small-and-down} {
   .btn-block {
     display: block;
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
   } 
 }
 .button-card {

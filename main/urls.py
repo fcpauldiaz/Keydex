@@ -50,9 +50,14 @@ urlpatterns = [
     name='products_save_product'
   ),
   url(
-    r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)',
+    r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)/(?P<date>\d{2}-\d{2}-\d{2})',
     product_views.product_detail,
     name='products_detail_product'
+  ),
+  url(
+    r'^product/overview/(?P<uuid>[0-9A-Za-z-]+)',
+    product_views.product_overview,
+    name='products_overview_product'
   ),
   url(
     r'^dashboard/',
