@@ -5,7 +5,7 @@
     <h2>Sign up</h2>
   </div>
   <div class="row container">
-    <form class="col l13 s13 center" method="post">
+    <form class="" method="post">
     {% csrf_token %}
     {% for field in user_form %}
       <div class="input-field col s13 l6">
@@ -16,8 +16,8 @@
         {% endfor %}
       </div>
     {% endfor %}
-   <div class="row">
-      <div class="col l13 s13">
+    <div class="row">
+      <div class="col l12 s12 m12 center">
         <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Sign Up
         </button>
       </div>

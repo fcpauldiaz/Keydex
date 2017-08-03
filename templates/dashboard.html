@@ -8,7 +8,7 @@
     <h2 class="inline">Welcome back,</h2><h2 class="blue-paypal-text inline">&nbsp {{request.user.first_name}}</h2>
   </div>
   <div class="col l3 offset-l3 s12" style="line-height: 7">
-    <a href="{% url 'products_add_product' %}"class="btn-large waves-light waves-effect green btn-block btn right-move  ">
+    <a href="{% url 'products_add_product' %}"class="btn-large waves-light waves-effect green btn-block btn right-move">
       + Add product
     </a>
   </div>
@@ -35,7 +35,7 @@
       <div class="col l13 m13 s13">
         <span class="card-subtitle center grey-text disabled-text-text">Asin: {{product.asin}}</span>
       </div>
-      <p><a  href="{% url 'products_detail_product' product.uuid %}" class="btn-large waves-light waves-effect blue-paypal btn-block">View Details</a></p>
+      <p><a  href="{% url 'products_overview_product' product.uuid %}" class="btn-large waves-light waves-effect blue-paypal btn-block">View Details</a></p>
       <br>
       <p><a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn-large waves-light waves-effect green btn-block">Check now</a></p>
     </div>

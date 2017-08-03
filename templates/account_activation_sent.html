@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
-
+{% block title %} Email Sent {% endblock %}
 {% block content %}
-  <p>Please confirm your email address to complete the registration. </p>
+  <div class="row container">
+    <div class="col s13 m13 l13">
+      <h4>Please confirm your email address to complete the registration. </h4>      
+    </div>
+  </div>
+  <div class="row container">
+     <div class="col s13 m13 l13 center">
+      <a href="{% url 'users_login_user' %}" class="btn-large waves-effect waves-light blue-paypal btn-block"> Login </a>      
+    </div>
+  </div>
 {% endblock %}
