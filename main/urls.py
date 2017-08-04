@@ -60,7 +60,7 @@ urlpatterns = [
     name='products_overview_product'
   ),
   url(
-    r'^dashboard/',
+    r'^dashboard/$',
     dashboard_views.dashboard,
     name='dashboard'
   ),
