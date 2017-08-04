@@ -5,10 +5,10 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 # Database
 
 if "DATABASE_URL" in os.environ:
-  database = os.environ['DB_NAME'],                      
-  user = os.environ['DB_USER'],
-  password = os.environ['DB_PASSWORD'],
-  host = os.environ['DB_HOST'],
+  database = os.environ['DB_NAME']                     
+  user = os.environ['DB_USER']
+  password = os.environ['DB_PASSWORD']
+  host = os.environ['DB_HOST']
 else:
   host = "localhost"
   user = "postgres"
