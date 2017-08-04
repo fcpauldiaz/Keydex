@@ -11,7 +11,7 @@ if "DATABASE_URL" in os.environ:
   host = os.environ['DB_HOST']
 else:
   host = "localhost"
-  user = "postgres"
+  user = ""
   password = ""
   database = "amazon_crawler"
 
