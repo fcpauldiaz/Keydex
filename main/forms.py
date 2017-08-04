@@ -31,10 +31,6 @@ class AsinForm(forms.Form):
   asin = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Eg: 3801209'}))
 
 class ProductSave(forms.Form):
-  db_reporting = ReportingPeriod.objects.all().order_by('value');
-  CHOICES_GROUP1 = []
-  for report in db_reporting:
-    CHOICES_GROUP1.append((report.value, report.text))
   CHOICES_GROUP2=[
     ('type5','Always'),
     ('type6','Only send me an email falls below'),
@@ -45,7 +41,7 @@ class ProductSave(forms.Form):
     ('type9', '70%'),
     ('type10', '50%')
   ]
-  choices_group1 = forms.ChoiceField(required=False, choices=CHOICES_GROUP1, widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': False}))
+  choices_group1 = forms.ModelChoiceField(required=False, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': False}))
   choices_group2 = forms.ChoiceField(required=False, choices=CHOICES_GROUP2, widget=forms.RadioSelect(attrs={'group':'group2', 'class':'with-gap', 'required': False}))
   choices_group3 = forms.ChoiceField(required=False, choices=CHOICES_GROUP3, widget=forms.RadioSelect(attrs={'group':'group3', 'class':'with-gap', 'required': False}))
 
