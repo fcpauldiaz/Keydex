@@ -95,10 +95,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',  
-            'NAME': 'keydex',                      
-            'USER': '',
-            'PASSWORD': '',
-            'HOST': 'localhost',
+            'NAME': 'indexer',                      
+            'USER': 'checkmykeywords',
+            'PASSWORD': '9ZVwy7GVuD8P5iTbUEwRabJh6',
+            'HOST': 'indexer.cjzyjdlft1jm.us-west-2.rds.amazonaws.com',
             'PORT': '5432',
         }
     }
