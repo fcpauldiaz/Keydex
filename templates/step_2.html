@@ -43,7 +43,7 @@
   <div class="row center">
   <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
      {% csrf_token %}
-      <div class="card">
+      <div class="card card-keywords">
         <div class="chips chips-placeholder"></div>
       </div>
     <div class="row center">
