@@ -1,0 +1,47 @@
+[
+  {
+    "model": "main.marketplace",
+    "pk": 1,
+    "fields": {
+      "country": "United States",
+      "country_code": "US",
+      "country_host": "https://www.amazon.com"
+    }
+  },
+  {
+    "model": "main.marketplace",
+    "pk": 2,
+    "fields": {
+      "country": "Germany",
+      "country_code": "DE",
+      "country_host": "https://www.amazon.de"
+    }
+  },
+  {
+    "model": "main.marketplace",
+    "pk": 3,
+    "fields": {
+      "country": "France",
+      "country_code": "FR",
+      "country_host": "https://www.amazon.fr"
+    }
+  },
+  {
+    "model": "main.marketplace",
+    "pk": 4,
+    "fields": {
+      "country": "United Kingdom",
+      "country_code": "UK",
+      "country_host": "https://www.amazon.co.uk"
+    }
+  },
+  {
+    "model": "main.marketplace",
+    "pk": 5,
+    "fields": {
+      "country": "Canada",
+      "country_code": "CA",
+      "country_host": "https://www.amazon.ca"
+    }
+  }
+]

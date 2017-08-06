@@ -15,10 +15,10 @@ pool = eventlet.GreenPool(settings.max_threads)
 pile = eventlet.GreenPile(pool)
 
 
-def begin_crawl(product):
+def begin_crawl(product, host):
     returnDictionary = {}
     for keyword in product.keywords:
-        page, html = make_request(asin=product.asin, keyword=keyword)
+        page, html = make_request(asin=product.asin,host=host, keyword=keyword, )
         if not page:
             log("WARNING: Error in {} found in the extraction.".format(url))
             sleep(3)
@@ -30,20 +30,20 @@ def begin_crawl(product):
     return returnDictionary
 
 
-def fetch_listing(ASIN):
+def fetch_listing(ASIN, host):
 
     global crawl_time
-    url = "https://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+ASIN
+    url = host+"/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords="+ASIN
     if not url:
         log("WARNING: No URLs {} found in the queue. Retrying...".format(url))
         #pile.spawn(fetch_listing)
         return
 
-    page, html = make_request(ASIN)
+    page, html = make_request(ASIN, host)
     if not page:
         log("WARNING: No page. Retrying")
         sleep(3)
-        pile.spawn(fetch_listing, ASIN)
+        pile.spawn(fetch_listing, ASIN, host)
     if page == None:
         return None
     item = page

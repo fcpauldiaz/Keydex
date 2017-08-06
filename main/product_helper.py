@@ -22,9 +22,11 @@ def save_product_indexing(result, product):
   #save transactional operation
   historic_entity.save()
 
+#delete session temporal data
 def delete_session(request):
   del request.session['keywords']
   del request.session['product']
+  del request.session['marketplace']
 
 
 def select_email_reporting(value1, value2):

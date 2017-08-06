@@ -40,7 +40,7 @@ urlpatterns = [
     name='products_add_product'
   ),
   url(
-    r'^product/keywords/(?P<asin>[0-9A-Za-z-]+)', 
+    r'^product/keywords/(?P<code>[A-Z]{2})/(?P<asin>[0-9A-Za-z-]+)', 
     product_views.add_keywords,
     name='products_add_keywords'
   ),
