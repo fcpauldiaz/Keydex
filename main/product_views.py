@@ -38,11 +38,11 @@ def add_keywords(request, code, asin):
     asin = asin.strip()
     marketplace = Marketplace.objects.get(country_code=code)
     product = fetch_listing(asin, marketplace.country_host)
-    if (product == None): #not parseable
+    if (product == None): #not parseable or not found
       redirect('products_add_product')
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     dictionary = marketplace.__dict__
-    del dictionary['_state']
+    del dictionary['_state'] #delete object from dictionary to serialize
     request.session['marketplace'] = json.dumps(dictionary)
     return render(request, 'step_2.html', {'product':product, 'marketplace': marketplace })
   elif request.method == 'POST':
@@ -113,17 +113,7 @@ def product_detail(request, uuid, date):
   if (product.user_id == request.user.id):
     historic = ProductHistoricIndexing.objects.get(product=product, indexed_date= datetime.strptime(date, '%y-%m-%d'))
     keywords = Keywords.objects.filter(product=product).order_by('-indexing')
-    indexed = 0.0
-    for keyword in keywords:
-      if (keyword.indexing == True):
-        indexed += 1
-    op = float(indexed)/float(len(keywords))*100
-    indexing_data = {}
-    indexing_data['indexed'] = format(op, '.2f')
-    indexing_data['not_indexed'] = format(100 - op, '.2f')
-    indexing_data['count'] = len(keywords)
-    indexing_data['indexed_count'] = int(round(op/100*len(keywords)))
-    indexing_data['not_indexed_count'] = len(keywords) - int(round(op/100*len(keywords)))
+    indexing_data = calculate_indexing(historic.indexing_rate, len(keywords))
     data =  { 
       'product': product,
       'keywords': keywords,
@@ -131,11 +121,6 @@ def product_detail(request, uuid, date):
     }
     return render(request, 'product_detail.html', data)
   return render(request, 'product_detail.html')
-
-def datetime_handler(x):
-  if isinstance(x, datetime):
-      return x.isoformat()
-  raise TypeError("Unknown type")
 
 @login_required
 def delete_product(request, pk):
@@ -158,3 +143,7 @@ def product_overview(request, uuid):
     return render(request, 'product_overview.html', data)
 
 
+def datetime_handler(x):
+  if isinstance(x, datetime):
+      return x.isoformat()
+  raise TypeError("Unknown type")
