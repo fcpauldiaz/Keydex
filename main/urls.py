@@ -50,6 +50,11 @@ urlpatterns = [
     name='products_save_product'
   ),
   url(
+    r'^product/edit/(?P<uuid>[0-9A-Za-z-]+)/',
+    product_views.edit_product,
+    name='products_edit_product'
+  ),
+  url(
     r'^product/delete/(?P<pk>\d+)$',
     product_views.delete_product,
     name='products_delete_product'

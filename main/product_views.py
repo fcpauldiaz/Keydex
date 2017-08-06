@@ -122,15 +122,6 @@ def product_detail(request, uuid, date):
     return render(request, 'product_detail.html', data)
   return render(request, 'product_detail.html')
 
-@login_required
-def delete_product(request, pk):
-  if request.method == 'POST':
-    p = Product.objects.get(pk=pk)
-    if (p.user_id == request.user.id):
-      p.delete()
-      return redirect('dashboard')
-    raise ValueError("Invalid user %s deleting" % (request.user))
-  raise ValueError("Invalid request at product delete")
 
 @login_required
 def product_overview(request, uuid):
@@ -142,6 +133,34 @@ def product_overview(request, uuid):
     data = { 'data': historic, 'product': product }
     return render(request, 'product_overview.html', data)
 
+@login_required
+def edit_product(request, uuid):
+  product = Product.objects.get(uuid=uuid)
+  if request.method == 'GET':
+    if (request.user.id == product.user_id):
+      data = { 'product': product }
+      return render(request, 'product_edit.html', data)
+    return redirect('dashboard')
+  elif request.method == 'POST':
+    chips = request.POST.get('chips', [])
+    request.session['keywords_temp'] = chips
+    chips = json.loads(request.session['keywords_temp'])
+    del request.session['keywords_temp']
+    product.keywords = chips
+    product.save()
+    return render(request, 'product_edit.html', data)
+  raise ValueError('Invalid request at add keywords')
+    
+
+@login_required
+def delete_product(request, pk):
+  if request.method == 'POST':
+    p = Product.objects.get(pk=pk)
+    if (p.user_id == request.user.id):
+      p.delete()
+      return redirect('dashboard')
+    raise ValueError("Invalid user %s deleting" % (request.user))
+  raise ValueError("Invalid request at product delete")
 
 def datetime_handler(x):
   if isinstance(x, datetime):
