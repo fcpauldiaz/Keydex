@@ -97,7 +97,7 @@ def save_product(request):
         save_product_indexing(result, product)
         #delete session variables not longer used
         delete_session(request)
-        return redirect('products_detail_product', uuid=product.uuid,date=datetime.strptime(datetime.now(), '%y-%m-%d'))  
+        return redirect('products_detail_product', uuid=product.uuid,date=datetime.now().strftime('%y-%m-%d'))  
       delete_session(request)
       return redirect('dashboard')
 
@@ -138,9 +138,16 @@ def datetime_handler(x):
   raise TypeError("Unknown type")
 
 @login_required
-def product_delete(request):
-  
+def delete_product(request, pk):
+  if request.method == 'POST':
+    p = Product.objects.get(pk=pk)
+    if (p.user_id == request.user.id):
+      p.delete()
+      return redirect('dashboard')
+    raise ValueError("Invalid user %s deleting" % (request.user))
+  raise ValueError("Invalid request at product delete")
 
+@login_required
 def product_overview(request, uuid):
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)

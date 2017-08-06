@@ -66,8 +66,10 @@ def fetch_listing(ASIN, host):
         product_indexing=product_indexing,
         crawl_time=crawl_time,
         asin=ASIN
-
     )
+    if (product.title == '<missing product title>' and 
+        product.product_url == '<missing product url>'):
+        return None
     return product
     #product_id = product.save()
     #download_image(product_image, product_id)

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %} Overview {% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col s13 l3 m4 offset-s3 offset-m5">
+      <div class="card-image">
+        <img class="responsive-img" src="{{ product.primary_img}}">
+      </div>
+    </div>
+    <div class="col l10 s13">
+      <table class="bordered striped highlight">
+        <thead class="detail-blue white-text">
+          <tr>
+            <th>Last Day Indexed</th>
+            <th>Indexed</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for historic in data %}
+          <tr>
+            <td>{{ historic.indexed_date}}</td>
+            <td>{{ historic.indexing_rate }} %</td>
+            <td><a class="btn btn-small green" href="{% url 'products_detail_product' product.uuid historic.indexed_date|date:"y-m-d" %}"> Details </a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 l3">
+      <h3 class="main-grey-text light overflow">
+        {{product.title | title}}
+      </h3>
+      <h7 class="disabled-text-text">
+        ASIN: {{ product.asin }}
+      </h7>
+    </div>
+  </div>
+  <div class="row">
+     <div class="col l1 m2 s13">
+        <a href="#" class="btn-small waves-effect waves-light blue-paypal btn-block">Edit</a>
+      </div>
+      <div class="col l1 m2 s13">
+        <a href="#modal1" class="btn-small modal-trigger waves-effect waves-light red btn-block">Delete</a>
+      </div>
+  </div>
+    <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <h4>Delete Product</h4>
+      <p>All keywords and associated indexing information will be deleted</p>
+    </div>
+    <div class="modal-footer">
+      <form method="post" action="{% url 'products_delete_product' product.pk %}">
+       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
+        {% csrf_token %}
+        <button type="submit" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Yes, Delete all</button>
+      </form>
+    
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+ $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+{% endblock %}
