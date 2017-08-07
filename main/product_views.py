@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from forms import AsinForm, ProductSave
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -148,7 +149,9 @@ def edit_product(request, uuid):
     del request.session['keywords_temp']
     product.keywords = chips
     product.save()
-    return render(request, 'product_edit.html', data)
+    message = 'Product updated'
+    data = { 'product': product }
+    return JsonResponse({ 'data': True })
   raise ValueError('Invalid request at add keywords')
     
 

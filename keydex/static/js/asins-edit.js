@@ -4,7 +4,6 @@ $(document).ready(function() {
   for (var i = 0; i < data.length; i++) {
     chips_data.push( {tag: data[i].innerText });
   }
-  console.log(chips_data)
   $('.chips').material_chip();
   $('.chips-placeholder').material_chip({
     placeholder: '+Keyword',

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load filter_extras %}
+{% block title %} Edit Product {% endblock %}
+{% block content %}
+{% if messages %}
+  <ul class="messages blue-paypal-text">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+{% endif %}
+<div class="row container">
+  <div class="col l6 offset-l3 s12 m8 offset-m2">
+    <div class="card-content">
+      <ul class="stepper horizontal" id="horizontal">
+         <li class="step active">
+            <!--data-step-label="To step-title!" -->
+            <div class="step-title waves-effect waves-dark">Step 1</div>
+         </li>
+         <li class="step active">
+            <div class="step-title waves-effect waves-dark">Step 2</div>
+         </li>
+         <li class="step">
+            <div class="step-title waves-effect waves-dark">Step 3</div>
+         </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="row container">
+  <div class="col s12 l3 m4 offset-s2 offset-l1 offset-m3p">
+      <div class="card-image">
+        <img class="responsive-img" src="{{ product.primary_img}}">
+      </div>
+  </div>
+  <div class="col s12 l6">
+    <h3 class="main-grey-text light overflow">
+      {{product.title | title}}
+    </h3>
+    <h7 class="disabled-text-text">
+      ASIN: {{ product.asin }}
+    </h7>
+  </div>
+</div>
+<div class="row container">
+  <div>
+    <h6 class="main-grey-text center">Keywords</h6>
+  </div>
+</div>
+  <div class="row center">
+  <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_edit_product' product.uuid%}" method="post">
+     {% csrf_token %}
+      <div class="card card-keywords">
+        <div class="chips chips-placeholder">
+        </div>
+      </div>
+      <div style="display: none">
+      {% for keyword in product.keywords %}
+      <p class="data-chips">{{ keyword }}</p>
+      {% endfor %}
+      </div>
+    <div class="row center">
+      <div class="col l13 s13">
+        <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Update
+        </button>
+      </div>
+    </div>
+      {% if user_form.errors %}
+        {% for field in user_form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    {{field.name}}
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in user_form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{field.name}}
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+      {% endif %}
+    </form>
+    </div>
+  </div>
+{% endblock %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/asins-edit.js' %}"></script>
+<script>
+  //For getting CSRF token
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+         var cookie = jQuery.trim(cookies[i]);
+    // Does this cookie string begin with the name we want?
+    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+       }
+      }
+    }
+  return cookieValue;
+}
+</script>
+<script>
+  $("#chip-button").on("click", function (e) {
+    e.preventDefault();
+    var form = $('#chips-form');
+    var chips = $('.chip');
+    var keywords = [];
+    for (i = 0; i < chips.length; i++) {
+      var chip = chips[i].innerText;
+      var input = chip.slice(0, chip.length-5);
+      keywords.push(input);
+    }
+    $.ajax({
+      url: form.attr("data-keywords-url"),
+      type : "POST",
+      data: { 
+        csrfmiddlewaretoken : getCookie('csrftoken'), 
+        chips: JSON.stringify(keywords) },
+      dataType: 'json',
+      success: function (response) {
+        if (response.data === true) {
+           Materialize.toast('Product updated', 3000);
+        }
+
+      }
+    });
+  });
+</script>
+{% endblock js %}
