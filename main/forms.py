@@ -42,7 +42,7 @@ class ProductSave(forms.Form):
     ('type9', '70%'),
     ('type10', '50%')
   ]
-  choices_group1 = forms.ModelChoiceField(required=False, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': False}))
+  choices_group1 = forms.ModelChoiceField(empty_label=None, required=True, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': True}))
   choices_group2 = forms.ChoiceField(required=False, choices=CHOICES_GROUP2, widget=forms.RadioSelect(attrs={'group':'group2', 'class':'with-gap', 'required': False}))
   choices_group3 = forms.ChoiceField(required=False, choices=CHOICES_GROUP3, widget=forms.RadioSelect(attrs={'group':'group3', 'class':'with-gap', 'required': False}))
 
