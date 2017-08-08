@@ -21,10 +21,22 @@ def save_product_indexing(result, product):
   )
   #save transactional operation
   historic_entity.save()
+  
+def calculate_indexing(indexing_rate, keyword_length):
+  indexing_data = {}
+  indexing_data['indexed'] = format(indexing_rate, '.2f')
+  indexing_data['not_indexed'] = format(100 - indexing_rate, '.2f')
+  indexing_data['count'] = keyword_length
+  indexing_data['indexed_count'] = int(round(indexing_rate/100*keyword_length))
+  indexing_data['not_indexed_count'] = keyword_length - int(round(indexing_rate/100*keyword_length))
+  return indexing_data
 
+
+#delete session temporal data
 def delete_session(request):
   del request.session['keywords']
   del request.session['product']
+  del request.session['marketplace']
 
 
 def select_email_reporting(value1, value2):
