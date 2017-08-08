@@ -8,3 +8,6 @@ staticfiles
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 *.pem
+
+#log files
+*.log
