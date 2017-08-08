@@ -24,7 +24,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = "6d#e=dl023mfd88^!2e73je+3nw3$$w5qh5b)=fg0#*13x5$@v"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Application definition
 
@@ -95,10 +95,10 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',  
-            'NAME': 'indexer',                      
-            'USER': 'checkmykeywords',
-            'PASSWORD': '9ZVwy7GVuD8P5iTbUEwRabJh6',
-            'HOST': 'indexer.cjzyjdlft1jm.us-west-2.rds.amazonaws.com',
+            'NAME': 'keydex',                      
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': 'localhost',
             'PORT': '5432',
         }
     }
@@ -172,3 +172,9 @@ DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
 
 LOGIN_URL='/user/login'
 LOGIN_REDIRECT_URL='/user/login'
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
