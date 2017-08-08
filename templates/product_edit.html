@@ -86,6 +86,9 @@
   </div>
 {% endblock %}
 {% load static %}
+{% block css %}
+<link href="{% static 'css/materialize-stepper.min.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block js %}
 <script src="{% static 'js/asins-edit.js' %}"></script>
 <script>
