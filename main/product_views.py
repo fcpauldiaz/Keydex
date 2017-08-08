@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, reverse
 from forms import AsinForm, ProductSave
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.utils import timezone
-from models import Profile, Product, ReportingPeriod, Keywords, ProductHistoricIndexing
+from models import Profile, Product, ReportingPeriod, Keywords, ProductHistoricIndexing, Marketplace
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
@@ -19,23 +20,32 @@ def add_product(request):
   if request.method == 'POST':
     form = AsinForm(request.POST)
     if form.is_valid():
-      asin = request.POST['asin']
-      return redirect('products_add_keywords', asin=asin)
-    return render(request, 'step_1.html', {'form': form}) 
+      asin = form.cleaned_data['asin']
+      code = form.cleaned_data['select_choices'].country_code   
+      return redirect('products_add_keywords', asin=asin, code=code)
+    marketplace = Marketplace.objects.all()
+    data = { 'form': form, 'urls': marketplace }
+    return render(request, 'step_1.html', data) 
   elif request.method == 'GET':
     form = AsinForm()
-    return render(request, 'step_1.html', {'form': form})
+    marketplace = Marketplace.objects.all()
+    data = { 'form': form, 'urls': marketplace }
+    return render(request, 'step_1.html', data)
   raise ValueError('Invalid request at add product')
 
 @login_required
-def add_keywords(request, asin):
+def add_keywords(request, code, asin):
   if request.method == 'GET':
     asin = asin.strip()
-    product = fetch_listing(asin)
-    if (product == None): #not parseable
+    marketplace = Marketplace.objects.get(country_code=code)
+    product = fetch_listing(asin, marketplace.country_host)
+    if (product == None): #not parseable or not found
       redirect('products_add_product')
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
-    return render(request, 'step_2.html', {'product':product})
+    dictionary = marketplace.__dict__
+    del dictionary['_state'] #delete object from dictionary to serialize
+    request.session['marketplace'] = json.dumps(dictionary)
+    return render(request, 'step_2.html', {'product':product, 'marketplace': marketplace })
   elif request.method == 'POST':
     data = request.POST.get('chips', [])
     request.session['keywords'] = data
@@ -48,7 +58,8 @@ def save_product(request):
   try:
     data = {
       'keywords': request.session['keywords'],
-      'product': request.session['product']
+      'product': request.session['product'],
+      'marketplace': request.session['marketplace']
     }
   except:
     #no longer product in session
@@ -60,14 +71,14 @@ def save_product(request):
   elif request.method == 'POST':
     form = ProductSave(request.POST)
     if form.is_valid():
-      value_report = form.cleaned_data['choices_group1']
-      reporting_period = ReportingPeriod.objects.get(value=value_report)
+      reporting_period = form.cleaned_data['choices_group1']
       percentage_report = select_email_reporting(
         form.cleaned_data['choices_group2'],  
         form.cleaned_data['choices_group3']
       )
       product_json = json.loads(data['product'])
       keywords = json.loads(data['keywords'])
+      marketplace = json.loads(data['marketplace'])
       product = Product.objects.create(
         asin= product_json['asin'],
         product_name= product_json['title'],
@@ -77,16 +88,17 @@ def save_product(request):
         keywords=keywords,
         reporting_period=reporting_period,
         reporting_percentage=percentage_report,
-        user=request.user
+        user=request.user,
+        marketplace=Marketplace.objects.get(id=marketplace['id'])
       )
       product.save()
       #run indexing
       if 'saveAndRun' in request.POST:
-        result = begin_crawl(product)
+        result = begin_crawl(product, marketplace['country_host'])
         save_product_indexing(result, product)
         #delete session variables not longer used
         delete_session(request)
-        return redirect('products_detail_product', uuid=product.uuid)  
+        return redirect('products_detail_product', uuid=product.uuid,date=datetime.now().strftime('%y-%m-%d'))  
       delete_session(request)
       return redirect('dashboard')
 
@@ -102,17 +114,7 @@ def product_detail(request, uuid, date):
   if (product.user_id == request.user.id):
     historic = ProductHistoricIndexing.objects.get(product=product, indexed_date= datetime.strptime(date, '%y-%m-%d'))
     keywords = Keywords.objects.filter(product=product).order_by('-indexing')
-    indexed = 0.0
-    for keyword in keywords:
-      if (keyword.indexing == True):
-        indexed += 1
-    op = float(indexed)/float(len(keywords))*100
-    indexing_data = {}
-    indexing_data['indexed'] = format(op, '.2f')
-    indexing_data['not_indexed'] = format(100 - op, '.2f')
-    indexing_data['count'] = len(keywords)
-    indexing_data['indexed_count'] = int(round(op/100*len(keywords)))
-    indexing_data['not_indexed_count'] = len(keywords) - int(round(op/100*len(keywords)))
+    indexing_data = calculate_indexing(historic.indexing_rate, len(keywords))
     data =  { 
       'product': product,
       'keywords': keywords,
@@ -121,11 +123,8 @@ def product_detail(request, uuid, date):
     return render(request, 'product_detail.html', data)
   return render(request, 'product_detail.html')
 
-def datetime_handler(x):
-  if isinstance(x, datetime):
-      return x.isoformat()
-  raise TypeError("Unknown type")
 
+@login_required
 def product_overview(request, uuid):
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)
@@ -135,4 +134,38 @@ def product_overview(request, uuid):
     data = { 'data': historic, 'product': product }
     return render(request, 'product_overview.html', data)
 
+@login_required
+def edit_product(request, uuid):
+  product = Product.objects.get(uuid=uuid)
+  if request.method == 'GET':
+    if (request.user.id == product.user_id):
+      data = { 'product': product }
+      return render(request, 'product_edit.html', data)
+    return redirect('dashboard')
+  elif request.method == 'POST':
+    chips = request.POST.get('chips', [])
+    request.session['keywords_temp'] = chips
+    chips = json.loads(request.session['keywords_temp'])
+    del request.session['keywords_temp']
+    product.keywords = chips
+    product.save()
+    message = 'Product updated'
+    data = { 'product': product }
+    return JsonResponse({ 'data': True })
+  raise ValueError('Invalid request at add keywords')
+    
 
+@login_required
+def delete_product(request, pk):
+  if request.method == 'POST':
+    p = Product.objects.get(pk=pk)
+    if (p.user_id == request.user.id):
+      p.delete()
+      return redirect('dashboard')
+    raise ValueError("Invalid user %s deleting" % (request.user))
+  raise ValueError("Invalid request at product delete")
+
+def datetime_handler(x):
+  if isinstance(x, datetime):
+      return x.isoformat()
+  raise TypeError("Unknown type")

@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 {% load filter_extras %}
-{% block title %} Save Products {% endblock %}
+{% block title %} Edit Product {% endblock %}
 {% block content %}
+{% if messages %}
+  <ul class="messages blue-paypal-text">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+  </ul>
+{% endif %}
 <div class="row container">
   <div class="col l6 offset-l3 s12 m8 offset-m2">
     <div class="card-content">
@@ -41,14 +48,20 @@
   </div>
 </div>
   <div class="row center">
-  <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
+  <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_edit_product' product.uuid%}" method="post">
      {% csrf_token %}
       <div class="card card-keywords">
-        <div class="chips chips-placeholder"></div>
+        <div class="chips chips-placeholder">
+        </div>
+      </div>
+      <div style="display: none">
+      {% for keyword in product.keywords %}
+      <p class="data-chips">{{ keyword }}</p>
+      {% endfor %}
       </div>
     <div class="row center">
       <div class="col l13 s13">
-        <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
+        <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Update
         </button>
       </div>
     </div>
@@ -74,7 +87,7 @@
 {% endblock %}
 {% load static %}
 {% block js %}
-<script src="{% static 'js/asins.js' %}"></script>
+<script src="{% static 'js/asins-edit.js' %}"></script>
 <script>
   //For getting CSRF token
 function getCookie(name) {
@@ -111,18 +124,13 @@ function getCookie(name) {
         csrfmiddlewaretoken : getCookie('csrftoken'), 
         chips: JSON.stringify(keywords) },
       dataType: 'json',
-      success: function (data) {
-        var data = JSON.parse(data.data);
-        console.log(data);
-        if (data.length === 0) {
-          Materialize.toast('Please add some keywords', 3000);
+      success: function (response) {
+        if (response.data === true) {
+           Materialize.toast('Product updated', 3000);
         }
-        else {
-          window.location.href = '/product/save/';
-        }
+
       }
     });
-
   });
 </script>
 {% endblock js %}

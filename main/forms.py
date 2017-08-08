@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 import django.forms as forms
-from main.models import User, ReportingPeriod
+from main.models import User, ReportingPeriod, Marketplace
 from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm
 from validator import validate_email_unique
@@ -28,6 +28,7 @@ class ChangePasswordForm(forms.Form):
   password_repeated = forms.CharField(widget=forms.PasswordInput)
 
 class AsinForm(forms.Form):
+  select_choices = forms.ModelChoiceField(required=False, queryset=Marketplace.objects.all(), widget=forms.Select(attrs={'required': True}), empty_label="Choose your country Marketplace", initial=1)
   asin = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Eg: 3801209'}))
 
 class ProductSave(forms.Form):

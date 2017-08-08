@@ -19,7 +19,7 @@ num_requests = 0
 #redis = redis.StrictRedis(host=settings.redis_host, port=settings.redis_port, db=settings.redis_db)
 
 
-def make_request(asin, keyword=None, return_soup=True):
+def make_request(asin, host, keyword=None, return_soup=True):
     # global request building and response handling
 
     #url = format_url(url)
@@ -30,7 +30,7 @@ def make_request(asin, keyword=None, return_soup=True):
 
     #proxies = get_proxy()
     try:
-        url = "https://www.amazon.com/s/ref=nb_sb_noss"
+        url = host+"/s/ref=nb_sb_noss"
         params = asin
         if keyword != None:
             params += " " + keyword

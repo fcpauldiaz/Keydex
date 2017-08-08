@@ -35,8 +35,20 @@ class ReportingPeriod(models.Model):
   #day of the week
   day_of_week = models.CharField(max_length=10)
 
+  def __unicode__( self ):
+    return self.text
+
   class Meta:
     db_table = 'main_reporting_period'
+
+class Marketplace(models.Model):
+  country = models.CharField(max_length=100)
+  #US, DE, FR, UK 
+  country_code = models.CharField(max_length=10)
+  #country url
+  country_host = models.CharField(max_length=100)
+  def __unicode__( self ):
+    return self.country
 
 class Product(models.Model):
   uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -49,6 +61,7 @@ class Product(models.Model):
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
   keywords = ArrayField(models.CharField(max_length=100))
   reporting_period = models.ForeignKey(ReportingPeriod)
+  marketplace = models.ForeignKey(Marketplace)
   reporting_percentage = models.DecimalField(decimal_places=2, max_digits=5)
   createdAt = models.DateTimeField(auto_now_add=True)
   updatedAt = models.DateTimeField(auto_now=True)
@@ -56,12 +69,15 @@ class Product(models.Model):
   @property
   def indexing(self):
     keywords = Keywords.objects.filter(product=self.id).order_by('-indexing')
+    if (len(keywords) == 0):
+      return '0.00%'
     indexed = 0.0
     indexing_data = {}
     for keyword in keywords:
       if (keyword.indexing == True):
         indexed += 1
-    op = float(indexed)/float(len(keywords))*100
+    print len(keywords)
+    op = (float(indexed)/float(len(keywords)))*100
     indexing_data = format(op, '.2f')
     return indexing_data+'%'
 

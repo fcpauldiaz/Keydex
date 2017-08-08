@@ -40,7 +40,7 @@ urlpatterns = [
     name='products_add_product'
   ),
   url(
-    r'^product/keywords/(?P<asin>[0-9A-Za-z-]+)', 
+    r'^product/keywords/(?P<code>[A-Z]{2})/(?P<asin>[0-9A-Za-z-]+)', 
     product_views.add_keywords,
     name='products_add_keywords'
   ),
@@ -48,6 +48,16 @@ urlpatterns = [
     r'^product/save/', 
     product_views.save_product,
     name='products_save_product'
+  ),
+  url(
+    r'^product/edit/(?P<uuid>[0-9A-Za-z-]+)/',
+    product_views.edit_product,
+    name='products_edit_product'
+  ),
+  url(
+    r'^product/delete/(?P<pk>\d+)$',
+    product_views.delete_product,
+    name='products_delete_product'
   ),
   url(
     r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)/(?P<date>\d{2}-\d{2}-\d{2})',
