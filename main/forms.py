@@ -17,11 +17,8 @@ class LoginForm(forms.Form):
   username = forms.CharField(widget=forms.TextInput())
   password = forms.CharField(widget=forms.PasswordInput())
 
-class ResetPasswordForm(forms.ModelForm):
-  username = forms.CharField(widget=forms.TextInput())
-  class Meta:
-    model = User
-    fields = ['username']
+class ResetPasswordForm(forms.Form):
+  username_or_email = forms.CharField(widget=forms.TextInput())
 
 class ChangePasswordForm(forms.Form):
   password = forms.CharField(widget=forms.PasswordInput())

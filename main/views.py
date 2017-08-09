@@ -119,9 +119,11 @@ def reset_password(request):
   else:
     form = ResetPasswordForm(request.POST)
     try:
-      user = User.objects.get(username=request.POST['username'].lower())
+      username_or_email = request.POST['username_or_email'].lower().strip()
+      user = User.objects.filter(username = username_or_email) | User.objects.filter(email = username_or_email)
+      user = user[0]
     except:
-      errors=form.add_error("", "Username " + request.POST['username'] + " not found")
+      errors=form.add_error("", "User " + request.POST['username_or_email'].lower().strip() + " not found")
       data = { 'form': form }
       return render(request, 'reset_password.html', data) 
 
@@ -143,8 +145,10 @@ def reset_password(request):
         )
         return redirect('main_index')
       else:
+        errors=form.add_error("", "The recover link has already been requested")
+        data = { 'form': form }
         # wait one hour before ask for another reset password token
-        return redirect('users_reset_password') 
+        return render(request, 'reset_password.html', data) 
     if hasattr(user, 'profile') and user.profile.password_reset_token == None: 
       # update existing profile
       profile = user.profile
