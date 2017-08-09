@@ -47,7 +47,7 @@ def loginUser(request):
   elif request.method == 'POST':
     form = LoginForm(request.POST)
     user = authenticate(
-      username=request.POST['username'].lower(),
+      username=request.POST['username'].lower().strip(),
       password=request.POST['password'],
     )
     if redirect_to != None:
