@@ -18,8 +18,15 @@
 <body>
   {% include 'navbar.html' %}
   <div class="section no-pad-bot" id="index-banner">
-   {% block content %}
-   {% endblock %}
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li style="display:none" {% if message.tags %} class="{{ message.tags }} message-body"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
+    {% block content %}
+    {% endblock %}
   </div>
 
 

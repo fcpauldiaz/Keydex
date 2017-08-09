@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from dateutil.relativedelta import relativedelta
 from django.contrib.sites.shortcuts import get_current_site
 from django.template import loader
+from django.contrib import messages
 import uuid
 
 from models import Profile, Product
@@ -89,6 +90,7 @@ def createUser(request):
     if user_form.is_valid():
       user = user_form.save(commit=False)
       user.is_active = False
+      user.username = user.username.lower().strip()
       user.save()
       send_confirmation_email(request, user)
       return redirect('account_activation_sent')      
@@ -118,9 +120,11 @@ def reset_password(request):
   else:
     form = ResetPasswordForm(request.POST)
     try:
-      user = User.objects.get(username=request.POST['username'].lower())
+      username_or_email = request.POST['username_or_email'].lower().strip()
+      user = User.objects.filter(username = username_or_email) | User.objects.filter(email = username_or_email)
+      user = user[0]
     except:
-      errors=form.add_error("", "Username " + request.POST['username'] + " not found")
+      errors=form.add_error("", "User " + request.POST['username_or_email'].lower().strip() + " not found")
       data = { 'form': form }
       return render(request, 'reset_password.html', data) 
 
@@ -133,17 +137,14 @@ def reset_password(request):
         user.profile.password_reset_token = uuid.uuid4()
         user.profile.password_reset_token_expiration = timezone.now()
         user.profile.save()
-        send_mail(
-          'Reset password Keydex',
-          'http://' + request.META['HTTP_HOST'] + '/users/token/' + str(user.profile.password_reset_token),
-          'do-not-reply@keydex.com',
-          [user.email],
-          fail_silently=False,
-        )
+        send_reset_email(request, user)
+        messages.success(request, 'Reset password email sent.')
         return redirect('main_index')
       else:
+        errors=form.add_error("", "The recover link has already been requested")
+        data = { 'form': form }
         # wait one hour before ask for another reset password token
-        return redirect('users_reset_password') 
+        return render(request, 'reset_password.html', data) 
     if hasattr(user, 'profile') and user.profile.password_reset_token == None: 
       # update existing profile
       profile = user.profile
@@ -157,15 +158,10 @@ def reset_password(request):
     if addNewProfile == True:
       user.profile = profile
     profile.save() # save profile 
-    user.save() # save user
+    user.save() # save userp
     # send confirmation email
-    send_mail(
-      'Reset password Keydex',
-      'http://' + request.META['HTTP_HOST'] + '/user/change/password/' + str(profile.password_reset_token),
-      'do-not-reply@keydex.com',
-      [user.email],
-      fail_silently=False,
-    )
+    send_reset_email(request, user)
+    messages.success(request, 'Reset password email sent.')
     return redirect('main_index')
 
 def change_password(request, token):
@@ -209,6 +205,20 @@ def send_confirmation_email(request, user):
   from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
   send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
 
+def send_reset_email(request, user):
+  current_site = get_current_site(request).domain
+  reset_url = 'http://'+ current_site + '/user/change/password/' + str(user.profile.password_reset_token)
+  html_message = loader.render_to_string(
+    'account_reset_email.html',
+    {
+      'user': user,
+      'reset_url': reset_url
+    }
+  )
+  message = reset_url
+  subject = 'Reset your password'
+  from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
+  send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
 
 
 def account_activation_sent(request):

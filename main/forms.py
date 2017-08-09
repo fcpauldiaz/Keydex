@@ -17,11 +17,8 @@ class LoginForm(forms.Form):
   username = forms.CharField(widget=forms.TextInput())
   password = forms.CharField(widget=forms.PasswordInput())
 
-class ResetPasswordForm(forms.ModelForm):
-  username = forms.CharField(widget=forms.TextInput())
-  class Meta:
-    model = User
-    fields = ['username']
+class ResetPasswordForm(forms.Form):
+  username_or_email = forms.CharField(widget=forms.TextInput())
 
 class ChangePasswordForm(forms.Form):
   password = forms.CharField(widget=forms.PasswordInput())
@@ -42,7 +39,7 @@ class ProductSave(forms.Form):
     ('type9', '70%'),
     ('type10', '50%')
   ]
-  choices_group1 = forms.ModelChoiceField(required=False, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': False}))
+  choices_group1 = forms.ModelChoiceField(empty_label=None, required=True, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': True}))
   choices_group2 = forms.ChoiceField(required=False, choices=CHOICES_GROUP2, widget=forms.RadioSelect(attrs={'group':'group2', 'class':'with-gap', 'required': False}))
   choices_group3 = forms.ChoiceField(required=False, choices=CHOICES_GROUP3, widget=forms.RadioSelect(attrs={'group':'group3', 'class':'with-gap', 'required': False}))
 
