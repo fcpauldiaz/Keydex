@@ -11,6 +11,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from dateutil.relativedelta import relativedelta
 from django.contrib.sites.shortcuts import get_current_site
 from django.template import loader
+from django.contrib import messages
 import uuid
 
 from models import Profile, Product
@@ -136,13 +137,8 @@ def reset_password(request):
         user.profile.password_reset_token = uuid.uuid4()
         user.profile.password_reset_token_expiration = timezone.now()
         user.profile.save()
-        send_mail(
-          'Reset password Keydex',
-          'http://' + request.META['HTTP_HOST'] + '/users/token/' + str(user.profile.password_reset_token),
-          'do-not-reply@keydex.com',
-          [user.email],
-          fail_silently=False,
-        )
+        send_reset_email(request, user)
+        messages.success(request, 'Reset password email sent.')
         return redirect('main_index')
       else:
         errors=form.add_error("", "The recover link has already been requested")
@@ -162,15 +158,10 @@ def reset_password(request):
     if addNewProfile == True:
       user.profile = profile
     profile.save() # save profile 
-    user.save() # save user
+    user.save() # save userp
     # send confirmation email
-    send_mail(
-      'Reset password Keydex',
-      'http://' + request.META['HTTP_HOST'] + '/user/change/password/' + str(profile.password_reset_token),
-      'do-not-reply@keydex.com',
-      [user.email],
-      fail_silently=False,
-    )
+    send_reset_email(request, user)
+    messages.success(request, 'Reset password email sent.')
     return redirect('main_index')
 
 def change_password(request, token):
@@ -214,6 +205,20 @@ def send_confirmation_email(request, user):
   from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
   send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
 
+def send_reset_email(request, user):
+  current_site = get_current_site(request).domain
+  reset_url = 'http://'+ current_site + '/user/change/password/' + str(user.profile.password_reset_token)
+  html_message = loader.render_to_string(
+    'account_reset_email.html',
+    {
+      'user': user,
+      'reset_url': reset_url
+    }
+  )
+  message = reset_url
+  subject = 'Reset your password'
+  from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
+  send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
 
 
 def account_activation_sent(request):

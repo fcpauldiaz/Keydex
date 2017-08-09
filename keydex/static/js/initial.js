@@ -8,4 +8,8 @@
   $(function(){
     $('.button-collapse').sideNav();
   }); // end of document ready
+  var messages = document.getElementsByClassName('message-body')
+  for (var i = 0; i < messages.length; i++) {
+    Materialize.toast(messages[i].innerText, 3000);
+  }
 })(jQuery); // end of jQuery name space
