@@ -89,6 +89,7 @@ def createUser(request):
     if user_form.is_valid():
       user = user_form.save(commit=False)
       user.is_active = False
+      user.username = user.username.lower().strip()
       user.save()
       send_confirmation_email(request, user)
       return redirect('account_activation_sent')      
