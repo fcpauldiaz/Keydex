@@ -94,7 +94,6 @@ def createUser(request):
       mail_response = validate_email(email)
       
       disposable = mail_response['is_disposable_address'] #disposable
-      print disposable      
       if (disposable == True):
         errors=user_form.add_error("email", "Email " + str(email) + " seems to be disposable, use another one.")
         data = { 'user_form': user_form }
