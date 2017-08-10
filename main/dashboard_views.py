@@ -11,7 +11,7 @@ def dashboard(request):
 
 def check_product_indexing(request, uuid):
   product = Product.objects.get(uuid=uuid)
-  result = begin_crawl(product)
+  result = begin_crawl(product, product.marketplace.country_host)
   save_product_indexing(result, product)
   return redirect(reverse('products_overview_product',kwargs={'uuid':uuid}))
 
