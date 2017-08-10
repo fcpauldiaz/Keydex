@@ -13,6 +13,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template import loader
 from django.contrib import messages
 import uuid
+from user_helper import validate_email #email validation
 
 from models import Profile, Product
 from tokens import account_activation_token
@@ -88,6 +89,18 @@ def createUser(request):
     user_form = SignUpForm(request.POST)
     message = "User created successfully"
     if user_form.is_valid():
+      #validate user email
+      email = user_form.cleaned_data['email']
+      mail_response = validate_email(email)
+      
+      disposable = mail_response['is_disposable_address'] #disposable
+      print disposable      
+      if (disposable == True):
+        errors=user_form.add_error("email", "Email " + str(email) + " seems to be disposable, use another one.")
+        data = { 'user_form': user_form }
+        return render(request,'sign_up.html', data)
+      
+
       user = user_form.save(commit=False)
       user.is_active = False
       user.username = user.username.lower().strip()
