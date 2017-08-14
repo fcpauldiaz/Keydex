@@ -64,3 +64,8 @@ max_threads = 200
 log_stdout = True
 image_dir = "/tmp/crawl_images"
 export_dir = "/tmp"
+
+AWS_KEY = "AKIAI5MZQK32FPKK35TA"
+AWS_SECRET = "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"
+AWS_API = "keydex-20"
+
