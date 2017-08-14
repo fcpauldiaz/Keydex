@@ -12,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
 from scraper.crawler import begin_crawl, fetch_listing
 from product_helper import *
+from collections import namedtuple
 import uuid
 import json
 
@@ -38,18 +39,23 @@ def add_keywords(request, code, asin):
   if request.method == 'GET':
     asin = asin.strip()
     marketplace = Marketplace.objects.get(country_code=code)
-    product = fetch_listing(asin, marketplace.country_host)
+    product = fetch_listing(asin, marketplace)
+    
     if (product == None): #not parseable or not found
-      redirect('products_add_product')
+      return redirect('products_add_product')
+    print product == None
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     dictionary = marketplace.__dict__
     del dictionary['_state'] #delete object from dictionary to serialize
     request.session['marketplace'] = json.dumps(dictionary)
     return render(request, 'step_2.html', {'product':product, 'marketplace': marketplace })
+  
   elif request.method == 'POST':
+  
     data = request.POST.get('chips', [])
     request.session['keywords'] = data
     return JsonResponse({ 'data': data })
+  
   raise ValueError('Invalid request at add keywords')
   
 
@@ -70,6 +76,7 @@ def save_product(request):
   
   elif request.method == 'POST':
     form = ProductSave(request.POST)
+    
     if form.is_valid():
       reporting_period = form.cleaned_data['choices_group1']
       percentage_report = select_email_reporting(
@@ -94,7 +101,8 @@ def save_product(request):
       product.save()
       #run indexing
       if 'saveAndRun' in request.POST:
-        result = begin_crawl(product, marketplace['country_host'])
+        object_market = namedtuple("marketplace", marketplace.keys())(*marketplace.values())
+        result = begin_crawl(product, object_market)
         save_product_indexing(result, product)
         #delete session variables not longer used
         delete_session(request)
