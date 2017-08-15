@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %} Overview {% endblock %}
+{% load filter_extras %}
 {% block content %}
 <div class="container">
   <div class="row">
@@ -23,7 +24,7 @@
           <tr>
             <td>{{ historic.indexed_date}}</td>
             <td>{{ historic.indexing_rate }} %</td>
-            <td><a class="btn btn-small green" href="{% url 'products_detail_product' product.uuid historic.indexed_date|date:"y-m-d" %}"> Details </a></td>
+            <td><a class="btn btn-small green" href="{% url 'products_detail_product' product.uuid historic.id|product_detail %}"> Details </a></td>
           </tr>
           {% endfor %}
         </tbody>

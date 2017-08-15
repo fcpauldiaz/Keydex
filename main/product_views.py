@@ -10,6 +10,8 @@ from models import Profile, Product, ReportingPeriod, Keywords, ProductHistoricI
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
+from django.utils.http import  urlsafe_base64_decode
+from django.utils.encoding import  force_text
 from scraper.crawler import begin_crawl, fetch_listing
 from product_helper import *
 from collections import namedtuple
@@ -115,12 +117,12 @@ def save_product(request):
   raise ValueError('Invalid request at save product')
 
 @login_required
-def product_detail(request, uuid, date):
+def product_detail(request, uuid, id):
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
-    historic = ProductHistoricIndexing.objects.get(product=product, indexed_date= datetime.strptime(date, '%y-%m-%d'))
+    historic = ProductHistoricIndexing.objects.get(id=urlsafe_base64_decode(force_text(id)))
     keywords = Keywords.objects.filter(product=product).order_by('-indexing')
     indexing_data = calculate_indexing(historic.indexing_rate, len(keywords))
     data =  { 
@@ -129,7 +131,7 @@ def product_detail(request, uuid, date):
       'indexing_data': indexing_data
     }
     return render(request, 'product_detail.html', data)
-  return render(request, 'product_detail.html')
+  return redirect('dashboard')
 
 
 @login_required

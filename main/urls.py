@@ -60,7 +60,7 @@ urlpatterns = [
     name='products_delete_product'
   ),
   url(
-    r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)/(?P<date>\d{2}-\d{2}-\d{2})',
+    r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)/(?P<id>[0-9A-Za-z_\-]+)',
     product_views.product_detail,
     name='products_detail_product'
   ),
