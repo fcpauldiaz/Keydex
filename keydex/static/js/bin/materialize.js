@@ -4296,33 +4296,36 @@ if (jQuery) {
         $currChips.siblings('.prefix').removeClass('active');
       });
 
-      self.$document.off('keydown.chips-add', SELS.CHIPS + ' ' + SELS.INPUT).on('keydown.chips-add', SELS.CHIPS + ' ' + SELS.INPUT, function(e){
+      self.$document.off('keydown.chips-add', SELS.CHIPS + ' ' + SELS.INPUT).on('keydown.chips-add paste', SELS.CHIPS + ' ' + SELS.INPUT, function(e){
         var $target = $(e.target);
         var $chips = $target.closest(SELS.CHIPS);
         var chipsLength = $chips.children(SELS.CHIP).length;
+        
+        setTimeout(function() {
+	        // enter
+	        if (13 === e.which || e.which === 0 || e.which === 32 || e.type === 'paste') {
+	          // Override enter if autocompleting.
+	          if (self.hasAutocomplete &&
+	              $chips.find('.autocomplete-content.dropdown-content').length &&
+	              $chips.find('.autocomplete-content.dropdown-content').children().length) {
+	            return;
+	          }
+	          
 
-        // enter
-        if (13 === e.which) {
-          // Override enter if autocompleting.
-          if (self.hasAutocomplete &&
-              $chips.find('.autocomplete-content.dropdown-content').length &&
-              $chips.find('.autocomplete-content.dropdown-content').children().length) {
-            return;
-          }
+	          e.preventDefault();
+	          self.addChip({tag: $target.val()}, $chips);
+	          $target.val('');
+	          return;
+	        }
 
-          e.preventDefault();
-          self.addChip({tag: $target.val()}, $chips);
-          $target.val('');
-          return;
-        }
-
-        // delete or left
-        if ((8 === e.keyCode || 37 === e.keyCode) && '' === $target.val() && chipsLength) {
-          e.preventDefault();
-          self.selectChip(chipsLength - 1, $chips);
-          $target.blur();
-          return;
-        }
+	        // delete or left
+	        if ((8 === e.keyCode || 37 === e.keyCode) && '' === $target.val() && chipsLength) {
+	          e.preventDefault();
+	          self.selectChip(chipsLength - 1, $chips);
+	          $target.blur();
+	          return;
+	        }
+        }, 100);
       });
 
       // Click on delete icon in chip.
