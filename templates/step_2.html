@@ -51,6 +51,17 @@
         <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
         </button>
       </div>
+      <div id="loader" class="preloader-wrapper small active" style="display: none">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
     </div>
       {% if user_form.errors %}
         {% for field in user_form %}
@@ -98,7 +109,10 @@ function getCookie(name) {
 </script>
 <script>
   $("#chip-button").on("click", function (e) {
+    e.stopPropagation();
     e.preventDefault();
+    $('#chip-button').hide();
+    $('#loader').show();
     var form = $('#chips-form');
     var chips = $('.chip');
     var keywords = [];
@@ -116,13 +130,17 @@ function getCookie(name) {
       dataType: 'json',
       success: function (data) {
         var data = JSON.parse(data.data);
-        console.log(data);
         if (data.length === 0) {
           Materialize.toast('Please add some keywords', 3000);
+          $('#chip-button').show();
+          $('#loader').hide();
         }
         else {
           window.location.href = '/product/save/';
         }
+      },
+      error: function(request, status, error) {
+        console.log(error);
       }
     });
 
