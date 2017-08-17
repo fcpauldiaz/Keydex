@@ -21,6 +21,7 @@ def save_product_indexing(result, product):
   )
   #save transactional operation
   historic_entity.save()
+  return historic_entity.id
   
 def calculate_indexing(indexing_rate, keyword_length):
   indexing_data = {}

@@ -108,8 +108,15 @@ function getCookie(name) {
 }
 </script>
 <script>
+  $('#chips-form').on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) { 
+    e.preventDefault();
+    return false;
+  }
+});
   $("#chip-button").on("click", function (e) {
-    e.stopPropagation();
+    console.log(e);
     e.preventDefault();
     $('#chip-button').hide();
     $('#loader').show();

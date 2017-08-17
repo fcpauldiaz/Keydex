@@ -10,9 +10,9 @@ from models import Profile, Product, ReportingPeriod, Keywords, ProductHistoricI
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
-from django.utils.http import  urlsafe_base64_decode
-from django.utils.encoding import  force_text
-from scraper.crawler import begin_crawl, fetch_listing
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from scraper.crawler import begin_crawl, fetch_listing, parallel_crawl
 from product_helper import *
 from collections import namedtuple
 import uuid
@@ -104,11 +104,11 @@ def save_product(request):
       #run indexing
       if 'saveAndRun' in request.POST:
         object_market = namedtuple("marketplace", marketplace.keys())(*marketplace.values())
-        result = begin_crawl(product, object_market)
-        save_product_indexing(result, product)
+        result = parallel_crawl(product, object_market)
+        historic_id = save_product_indexing(result, product)
         #delete session variables not longer used
         delete_session(request)
-        return redirect('products_detail_product', uuid=product.uuid,date=datetime.now().strftime('%y-%m-%d'))  
+        return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
       delete_session(request)
       return redirect('dashboard')
 

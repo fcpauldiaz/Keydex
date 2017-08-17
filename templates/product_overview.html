@@ -46,11 +46,22 @@
         <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light blue-paypal btn-block">Edit</a>
       </div>
       <div class="col l1 m2 s13">
-        <a href="#modal1" class="btn-small modal-trigger waves-effect waves-light red btn-block">Delete</a>
+        <a href="#modal1" id="delete-hide" class="btn-small modal-trigger waves-effect waves-light red btn-block">Delete</a>
+        <div id="loader" class="preloader-wrapper small active" style="display: none">
+          <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
       </div>
   </div>
     <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+  <div id="modal1" class="modal container">
     <div class="modal-content">
       <h4>Delete Product</h4>
       <p>All keywords and associated indexing information will be deleted</p>
@@ -59,7 +70,7 @@
       <form method="post" action="{% url 'products_delete_product' product.pk %}">
        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
         {% csrf_token %}
-        <button type="submit" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Yes, Delete all</button>
+        <button id="delete" type="submit" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Yes, Delete all</button>
       </form>
     
     </div>
@@ -70,6 +81,10 @@
 <script>
  $(document).ready(function(){
     $('.modal').modal();
+    $("#delete").on("click", function (e) {
+      $("#delete-hide").hide();
+      $('#loader').show();
+    });
   });
 </script>
 {% endblock %}
