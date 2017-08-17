@@ -68,7 +68,8 @@ class Product(models.Model):
 
   @property
   def indexing(self):
-    keywords = Keywords.objects.filter(product=self.id).order_by('-indexing')
+    historic_list = ProductHistoricIndexing.objects.filter(product=self.id)
+    keywords = Keywords.objects.filter(historic__in=historic_list).order_by('-indexing')
     if (len(keywords) == 0):
       return '0.00%'
     indexed = 0.0
@@ -81,19 +82,19 @@ class Product(models.Model):
     indexing_data = format(op, '.2f')
     return indexing_data+'%'
 
-  
-class Keywords(models.Model):
-  keyword = models.CharField(max_length=250)
-  indexing = models.BooleanField()
-  index_date = models.DateTimeField(auto_now_add=True)
-  product = models.ForeignKey(Product, related_name="product_keywords")
-
 class ProductHistoricIndexing(models.Model):
   product = models.ForeignKey(Product)
   indexing_rate = models.DecimalField(max_digits=5, decimal_places=2)
   indexed_date = models.DateField(auto_now_add=True) 
   class Meta:
     db_table = 'main_product_historic_indexing'
+
+class Keywords(models.Model):
+  keyword = models.CharField(max_length=250)
+  indexing = models.BooleanField()
+  index_date = models.DateTimeField(auto_now_add=True)
+  historic = models.ForeignKey(ProductHistoricIndexing, related_name="historic_keywords", null=True)
+
 
 class Subscription(models.Model):
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

@@ -3,11 +3,7 @@ import os
 import random
 from datetime import datetime
 from urlparse import urlparse
-
-import eventlet
-requests = eventlet.import_patched('requests.__init__')
-time = eventlet.import_patched('time')
-import redis
+import requests
 
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
@@ -33,19 +29,18 @@ def make_request(asin, host, keyword=None, return_soup=True):
         url = host+"/s/ref=nb_sb_noss"
         params = asin
         if keyword != None:
-            params += " " + keyword
+            params += " " + keyword.strip()
         querystring = {"url":"search-alias=aps", "field-keywords": params }
 
         headers = {
             'cache-control': "no-cache",
             'user-agent': random.choice(settings.USER_AGENTS)['User-Agent']
         }
-
         r = requests.request("GET", url, headers=headers, params=querystring)
         print r.url
     except RequestException as e:
         log("WARNING: Request for {} failed, trying again.".format(url))
-        return
+        return None
         #return make_request(url)  # try request again, recursively
 
     num_requests += 1
