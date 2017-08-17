@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-from scraper.crawler import begin_crawl, fetch_listing, parallel_crawl
+from scraper.crawler import fetch_listing, parallel_crawl
 from product_helper import *
 from collections import namedtuple
 import uuid
@@ -123,7 +123,7 @@ def product_detail(request, uuid, id):
   #user created this product
   if (product.user_id == request.user.id):
     historic = ProductHistoricIndexing.objects.get(id=urlsafe_base64_decode(force_text(id)))
-    keywords = Keywords.objects.filter(product=product).order_by('-indexing')
+    keywords = Keywords.objects.filter(historic=historic).order_by('-indexing')
     indexing_data = calculate_indexing(historic.indexing_rate, len(keywords))
     data =  { 
       'product': product,

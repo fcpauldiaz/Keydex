@@ -12,10 +12,9 @@ def dashboard(request):
 def check_product_indexing(request, uuid):
   product = Product.objects.get(uuid=uuid)
   result = parallel_crawl(product, product.marketplace)
-  print result
   save_product_indexing(result, product)
   return redirect(reverse('products_overview_product',kwargs={'uuid':uuid}))
 
 
 
-#postgres://checkmykeyword:9ZVwy7GVuD8P5iTbUEwRabJh6@sdb-ts-indexer.cjzyjdlft1jm.us-west-2.rds.amazonaws.com:5432/indexer_ts_db
+

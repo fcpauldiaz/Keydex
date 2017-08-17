@@ -3,11 +3,7 @@ import os
 import random
 from datetime import datetime
 from urlparse import urlparse
-
-import eventlet
-requests = eventlet.import_patched('requests.__init__')
-time = eventlet.import_patched('time')
-import redis
+import requests
 
 from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
