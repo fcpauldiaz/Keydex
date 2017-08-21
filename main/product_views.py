@@ -54,9 +54,11 @@ def add_keywords(request, code, asin):
   
   elif request.method == 'POST':
   
-    data = request.POST.get('chips', [])
-    request.session['keywords'] = data
-    return JsonResponse({ 'data': data })
+    data_key = request.POST.get('chips_keywords', [])
+    data_phrase = request.POST.get('chips_phrases')
+    request.session['keywords'] = data_key
+    request.session['phrases'] = data_phrase
+    return JsonResponse({ 'data_key': data_key, 'data_ph': data_phrase })
   
   raise ValueError('Invalid request at add keywords')
   
