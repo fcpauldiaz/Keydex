@@ -59,7 +59,7 @@ class Product(models.Model):
   price = models.CharField(max_length=128)
   primary_img = models.CharField(max_length=2056)
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-  keywords = ArrayField(models.CharField(max_length=100))
+  keywords = ArrayField(models.CharField(max_length=1000))
   reporting_period = models.ForeignKey(ReportingPeriod)
   marketplace = models.ForeignKey(Marketplace)
   reporting_percentage = models.DecimalField(decimal_places=2, max_digits=5)
@@ -90,7 +90,7 @@ class ProductHistoricIndexing(models.Model):
     db_table = 'main_product_historic_indexing'
 
 class Keywords(models.Model):
-  keyword = models.CharField(max_length=250)
+  keyword = models.CharField(max_length=1000)
   indexing = models.BooleanField()
   index_date = models.DateTimeField(auto_now_add=True)
   historic = models.ForeignKey(ProductHistoricIndexing, related_name="historic_keywords", null=True)
