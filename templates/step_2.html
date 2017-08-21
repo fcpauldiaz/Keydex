@@ -36,17 +36,22 @@
   </div>
 </div>
 <div class="row container">
-  <div>
-    <h6 class="main-grey-text center">Keywords</h6>
-  </div>
+  <ul class="tabs">
+    <li class="tab col l3 m6 offset-l3 s13"><a href="#keywords" class="active blue-paypal-text">Keywords</a></li>
+    <li class="tab col l3 m6 s13"><a class="blue-paypal-text" href="#phrases">Phrases</a></li>
+  </ul>
 </div>
   <div class="row center">
   <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
      {% csrf_token %}
-      <div class="card card-keywords">
-        <div class="chips chips-placeholder"></div>
+      <div id="keywords" class="card card-keywords">
+        <div id="div-1" class="chips chips-placeholder"></div>
+      </div>
+      <div id="phrases" class="card card-keywords">
+        <div id="div-2" class="chips chips-placeholder"></div>
       </div>
     <div class="row center">
+
       <div class="col l13 s13">
         <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
         </button>

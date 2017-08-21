@@ -4,11 +4,13 @@ from django.contrib.auth.decorators import login_required
 from scraper.crawler import parallel_crawl, fetch_listing
 from product_helper import save_product_indexing
 
+@login_required
 def dashboard(request):
   products = Product.objects.filter(user=request.user)
   data = { 'products': products }
   return render(request, 'dashboard.html', data)
 
+@login_required
 def check_product_indexing(request, uuid):
   product = Product.objects.get(uuid=uuid)
   result = parallel_crawl(product, product.marketplace)
