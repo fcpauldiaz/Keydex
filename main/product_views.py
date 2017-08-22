@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, reverse
 from forms import AsinForm, ProductSave
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -15,16 +14,25 @@ from django.utils.encoding import force_bytes, force_text
 from scraper.crawler import fetch_listing, parallel_crawl
 from product_helper import *
 from collections import namedtuple
+from django.contrib import messages
 import uuid
 import json
 
-@login_required
+
 def add_product(request):
   if request.method == 'POST':
     form = AsinForm(request.POST)
     if form.is_valid():
       asin = form.cleaned_data['asin']
       code = form.cleaned_data['select_choices'].country_code   
+      find_repeated = Product.objects.filter(user=request.user, asin=asin).first()
+      print find_repeated, 'repeated'
+      if find_repeated != None:
+        messages.error(request, 'Product already added on dashboard')
+        marketplace = Marketplace.objects.all()
+        data = { 'form': form, 'urls': marketplace }
+        return render(request, 'step_1.html', data) 
+
       return redirect('products_add_keywords', asin=asin, code=code)
     marketplace = Marketplace.objects.all()
     data = { 'form': form, 'urls': marketplace }
@@ -45,7 +53,6 @@ def add_keywords(request, code, asin):
     
     if (product == None): #not parseable or not found
       return redirect('products_add_product')
-    print product == None
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     dictionary = marketplace.__dict__
     del dictionary['_state'] #delete object from dictionary to serialize
@@ -55,10 +62,10 @@ def add_keywords(request, code, asin):
   elif request.method == 'POST':
   
     data_key = request.POST.get('chips_keywords', [])
-    data_phrase = request.POST.get('chips_phrases')
+    data_phrase = request.POST.get('chips_phrases', [])
     request.session['keywords'] = data_key
     request.session['phrases'] = data_phrase
-    return JsonResponse({ 'data_key': data_key, 'data_ph': data_phrase })
+    return JsonResponse({ 'data_key': data_key, 'data_phrase': data_phrase})
   
   raise ValueError('Invalid request at add keywords')
   
@@ -68,6 +75,7 @@ def save_product(request):
   try:
     data = {
       'keywords': request.session['keywords'],
+      'phrases': request.session['phrases'],
       'product': request.session['product'],
       'marketplace': request.session['marketplace']
     }
@@ -89,6 +97,9 @@ def save_product(request):
       )
       product_json = json.loads(data['product'])
       keywords = json.loads(data['keywords'])
+      phrases = json.loads(data['phrases'])
+      merged = keywords + phrases
+      print merged
       marketplace = json.loads(data['marketplace'])
       product = Product.objects.create(
         asin= product_json['asin'],
@@ -96,7 +107,7 @@ def save_product(request):
         product_url= product_json['product_url'],
         price= product_json['price'],
         primary_img= product_json['primary_img'],
-        keywords=keywords,
+        keywords=merged,
         reporting_period=reporting_period,
         reporting_percentage=percentage_report,
         user=request.user,

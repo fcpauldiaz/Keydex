@@ -2598,7 +2598,7 @@ nav ul a span.badge {
   position: absolute;
   transform: rotate(-53deg);
   top: 36px;
-  left: -42px; }
+  left: -130px; }
 
 .capa2 {
   position: absolute;
@@ -2612,7 +2612,7 @@ nav ul a span.badge {
   font-size: 14px;
   color: white;
   top: 5px;
-  left: 5px; }
+  left: -86px; }
 
 .container {
   margin: 0 auto;
@@ -3760,7 +3760,7 @@ small {
     .tabs.tabs-transparent .tab a,
     .tabs.tabs-transparent .tab.disabled a,
     .tabs.tabs-transparent .tab.disabled a:hover {
-      color: rgba(255, 255, 255, 0.7); }
+      color: #177FEF; }
     .tabs.tabs-transparent .tab a:hover,
     .tabs.tabs-transparent .tab a.active {
       color: #fff; }
@@ -7085,3 +7085,6 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .card-padding {
   padding-bottom: 10px;
   display: block; }
+
+.error {
+  background-color: red; }

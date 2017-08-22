@@ -4341,7 +4341,7 @@ if (jQuery) {
 	          $target.blur();
 	          return;
 	        }
-        }, 100);
+        }, 20);
       });
 
       // Click on delete icon in chip.
