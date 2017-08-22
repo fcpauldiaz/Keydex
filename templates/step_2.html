@@ -123,13 +123,12 @@ function getCookie(name) {
   }
 });
   $("#chip-button").on("click", function (e) {
-    console.log(e);
     e.preventDefault();
     $('#chip-button').hide();
     $('#loader').show();
     var form = $('#chips-form');
-    var chips = $('#div-1');
-    var chips2 = $('#div-2');
+    var chips = $('#div-1 .chip');
+    var chips2 = $('#div-2 .chip');
     var keywords = [];
     for (i = 0; i < chips.length; i++) {
       var chip = chips[i].innerText;
