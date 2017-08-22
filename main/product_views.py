@@ -26,7 +26,6 @@ def add_product(request):
       asin = form.cleaned_data['asin']
       code = form.cleaned_data['select_choices'].country_code   
       find_repeated = Product.objects.filter(user=request.user, asin=asin).first()
-      print find_repeated, 'repeated'
       if find_repeated != None:
         messages.error(request, 'Product already added on dashboard')
         marketplace = Marketplace.objects.all()
@@ -99,7 +98,6 @@ def save_product(request):
       keywords = json.loads(data['keywords'])
       phrases = json.loads(data['phrases'])
       merged = keywords + phrases
-      print merged
       marketplace = json.loads(data['marketplace'])
       product = Product.objects.create(
         asin= product_json['asin'],
