@@ -15,13 +15,14 @@ def begin_crawl(product, marketplace, keyword, output):
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         log("WARNING: Error in {} found in the extraction.".format(product.asin))
-        sleep(2)
+        sleep(1)
         product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
         returnDictionary[keyword] = product_indexing
     else:    
         item = page
         product_indexing = get_indexing(item)
         returnDictionary[keyword] = product_indexing
+    print returnDictionary
     output.put(returnDictionary)
 
 def parallel_crawl(product, marketplace):
@@ -54,8 +55,8 @@ def fetch_listing(ASIN, marketplace):
     page, html = make_request(ASIN, marketplace.country_host)
     if not page:
         log("WARNING: No page. Retrying")
-        sleep(3)
-        pile.spawn(fetch_listing, ASIN, marketplace)
+        #sleep(3)
+        #fetch_listing(ASIN, marketplace)
     if page == None:
         return None
     item = page

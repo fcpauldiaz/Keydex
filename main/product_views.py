@@ -18,7 +18,6 @@ from django.contrib import messages
 import uuid
 import json
 
-
 def add_product(request):
   if request.method == 'POST':
     form = AsinForm(request.POST)
@@ -32,7 +31,14 @@ def add_product(request):
         data = { 'form': form, 'urls': marketplace }
         return render(request, 'step_1.html', data) 
 
-      return redirect('products_add_keywords', asin=asin, code=code)
+      try:
+        return redirect('products_add_keywords', asin=asin, code=code)
+      except:
+        messages.error(request, 'Invalid ASIN')
+        marketplace = Marketplace.objects.all()
+        data = { 'form': form, 'urls': marketplace }
+        return render(request, 'step_1.html', data) 
+
     marketplace = Marketplace.objects.all()
     data = { 'form': form, 'urls': marketplace }
     return render(request, 'step_1.html', data) 
