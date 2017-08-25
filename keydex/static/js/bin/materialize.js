@@ -4319,7 +4319,7 @@ if (jQuery) {
 			          e.preventDefault();
 			          var n = Number($('#div-2-counter').text());
 	          		$('#div-2-counter').text(n + 1);
-			          self.addChip({tag: $target.val()}, $chips);
+			          self.addChip({tag: $target.val().toLowerCase().replace(/[^\x00-\x7F]/g, "")}, $chips);
 			          $target.val('');
 	          	}
 	          	return;
@@ -4337,7 +4337,7 @@ if (jQuery) {
 	          var n = Number($('#div-1-counter').text());
 	          $('#div-1-counter').text(n + words.length);
 	          for (var i = 0; i < words.length; i++) {
-	          	self.addChip({tag: words[i]}, $chips);
+	          	self.addChip({tag: words[i].toLowerCase().replace(/[^\x00-\x7F]/g, "")}, $chips);
 	          }
 
 	          

@@ -18,6 +18,7 @@ from django.contrib import messages
 import uuid
 import json
 
+@login_required
 def add_product(request):
   if request.method == 'POST':
     form = AsinForm(request.POST)
@@ -57,6 +58,7 @@ def add_keywords(request, code, asin):
     product = fetch_listing(asin, marketplace)
     
     if (product == None): #not parseable or not found
+      print 'Product not found ' + asin
       return redirect('products_add_product')
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     dictionary = marketplace.__dict__

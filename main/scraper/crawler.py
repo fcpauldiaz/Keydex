@@ -58,7 +58,7 @@ def fetch_listing(ASIN, marketplace):
         #sleep(3)
         #fetch_listing(ASIN, marketplace)
     if page == None:
-        return None
+        return amazon_api(ASIN, url, marketplace.country_code)
     item = page
     product_image = get_primary_img(item)
     if not product_image:
