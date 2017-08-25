@@ -48,11 +48,13 @@
    <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
 
       <div id="keywords" class="card card-keywords">
-    <div id="div-1" class="chips chips-placeholder"></div>
+        <div id="div-1" class="chips chips-placeholder overflow-wrap"></div>
       </div>
+      <div style="text-align: left;" id="div-1-text"><span class="disabled-text-text">Keywords </span><span id="div-1-counter" class="disabled-text-text">0</span></div>
       <div id="phrases" class="card card-keywords">
-   <div id="div-2" class="chips chips-placeholder"></div>
+       <div id="div-2" class="chips chips-placeholder overflow-wrap"></div>
       </div>
+      <div style="text-align: left; display: none" id="div-2-text"><span class="disabled-text-text">Phrases </span><span class="disabled-text-text" id="div-2-counter">0</span></div>
       <div class="row center">
    <div class="col l13 s13">
      <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next

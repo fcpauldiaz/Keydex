@@ -1539,6 +1539,14 @@ if (jQuery) {
         }
         
         $tab_status = e.currentTarget.id;
+        if ($tab_status == 'tab2') {
+        	$('#div-1-text').hide();
+        	$('#div-2-text').show();
+        }
+        else {
+        	$('#div-1-text').show();
+        	$('#div-2-text').hide();
+        }
         clicked = true;
         $tabs_width = $this.width();
         $tab_width = Math.max($tabs_width, $this[0].scrollWidth) / $links.length;
@@ -4309,6 +4317,8 @@ if (jQuery) {
         	 if ($tab_status === 'tab2') {
         	 		if (e.which === 0 || e.which === 13 || e.type === 'paste') {
 			          e.preventDefault();
+			          var n = Number($('#div-2-counter').text());
+	          		$('#div-2-counter').text(n + 1);
 			          self.addChip({tag: $target.val()}, $chips);
 			          $target.val('');
 	          	}
@@ -4324,6 +4334,8 @@ if (jQuery) {
 	          }
 	          e.preventDefault();
 	          words = $target.val().trim().split(/\s+/);
+	          var n = Number($('#div-1-counter').text());
+	          $('#div-1-counter').text(n + words.length);
 	          for (var i = 0; i < words.length; i++) {
 	          	self.addChip({tag: words[i]}, $chips);
 	          }

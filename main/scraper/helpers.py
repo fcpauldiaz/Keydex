@@ -14,17 +14,6 @@ num_requests = 0
 
 def get_proxy():
     # choose a proxy server to use for this request, if we need one
-    if not settings.proxies or len(settings.proxies) == 0:
-        return None
-
-    proxy_ip = random.choice(settings.proxies)
-    proxy_url = "socks5://{user}:{passwd}@{ip}:{port}/".format(
-        user=settings.proxy_user,
-        passwd=settings.proxy_pass,
-        ip=proxy_ip,
-        port=settings.proxy_port,
-
-    )
     return {
         "http": "83.149.70.159:13012",
         "https": "83.149.70.159:13012"
