@@ -4323,7 +4323,7 @@ if (jQuery) {
 	            return;
 	          }
 	          e.preventDefault();
-	          words = $target.val().split(' ');
+	          words = $target.val().trim().split(/\s+/);
 	          for (var i = 0; i < words.length; i++) {
 	          	self.addChip({tag: words[i]}, $chips);
 	          }
