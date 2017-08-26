@@ -14,7 +14,7 @@ def begin_crawl(product, marketplace, keyword, output):
     returnDictionary = {}
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
-        log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin), keyword)
+        log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(1)
         product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
         returnDictionary[keyword] = product_indexing

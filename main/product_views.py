@@ -127,9 +127,10 @@ def save_product(request):
         historic_id = save_product_indexing(result, product)
         #delete session variables not longer used
         delete_session(request)
-        return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
+        return JsonResponse({ 'uuid': product.uuid, 'id': urlsafe_base64_encode(force_bytes(historic_id))})
+        #return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
       delete_session(request)
-      return redirect('dashboard')
+      return JsonResponse({'saved': True})
 
     else:
       return render(request, 'step_3.html', { 'form': form })
