@@ -4317,7 +4317,7 @@ if (jQuery) {
         	 if ($tab_status === 'tab2') {
         	 		if (e.which === 0 || e.which === 13 || e.type === 'paste') {
 			          e.preventDefault();
-			          self.addChip({tag: $target.val().toLowerCase().replace(/[^\x00-\x7F]/g, "")}, $chips);
+			          self.addChip({tag: $target.val().toLowerCase().replace(/[^\x00-\x7F]/g, " ")}, $chips);
 			          $target.val('');
 	          	}
 	          	return;
@@ -4333,7 +4333,7 @@ if (jQuery) {
 	          e.preventDefault();
 	          words = $target.val().trim().split(/\s+/);
 	          for (var i = 0; i < words.length; i++) {
-	          	self.addChip({tag: words[i].toLowerCase().replace(/[^\x00-\x7F]/g, "")}, $chips);
+	          	self.addChip({tag: words[i].toLowerCase().replace(/[^\x00-\x7F]/g, " ")}, $chips);
 	          }
 
 	          
