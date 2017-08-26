@@ -4317,8 +4317,6 @@ if (jQuery) {
         	 if ($tab_status === 'tab2') {
         	 		if (e.which === 0 || e.which === 13 || e.type === 'paste') {
 			          e.preventDefault();
-			          var n = Number($('#div-2-counter').text());
-	          		$('#div-2-counter').text(n + 1);
 			          self.addChip({tag: $target.val().toLowerCase().replace(/[^\x00-\x7F]/g, "")}, $chips);
 			          $target.val('');
 	          	}
@@ -4334,8 +4332,6 @@ if (jQuery) {
 	          }
 	          e.preventDefault();
 	          words = $target.val().trim().split(/\s+/);
-	          var n = Number($('#div-1-counter').text());
-	          $('#div-1-counter').text(n + words.length);
 	          for (var i = 0; i < words.length; i++) {
 	          	self.addChip({tag: words[i].toLowerCase().replace(/[^\x00-\x7F]/g, "")}, $chips);
 	          }
@@ -4442,10 +4438,18 @@ if (jQuery) {
       var $renderedChip = self.renderChip(elem);
       var newData = [];
       var oldData = $chips.data('chips');
-      if (oldData.length > 1000) {
+      if (oldData.length > 500) {
       	Materialize.toast('Reached max keywords', 3000)
       	return;
       }
+      if ($tab_status == 'tab2') {
+      	var n = Number($('#div-2-counter').text());
+				$('#div-2-counter').text(n + 1);
+      } else {
+				var n = Number($('#div-1-counter').text());
+				$('#div-1-counter').text(n + 1);
+      }
+			
       for (var i = 0; i < oldData.length; i++) {
         newData.push(oldData[i]);
       }
@@ -4467,6 +4471,13 @@ if (jQuery) {
         if (i !== chipIndex) {
           newData.push(oldData[i]);
         }
+      }
+      if ($tab_status == 'tab2') {
+					var n = Number($('#div-2-counter').text());
+      	$('#div-2-counter').text(n - 1);
+      } else {
+      	 var n = Number($('#div-1-counter').text());
+      	$('#div-1-counter').text(n - 1);
       }
 
       $chips.data('chips', newData);
