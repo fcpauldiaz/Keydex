@@ -14,6 +14,7 @@ from django.template import loader
 from django.contrib import messages
 import uuid
 from user_helper import validate_email #email validation
+from pinax.stripe.actions import customers
 
 from models import Profile, Product
 from tokens import account_activation_token
@@ -105,6 +106,7 @@ def createUser(request):
       user.username = user.username.lower().strip()
       user.save()
       send_confirmation_email(request, user)
+      customers.create(user=user)
       return redirect('account_activation_sent')      
     return render(
       request,

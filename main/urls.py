@@ -79,5 +79,10 @@ urlpatterns = [
     dashboard_views.check_product_indexing,
     name='dashboard_product_indexing'
   ),
+  url(
+    r'^settings',
+    dashboard_views.dashboard_settings,
+    name='dashboard_settings'
+  )
 
 ]
