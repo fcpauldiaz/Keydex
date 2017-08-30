@@ -27,12 +27,21 @@ def check_product_indexing(request, uuid):
 @login_required
 def dashboard_settings(request):
   if request.method == 'GET':
-    form = SettingsForm(initial={'password':'invalidpassword'}, instance=request.user)
+    profile = Profile.objects.get(user_id=request.user)
+    initial_dict = dict()
+    
+    if profile.billing_address != None:
+      initial_dict = { 'billing_address': profile.billing_address }      
+        
     c = Customer.objects.get(user_id=request.user)
     card = Card.objects.filter(customer_id=c.id)
-    data = { 'user': request.user, 'form': form }
+    data = { 'user': request.user }
     if (len(card) > 0):
       data['last4'] = card[0].last4
+      initial_dict['credit_card_name'] = card[0].name
+
+    form = SettingsForm(initial=initial_dict, instance=request.user)
+    data['form'] = form 
     return render(request, 'settings.html', data)
   elif request.method == 'POST':
     form = SettingsForm(request.POST, instance=request.user)
