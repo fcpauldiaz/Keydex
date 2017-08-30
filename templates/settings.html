@@ -26,7 +26,7 @@
       <label for="card-element" style="top: 0px;">
         Credit or debit card
       </label><br>
-      {% if last4 == '' %}
+      {% if last4 and last4.strip %}
       <div id="card-element">
         <!-- a Stripe Element will be inserted here. -->
       </div>
