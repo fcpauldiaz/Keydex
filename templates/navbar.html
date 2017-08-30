@@ -37,7 +37,7 @@
         </a>
       </li>
       <li style="cursor: pointer;">
-        <a href="#">  <h5 class="main-grey-text inline">Settings</h5>
+        <a href="{% url 'dashboard_settings' %}">  <h5 class="main-grey-text inline">Settings</h5>
           <i class="material-icons" style="display: inline-block;">settings
           </i>
         </a>
@@ -66,7 +66,7 @@
     </ul>
     {% if request.user.is_authenticated %}
     <div class="row col offset-s8 navbar-icons">
-      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="#"><i class="material-icons">settings</i></a>
+      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="{% url 'dashboard_settings' %}"><i class="material-icons">settings</i></a>
       <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Logout"href="{% url 'users_logout_user' %}"><i class="material-icons">input</i></a>
     </div>
     {% endif %}

@@ -10,21 +10,27 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
-import dj_database_url
+import environ
+root = environ.Path(__file__)
+env = environ.Env(DEBUG=(bool, False),) # set default values and casting
+environ.Env.read_env() # reading .env file
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-ALLOWED_HOSTS = ['http://dev.checkmykeywords.com', 'http://checkmykeywords.com', 'http://127.0.0.1:8000/']
+SITE_ID = 1
 
+PINAX_STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC')
+PINAX_STRIPE_SECRET_KEY = env('STRIPE_PRIVATE')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "6d#e=dl023mfd88^!2e73je+3nw3$$w5qh5b)=fg0#*13x5$@v"
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env('DEBUG') # False if not in os.environ
 
 # Application definition
 
@@ -41,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'sass_processor',
     'main',
-    'anymail'
+    'anymail',
+    'pinax.stripe'
 ]
 
 MIDDLEWARE = [
@@ -80,28 +87,16 @@ WSGI_APPLICATION = 'keydex.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-if "DATABASE_URL" in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',  
-            'NAME': os.environ['DB_NAME'],                      
-            'USER': os.environ['DB_USER'],
-            'PASSWORD': os.environ['DB_PASSWORD'],
-            'HOST': os.environ['DB_HOST'],
-            'PORT': '5432',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',  
+        'NAME':  env('DB_NAME'), 
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT')
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',  
-            'NAME': 'indexer',                      
-            'USER': 'checkmykeywords',
-            'PASSWORD': '9ZVwy7GVuD8P5iTbUEwRabJh6',
-            'HOST': 'indexer.cjzyjdlft1jm.us-west-2.rds.amazonaws.com',
-            'PORT': '5432',
-        }
-    }
+}
 
 
 PASSWORD_HASHERS = (
@@ -172,42 +167,3 @@ DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
 
 LOGIN_URL='/user/login'
 LOGIN_REDIRECT_URL='/user/login'
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-#CSRF_COOKIE_HTTPONLY = True
-X_FRAME_OPTIONS = 'DENY'
-SECURE_CONTENT_TYPE_NOSNIFF = True
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'keydex.log',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'main': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-    }
-}

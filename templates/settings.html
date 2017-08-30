@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %} Settings {% endblock %}
+{% block content %}
+  <div class="row container">
+    <h2>Settings</h2>
+  </div>
+  <div class="row container">
+    <form class="" method="post" id="payment-form" data-settings-url="{% url 'dashboard_settings' %}" data-last-4="{{last4}}">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="input-field col s13 l6">
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% for error in field.errors %}
+          <span style="color: red; postition: absolute; top: 0px;">{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% if field.html_name == 'credit_card_name' %}
+      <div class="col s13 l6 m6 offset-l6">
+        <input type="checkbox" id="test6" onclick="userData();"/>
+        <label for="test6">Use Account Name</label>
+      </div>
+     {% endif %}
+    {% endfor %}
+    <div class="input-field col s13 l12">
+      <label for="card-element" style="top: 0px;">
+        Credit or debit card
+      </label><br>
+      {% if last4 == '' %}
+      <div id="card-element">
+        <!-- a Stripe Element will be inserted here. -->
+      </div>
+      {% else %}
+      <div id="card-element" style="display: none;">
+        <!-- a Stripe Element will be inserted here. -->
+      </div>
+        
+        <input class="card_hide"disabled type="text" value="•••• •••• •••• {{last4}}">
+        <span class="blue-paypal-text edit_cc card_hide" onclick="revealStripe()">Edit Credit Card</span>
+        
+      </div>
+      {% endif %}
+      <div id="card-errors" class="error-stripe" role="alert"></div>
+    </div>
+    <div class="row">
+      <div class="col l12 s12 m12 center">
+        <button id="save" class="btn waves-effect waves-light blue-paypal btn-block margin-top" type="submit" name="action">Save
+        </button>
+      </div>
+      <div class="col l12" style="text-align: center">
+        <div id="loader" class="preloader-wrapper small active settings-loader" style="display: none;">
+         <div class="spinner-layer spinner-blue-only">
+           <div class="circle-clipper left">
+             <div class="circle"></div>
+           </div><div class="gap-patch">
+             <div class="circle"></div>
+           </div><div class="circle-clipper right">
+             <div class="circle"></div>
+           </div>
+         </div>
+      </div>
+      </div>
+    </div>
+  </form>
+  </div>
+{% endblock %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/stripe.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{% static 'js/stripe.js' %}"></script>
+<script src="{% static 'js/settings.js' %}"></script>
+<script>
+
+
+</script>
+{% endblock %}
