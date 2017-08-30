@@ -27,17 +27,15 @@
         Credit or debit card
       </label><br>
       {% if last4 and last4.strip %}
-      <div id="card-element">
-        <!-- a Stripe Element will be inserted here. -->
-      </div>
-      {% else %}
-      <div id="card-element" style="display: none;">
-        <!-- a Stripe Element will be inserted here. -->
-      </div>
-        
+        <div id="card-element" style="display: none;">
+          <!-- a Stripe Element will be inserted here. -->
+        </div>
         <input class="card_hide"disabled type="text" value="•••• •••• •••• {{last4}}">
         <span class="blue-paypal-text edit_cc card_hide" onclick="revealStripe()">Edit Credit Card</span>
-        
+      </div>
+      {% else %}
+      <div id="card-element">
+        <!-- a Stripe Element will be inserted here. -->
       </div>
       {% endif %}
       <div id="card-errors" class="error-stripe" role="alert"></div>
