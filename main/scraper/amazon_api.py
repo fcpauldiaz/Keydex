@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from amazon.api import AmazonAPI
 from models import ProductRecord
 from datetime import datetime

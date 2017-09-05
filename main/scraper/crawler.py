@@ -16,10 +16,11 @@ def begin_crawl(product, marketplace, keyword, retries, output):
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(2)
-        if (retries < 3):
+        if (retries < 2):
             return begin_crawl(product, marketplace, keyword, retries + 1, output)
-        product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
-        returnDictionary[keyword] = product_indexing
+        returnDictionary[keyword] = 'Information not available'
+        #product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
+        #returnDictionary[keyword] = product_indexing
     else:    
         item = page
         product_indexing = get_indexing(item)

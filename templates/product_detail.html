@@ -35,10 +35,12 @@
           {% for keyword in keywords %}
           <tr>
             <td>
-              {% if keyword.indexing == True %}
+              {% if keyword.indexing == 'True' %}
                 <div class="green circle table-circle"></div>
-              {% else %}
+              {% elif keyword.indexing == 'False' %}
                 <div class="red circle table-circle"></div>
+              {% else %}
+                <div class="grey circle table-circle"></div>
               {% endif %}
               {{ forloop.counter }}
             </td>

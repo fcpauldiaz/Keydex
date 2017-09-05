@@ -91,10 +91,9 @@ class ProductHistoricIndexing(models.Model):
 
 class Keywords(models.Model):
   keyword = models.CharField(max_length=1000)
-  indexing = models.BooleanField()
+  indexing = models.CharField(max_length=30)
   index_date = models.DateTimeField(auto_now_add=True)
   historic = models.ForeignKey(ProductHistoricIndexing, related_name="historic_keywords", null=True)
-
 
 class Subscription(models.Model):
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
