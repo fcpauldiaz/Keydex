@@ -28,10 +28,11 @@ def begin_crawl(product, marketplace, keyword, retries, output):
     output.put(returnDictionary)
 
 def parallel_crawl(product, marketplace):
+    keywords_and_phrases = product.keywords + product.phrases
     # Define an output queue
     output_queue = mp.Queue()
     # Setup a list of processes that we want to run
-    processes = [mp.Process(target=begin_crawl, args=(product, marketplace, keyword, 0, output_queue)) for keyword in product.keywords]
+    processes = [mp.Process(target=begin_crawl, args=(product, marketplace, keyword, 0, output_queue)) for keyword in keywords_and_phrases]
     #intial_time = time()
     # Run processes
     for p in processes:

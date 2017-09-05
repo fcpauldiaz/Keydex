@@ -106,7 +106,6 @@ def createUser(request):
       user.username = user.username.lower().strip()
       user.save()
       send_confirmation_email(request, user)
-      customers.create(user=user)
       return redirect('account_activation_sent')      
     return render(
       request,
@@ -250,6 +249,7 @@ def activate(request, uidb64, token):
   if user is not None and account_activation_token.check_token(user, token):
     user.is_active = True
     user.profile.account_confirmed = True
+    customers.create(user=user)
     user.save()
     login(request, user)
     return redirect('products_add_product')

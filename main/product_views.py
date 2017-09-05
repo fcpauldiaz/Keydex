@@ -105,7 +105,6 @@ def save_product(request):
       product_json = json.loads(data['product'])
       keywords = json.loads(data['keywords'])
       phrases = json.loads(data['phrases'])
-      merged = keywords + phrases
       marketplace = json.loads(data['marketplace'])
       product = Product.objects.create(
         asin= product_json['asin'],
@@ -113,7 +112,8 @@ def save_product(request):
         product_url= product_json['product_url'],
         price= product_json['price'],
         primary_img= product_json['primary_img'],
-        keywords=merged,
+        keywords=keywords,
+        phrases=phrases,
         reporting_period=reporting_period,
         reporting_percentage=percentage_report,
         user=request.user,
