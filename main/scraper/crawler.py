@@ -14,7 +14,7 @@ def begin_crawl(product, marketplace, keyword, retries, output):
     returnDictionary = {}
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
-        log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
+        #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(2)
         if (retries < 3):
             return begin_crawl(product, marketplace, keyword, retries + 1, output)
