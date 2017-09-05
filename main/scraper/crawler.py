@@ -24,7 +24,7 @@ def begin_crawl(product, marketplace, keyword, retries, output):
         item = page
         product_indexing = get_indexing(item)
         returnDictionary[keyword] = product_indexing
-    print returnDictionary
+    #print returnDictionary
     output.put(returnDictionary)
 
 def parallel_crawl(product, marketplace):
