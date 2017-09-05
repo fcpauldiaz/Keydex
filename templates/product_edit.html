@@ -43,49 +43,69 @@
   </div>
 </div>
 <div class="row container">
-  <div>
-    <h6 class="main-grey-text center">Keywords</h6>
+
+  <ul class="tabs">
+    <li class="tab col l3 m6 offset-l3 s13"><a href="#keywords" id="tab1" class="active blue-paypal-text">Keywords</a></li>
+    <li class="tab col l3 m6 s13"><a id="tab2"  class="blue-paypal-text" href="#phrases">Phrases</a></li>
+  </ul>
+
+</div>
+  <div style="display: none">
+  {% for keyword in product.keywords %}
+  <p class="data-keywords">{{ keyword }}</p>
+  {% endfor %}
+  {% for phrase in product.phrases %}
+  <p class="data-phrases">{{ phrase }}</p>
+  {% endfor %}
+</div>
+<div class="row center">
+  {% csrf_token %}
+  <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_edit_product' product.uuid %}" method="post">
+
+      <div id="keywords" class="card card-keywords">
+        <div id="div-1" class="chips chips-placeholder overflow-wrap"></div>
+      </div>
+      <div style="text-align: left;" id="div-1-text"><span class="disabled-text-text">Keywords </span><span id="div-1-counter" class="disabled-text-text">0</span></div>
+      <div id="phrases" class="card card-keywords">
+       <div id="div-2" class="chips chips-placeholder overflow-wrap"></div>
+      </div>
+      <div style="text-align: left; display: none" id="div-2-text"><span class="disabled-text-text">Phrases </span><span class="disabled-text-text" id="div-2-counter">0</span></div>
+  <div class="row center">
+   <div class="col l13 s13">
+     <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
+     </button>
+   </div>
+   <div id="loader" class="preloader-wrapper small active" style="display: none">
+   <div class="spinner-layer spinner-blue-only">
+     <div class="circle-clipper left">
+       <div class="circle"></div>
+     </div><div class="gap-patch">
+       <div class="circle"></div>
+     </div><div class="circle-clipper right">
+       <div class="circle"></div>
+     </div>
+   </div>
+      </div>
+      </div>
+   {% if user_form.errors %}
+     {% for field in user_form %}
+         {% for error in field.errors %}
+             <div class="alert alert-danger">
+                 {{field.name}}
+                 <strong>{{ error|escape }}</strong>
+             </div>
+         {% endfor %}
+     {% endfor %}
+     {% for error in user_form.non_field_errors %}
+         <div class="alert alert-danger">
+             {{field.name}}
+             <strong>{{ error|escape }}</strong>
+         </div>
+     {% endfor %}
+   {% endif %}
+   </form>
   </div>
 </div>
-  <div class="row center">
-  <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_edit_product' product.uuid%}" method="post">
-     {% csrf_token %}
-      <div class="card card-keywords">
-        <div class="chips chips-placeholder">
-        </div>
-      </div>
-      <div style="display: none">
-      {% for keyword in product.keywords %}
-      <p class="data-chips">{{ keyword }}</p>
-      {% endfor %}
-      </div>
-    <div class="row center">
-      <div class="col l13 s13">
-       <a href="{% url 'products_overview_product' product.uuid %}" class="btn waves-effect waves-light green btn-block">Back
-        </a>
-        <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Update
-        </button>
-      </div>
-    </div>
-      {% if user_form.errors %}
-        {% for field in user_form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    {{field.name}}
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in user_form.non_field_errors %}
-            <div class="alert alert-danger">
-                {{field.name}}
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-      {% endif %}
-    </form>
-    </div>
-  </div>
 {% endblock %}
 {% load static %}
 {% block css %}
@@ -112,28 +132,56 @@ function getCookie(name) {
 }
 </script>
 <script>
+  $('#chips-form').on('keyup keypress', function(e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) { 
+      e.preventDefault();
+      return false;
+    }
+  });
   $("#chip-button").on("click", function (e) {
     e.preventDefault();
+    $('#chip-button').hide();
+    $('#loader').show();
     var form = $('#chips-form');
-    var chips = $('.chip');
+    var chips = $('#div-1 .chip');
+    var chips2 = $('#div-2 .chip');
     var keywords = [];
     for (i = 0; i < chips.length; i++) {
       var chip = chips[i].innerText;
       var input = chip.slice(0, chip.length-5);
-      keywords.push(input);
+      if (input !== '') {
+        keywords.push(input);
+      }
+    }
+    var phrases = [];
+    for (i = 0; i < chips2.length; i++) {
+      var chip = chips2[i].innerText;
+      var input = chip.slice(0, chip.length-5);
+      if (input !== '') {
+        phrases.push(input);
+      }
     }
     $.ajax({
       url: form.attr("data-keywords-url"),
       type : "POST",
       data: { 
         csrfmiddlewaretoken : getCookie('csrftoken'), 
-        chips: JSON.stringify(keywords) },
-      dataType: 'json',
+        chips_keywords: JSON.stringify(keywords),
+        chips_phrases: JSON.stringify(phrases) 
+      },
       success: function (response) {
         if (response.data === true) {
-           Materialize.toast('Product updated', 3000);
+          $('#chip-button').show();
+          $('#loader').hide();
+          Materialize.toast('Product updated', 3000);
         }
 
+      },
+      error: function (response) {
+        $('#chip-button').show();
+        $('#loader').hide();
+        Materialize.toast('Server error', 3000);
       }
     });
   });

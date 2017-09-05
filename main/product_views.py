@@ -173,11 +173,16 @@ def edit_product(request, uuid):
       return render(request, 'product_edit.html', data)
     return redirect('dashboard')
   elif request.method == 'POST':
-    chips = request.POST.get('chips', [])
-    request.session['keywords_temp'] = chips
-    chips = json.loads(request.session['keywords_temp'])
+    keywords_array = request.POST.get('chips_keywords', [])
+    phrases_array = request.POST.get('chips_phrases', [])
+    request.session['keywords_temp'] = keywords_array
+    request.session['phrases_temp'] = phrases_array
+    keywords = json.loads(request.session['keywords_temp'])
+    phrases = json.loads(request.session['phrases_temp'])
     del request.session['keywords_temp']
-    product.keywords = chips
+    del request.session['phrases_temp']
+    product.keywords = keywords
+    product.phrases = phrases
     product.save()
     message = 'Product updated'
     data = { 'product': product }
