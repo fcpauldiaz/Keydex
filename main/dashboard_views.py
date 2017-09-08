@@ -1,13 +1,15 @@
+from __future__ import absolute_import, unicode_literals
 from django.shortcuts import render, redirect, reverse
-from models import Profile, Product, Keywords
+from main.models import Profile, Product, Keywords
 from django.contrib.auth.decorators import login_required
-from scraper.crawler import parallel_crawl, fetch_listing
-from product_helper import save_product_indexing
-from forms import SettingsForm
+from main.scraper.crawler import parallel_crawl, fetch_listing, queue_crawl
+from main.product_helper import save_product_indexing
+from main.forms import SettingsForm
 from django.http import JsonResponse
 from pinax.stripe.actions.sources import create_card, update_card
 from pinax.stripe.models import Customer, Card
 from pinax.stripe.actions import subscriptions
+from celery.result import AsyncResult
 import json
 
 @login_required
@@ -19,8 +21,8 @@ def dashboard(request):
 @login_required
 def check_product_indexing(request, uuid):
   product = Product.objects.get(uuid=uuid)
-  result = parallel_crawl(product, product.marketplace)
-  save_product_indexing(result, product)
+  job = queue_crawl(product, product.marketplace)
+  request.session['job_ids'] = job.id
   return redirect(reverse('products_overview_product',kwargs={'uuid':uuid}))
 
 
@@ -63,3 +65,24 @@ def dashboard_settings(request):
     return JsonResponse({'data': 'not_valid'})
   raise ValueError('Invalid request type at dashboad settings')
 
+def poll_state(request):
+    """ A view to report the progress to the user """
+    data = 'Fail'
+    if request.is_ajax():
+        if 'task_id' in request.POST.keys() and request.POST['task_id']:
+            task_id = request.POST['task_id']
+            task = AsyncResult(task_id)
+            data = task.result or task.state
+        else:
+            data = 'No task_id in the request'
+    else:
+        data = 'This is not an ajax request'
+    if data == None:
+      return JsonResponse({'finish': True}, safe=False)
+    print type(data), 'type'
+    if isinstance(data, dict):
+      data = json.dumps(data)
+
+    print str(data), 'data'
+
+    return JsonResponse(data, safe=False)

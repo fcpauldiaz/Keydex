@@ -61,12 +61,17 @@
       </div>
   </div>
   <div class="row">
-   <div class="col l4 m6 s13">
+    <div class="col l4 m6 s13">
       <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light green btn-block">Check Now</a>
     </div>
   </div>
-    <!-- Modal Structure -->
-  <div id="modal1" class="modal container">
+  <div class="row">
+    <div class="col l2 m1 s1 ">
+      <div id="progress" class="progress_bar center" style="display: none"></div>
+    </div>
+  </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal container" data-poll-url="{% url 'poll_state'%}">
     <div class="modal-content">
       <h4>Delete Product</h4>
       <p>All keywords and associated indexing information will be deleted</p>
@@ -81,15 +86,101 @@
     </div>
   </div>
 </div>
+<ul>
+{% for job in jobs %}
+<li style='display: none'>{{job}}</li>
+{% endfor %}
+</ul>
 {% endblock %}
+{% load static %}
 {% block js %}
 <script>
- $(document).ready(function(){
+ $(document).ready(function() {
     $('.modal').modal();
     $("#delete").on("click", function (e) {
       $("#delete-hide").hide();
       $('#loader').show();
     });
   });
+</script>
+<script src="{% static 'js/progressbar.min.js' %}"></script>
+<script>
+function initProgress() {
+  var container = document.getElementById('progress');
+  var bar = new ProgressBar.Circle(container, {
+    color: '#aaa',
+    // This has to be the same size as the maximum width to
+    // prevent clipping
+    strokeWidth: 5,
+    trailWidth: 1,
+    easing: 'easeInOut',
+    duration: 0,
+    text: {
+      autoStyleContainer: false
+    },
+    from: { color: '#e51c23', width: 1 },
+    to: { color: '#177FEF', width: 5 },
+    // Set default step function for all animate calls
+    step: function(state, circle) {
+      circle.path.setAttribute('stroke', state.color);
+      circle.path.setAttribute('stroke-width', state.width);
+
+      var value = Math.round(circle.value() * 100);
+      if (value === 0) {
+        circle.setText('');
+      } else {
+        circle.setText(value);
+      }
+
+    }
+  });
+  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+  bar.text.style.fontSize = '2rem';
+  return bar;
+}
+</script>
+<script>
+  var poll_xhr;
+  var willstop = 0;
+  (function() {
+    var bar = initProgress();
+    var poll = function() {
+      var json_dump = "{{ jobs | safe }}";
+      var format_v1 = ((json_dump.replace(/u'(?=[^:]+')/g, "\"")));
+      var format_v2 = (format_v1.replace(/'/g, "\""))
+      var jobs_array = JSON.parse(format_v2);
+      var task_id = jobs_array[0];
+      form = $('#modal1');
+      if (task_id === undefined) {
+        willstop = 1;
+      }
+      if (task_id !== undefined) {
+        $('#progress').show()
+        poll_xhr = $.ajax({
+          url: form.attr("data-poll-url"),
+          type: 'POST',
+          data: {
+              task_id: task_id,
+              csrfmiddlewaretoken: "{{csrf_token}}",
+          },
+          success: function(result) {
+          var result = JSON.parse(result);
+          if (result.process_percent === null || result.process_percent === undefined) {
+              willstop = 1;
+              $('#progress').hide();
+           } else {
+            bar.set(result.process_percent);
+           };
+          }
+        });
+      };
+    }
+    var refreshIntervalId = setInterval(function() {
+      poll();
+      if (willstop == 1){
+        clearInterval(refreshIntervalId);
+      }
+    }, 500);
+  })();
 </script>
 {% endblock %}

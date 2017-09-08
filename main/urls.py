@@ -83,6 +83,10 @@ urlpatterns = [
     r'^settings',
     dashboard_views.dashboard_settings,
     name='dashboard_settings'
-  )
-
+  ),
+  url(
+    r'^poll_state',
+    dashboard_views.poll_state,
+    name='poll_state'
+  ),
 ]
