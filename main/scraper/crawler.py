@@ -13,9 +13,9 @@ import multiprocessing as mp
 
 crawl_time = datetime.datetime.now()
 
-def begin_crawl(product, marketplace, keyword, retries):
+def begin_crawl(product, marketplace, keyword, retries, output):
     returnDictionary = {}
-    page, html = make_request(asin=product['asin'], host=marketplace['country_host'], keyword=keyword)
+    page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(2)
@@ -28,14 +28,14 @@ def begin_crawl(product, marketplace, keyword, retries):
         item = page
         product_indexing = get_indexing(item)
         returnDictionary[keyword] = product_indexing
-    return returnDictionary
-    #output.put(returnDictionary)
+    #return returnDictionary
+    output.put(returnDictionary)
 
 def queue_crawl(product, marketplace):
     product_ser = serializers.serialize('json', [ product])
     marketplace_ser = serializers.serialize('json', [ marketplace ])
     keywords_and_phrases = product.keywords + product.phrases
-    job = index_data.delay(product_ser, marketplace_ser, keywords_and_phrases, 0)
+    job = index_data.delay(product.asin, marketplace.country_host, keywords_and_phrases, 0)
     return job
 
 def parallel_crawl(product, marketplace):

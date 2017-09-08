@@ -5,13 +5,13 @@ from main.scraper.extractors import get_title, get_url, get_price, get_primary_i
 from time import sleep
 
 @shared_task
-def index_data(product, marketplace, keywords_and_phrases, retries):
+def index_data(asin, country_host, keywords_and_phrases, retries):
   returnDictionary = {}
   total = float(len(keywords_and_phrases))
   for index, keyword in enumerate(keywords_and_phrases):
     process_percent = float(index)/total
     current_task.update_state(state='PROGRESS', meta={ 'process_percent': process_percent })
-    page, html = helpers.make_request(asin=product[1], host=marketplace[2], keyword=keyword)
+    page, html = helpers.make_request(asin=asin, host=country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(2)
