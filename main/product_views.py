@@ -156,12 +156,19 @@ def product_detail(request, uuid, id):
 
 @login_required
 def product_overview(request, uuid):
+  try:
+    jobs = request.session['job_ids']
+    del request.session['job_ids']
+    jobs = jobs.split(',')
+  except:
+    jobs  = []
+    pass
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
     historic = ProductHistoricIndexing.objects.filter(product=product)
-    data = { 'data': historic, 'product': product }
+    data = { 'data': historic, 'product': product, 'jobs': jobs }
     return render(request, 'product_overview.html', data)
 
 @login_required

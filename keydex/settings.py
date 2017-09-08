@@ -8,9 +8,11 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
+from __future__ import absolute_import, unicode_literals
 import os
 import environ
+
+
 root = environ.Path(__file__)
 env = environ.Env(DEBUG=(bool, False),) # set default values and casting
 environ.Env.read_env() # reading .env file
@@ -48,7 +50,8 @@ INSTALLED_APPS = [
     'sass_processor',
     'main',
     'anymail',
-    'pinax.stripe'
+    'pinax.stripe',
+    'celery'
 ]
 
 MIDDLEWARE = [
@@ -167,3 +170,11 @@ DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
 
 LOGIN_URL='/user/login'
 LOGIN_REDIRECT_URL='/user/login'
+
+CELERY_BROKER_URL = env('BROKER_URL')
+CELERY_RESULT_BACKEND = env('REDIS_URL')
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json', 'pickle']
+#CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
+CELERY_TASK_SERIALIZER = 'json'
