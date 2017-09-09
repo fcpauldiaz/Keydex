@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 from celery import shared_task, current_task, group
 from main.scraper import helpers   #make_request
 from main.scraper.extractors import get_title, get_url, get_price, get_primary_img, get_indexing
+from main.scraper.amazon_api import amazon_product
 from time import sleep
 
 @shared_task
