@@ -9,8 +9,9 @@ from django.http import JsonResponse
 from pinax.stripe.actions.sources import create_card, update_card
 from pinax.stripe.models import Customer, Card
 from pinax.stripe.actions import subscriptions
-from celery.result import AsyncResult
+from celery.result import AsyncResult, ResultSet, GroupResult
 import json
+from keydex.celery_app import app
 
 @login_required
 def dashboard(request):
@@ -21,8 +22,9 @@ def dashboard(request):
 @login_required
 def check_product_indexing(request, uuid):
   product = Product.objects.get(uuid=uuid)
-  job = queue_crawl(product, product.marketplace)
-  request.session['job_ids'] = job.id
+  job = queue_crawl(product, product.marketplace)  
+  request.session['job_total_count'] = len(job.results)
+  request.session['job_id'] = job.id
   return redirect(reverse('products_overview_product',kwargs={'uuid':uuid}))
 
 
@@ -71,18 +73,22 @@ def poll_state(request):
     if request.is_ajax():
         if 'task_id' in request.POST.keys() and request.POST['task_id']:
             task_id = request.POST['task_id']
-            task = AsyncResult(task_id)
-            data = task.result or task.state
+            task_total = request.POST['task_total']
+            task = GroupResult.restore(task_id, app=app)
+            progress = task.completed_count()/float(task_total)
+            data = {}
+            if progress >= 1.0:
+              progress = None
+              result = task.get()
+              print result
+            data['process_percent'] = progress 
         else:
             data = 'No task_id in the request'
     else:
         data = 'This is not an ajax request'
     if data == None:
       return JsonResponse({'finish': True}, safe=False)
-    print type(data), 'type'
+    
     if isinstance(data, dict):
       data = json.dumps(data)
-
-    print str(data), 'data'
-
     return JsonResponse(data, safe=False)

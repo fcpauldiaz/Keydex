@@ -7,7 +7,7 @@ from main.scraper.extractors import get_title, get_url, get_price, get_primary_i
 from main.scraper.amazon_api import amazon_api, amazon_product
 from django.core import serializers
 from time import sleep, time
-from ..tasks import index_data
+from ..tasks import index_data, paralel_data
 import json
 import multiprocessing as mp
 
@@ -35,7 +35,7 @@ def queue_crawl(product, marketplace):
     product_ser = serializers.serialize('json', [ product])
     marketplace_ser = serializers.serialize('json', [ marketplace ])
     keywords_and_phrases = product.keywords + product.phrases
-    job = index_data.delay(product.asin, marketplace.country_host, keywords_and_phrases, 0)
+    job = paralel_data(product.asin, marketplace.country_host, keywords_and_phrases, 0)
     return job
 
 def parallel_crawl(product, marketplace):
@@ -43,7 +43,7 @@ def parallel_crawl(product, marketplace):
     # Define an output queue
     output_queue = mp.Queue()
     # Setup a list of processes that we want to run
-    processes = [mp.Process(target=begin_crawl, args=(product, marketplace, keyword, 0, status, len(keywords_and_phrases), output_queue)) for index, keyword in enumerate(keywords_and_phrases)]
+    processes = [mp.Process(target=begin_crawl, args=(product, marketplace, keyword, 0, output_queue)) for keyword in keywords_and_phrases]
     #intial_time = time()
     # Run processes
     for p in processes:

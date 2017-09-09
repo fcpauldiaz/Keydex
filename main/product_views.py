@@ -157,18 +157,20 @@ def product_detail(request, uuid, id):
 @login_required
 def product_overview(request, uuid):
   try:
-    jobs = request.session['job_ids']
-    del request.session['job_ids']
-    jobs = jobs.split(',')
+    job_count = request.session['job_total_count']
+    task_id = request.session['job_id']
+    del request.session['job_total_count']
+    del request.session['job_id']
   except:
-    jobs  = []
+    task_id = None
+    job_count = -1
     pass
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
     historic = ProductHistoricIndexing.objects.filter(product=product)
-    data = { 'data': historic, 'product': product, 'jobs': jobs }
+    data = { 'data': historic, 'product': product, 'job_count': job_count, 'task_id': task_id }
     return render(request, 'product_overview.html', data)
 
 @login_required
