@@ -26,9 +26,8 @@ def index_data(asin, country_host, country_code, keyword, retries):
   #output.put(returnDictionary)
   #return '{} random users created with success!'.format(total)
 
-def paralel_data(asin, country_host, keywords_and_phrases, retries):
-  total = float(len(keywords_and_phrases))
-  tasks = group(index_data.s(asin, country_host, keyword, retries) for keyword in keywords_and_phrases)
+def paralel_data(asin, country_host, country_code, keywords_and_phrases, retries):
+  tasks = group(index_data.s(asin, country_host, country_code, keyword, retries) for keyword in keywords_and_phrases)
   group_task = tasks.apply_async()
   group_task.save()
   return group_task
