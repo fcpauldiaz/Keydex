@@ -86,8 +86,6 @@ def poll_state(request):
             data = 'No task_id in the request'
     else:
         data = 'This is not an ajax request'
-    if data == None:
-      return JsonResponse({'finish': True}, safe=False)
     
     if isinstance(data, dict):
       data = json.dumps(data)

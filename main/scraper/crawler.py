@@ -32,10 +32,8 @@ def begin_crawl(product, marketplace, keyword, retries, output):
     output.put(returnDictionary)
 
 def queue_crawl(product, marketplace):
-    product_ser = serializers.serialize('json', [ product])
-    marketplace_ser = serializers.serialize('json', [ marketplace ])
     keywords_and_phrases = product.keywords + product.phrases
-    job = paralel_data(product.asin, marketplace.country_host, keywords_and_phrases, 0)
+    job = paralel_data(product.asin, marketplace.country_host, marketplace.country_code, keywords_and_phrases, 0)
     return job
 
 def parallel_crawl(product, marketplace):
