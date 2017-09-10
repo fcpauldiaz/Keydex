@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
 import os
+import raven
 import environ
 
 
@@ -51,7 +52,8 @@ INSTALLED_APPS = [
     'main',
     'anymail',
     'pinax.stripe',
-    'celery'
+    'celery',
+    'raven.contrib.django.raven_compat'
 ]
 
 MIDDLEWARE = [
@@ -63,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
 ]
 
 ROOT_URLCONF = 'keydex.urls'
@@ -138,6 +141,12 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+RAVEN_CONFIG = {
+    'dsn': env('SENTRY_URL'),
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
