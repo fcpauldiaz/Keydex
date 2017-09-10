@@ -20,7 +20,7 @@ class Profile(models.Model):
   account_confirmed = models.BooleanField(default=False)
   password_reset_token = models.CharField(max_length=150, null=True)
   password_reset_token_expiration = models.DateTimeField(null=True) 
-
+  billing_address = models.CharField(max_length=120, null=True)
 
 
 class ReportingPeriod(models.Model):
@@ -59,7 +59,8 @@ class Product(models.Model):
   price = models.CharField(max_length=128)
   primary_img = models.CharField(max_length=2056)
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-  keywords = ArrayField(models.CharField(max_length=1000))
+  keywords = ArrayField(models.CharField(max_length=1000), null=True)
+  phrases = ArrayField(models.CharField(max_length=1000), null=True)
   reporting_period = models.ForeignKey(ReportingPeriod)
   marketplace = models.ForeignKey(Marketplace)
   reporting_percentage = models.DecimalField(decimal_places=2, max_digits=5)
@@ -90,10 +91,9 @@ class ProductHistoricIndexing(models.Model):
 
 class Keywords(models.Model):
   keyword = models.CharField(max_length=1000)
-  indexing = models.BooleanField()
+  indexing = models.CharField(max_length=30)
   index_date = models.DateTimeField(auto_now_add=True)
   historic = models.ForeignKey(ProductHistoricIndexing, related_name="historic_keywords", null=True)
-
 
 class Subscription(models.Model):
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)

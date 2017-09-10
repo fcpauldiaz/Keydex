@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect, reverse
 from forms import AsinForm, ProductSave
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -15,6 +14,7 @@ from django.utils.encoding import force_bytes, force_text
 from scraper.crawler import fetch_listing, parallel_crawl
 from product_helper import *
 from collections import namedtuple
+from django.contrib import messages
 import uuid
 import json
 
@@ -25,7 +25,21 @@ def add_product(request):
     if form.is_valid():
       asin = form.cleaned_data['asin']
       code = form.cleaned_data['select_choices'].country_code   
-      return redirect('products_add_keywords', asin=asin, code=code)
+      find_repeated = Product.objects.filter(user=request.user, asin=asin).first()
+      if find_repeated != None:
+        messages.error(request, 'Product already added on dashboard')
+        marketplace = Marketplace.objects.all()
+        data = { 'form': form, 'urls': marketplace }
+        return render(request, 'step_1.html', data) 
+
+      try:
+        return redirect('products_add_keywords', asin=asin, code=code)
+      except:
+        messages.error(request, 'Invalid ASIN')
+        marketplace = Marketplace.objects.all()
+        data = { 'form': form, 'urls': marketplace }
+        return render(request, 'step_1.html', data) 
+
     marketplace = Marketplace.objects.all()
     data = { 'form': form, 'urls': marketplace }
     return render(request, 'step_1.html', data) 
@@ -44,8 +58,8 @@ def add_keywords(request, code, asin):
     product = fetch_listing(asin, marketplace)
     
     if (product == None): #not parseable or not found
+      print 'Product not found ' + asin
       return redirect('products_add_product')
-    print product == None
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     dictionary = marketplace.__dict__
     del dictionary['_state'] #delete object from dictionary to serialize
@@ -54,9 +68,11 @@ def add_keywords(request, code, asin):
   
   elif request.method == 'POST':
   
-    data = request.POST.get('chips', [])
-    request.session['keywords'] = data
-    return JsonResponse({ 'data': data })
+    data_key = request.POST.get('chips_keywords', [])
+    data_phrase = request.POST.get('chips_phrases', [])
+    request.session['keywords'] = data_key
+    request.session['phrases'] = data_phrase
+    return JsonResponse({ 'data_key': data_key, 'data_phrase': data_phrase})
   
   raise ValueError('Invalid request at add keywords')
   
@@ -66,6 +82,7 @@ def save_product(request):
   try:
     data = {
       'keywords': request.session['keywords'],
+      'phrases': request.session['phrases'],
       'product': request.session['product'],
       'marketplace': request.session['marketplace']
     }
@@ -87,6 +104,7 @@ def save_product(request):
       )
       product_json = json.loads(data['product'])
       keywords = json.loads(data['keywords'])
+      phrases = json.loads(data['phrases'])
       marketplace = json.loads(data['marketplace'])
       product = Product.objects.create(
         asin= product_json['asin'],
@@ -95,6 +113,7 @@ def save_product(request):
         price= product_json['price'],
         primary_img= product_json['primary_img'],
         keywords=keywords,
+        phrases=phrases,
         reporting_period=reporting_period,
         reporting_percentage=percentage_report,
         user=request.user,
@@ -108,9 +127,10 @@ def save_product(request):
         historic_id = save_product_indexing(result, product)
         #delete session variables not longer used
         delete_session(request)
-        return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
+        return JsonResponse({ 'uuid': product.uuid, 'id': urlsafe_base64_encode(force_bytes(historic_id))})
+        #return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
       delete_session(request)
-      return redirect('dashboard')
+      return JsonResponse({'saved': True})
 
     else:
       return render(request, 'step_3.html', { 'form': form })
@@ -136,12 +156,23 @@ def product_detail(request, uuid, id):
 
 @login_required
 def product_overview(request, uuid):
+  try:
+    job_count = request.session['job_total_count']
+    task_id = request.session['job_id']
+    del request.session['job_total_count']
+    del request.session['job_id']
+    if request.session.get('saved') != None:
+      del request.session['saved']
+  except:
+    task_id = None
+    job_count = -1
+    pass
   #check if user has permission to see this prodcut
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
     historic = ProductHistoricIndexing.objects.filter(product=product)
-    data = { 'data': historic, 'product': product }
+    data = { 'data': historic, 'product': product, 'job_count': job_count, 'task_id': task_id }
     return render(request, 'product_overview.html', data)
 
 @login_required
@@ -153,11 +184,16 @@ def edit_product(request, uuid):
       return render(request, 'product_edit.html', data)
     return redirect('dashboard')
   elif request.method == 'POST':
-    chips = request.POST.get('chips', [])
-    request.session['keywords_temp'] = chips
-    chips = json.loads(request.session['keywords_temp'])
+    keywords_array = request.POST.get('chips_keywords', [])
+    phrases_array = request.POST.get('chips_phrases', [])
+    request.session['keywords_temp'] = keywords_array
+    request.session['phrases_temp'] = phrases_array
+    keywords = json.loads(request.session['keywords_temp'])
+    phrases = json.loads(request.session['phrases_temp'])
     del request.session['keywords_temp']
-    product.keywords = chips
+    del request.session['phrases_temp']
+    product.keywords = keywords
+    product.phrases = phrases
     product.save()
     message = 'Product updated'
     data = { 'product': product }

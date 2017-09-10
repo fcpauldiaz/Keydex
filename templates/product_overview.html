@@ -47,7 +47,7 @@
       </div>
       <div class="col l1 m2 s13">
         <a href="#modal1" id="delete-hide" class="btn-small modal-trigger waves-effect waves-light red btn-block">Delete</a>
-        <div id="loader" class="preloader-wrapper small active" style="display: none">
+        <div id="loader" class="preloader-wrapper small active" style="display: none;">
           <div class="spinner-layer spinner-red-only">
             <div class="circle-clipper left">
               <div class="circle"></div>
@@ -60,8 +60,18 @@
         </div>
       </div>
   </div>
-    <!-- Modal Structure -->
-  <div id="modal1" class="modal container">
+  <div class="row">
+    <div class="col l4 m6 s13">
+      <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light green btn-block">Check Now</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col l2 m1 s1 ">
+      <div id="progress" class="progress_bar center" style="display: none"></div>
+    </div>
+  </div>
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal container" data-poll-url="{% url 'poll_state'%}" data-product-id="{{ product.uuid }}">
     <div class="modal-content">
       <h4>Delete Product</h4>
       <p>All keywords and associated indexing information will be deleted</p>
@@ -76,15 +86,68 @@
     </div>
   </div>
 </div>
+<ul>
+{% for job in jobs %}
+<li style='display: none'>{{job}}</li>
+{% endfor %}
+</ul>
 {% endblock %}
+{% load static %}
 {% block js %}
 <script>
- $(document).ready(function(){
+ $(document).ready(function() {
     $('.modal').modal();
     $("#delete").on("click", function (e) {
       $("#delete-hide").hide();
       $('#loader').show();
     });
   });
+</script>
+<script src="{% static 'js/progressbar.min.js' %}"></script>
+<script src="{% static 'js/progress-config.js' %}"></script><script>
+  var poll_xhr;
+  var willstop = 0;
+  (function() {
+    var task_total = "{{ job_count | safe }}";
+    var task_id = "{{ task_id | safe }}";
+    var bar = initProgress();
+    var poll = function() {
+      form = $('#modal1');
+      if (task_id === 'None' || task_total === -1) {
+        willstop = 1;
+      }
+      else {
+        $('#progress').show()
+        poll_xhr = $.ajax({
+          url: form.attr("data-poll-url"),
+          type: 'POST',
+          data: {
+              task_id: task_id,
+              task_total: task_total,
+              product_uuid: form.attr("data-product-id"),
+              csrfmiddlewaretoken: "{{csrf_token}}",
+          },
+          success: function(result) {
+          var result = JSON.parse(result);
+          if (result.process_percent === null || result.process_percent === undefined) {
+              willstop = 1;
+              $('#progress').hide();
+              task_total = -1;
+              location.reload(true);
+           } else {
+            bar.set(result.process_percent);
+           };
+          }
+        });
+      };
+    }
+    var refreshIntervalId = setInterval(function() {
+      if (willstop === 1){
+        clearInterval(refreshIntervalId);
+      } else {
+        poll();  
+      }
+    }, 2000);
+  })();
 </script>
 {% endblock %}

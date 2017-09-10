@@ -5,11 +5,17 @@
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-104307868-1', 'auto');
   ga('send', 'pageview');
-  $(function(){
+  $(function() {
     $('.button-collapse').sideNav();
+    var messages = document.getElementsByClassName('message-body')
+    for (var j = 0; j < messages.length; j++) {
+      var m = messages[j]
+      if (m.className.includes('error')) {
+      Materialize.toast(m.innerText, 3000, 'error');  
+      } else {
+        Materialize.toast(m.innerText, 3000);
+      }
+     }
   }); // end of document ready
-  var messages = document.getElementsByClassName('message-body')
-  for (var i = 0; i < messages.length; i++) {
-    Materialize.toast(messages[i].innerText, 3000);
-  }
+  
 })(jQuery); // end of jQuery name space

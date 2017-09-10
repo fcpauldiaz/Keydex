@@ -1537,7 +1537,16 @@ if (jQuery) {
         if (!!$(this).attr("target")) {
           return;
         }
-
+        
+        $tab_status = e.currentTarget.id;
+        if ($tab_status == 'tab2') {
+        	$('#div-1-text').hide();
+        	$('#div-2-text').show();
+        }
+        else {
+        	$('#div-1-text').show();
+        	$('#div-2-text').hide();
+        }
         clicked = true;
         $tabs_width = $this.width();
         $tab_width = Math.max($tabs_width, $this[0].scrollWidth) / $links.length;
@@ -4297,11 +4306,22 @@ if (jQuery) {
       });
 
       self.$document.off('keydown.chips-add', SELS.CHIPS + ' ' + SELS.INPUT).on('keydown.chips-add paste', SELS.CHIPS + ' ' + SELS.INPUT, function(e){
+        if (typeof $tab_status === 'undefined') {
+        	$tab_status = 'tab1';
+        }
         var $target = $(e.target);
         var $chips = $target.closest(SELS.CHIPS);
         var chipsLength = $chips.children(SELS.CHIP).length;
         
         setTimeout(function() {
+        	 if ($tab_status === 'tab2') {
+        	 		if (e.which === 0 || e.which === 13 || e.type === 'paste') {
+			          e.preventDefault();
+			          self.addChip({tag: $target.val().toLowerCase().replace(/[^\x00-\x7F]/g, " ")}, $chips);
+			          $target.val('');
+	          	}
+	          	return;
+	         }
 	        // enter
 	        if (13 === e.which || e.which === 0 || e.which === 32 || e.type === 'paste') {
 	          // Override enter if autocompleting.
@@ -4310,10 +4330,14 @@ if (jQuery) {
 	              $chips.find('.autocomplete-content.dropdown-content').children().length) {
 	            return;
 	          }
-	          
-
 	          e.preventDefault();
-	          self.addChip({tag: $target.val()}, $chips);
+	          words = $target.val().trim().split(/\s+/);
+	          for (var i = 0; i < words.length; i++) {
+	          	self.addChip({tag: words[i].toLowerCase().replace(/[^\x00-\x7F]/g, " ")}, $chips);
+	          }
+
+	          
+	          
 	          $target.val('');
 	          return;
 	        }
@@ -4325,7 +4349,7 @@ if (jQuery) {
 	          $target.blur();
 	          return;
 	        }
-        }, 100);
+        }, 20);
       });
 
       // Click on delete icon in chip.
@@ -4414,10 +4438,18 @@ if (jQuery) {
       var $renderedChip = self.renderChip(elem);
       var newData = [];
       var oldData = $chips.data('chips');
-      if (oldData.length > 1000) {
+      if (oldData.length > 500) {
       	Materialize.toast('Reached max keywords', 3000)
       	return;
       }
+      if ($tab_status == 'tab2') {
+      	var n = Number($('#div-2-counter').text());
+				$('#div-2-counter').text(n + 1);
+      } else {
+				var n = Number($('#div-1-counter').text());
+				$('#div-1-counter').text(n + 1);
+      }
+			
       for (var i = 0; i < oldData.length; i++) {
         newData.push(oldData[i]);
       }
@@ -4439,6 +4471,13 @@ if (jQuery) {
         if (i !== chipIndex) {
           newData.push(oldData[i]);
         }
+      }
+      if ($tab_status == 'tab2') {
+					var n = Number($('#div-2-counter').text());
+      	$('#div-2-counter').text(n - 1);
+      } else {
+      	 var n = Number($('#div-1-counter').text());
+      	$('#div-1-counter').text(n - 1);
       }
 
       $chips.data('chips', newData);

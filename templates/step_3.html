@@ -23,7 +23,7 @@
   <div class="col offset-s2">
     <h6 class="main-grey-text">How often do you want to check your product for indexation?</h6>
   </div>
-  <form class="col center s8 offset-s2" method="POST">
+  <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" >
     {% csrf_token %}
       {% for choice in form.choices_group1 %}
       <p>
@@ -49,10 +49,20 @@
         </p>
         {% endfor %}
       </div>
-      <button class="btn waves-effect waves-light blue-paypal button-padding" type="submit" value="saveProduct" name="saveProduct">Save Product
-      </button>
-      <button id="chip-button" class="btn waves-effect waves-light blue-paypal" type="submit" value="saveAndRun" name="saveAndRun">Save and run indexation now</button>
-
+      <a id="save-button" class="btn waves-effect waves-light blue-paypal button-padding">Save Product
+      </a>
+      <a id="saveAndRun" value="saveAndRun" class="btn waves-effect waves-light blue-paypal">Save and run indexation now</a>
+      <div id="loader" class="preloader-wrapper small active" style="display: none; margin-left: 30px;">
+   <div class="spinner-layer spinner-blue-only">
+     <div class="circle-clipper left">
+       <div class="circle"></div>
+     </div><div class="gap-patch">
+       <div class="circle"></div>
+     </div><div class="circle-clipper right">
+       <div class="circle"></div>
+     </div>
+   </div>
+      </div>
       {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -77,5 +87,42 @@
 <link href="{% static 'css/materialize-stepper.min.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block js %}
+<script type="text/javascript">
+  $("#saveAndRun, #save-button").on("click", function (e) {  
+    e.preventDefault();
+    var idEvent = e.target.id;
+    $('#saveAndRun').hide();
+    $('#save-button').hide();
+    $('#loader').show();
+
+    var form = $('#form');
+    $.ajax({
+      url: form.attr("data-save-url"),
+      type : "POST",
+      data: form.serialize() + '&'+idEvent+'='+ 'True',
+      dataType: 'json',
+      success: function (data) {
+        if (data.uuid !== undefined && data.id !== undefined) {
+          window.location = '/product/detail/'+data.uuid+'/'+data.id;
+        }
+        else if (data.saved === true) {
+          window.location = '/dashboard';
+        }
+        else {
+          Materialize.toast('Error saving', 3000);
+          $('#saveAndRun').show();
+          $('#save-button').show();
+          $('#loader').hide();
+
+        }
+      },
+      error: function(request, status, error) {
+        console.log(error);
+      }
+    });
+
+  });
+</script>
 <script src="{% static 'js/radio_buttons.js' %}"></script>
+<script src="{% static 'js/progressbar.min.js' %}"></script>
 {% endblock %}

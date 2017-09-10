@@ -14,6 +14,7 @@ from django.template import loader
 from django.contrib import messages
 import uuid
 from user_helper import validate_email #email validation
+from pinax.stripe.actions import customers
 
 from models import Profile, Product
 from tokens import account_activation_token
@@ -248,6 +249,7 @@ def activate(request, uidb64, token):
   if user is not None and account_activation_token.check_token(user, token):
     user.is_active = True
     user.profile.account_confirmed = True
+    customers.create(user=user)
     user.save()
     login(request, user)
     return redirect('products_add_product')

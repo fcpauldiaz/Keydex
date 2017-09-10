@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from amazon.api import AmazonAPI
 from models import ProductRecord
 from datetime import datetime
@@ -22,7 +23,7 @@ def amazon_api(asin, url, marketplace = 'US'):
     return model_product
   except:
     return None
-  
+
 
 #function to retrieve if a product is indexing
 #on a given marketplace with a keyword
@@ -32,7 +33,10 @@ def amazon_product(asin, keyword, marketplace = 'US'):
     search_item = asin + ' ' + keyword
     products = amazon.search_n(1, Keywords=search_item, SearchIndex='All')
     if len(products) != 0:
+      if (products[0].asin != asin):
+        return 'Information Not Available'
       return True
     return False
   except:
     return False
+

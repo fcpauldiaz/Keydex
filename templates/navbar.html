@@ -1,12 +1,17 @@
 <nav class="light-blue lighten-1" role="navigation">
-  <a href="{% url 'main_index' %}">
-    <div class="capa1 hide-on-med-and-down">
-        <div class="capa2"></div>
-    </div>
-    <div class="text-logo hide-on-med-and-down">CHECK MY KEYWORDS</div>
-  </a>
    
   <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"></a>
+   <a href="{% url 'main_index' %}">
+    <div class="capa1 hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
+      <a href="{% url 'main_index' %}">
+        <div class="capa2" onclick="location.href='/';" style="cursor: pointer;"></div>
+      </a>
+    </div>
+    <a href="{% url 'main_index' %}">
+    <div class="text-logo hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
+    <a href="{% url 'main_index' %}">CHECK MY KEYWORDS</a></div>
+    </a>
+  </a>
   
     <ul class="right hide-on-med-and-down">
     {% if request.user.is_authenticated %}
@@ -32,7 +37,7 @@
         </a>
       </li>
       <li style="cursor: pointer;">
-        <a href="#">  <h5 class="main-grey-text inline">Settings</h5>
+        <a href="{% url 'dashboard_settings' %}">  <h5 class="main-grey-text inline">Settings</h5>
           <i class="material-icons" style="display: inline-block;">settings
           </i>
         </a>
@@ -61,7 +66,7 @@
     </ul>
     {% if request.user.is_authenticated %}
     <div class="row col offset-s8 navbar-icons">
-      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="#"><i class="material-icons">settings</i></a>
+      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="{% url 'dashboard_settings' %}"><i class="material-icons">settings</i></a>
       <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Logout"href="{% url 'users_logout_user' %}"><i class="material-icons">input</i></a>
     </div>
     {% endif %}

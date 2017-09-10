@@ -39,7 +39,16 @@ class ProductSave(forms.Form):
     ('type9', '70%'),
     ('type10', '50%')
   ]
-  choices_group1 = forms.ModelChoiceField(empty_label=None, required=True, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': True}))
-  choices_group2 = forms.ChoiceField(required=False, choices=CHOICES_GROUP2, widget=forms.RadioSelect(attrs={'group':'group2', 'class':'with-gap', 'required': False}))
+  choices_group1 = forms.ModelChoiceField(empty_label=None, initial='1', required=True, queryset=ReportingPeriod.objects.all().order_by('value'), widget=forms.RadioSelect(attrs={'group':'group1', 'class':'with-gap', 'required': True}))
+  choices_group2 = forms.ChoiceField(required=False, initial = 'type5', choices=CHOICES_GROUP2, widget=forms.RadioSelect(attrs={'group':'group2', 'class':'with-gap', 'required': False}))
   choices_group3 = forms.ChoiceField(required=False, choices=CHOICES_GROUP3, widget=forms.RadioSelect(attrs={'group':'group3', 'class':'with-gap', 'required': False}))
 
+class SettingsForm(forms.ModelForm):
+  billing_address = forms.CharField(widget=forms.TextInput(attrs={'maxlength':100}))
+  credit_card_name = forms.CharField(widget=forms.TextInput(attrs={'maxlength':30}))
+  class Meta:
+    model = User
+    fields = ('first_name', 'last_name', 'username', 'email')
+    def __init__(self, *args, **kwargs):
+      self.request = kwargs.pop('request', None)
+      super(SettingsForm, self).__init__(*args, **kwargs)

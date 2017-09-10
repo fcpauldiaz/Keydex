@@ -21,7 +21,7 @@
   </div>
 </div>
 <div class="row container">
-  <div class="col s12 l3 m4 offset-s2 offset-l1 offset-m3p">
+  <div class="col s12 l3 m4 offset-s2 offset-l1 offset-m3">
       <div class="card-image">
         <img class="responsive-img" src="{{ product.primary_img}}">
       </div>
@@ -36,55 +36,59 @@
   </div>
 </div>
 <div class="row container">
+
   <ul class="tabs">
-    <li class="tab col l3 m6 offset-l3 s13"><a href="#keywords" class="active blue-paypal-text">Keywords</a></li>
-    <li class="tab col l3 m6 s13"><a class="blue-paypal-text" href="#phrases">Phrases</a></li>
+    <li class="tab col l3 m6 offset-l3 s13"><a href="#keywords" id="tab1" class="active blue-paypal-text">Keywords</a></li>
+    <li class="tab col l3 m6 s13"><a id="tab2"  class="blue-paypal-text" href="#phrases">Phrases</a></li>
   </ul>
+
 </div>
   <div class="row center">
-  <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
-     {% csrf_token %}
-      <div id="keywords" class="card card-keywords">
-        <div id="div-1" class="chips chips-placeholder"></div>
-      </div>
-      <div id="phrases" class="card card-keywords">
-        <div id="div-2" class="chips chips-placeholder"></div>
-      </div>
-    <div class="row center">
+  {% csrf_token %}
+   <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
 
-      <div class="col l13 s13">
-        <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
-        </button>
+      <div id="keywords" class="card card-keywords">
+        <div id="div-1" class="chips chips-placeholder overflow-wrap"></div>
       </div>
-      <div id="loader" class="preloader-wrapper small active" style="display: none">
-      <div class="spinner-layer spinner-blue-only">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
-        </div><div class="gap-patch">
-          <div class="circle"></div>
-        </div><div class="circle-clipper right">
-          <div class="circle"></div>
-        </div>
+      <div style="text-align: left;" id="div-1-text"><span class="disabled-text-text">Keywords </span><span id="div-1-counter" class="disabled-text-text">0</span></div>
+      <div id="phrases" class="card card-keywords">
+       <div id="div-2" class="chips chips-placeholder overflow-wrap"></div>
       </div>
-    </div>
-    </div>
-      {% if user_form.errors %}
-        {% for field in user_form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    {{field.name}}
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in user_form.non_field_errors %}
-            <div class="alert alert-danger">
-                {{field.name}}
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-      {% endif %}
-    </form>
+      <div style="text-align: left; display: none" id="div-2-text"><span class="disabled-text-text">Phrases </span><span class="disabled-text-text" id="div-2-counter">0</span></div>
+      <div class="row center">
+   <div class="col l13 s13">
+     <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
+     </button>
+   </div>
+   <div id="loader" class="preloader-wrapper small active" style="display: none">
+   <div class="spinner-layer spinner-blue-only">
+     <div class="circle-clipper left">
+       <div class="circle"></div>
+     </div><div class="gap-patch">
+       <div class="circle"></div>
+     </div><div class="circle-clipper right">
+       <div class="circle"></div>
+     </div>
+   </div>
+      </div>
+      </div>
+   {% if user_form.errors %}
+     {% for field in user_form %}
+         {% for error in field.errors %}
+             <div class="alert alert-danger">
+                 {{field.name}}
+                 <strong>{{ error|escape }}</strong>
+             </div>
+         {% endfor %}
+     {% endfor %}
+     {% for error in user_form.non_field_errors %}
+         <div class="alert alert-danger">
+             {{field.name}}
+             <strong>{{ error|escape }}</strong>
+         </div>
+     {% endfor %}
+   {% endif %}
+   </form>
     </div>
   </div>
 {% endblock %}
@@ -120,29 +124,42 @@ function getCookie(name) {
     return false;
   }
 });
-  $("#chip-button").on("click", function (e) {
-    console.log(e);
+  $("#chip-button").on("click", function (e) {  
     e.preventDefault();
     $('#chip-button').hide();
     $('#loader').show();
     var form = $('#chips-form');
-    var chips = $('.chip');
+    var chips = $('#div-1 .chip');
+    var chips2 = $('#div-2 .chip');
     var keywords = [];
     for (i = 0; i < chips.length; i++) {
       var chip = chips[i].innerText;
       var input = chip.slice(0, chip.length-5);
-      keywords.push(input);
+      if (input !== '') {
+        keywords.push(input);
+      }
+    }
+    var phrases = [];
+    for (i = 0; i < chips2.length; i++) {
+      var chip = chips2[i].innerText;
+      var input = chip.slice(0, chip.length-5);
+      if (input !== '') {
+        phrases.push(input);
+      }
     }
     $.ajax({
       url: form.attr("data-keywords-url"),
       type : "POST",
       data: { 
         csrfmiddlewaretoken : getCookie('csrftoken'), 
-        chips: JSON.stringify(keywords) },
+        chips_keywords: JSON.stringify(keywords),
+        chips_phrases: JSON.stringify(phrases) 
+      },
       dataType: 'json',
       success: function (data) {
-        var data = JSON.parse(data.data);
-        if (data.length === 0) {
+        var data_key = JSON.parse(data.data_key);
+        var data_phrase = JSON.parse(data.data_phrase)
+        if (data_key.length === 0 && data_phrase.length === 0) {
           Materialize.toast('Please add some keywords', 3000);
           $('#chip-button').show();
           $('#loader').hide();

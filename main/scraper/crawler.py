@@ -1,34 +1,47 @@
-from datetime import datetime
-
-import settings
-from models import ProductRecord
-from helpers import make_request, log, format_url, enqueue_url, dequeue_url
-from extractors import get_title, get_url, get_price, get_primary_img, get_indexing
-from amazon_api import amazon_api, amazon_product
+from __future__ import absolute_import, unicode_literals
+import datetime
+import main.scraper.settings
+from main.scraper.models import ProductRecord
+from main.scraper.helpers import make_request, log, format_url, enqueue_url, dequeue_url
+from main.scraper.extractors import get_title, get_url, get_price, get_primary_img, get_indexing
+from main.scraper.amazon_api import amazon_api, amazon_product
+from django.core import serializers
 from time import sleep, time
+from ..tasks import index_data, paralel_data
+import json
 import multiprocessing as mp
 
-crawl_time = datetime.now()
+crawl_time = datetime.datetime.now()
 
-def begin_crawl(product, marketplace, keyword, output):
+def begin_crawl(product, marketplace, keyword, retries, output):
     returnDictionary = {}
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
-        log("WARNING: Error in {} found in the extraction.".format(product.asin))
+        #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(2)
-        product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
-        returnDictionary[keyword] = product_indexing
+        if (retries < 3):
+            return begin_crawl(product, marketplace, keyword, retries + 1, output)
+        returnDictionary[keyword] = 'Information not available'
+        #product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
+        #returnDictionary[keyword] = product_indexing
     else:    
         item = page
         product_indexing = get_indexing(item)
         returnDictionary[keyword] = product_indexing
+    #return returnDictionary
     output.put(returnDictionary)
 
+def queue_crawl(product, marketplace):
+    keywords_and_phrases = product.keywords + product.phrases
+    job = paralel_data(product.asin, marketplace.country_host, marketplace.country_code, keywords_and_phrases, 0)
+    return job
+
 def parallel_crawl(product, marketplace):
+    keywords_and_phrases = product.keywords + product.phrases
     # Define an output queue
     output_queue = mp.Queue()
     # Setup a list of processes that we want to run
-    processes = [mp.Process(target=begin_crawl, args=(product, marketplace, keyword, output_queue)) for keyword in product.keywords]
+    processes = [mp.Process(target=begin_crawl, args=(product, marketplace, keyword, 0, output_queue)) for keyword in keywords_and_phrases]
     #intial_time = time()
     # Run processes
     for p in processes:
@@ -54,10 +67,10 @@ def fetch_listing(ASIN, marketplace):
     page, html = make_request(ASIN, marketplace.country_host)
     if not page:
         log("WARNING: No page. Retrying")
-        sleep(3)
-        pile.spawn(fetch_listing, ASIN, marketplace)
+        #sleep(3)
+        #fetch_listing(ASIN, marketplace)
     if page == None:
-        return None
+        return amazon_api(ASIN, url, marketplace.country_code)
     item = page
     product_image = get_primary_img(item)
     if not product_image:
@@ -82,3 +95,9 @@ def fetch_listing(ASIN, marketplace):
             asin=ASIN
         ) 
     return product
+
+def datetime_handler(x):
+  if isinstance(x, datetime.datetime):
+      return x.isoformat()
+  print x
+  raise TypeError("Unknown type")
