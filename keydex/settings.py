@@ -138,7 +138,8 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-
+ADMINS = [('support', 'pablo@checkmykeywords.com')]
+SERVER_MAIL = 'support@checkmykeywords.com'
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -178,38 +179,6 @@ CSRF_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'keydex.log',
-            'formatter': 'verbose'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers':['file', 'mail_admins'],
-            'propagate': True,
-            'level':'DEBUG',
-        },
-        'main': {
-            'handlers': ['file', 'mail_admins'],
-            'level': 'DEBUG',
-        },
-    }
-}
 
 CELERY_BROKER_URL = env('BROKER_URL')
 CELERY_RESULT_BACKEND = env('REDIS_URL')
