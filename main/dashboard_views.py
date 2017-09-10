@@ -71,19 +71,22 @@ def poll_state(request):
     """ A view to report the progress to the user """
     data = 'Fail'
     if request.is_ajax():
-        if 'task_id' in request.POST.keys() and request.POST['task_id']:
-            task_id = request.POST['task_id']
-            task_total = request.POST['task_total']
-            task = GroupResult.restore(task_id, app=app)
-            progress = task.completed_count()/float(task_total)
-            data = {}
-            if progress >= 1.0:
-              progress = None
-              result = task.get()
-              print result
-            data['process_percent'] = progress 
-        else:
-            data = 'No task_id in the request'
+      if 'task_id' in request.POST.keys() and request.POST['task_id']:
+          task_id = request.POST['task_id']
+          task_total = request.POST['task_total']
+          task = GroupResult.restore(task_id, app=app)
+          progress = task.completed_count()/float(task_total)
+          data = {}
+          if progress >= 1.0:
+            progress = None
+            result = task.get()
+            task.forget()
+            uuid = request.POST['product_uuid']
+            p = Product.objects.get(uuid=uuid)
+            save_product_indexing(result, p)
+          data['process_percent'] = progress 
+      else:
+          data = 'No task_id in the request'
     else:
         data = 'This is not an ajax request'
     
