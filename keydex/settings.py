@@ -201,12 +201,12 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers':['file'],
+            'handlers':['file', 'mail_admins'],
             'propagate': True,
             'level':'DEBUG',
         },
         'main': {
-            'handlers': ['file'],
+            'handlers': ['file', 'mail_admins'],
             'level': 'DEBUG',
         },
     }
