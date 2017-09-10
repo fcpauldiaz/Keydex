@@ -53,7 +53,7 @@
 </div>
 <div class="row container center">
   
-    <a href="#" class="btn waves-effect waves-light green button-padding">Download results to Excel</a>
+    <a href="{% url 'products_export_detail' product.uuid historic_id %}" class="btn waves-effect waves-light green button-padding">Download results to Excel</a>
     
     <a href="{% url 'dashboard' %}" class="btn waves-effect waves-light blue-paypal">Go to dashboard</a>
   

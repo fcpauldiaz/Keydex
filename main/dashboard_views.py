@@ -67,6 +67,7 @@ def dashboard_settings(request):
     return JsonResponse({'data': 'not_valid'})
   raise ValueError('Invalid request type at dashboad settings')
 
+@login_required
 def poll_state(request):
     """ A view to report the progress to the user """
     data = 'Fail'

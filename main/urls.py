@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from main import views as main_views
 from main import product_views, dashboard_views
+from main import export_data as export_views
 
 urlpatterns = [
   url(
@@ -63,6 +64,11 @@ urlpatterns = [
     r'^product/detail/(?P<uuid>[0-9A-Za-z-]+)/(?P<id>[0-9A-Za-z_\-]+)',
     product_views.product_detail,
     name='products_detail_product'
+  ),
+  url(
+    r'^product/export/(?P<uuid>[0-9A-Za-z-]+)/(?P<historic_id>[0-9A-Za-z_\-]+)',
+    export_views.export_excel,
+    name='products_export_detail'
   ),
   url(
     r'^product/overview/(?P<uuid>[0-9A-Za-z-]+)',
