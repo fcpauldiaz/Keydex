@@ -171,6 +171,46 @@ DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
 LOGIN_URL='/user/login'
 LOGIN_REDIRECT_URL='/user/login'
 
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt' : "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'keydex.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers':['file', 'mail_admins'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+        'main': {
+            'handlers': ['file', 'mail_admins'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
 CELERY_BROKER_URL = env('BROKER_URL')
 CELERY_RESULT_BACKEND = env('REDIS_URL')
 
@@ -181,3 +221,4 @@ CELERY_TASK_SERIALIZER = 'json'
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
+
