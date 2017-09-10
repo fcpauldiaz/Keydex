@@ -161,7 +161,8 @@ def product_overview(request, uuid):
     task_id = request.session['job_id']
     del request.session['job_total_count']
     del request.session['job_id']
-    del request.session['saved']
+    if request.session.get('saved') != None:
+      del request.session['saved']
   except:
     task_id = None
     job_count = -1
