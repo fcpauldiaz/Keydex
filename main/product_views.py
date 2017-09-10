@@ -148,7 +148,8 @@ def product_detail(request, uuid, id):
     data =  { 
       'product': product,
       'keywords': keywords,
-      'indexing_data': indexing_data
+      'indexing_data': indexing_data,
+      'historic_id': id
     }
     return render(request, 'product_detail.html', data)
   return redirect('dashboard')
