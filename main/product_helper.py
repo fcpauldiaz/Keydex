@@ -5,7 +5,9 @@ def save_product_indexing(result, product):
   indexing_data = {}
   keyword_length = 0
   entities = []
-  for keyword, indexing in result.items():
+  for value in result:
+    keyword = value.keys()[0]
+    indexing = value.values()[0]
     keyword_entity = Keywords(
       keyword=keyword,
       indexing=indexing
