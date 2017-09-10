@@ -80,7 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
             'debug': DEBUG,
         },
@@ -179,6 +179,14 @@ DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
 
 LOGIN_URL='/user/login'
 LOGIN_REDIRECT_URL='/user/login'
+
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 CELERY_BROKER_URL = env('BROKER_URL')
 CELERY_RESULT_BACKEND = env('REDIS_URL')
