@@ -77,13 +77,14 @@ def poll_state(request):
           task = GroupResult.restore(task_id, app=app)
           progress = task.completed_count()/float(task_total)
           data = {}
-          if progress >= 1.0:
+          if progress >= 1.0 and 'saved' not in request.session:
             progress = None
             result = task.get()
             task.forget()
             uuid = request.POST['product_uuid']
             p = Product.objects.get(uuid=uuid)
             save_product_indexing(result, p)
+            request.session['saved'] = 'saved'
           data['process_percent'] = progress 
       else:
           data = 'No task_id in the request'
