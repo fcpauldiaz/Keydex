@@ -76,6 +76,8 @@ def poll_state(request):
           task_total = request.POST['task_total']
           task = GroupResult.restore(task_id, app=app)
           progress = task.completed_count()/float(task_total)
+          if progress <= 0:
+            progress = 0.01
           data = {}
           if progress >= 1.0 and request.session.get('saved') == None:
             request.session['saved'] = 'saved'
