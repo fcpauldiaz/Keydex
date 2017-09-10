@@ -15,6 +15,8 @@ from django.contrib import messages
 import uuid
 from user_helper import validate_email #email validation
 from pinax.stripe.actions import customers
+from django.views.defaults import page_not_found, server_error
+from django.template.response import TemplateResponse
 
 from models import Profile, Product
 from tokens import account_activation_token
@@ -255,3 +257,15 @@ def activate(request, uidb64, token):
     return redirect('products_add_product')
   else:
     return render(request, 'account_activation_invalid.html')
+
+
+def server_error(request, template_name='500.html'):
+    """500 error handler using RequestContext."""
+    try:
+        template = loader.get_template(template_name)
+    except TemplateDoesNotExist:
+        if template_name != '500.html':
+            # Reraise if it's a missing custom template.
+            raise
+        return http.HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
+    return http.HttpResponseServerError(template.render(None, request, status=500))

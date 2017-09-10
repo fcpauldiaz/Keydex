@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   {% load sass_tags %}
   {% load static %}
+  {% load raven %}
 
   <link href="{% sass_src 'sass/materialize.scss' %}" rel="stylesheet" type="text/css" />
   {% block css %}
@@ -35,10 +36,8 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{% static 'js/bin/materialize.js' %}"></script>
   <script src="{% static 'js/initial.js' %}"></script>
-  <script src='https://cdn.slaask.com/chat.js'></script>
-  <script>
-      _slaask.init('5af3876e1dc182cb86e07d2a382133f4');
-  </script>
+  <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
+  <script>Raven.config('{% sentry_public_dsn %}').install()</script>
   {% block js %}
   {% endblock js %}
 

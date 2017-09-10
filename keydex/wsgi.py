@@ -13,13 +13,14 @@ import traceback
 import signal
 import sys
 from django.core.wsgi import get_wsgi_application
+from raven.contrib.django.raven_compat.middleware.wsgi import Sentry
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "keydex.settings")
 
 
 
 try:
-    application = get_wsgi_application()
+    application = Sentry(get_wsgi_application())
     print 'WSGI without exception'
 except Exception:
     print 'handling WSGI exception'
