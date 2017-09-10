@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
 import os
+import raven
 import environ
 
 
@@ -51,7 +52,8 @@ INSTALLED_APPS = [
     'main',
     'anymail',
     'pinax.stripe',
-    'celery'
+    'celery',
+    'raven.contrib.django.raven_compat'
 ]
 
 MIDDLEWARE = [
@@ -63,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
 ]
 
 ROOT_URLCONF = 'keydex.urls'
@@ -77,7 +80,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
             'debug': DEBUG,
         },
@@ -138,8 +141,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-ADMINS = [('support', 'pablo@checkmykeywords.com')]
-SERVER_MAIL = 'support@checkmykeywords.com'
+RAVEN_CONFIG = {
+    'dsn': 'https://776e2a63bddc432ea3939a4a6cc94206:879d04522754469792e1338b361ebc65@sentry.io/215015',
+    # If you are using git, you can also automatically configure the
+    # release based on the git info.
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
+
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
