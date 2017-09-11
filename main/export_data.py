@@ -3,6 +3,7 @@ from django.utils.encoding import force_bytes, force_text
 from models import  Keywords, ProductHistoricIndexing, Product
 from django.contrib.auth.decorators import login_required
 from product_helper import calculate_indexing
+from datetime import datetime
 import django_excel as excel
 
 @login_required
@@ -26,5 +27,6 @@ def export_excel(request, uuid, historic_id):
       data.append(new_row)
     sheet = excel.pe.Sheet(data)
     sheet.name = "Check My Keywords"
-    return excel.make_response(sheet, "xlsx",  file_name="export_data")
+    timestamp = datetime.now().strftime("%I-%M-%m-%d-%Y")
+    return excel.make_response(sheet, "xlsx",  file_name="export_data_"+timestamp)
 
