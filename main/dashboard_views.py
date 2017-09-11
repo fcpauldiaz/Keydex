@@ -10,6 +10,8 @@ from pinax.stripe.actions.sources import create_card, update_card
 from pinax.stripe.models import Customer, Card
 from pinax.stripe.actions import subscriptions
 from celery.result import AsyncResult, ResultSet, GroupResult
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
 import json
 from keydex.celery_app import app
 
@@ -87,7 +89,9 @@ def poll_state(request):
             task.forget()
             uuid = request.POST['product_uuid']
             p = Product.objects.get(uuid=uuid)
-            save_product_indexing(result, p)
+            historic_id = save_product_indexing(result, p)
+            data['historic_id'] = urlsafe_base64_encode(force_bytes(historic_id))
+            data['uuid'] = str(p.uuid)
           data['process_percent'] = progress 
       else:
           data = 'No task_id in the request'

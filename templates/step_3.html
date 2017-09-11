@@ -23,7 +23,7 @@
   <div class="col offset-s2">
     <h6 class="main-grey-text">How often do you want to check your product for indexation?</h6>
   </div>
-  <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" >
+  <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" data-poll-url="{% url 'poll_state'%}">
     {% csrf_token %}
       {% for choice in form.choices_group1 %}
       <p>
@@ -52,6 +52,11 @@
       <a id="save-button" class="btn waves-effect waves-light blue-paypal button-padding">Save Product
       </a>
       <a id="saveAndRun" value="saveAndRun" class="btn waves-effect waves-light blue-paypal">Save and run indexation now</a>
+      <div class="row">
+        <div class="col l3 offset-l6 m3 offset-m3 s3 offset-s3">
+          <div id="progress" class="progress_bar center" style="display: none"></div>
+        </div>
+      </div>
       <div id="loader" class="preloader-wrapper small active" style="display: none; margin-left: 30px;">
    <div class="spinner-layer spinner-blue-only">
      <div class="circle-clipper left">
@@ -87,13 +92,68 @@
 <link href="{% static 'css/materialize-stepper.min.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block js %}
+<script src="{% static 'js/progressbar.min.js' %}"></script>
+<script src="{% static 'js/progress-config.js' %}"></script>
+<script>
+  var poll_xhr;
+  var willstop = 0;
+  function pollData(job_count, task_id, uuid) {
+    var task_total = job_count;
+    var task_id = task_id;
+    var bar = initProgress();
+    var poll = function() {
+      form = $('#form');
+      if (task_id === 'None' || task_total === -1) {
+        willstop = 1;
+      }
+      else {
+        $('#progress').show()
+        poll_xhr = $.ajax({
+          url: form.attr("data-poll-url"),
+          type: 'POST',
+          data: {
+              task_id: task_id,
+              task_total: task_total,
+              product_uuid: uuid,
+              csrfmiddlewaretoken: "{{csrf_token}}",
+          },
+          success: function(result) {
+            console.log(result);
+          var result = JSON.parse(result);
+          if (result.process_percent === null || result.process_percent === undefined) {
+              willstop = 1;
+              $('#progress').hide();
+              task_total = -1;
+              window.location = '/product/detail/'+result.uuid+'/'+(result.historic_id);
+
+           } else {
+            bar.set(result.process_percent);
+           };
+          }
+        });
+      };
+    }
+    var refreshIntervalId = setInterval(function() {
+      if (willstop === 1){
+        clearInterval(refreshIntervalId);
+      } else {
+        poll();  
+      }
+    }, 2000);
+  };
+</script>
 <script type="text/javascript">
   $("#saveAndRun, #save-button").on("click", function (e) {  
     e.preventDefault();
     var idEvent = e.target.id;
     $('#saveAndRun').hide();
     $('#save-button').hide();
-    $('#loader').show();
+    
+    if (idEvent === 'saveAndRun') {
+      $('#progress').show();
+    } else {
+      $('#loader').show();
+    }
 
     var form = $('#form');
     $.ajax({
@@ -102,8 +162,9 @@
       data: form.serialize() + '&'+idEvent+'='+ 'True',
       dataType: 'json',
       success: function (data) {
-        if (data.uuid !== undefined && data.id !== undefined) {
-          window.location = '/product/detail/'+data.uuid+'/'+data.id;
+        console.log(data);
+        if (data.uuid !== undefined && data.job_id !== undefined) {
+          pollData(data.total_job, data.job_id, data.uuid);
         }
         else if (data.saved === true) {
           window.location = '/dashboard';
@@ -124,5 +185,4 @@
   });
 </script>
 <script src="{% static 'js/radio_buttons.js' %}"></script>
-<script src="{% static 'js/progressbar.min.js' %}"></script>
 {% endblock %}
