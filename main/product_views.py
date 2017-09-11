@@ -203,7 +203,46 @@ def edit_product(request, uuid):
     data = { 'product': product }
     return JsonResponse({ 'data': True })
   raise ValueError('Invalid request at add keywords')
+
+@login_required
+def cron_edit(request, uuid):
+  product = Product.objects.get(uuid=uuid)
+  if request.method == 'GET':
+    if (request.user.id == product.user_id):
+      map_group2 = { '100': 'type5'}
+      map_group3 = { '95.00': 'type7', '80.00': 'type8', '70.00': 'type9', '50.00': 'type10'}
+      group2 = 'type5'
+      group3 = ''
+      if (product.reporting_percentage != 100):
+        group2 = 'type6'
+        group3 = map_group3[str(product.reporting_percentage)]
+
+
+      form = ProductSave(initial={
+        'choices_group1': product.reporting_period ,
+        'choices_group2': group2,
+        'choices_group3': group3
+      })
+      data = { 'product': product, 'form': form }
+      return render(request, 'cron_edit.html', data)
+    return redirect('dashboard')
+  elif request.method == 'POST':
+    form = ProductSave(request.POST)
+    if form.is_valid():
+      reporting_period = form.cleaned_data['choices_group1']
+      percentage_report = select_email_reporting(
+        form.cleaned_data['choices_group2'],  
+        form.cleaned_data['choices_group3']
+      )
+      product.reporting_period
+      product.reporting_percentage
+      product.save()
+      messages.success(request, 'Product Updated')
+    data = { 'product': product, 'form': form }
+    return render(request, 'cron_edit.html', data)
     
+
+
 
 @login_required
 def delete_product(request, pk):
