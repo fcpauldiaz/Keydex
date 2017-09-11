@@ -42,7 +42,7 @@
     <div class="card-reveal">
       <span class="card-title grey-text text-darken-4">Product {{ forloop.counter }}<i class="material-icons right">close</i></span>
       <p>{{product.product_name}}</p>
-      <a href="#modal1" class="btn l modal-trigger waves-effect waves-light red btn-block delete-hide">Delete</a>
+      <a href="#modal{{ forloop.counter }}" class="btn l modal-trigger waves-effect waves-light red btn-block delete-hide">Delete</a>
        <div class="preloader-wrapper small active dashboard-loader" style="display: none;">
           <div class="spinner-layer spinner-red-only center">
             <div class="circle-clipper left">
@@ -57,7 +57,7 @@
     </div>
   </div>
     <!-- Modal Structure -->
-  <div id="modal1" class="modal container">
+  <div id="modal{{ forloop.counter }}" class="modal container">
     <div class="modal-content">
       <h4>Delete Product</h4>
       <p>All keywords and associated indexing information will be deleted</p>

@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-from scraper.crawler import fetch_listing, parallel_crawl
+from scraper.crawler import fetch_listing, parallel_crawl, queue_crawl
 from product_helper import *
 from collections import namedtuple
 from django.contrib import messages
@@ -86,6 +86,8 @@ def save_product(request):
       'product': request.session['product'],
       'marketplace': request.session['marketplace']
     }
+    if request.session.get('saved') != None:
+      del request.session['saved']
   except:
     #no longer product in session
     return redirect('products_add_product')
@@ -123,11 +125,12 @@ def save_product(request):
       #run indexing
       if 'saveAndRun' in request.POST:
         object_market = namedtuple("marketplace", marketplace.keys())(*marketplace.values())
-        result = parallel_crawl(product, object_market)
-        historic_id = save_product_indexing(result, product)
+        job = queue_crawl(product, object_market)  
+        
+        total_job = len(job.results)
         #delete session variables not longer used
         delete_session(request)
-        return JsonResponse({ 'uuid': product.uuid, 'id': urlsafe_base64_encode(force_bytes(historic_id))})
+        return JsonResponse({ 'uuid': product.uuid, 'job_id': job.id, 'total_job': total_job})
         #return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
       delete_session(request)
       return JsonResponse({'saved': True})
