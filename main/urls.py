@@ -59,6 +59,11 @@ urlpatterns = [
     product_views.edit_product,
     name='products_edit_product'
   ),
+   url(
+    r'^cron/edit/(?P<uuid>[0-9A-Za-z-]+)/',
+    product_views.cron_edit,
+    name='products_edit_cron'
+  ),
   url(
     r'^product/delete/(?P<pk>\d+)$',
     product_views.delete_product,
