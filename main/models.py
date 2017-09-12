@@ -76,7 +76,7 @@ class Product(models.Model):
     indexed = 0.0
     indexing_data = {}
     for keyword in keywords:
-      if (keyword.indexing == True):
+      if (keyword.indexing == 'True'):
         indexed += 1
     op = (float(indexed)/float(len(keywords)))*100
     indexing_data = format(op, '.2f')
