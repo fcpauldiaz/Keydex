@@ -235,7 +235,7 @@ def cron_edit(request, uuid):
         form.cleaned_data['choices_group3']
       )
       product.reporting_period = reporting_period
-      product.reporting_percentage = reporting_percentage
+      product.reporting_percentage = percentage_report
       product.save()
       messages.success(request, 'Product Updated')
     data = { 'product': product, 'form': form }
