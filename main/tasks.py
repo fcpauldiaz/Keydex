@@ -12,9 +12,9 @@ def index_data(asin, country_host, country_code, keyword, retries):
   page, html = helpers.make_request(asin=asin, host=country_host, keyword=keyword)
   if page == None:
       #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-      sleep(2)
-      if (retries < 3):
-        return index_data(asin, country_host, country_code, keyword, retries + 1)
+      #sleep(2)
+      #if (retries < 3):
+      #  return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'
       product_indexing = amazon_product(asin, keyword, country_code)
       returnDictionary[keyword] = product_indexing
