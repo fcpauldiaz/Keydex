@@ -192,6 +192,7 @@ CELERY_RESULT_BACKEND = env('REDIS_URL')
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json', 'pickle']
 CELERY_TASK_SERIALIZER = 'json'
+CELERY_IGNORE_RESULT = True
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
