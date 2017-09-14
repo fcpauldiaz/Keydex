@@ -2,7 +2,6 @@ from __future__ import absolute_import, unicode_literals
 from celery import Celery
 from celery.schedules import crontab
 from django.contrib.auth.models import User
-from jinja2 import Environment, FileSystemLoader
 from calendar import monthrange
 from main.models import Product, Keywords, ProductHistoricIndexing
 from main.scraper.crawler import cron_crawler

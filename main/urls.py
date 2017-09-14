@@ -3,10 +3,6 @@ from main import views as main_views
 from main import product_views, dashboard_views
 from main import export_data as export_views
 
-from django.conf.urls import  handler500 
-
-handler500 = main_views.server_error
-
 urlpatterns = [
   url(
     r'^$',
