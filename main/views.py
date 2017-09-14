@@ -209,7 +209,7 @@ def send_confirmation_email(request, user):
     'account_activation_email.html',
     {
       'user': user,
-      'domain': current_site.domain,
+      'domain': request.META['HTTP_HOST'],
       'uid': uid,
       'token': token,
     }
@@ -222,7 +222,7 @@ def send_confirmation_email(request, user):
 
 def send_reset_email(request, user):
   current_site = get_current_site(request).domain
-  reset_url = 'http://'+ current_site + '/user/change/password/' + str(user.profile.password_reset_token)
+  reset_url = 'http://'+ request.META['HTTP_HOST'] + '/user/change/password/' + str(user.profile.password_reset_token)
   html_message = loader.render_to_string(
     'account_reset_email.html',
     {
