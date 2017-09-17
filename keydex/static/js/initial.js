@@ -6,7 +6,6 @@
   ga('create', 'UA-104307868-1', 'auto');
   ga('send', 'pageview');
   $(function() {
-    $('.button-collapse').sideNav();
     var messages = document.getElementsByClassName('message-body')
     for (var j = 0; j < messages.length; j++) {
       var m = messages[j]
