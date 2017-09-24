@@ -31,7 +31,7 @@ def handler500(request):
 
 
 urlpatterns = [
-  url(r'^admin/', admin.site.urls),
+  url(r'^indexer/', admin.site.urls),
   url(r'^', include('main.urls')),
   #url(r"^payments/", include("pinax.stripe.urls")),  
 ]

@@ -7,6 +7,7 @@ from main.models import Product, Keywords, ProductHistoricIndexing
 from main.scraper.crawler import cron_crawler
 from django.core.mail import send_mail
 from django.template import loader
+from raven.contrib.celery import register_signal, register_logger_signal
 
 import unicodedata 
 import datetime
@@ -86,7 +87,7 @@ def save_product_indexing(result, product):
   for entity in entities:
     entity.historic = historic_entity
     entity.save()
-  return historic_entity.id
+  return indexing_rate
 
 @app.task
 def cron_job():
@@ -98,34 +99,37 @@ def cron_job():
     products = Product.objects.filter(user=user)
     failed = False
     for product in products:
-      periodicity = product.reporting_period
-      reporting_percentage = product.reporting_percentage
-      today = datetime.date.today()
-      asin = product.asin
-      if (periodicity == 'monthly'):
-        #check if today is endof month
-        monthly = last_day_month(today)
-        if (monthly == False):
-            continue
-      elif (periodicity == 'weekly'):
-          #check if today is sunday
-          sunday = weekend(today)
-          if (sunday == False):
+      try:
+        periodicity = product.reporting_period
+        reporting_percentage = product.reporting_percentage
+        today = datetime.date.today()
+        asin = product.asin
+        rate = product.reporting_percentage
+        if (periodicity == 'monthly'):
+          #check if today is endof month
+          monthly = last_day_month(today)
+          if (monthly == False):
               continue
-      elif (periodicity == '-1'):
-          continue
-      rDict = cron_crawler(product, product.marketplace)
-      save_product_indexing(rDict, product)
-      if reporting_percentage >= 100:
-          #save in memory for email later
-          asins_to_email.append(asin)
-      elif reporting_percentage >= rate:
-          #save in memory for email later
-          asins_to_email.append(asin)
+        elif (periodicity == 'weekly'):
+            #check if today is sunday
+            sunday = weekend(today)
+            if (sunday == False):
+                continue
+        elif (periodicity == '-1'):
+            continue
+        rDict = cron_crawler(product, product.marketplace)
+        rate =  save_product_indexing(rDict, product)
+        if reporting_percentage >= 100:
+            #save in memory for email later
+            asins_to_email.append(asin)
+        elif reporting_percentage >= rate:
+            #save in memory for email later
+            asins_to_email.append(asin)
+      except:
+        failed = True
     if len(asins_to_email) != 0:
       #print 'Sending email ' + user_email
       send_email(asins_to_email, user)
       asins_to_email = []  
   return failed
-
 
