@@ -116,7 +116,6 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
       elif (periodicity == '-1'):
           continue
       rDict = cron_crawler(product, product.marketplace)
-      return rDict
       rate =  save_product_indexing(rDict, product)
       if reporting_percentage >= 100:
           #save in memory for email later
@@ -138,4 +137,3 @@ def cron_parallel():
   tasks = group(cron_job.s(user.id, user.first_name, user.last_name, user.email) for user in users)
   group_task = tasks.apply_async()
   return group_task
-cron_parallel()
