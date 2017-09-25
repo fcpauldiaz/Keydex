@@ -46,6 +46,10 @@ def add_product(request):
   elif request.method == 'GET':
     form = AsinForm()
     marketplace = Marketplace.objects.all()
+    product_count = Product.objects.filter(user=request.user).count()
+    if (product_count >= 500):
+      messages.error(request, 'You have reached your product limit')
+      return redirect('dashboard')
     data = { 'form': form, 'urls': marketplace }
     return render(request, 'step_1.html', data)
   raise ValueError('Invalid request at add product')
