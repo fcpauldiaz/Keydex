@@ -47,13 +47,18 @@ class Marketplace(models.Model):
   country_code = models.CharField(max_length=10)
   #country url
   country_host = models.CharField(max_length=100)
+  #css option
+  disabled = models.BooleanField(default=True)
+
+  def render_css(self):
+    return { 'label': self.country, 'disabled': self.disabled }
   def __unicode__( self ):
     return self.country
 
 class Product(models.Model):
   uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
   asin = models.CharField(max_length=40)
-  product_name = models.CharField(max_length=2056)
+  product_name = models.CharField(max_length=500)
   product_url = models.CharField(max_length=2056)
   listing_url = models.CharField(max_length=2056)
   price = models.CharField(max_length=128)

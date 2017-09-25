@@ -1,10 +1,10 @@
 from __future__ import absolute_import, unicode_literals
-from celery import Celery
+from celery import Celery, shared_task, current_task, group
 from celery.schedules import crontab
 from django.contrib.auth.models import User
 from calendar import monthrange
 from main.models import Product, Keywords, ProductHistoricIndexing
-from main.scraper.crawler import cron_crawler
+from main.scraper.crawler import cron_crawler, parallel_crawl
 from django.core.mail import send_mail
 from django.template import loader
 from raven.contrib.celery import register_signal, register_logger_signal
@@ -42,11 +42,11 @@ def weekend(today):
       return True
   return False
 
-def send_email(asin_list, user):
+def send_email(asin_list, user_first_name, user_last_name, user_email):
 
-  first_name = user.first_name
-  last_name = user.last_name
-  email_format = first_name + ' ' + last_name + '<' + user.email + '>'
+  first_name = user_first_name
+  last_name = user_last_name
+  email_format = first_name + ' ' + last_name + '<' + user_email + '>'
   html_message = loader.render_to_string(
   'email_reporting.html',
     {
@@ -90,46 +90,52 @@ def save_product_indexing(result, product):
   return indexing_rate
 
 @app.task
-def cron_job():
-  users = User.objects.filter(profile__account_confirmed=True)
-  message = ''
-  for user in users:
-    asins_to_email = []
-    id_user = user.id
-    products = Product.objects.filter(user=user)
-    failed = False
-    for product in products:
-      try:
-        periodicity = product.reporting_period
-        reporting_percentage = product.reporting_percentage
-        today = datetime.date.today()
-        asin = product.asin
-        rate = product.reporting_percentage
-        if (periodicity == 'monthly'):
-          #check if today is endof month
-          monthly = last_day_month(today)
-          if (monthly == False):
-              continue
-        elif (periodicity == 'weekly'):
-            #check if today is sunday
-            sunday = weekend(today)
-            if (sunday == False):
-                continue
-        elif (periodicity == '-1'):
+def cron_job(user_id, user_first_name, user_last_name, user_email):
+  asins_to_email = []
+  id_user = user_id
+  products = Product.objects.filter(user=id_user)
+  failed = 'False'
+  for product in products:
+    #print product.id
+    try:
+      periodicity = product.reporting_period
+      reporting_percentage = product.reporting_percentage
+      today = datetime.date.today()
+      asin = product.asin
+      rate = product.reporting_percentage
+      if (periodicity == 'monthly'):
+        #check if today is endof month
+        monthly = last_day_month(today)
+        if (monthly == False):
             continue
-        rDict = cron_crawler(product, product.marketplace)
-        rate =  save_product_indexing(rDict, product)
-        if reporting_percentage >= 100:
-            #save in memory for email later
-            asins_to_email.append(asin)
-        elif reporting_percentage >= rate:
-            #save in memory for email later
-            asins_to_email.append(asin)
-      except:
-        failed = True
-    if len(asins_to_email) != 0:
-      #print 'Sending email ' + user_email
-      send_email(asins_to_email, user)
-      asins_to_email = []  
+      elif (periodicity == 'weekly'):
+          #check if today is sunday
+          sunday = weekend(today)
+          if (sunday == False):
+              continue
+      elif (periodicity == '-1'):
+          continue
+      rDict = cron_crawler(product, product.marketplace)
+      return rDict
+      rate =  save_product_indexing(rDict, product)
+      if reporting_percentage >= 100:
+          #save in memory for email later
+          asins_to_email.append(asin)
+      elif reporting_percentage >= rate:
+          #save in memory for email later
+          asins_to_email.append(asin)
+    except Exception, e:
+      failed = e.message
+  if len(asins_to_email) != 0:
+    #print 'Sending email ' + user_email
+    send_email(asins_to_email, user_first_name, user_last_name, user_email)
+    asins_to_email = []  
   return failed
 
+@app.task
+def cron_parallel():
+  users = User.objects.filter(profile__account_confirmed=True)
+  tasks = group(cron_job.s(user.id, user.first_name, user.last_name, user.email) for user in users)
+  group_task = tasks.apply_async()
+  return group_task
+cron_parallel()

@@ -9,7 +9,7 @@ from django.core import serializers
 from time import sleep, time
 from ..tasks import index_data, paralel_data
 import json
-import multiprocessing as mp
+import billiard as mp
 
 crawl_time = datetime.datetime.now()
 
@@ -31,6 +31,7 @@ def single_crawl(product, marketplace, keyword, retries):
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(2)
         if (retries < 3):
+            print retries
             return single_crawl(product, marketplace, keyword, retries + 1)
         #returnDictionary[keyword] = 'Information not available'
         product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
