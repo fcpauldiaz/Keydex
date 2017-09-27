@@ -191,7 +191,7 @@ nav.n ul a:hover {
 }
 
 .desktop-preview-sizer .desktop-preview {
-    background-image: url("desktop.png")
+    //background-image: url("desktop.png")
 }
 
 .desktop-preview-sizer .image-container {
@@ -279,11 +279,11 @@ nav.n ul a:hover {
 }
 
 .tablet-preview-sizer.l .tablet-preview {
-    background-image: url("tablet-white.png")
+    //background-image: url("tablet-white.png")
 }
 
 .tablet-preview-sizer .tablet-preview {
-    background-image: url("tablet.png")
+    //background-image: url("tablet.png")
 }
 
 .tablet-preview-sizer .image-container {
@@ -380,7 +380,7 @@ nav.n ul a:hover {
 }
 
 .phone-preview-sizer.fc .phone-preview {
-    background-image: url("iphone.png")
+    //background-image: url("iphone.png")
 }
 
 .phone-preview-sizer.fc .image-container {
@@ -391,7 +391,7 @@ nav.n ul a:hover {
 }
 
 .phone-preview-sizer .phone-preview {
-    background-image: url("nexus5x.png")
+    //background-image: url("nexus5x.png")
 }
 
 .phone-preview-sizer .image-container {
