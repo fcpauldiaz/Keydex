@@ -42,6 +42,11 @@ def weekend(today):
       return True
   return False
 
+def two_days(today):
+  if today.weekday() == 0 or today.weekday() == 2 or today.weekday() == 4:
+    return True
+  return False
+
 def send_email(asin_list, user_first_name, user_last_name, user_email):
 
   first_name = user_first_name
@@ -113,6 +118,11 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
           sunday = weekend(today)
           if (sunday == False):
               continue
+      elif (periodicity == 'every_two_days'):
+        #check every two days
+        check_two_days = two_days(today)
+        if (check_two_days == False):
+          continue
       elif (periodicity == '-1'):
           continue
       rDict = cron_crawler(product, product.marketplace)
