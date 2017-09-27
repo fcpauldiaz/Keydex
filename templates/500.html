@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %} Error {% endblock %}
+{% block content %}
+{% load raven %}
+<div class="row container">
+  <div class="col l10 offset-l3 s12 m8 offset-m2">
+  <h3 class=lue-paypal-text center>You've encountered an error, oh noes!</h3>
+  {% if request.sentry.id %}
+      <p>If you need assistance, you may reference this error as
+      <strong>{{ request.sentry.id }}</strong>.</p>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdn.ravenjs.com/2.3.0/raven.min.js"></script>
+<script>Raven.config('{% sentry_public_dsn %}').install()</script>
+
+{% if request.sentry.id %}
+  <script>
+  Raven.showReportDialog({
+    eventId: '{{ request.sentry.id }}',
+
+    // use the public DSN (dont include your secret!)
+    dsn: 'https://776e2a63bddc432ea3939a4a6cc94206@sentry.io/215015'
+  });
+  </script>
+{% endif %}
+{% endblock %}

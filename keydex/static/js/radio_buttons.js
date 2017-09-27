@@ -4,6 +4,7 @@ $('[name="choices_group2"]').on('change', function(e) {
   if (value === 'type5') {
     for (i = 0; i < group3.length; i ++) {
       group3[i].checked = false;
+      $('#group3_choices').hide();
     }
   }
   if (value === 'type6') {
@@ -15,7 +16,10 @@ $('[name="choices_group2"]').on('change', function(e) {
       }
     }
     if (force === true) {
-      $('#id_choices_group3_0')[0].checked = true;
+      var choices = $('#id_choices_group3_0');
+      choices[0].checked = true;
+      $('#group3_choices').show();
+
     }
   }
 });

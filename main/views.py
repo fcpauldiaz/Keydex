@@ -15,6 +15,8 @@ from django.contrib import messages
 import uuid
 from user_helper import validate_email #email validation
 from pinax.stripe.actions import customers
+from django.views.defaults import page_not_found, server_error
+from django.template.response import TemplateResponse
 
 from models import Profile, Product
 from tokens import account_activation_token
@@ -26,7 +28,15 @@ def index(request):
     return redirect('dashboard')
   return render(
     request,
-    'index.html'
+    'new_index.html'
+  )
+
+def tutorial(request):
+  if request.user.is_authenticated() == False:
+    return redirect('dashboard')
+  return render(
+    request,
+    'tutorial.html'
   )
 
 def loginUser(request):
@@ -48,8 +58,18 @@ def loginUser(request):
     )
   elif request.method == 'POST':
     form = LoginForm(request.POST)
+    try:
+      username_or_email = request.POST['username_or_email'].lower().strip()
+      user_object = User.objects.filter(username = username_or_email) | User.objects.filter(email = username_or_email)
+      user_object = user_object[0]
+    except:
+      errors=form.add_error("password", "Invalid Credentials")
+      return render(
+        request,
+        'login.html', { 'form': form }
+      )
     user = authenticate(
-      username=request.POST['username'].lower().strip(),
+      username=user_object.username.lower().strip(),
       password=request.POST['password'],
     )
     if redirect_to != None:
@@ -207,7 +227,7 @@ def send_confirmation_email(request, user):
     'account_activation_email.html',
     {
       'user': user,
-      'domain': current_site.domain,
+      'domain': request.META['HTTP_HOST'],
       'uid': uid,
       'token': token,
     }
@@ -220,7 +240,7 @@ def send_confirmation_email(request, user):
 
 def send_reset_email(request, user):
   current_site = get_current_site(request).domain
-  reset_url = 'http://'+ current_site + '/user/change/password/' + str(user.profile.password_reset_token)
+  reset_url = 'http://'+ request.META['HTTP_HOST'] + '/user/change/password/' + str(user.profile.password_reset_token)
   html_message = loader.render_to_string(
     'account_reset_email.html',
     {
@@ -252,6 +272,18 @@ def activate(request, uidb64, token):
     customers.create(user=user)
     user.save()
     login(request, user)
-    return redirect('products_add_product')
+    return redirect('tutorial')
   else:
     return render(request, 'account_activation_invalid.html')
+
+
+def server_error(request, template_name='500.html'):
+    """500 error handler using RequestContext."""
+    try:
+        template = loader.get_template(template_name)
+    except TemplateDoesNotExist:
+        if template_name != '500.html':
+            # Reraise if it's a missing custom template.
+            raise
+        return http.HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
+    return http.HttpResponseServerError(template.render(None, request, status=500))

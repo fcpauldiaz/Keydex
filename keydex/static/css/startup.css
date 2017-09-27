@@ -1,0 +1,593 @@
+
+nav.n {
+    z-index: 10;
+    position: fixed;
+    box-shadow: none;
+    background-color: transparent;
+    transition: box-shadow .3s, background-color .3s
+}
+
+nav.n.cv {
+    background-color: rgba(0, 0, 0, 0.3)
+}
+
+nav.n.fj {
+    position: absolute;
+    top: 0;
+    width: 100%
+}
+
+nav.n.bi a,
+nav.n.ao a {
+    color: #444
+}
+
+nav.n.bi .brand-logo i,
+nav.n.ao .brand-logo i {
+    color: #444
+}
+
+nav.n.bi ul.dropdown-content li>a::before,
+nav.n.ao ul.dropdown-content li>a::before,
+nav.n.bi ul.dropdown-content li>span::before,
+nav.n.ao ul.dropdown-content li>span::before,
+nav.n.bi a::before,
+nav.n.ao a::before {
+    background-color: #444
+}
+
+nav.n.ao {
+    background-color: #fff
+}
+
+nav.n.ao.bi,
+nav.n.ao {
+    background-color: #10a98d
+}
+
+nav.n.ao:not(.dropdown-content)>li>a {
+    color: #fff
+}
+
+nav.n.ao.bi .brand-logo i,
+nav.n.ao .brand-logo i {
+    color: #fff
+}
+
+nav.n.ao.bi ul.dropdown-content li>a::before,
+nav.n.ao ul.dropdown-content li>a::before,
+nav.n.ao.bi ul.dropdown-content li>span::before,
+nav.n.ao ul.dropdown-content li>span::before {
+    background-color: #10a98d
+}
+
+nav.n.ao.bi a::before,
+nav.n.ao a::before {
+    background-color: #fff
+}
+
+nav.n .brand-logo {
+    left: 15px;
+    transform: initial
+}
+
+nav.n .brand-logo i {
+    line-height: inherit;
+    color: #fff;
+    transition: color .2s
+}
+
+nav.n.cv .brand-logo i {
+    color: #1de9c3
+}
+
+nav.n ul>li.active>a::before,
+nav.n ul>li>a.g::before,
+nav.n ul>li>a:hover::before {
+    transform: scaleX(1)
+}
+
+nav.n ul li.g {
+    background-color: transparent
+}
+
+nav.n ul a {
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0 10px;
+    position: relative;
+    font-weight: 300;
+    transition: color .2s
+}
+
+nav.n ul a:hover {
+    background-color: transparent
+}
+
+
+.device-triplet .laptop-preview-sizer ~ .tablet-preview-sizer {
+    width: 34%;
+    align-self: flex-end
+}
+
+.device-triplet .desktop-preview-sizer ~ .tablet-preview-sizer {
+    left: auto;
+    right: 5%;
+    width: 40%;
+    align-self: flex-end
+}
+
+.desktop-preview-sizer .desktop-preview,
+.desktop-preview-sizer .laptop-preview,
+.desktop-preview-sizer .tablet-preview,
+.desktop-preview-sizer .phone-preview,
+.laptop-preview-sizer .desktop-preview,
+.laptop-preview-sizer .laptop-preview,
+.laptop-preview-sizer .tablet-preview,
+.laptop-preview-sizer .phone-preview,
+.tablet-preview-sizer .desktop-preview,
+.tablet-preview-sizer .laptop-preview,
+.tablet-preview-sizer .tablet-preview,
+.tablet-preview-sizer .phone-preview,
+.phone-preview-sizer .desktop-preview,
+.phone-preview-sizer .laptop-preview,
+.phone-preview-sizer .tablet-preview,
+.phone-preview-sizer .phone-preview {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    z-index: 2
+}
+
+.desktop-preview-sizer .image-container,
+.laptop-preview-sizer .image-container,
+.tablet-preview-sizer .image-container,
+.phone-preview-sizer .image-container {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity .3s, z-index 0s linear .3s
+}
+
+.desktop-preview-sizer .image-container.g,
+.laptop-preview-sizer .image-container.g,
+.tablet-preview-sizer .image-container.g,
+.phone-preview-sizer .image-container.g {
+    opacity: 1;
+    z-index: 1;
+    transition: opacity .3s
+}
+
+.desktop-preview-sizer .image-container.et,
+.laptop-preview-sizer .image-container.et,
+.tablet-preview-sizer .image-container.et,
+.phone-preview-sizer .image-container.et {
+    opacity: 1;
+    background-color: #444;
+    z-index: 0
+}
+
+.desktop-preview-sizer {
+    position: relative;
+    width: 100%
+}
+
+.desktop-preview-sizer.cv {
+    width: inherit;
+    padding-bottom: 0
+}
+
+.desktop-preview-sizer.cv:before,
+.desktop-preview-sizer:before {
+    content: '';
+    display: block;
+    padding-bottom: 84%
+}
+
+.desktop-preview-sizer .desktop-preview {
+    background-image: url("desktop.png")
+}
+
+.desktop-preview-sizer .image-container {
+    width: 94%;
+    top: 6%;
+    left: 3%;
+    bottom: 32%
+}
+
+.c .d.phone-preview-sizer {
+    padding: 0
+}
+
+.laptop-preview-sizer {
+    position: relative;
+    width: 100%
+}
+
+.laptop-preview-sizer.cv {
+    margin-top: 64px;
+    width: inherit;
+    padding-bottom: 0
+}
+
+.laptop-preview-sizer.cv:before,
+.laptop-preview-sizer:before {
+    content: '';
+    display: block;
+    padding-bottom: 58%
+}
+
+.laptop-preview-sizer.pin-bottom {
+    transform: translateY(64px)
+}
+
+.laptop-preview-sizer.l {
+    background: transparent !important
+}
+
+.laptop-preview-sizer.l .laptop-preview {
+    background-image: url("/static/img/macbook-white.png")
+}
+
+.laptop-preview-sizer.l .image-container {
+    width: 75%;
+    top: 8%;
+    left: 13%;
+    bottom: 11%
+}
+
+.laptop-preview-sizer .laptop-preview {
+    background-image: url("/static/img/macbook.png")
+}
+
+.laptop-preview-sizer .image-container {
+    width: 76%;
+    top: 7%;
+    left: 12%;
+    bottom: 12%
+}
+
+.c .d.phone-preview-sizer {
+    padding: 0
+}
+
+.tablet-preview-sizer {
+    position: relative;
+    width: 100%
+}
+
+.tablet-preview-sizer.cv {
+    width: inherit;
+    padding-bottom: 0
+}
+
+.tablet-preview-sizer.cv::before,
+.tablet-preview-sizer:before {
+    content: '';
+    display: block;
+    padding-bottom: 138%
+}
+
+.tablet-preview-sizer.l {
+    background: transparent !important
+}
+
+.tablet-preview-sizer.l .tablet-preview {
+    background-image: url("tablet-white.png")
+}
+
+.tablet-preview-sizer .tablet-preview {
+    background-image: url("tablet.png")
+}
+
+.tablet-preview-sizer .image-container {
+    width: 84%;
+    top: 10%;
+    left: 8%;
+    bottom: 9%
+}
+
+.c .d.phone-preview-sizer {
+    padding: 0
+}
+
+.tablet-pair {
+    max-width: 700px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end
+}
+
+.tablet-pair.he {
+    justify-content: flex-start
+}
+
+.tablet-pair.he .tablet-preview-sizer:nth-child(2) {
+    right: auto;
+    left: 50%
+}
+
+.tablet-pair .tablet-preview-sizer:nth-child(1) {
+    position: relative;
+    max-width: 400px;
+    z-index: 2
+}
+
+.tablet-pair .tablet-preview-sizer:nth-child(2) {
+    right: 50%;
+    position: absolute;
+    max-width: 300px;
+    z-index: 1
+}
+
+.tablet-triplet {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.tablet-triplet .tablet-preview-sizer:nth-child(1) {
+    position: relative;
+    max-width: 400px;
+    z-index: 2
+}
+
+.tablet-triplet .tablet-preview-sizer:nth-child(2) {
+    right: 60%;
+    position: absolute;
+    max-width: 300px;
+    z-index: 1
+}
+
+.tablet-triplet .tablet-preview-sizer:nth-child(3) {
+    left: 60%;
+    position: absolute;
+    max-width: 300px;
+    z-index: 1
+}
+
+.phone-preview-sizer {
+    position: relative;
+    width: 100%
+}
+
+.phone-preview-sizer.cv {
+    width: inherit;
+    padding-bottom: 0
+}
+
+.phone-preview-sizer.cv:before,
+.phone-preview-sizer:before {
+    content: '';
+    display: block;
+    padding-bottom: 200%
+}
+
+.phone-preview-sizer.fc {
+    background: transparent !important
+}
+
+.phone-preview-sizer.fc:before {
+    padding-bottom: 204%
+}
+
+.phone-preview-sizer.fc .phone-preview {
+    background-image: url("iphone.png")
+}
+
+.phone-preview-sizer.fc .image-container {
+    width: 89%;
+    top: 12%;
+    left: 6%;
+    bottom: 11%
+}
+
+.phone-preview-sizer .phone-preview {
+    background-image: url("nexus5x.png")
+}
+
+.phone-preview-sizer .image-container {
+    width: 92%;
+    top: 9%;
+    left: 4%;
+    bottom: 10%
+}
+
+.c .d.phone-preview-sizer {
+    padding: 0
+}
+
+.phone-preview-halfway {
+    position: relative
+}
+
+.phone-preview-halfway .phone-preview-sizer {
+    position: absolute
+}
+
+.phone-triplet {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.phone-triplet .phone-preview-sizer:nth-child(1) {
+    position: relative;
+    max-width: 300px;
+    z-index: 2
+}
+
+.phone-triplet .phone-preview-sizer:nth-child(2) {
+    right: 55%;
+    position: absolute;
+    max-width: 200px;
+    z-index: 1
+}
+
+.phone-triplet .phone-preview-sizer:nth-child(3) {
+    left: 55%;
+    position: absolute;
+    max-width: 200px;
+    z-index: 1
+}
+
+.pricing-table {
+    margin-top: 50px;
+    border: 2px solid #1de9c3
+}
+
+.pricing-table.fk {
+    margin-top: 0
+}
+
+.pricing-table.fk .pricing-header {
+    padding: 45px 0
+}
+
+.pricing-table .pricing-header {
+    position: relative;
+    padding: 20px 0;
+    text-align: center
+}
+
+.pricing-table .pricing-header i {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 80px;
+    padding-left: 5px;
+    margin-left: -40px;
+    font-size: 28px;
+    background-color: #000;
+    transform: translateY(-50%)
+}
+
+.pricing-table .pricing-header .gd {
+    font-size: 60px;
+    line-height: 60px
+}
+
+.pricing-table .pricing-header .gd .hm,
+.pricing-table .pricing-header .gd .ic {
+    font-weight: 300;
+    margin: 0 -10px;
+    font-size: 20px;
+    line-height: 42px;
+    vertical-align: text-top
+}
+
+.pricing-table .pricing-features {
+    margin: 0;
+    padding: 10px 0 30px
+}
+
+.pricing-table .pricing-features .pricing-feature {
+    font-weight: 300;
+    padding: 10px 20px;
+    text-align: center
+}
+
+.pricing-table .pricing-features .pricing-feature i {
+    margin-right: 18px
+}
+
+.pricing-table .pricing-features .pricing-feature.au,
+.pricing-table .pricing-features .pricing-feature.au i {
+    color: rgba(19, 192, 160, 0.5)
+}
+
+.pricing-table .pricing-features .pricing-feature:hover {
+    background-color: rgba(29, 233, 195, 0.2)
+}
+
+.v.l .pricing-header i {
+    background-color: #fff
+}
+
+.v.r .pricing-header i,
+.page-footer .v.footer-copyright .pricing-header i {
+    background-color: #42c4ac
+}
+
+.v.r .pricing-features .pricing-feature.au,
+.page-footer .v.footer-copyright .pricing-features .pricing-feature.au,
+.v.r .pricing-features .pricing-feature.au i,
+.page-footer .v.footer-copyright .pricing-features .pricing-feature.au i {
+    color: rgba(12, 123, 102, 0.5)
+}
+
+@media only screen and (max-width: 600px) {
+    .pricing-table {
+        margin-top: 50px
+    }
+    .pricing-table.fk {
+        margin-top: 50px
+    }
+}
+
+.cg,
+.v.cg {
+    margin: 0;
+    padding: 0;
+    height: auto
+}
+
+.cg .c,
+.v.cg .c {
+    margin: 0
+}
+
+.cg .cz,
+.v.cg .cz {
+    position: relative;
+    height: 256px
+}
+
+.cg .cz:hover .fz,
+.v.cg .cz:hover .fz {
+    transform: scale(1) translate(-50%, -50%)
+}
+
+.cg .cz:hover .cx,
+.v.cg .cz:hover .cx {
+    opacity: 1
+}
+
+.cg .cz .fz,
+.v.cg .cz .fz {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: scale(0.8) translate(-50%, -50%);
+    transform-origin: 0 0;
+    transition: transform .2s
+}
+
+.cg .cz .cx,
+.v.cg .cz .cx {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    text-align: center;
+    line-height: 256px;
+    font-size: 40px;
+    font-weight: 300;
+    color: #fff;
+    transition: opacity .2s
+}
+
+

@@ -11,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 from django.http import JsonResponse
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
-from scraper.crawler import fetch_listing, parallel_crawl
+from scraper.crawler import fetch_listing, parallel_crawl, queue_crawl
 from product_helper import *
 from collections import namedtuple
 from django.contrib import messages
@@ -46,6 +46,10 @@ def add_product(request):
   elif request.method == 'GET':
     form = AsinForm()
     marketplace = Marketplace.objects.all()
+    product_count = Product.objects.filter(user=request.user).count()
+    if (product_count >= 500):
+      messages.error(request, 'You have reached your product limit')
+      return redirect('dashboard')
     data = { 'form': form, 'urls': marketplace }
     return render(request, 'step_1.html', data)
   raise ValueError('Invalid request at add product')
@@ -86,6 +90,8 @@ def save_product(request):
       'product': request.session['product'],
       'marketplace': request.session['marketplace']
     }
+    if request.session.get('saved') != None:
+      del request.session['saved']
   except:
     #no longer product in session
     return redirect('products_add_product')
@@ -123,11 +129,12 @@ def save_product(request):
       #run indexing
       if 'saveAndRun' in request.POST:
         object_market = namedtuple("marketplace", marketplace.keys())(*marketplace.values())
-        result = parallel_crawl(product, object_market)
-        historic_id = save_product_indexing(result, product)
+        job = queue_crawl(product, object_market)  
+        
+        total_job = len(job.results)
         #delete session variables not longer used
         delete_session(request)
-        return JsonResponse({ 'uuid': product.uuid, 'id': urlsafe_base64_encode(force_bytes(historic_id))})
+        return JsonResponse({ 'uuid': product.uuid, 'job_id': job.id, 'total_job': total_job})
         #return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
       delete_session(request)
       return JsonResponse({'saved': True})
@@ -172,7 +179,7 @@ def product_overview(request, uuid):
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
-    historic = ProductHistoricIndexing.objects.filter(product=product)
+    historic = ProductHistoricIndexing.objects.filter(product=product).order_by('-indexed_date')
     data = { 'data': historic, 'product': product, 'job_count': job_count, 'task_id': task_id }
     return render(request, 'product_overview.html', data)
 
@@ -200,7 +207,46 @@ def edit_product(request, uuid):
     data = { 'product': product }
     return JsonResponse({ 'data': True })
   raise ValueError('Invalid request at add keywords')
+
+@login_required
+def cron_edit(request, uuid):
+  product = Product.objects.get(uuid=uuid)
+  if request.method == 'GET':
+    if (request.user.id == product.user_id):
+      map_group2 = { '100': 'type5'}
+      map_group3 = { '95.00': 'type7', '80.00': 'type8', '70.00': 'type9', '50.00': 'type10'}
+      group2 = 'type5'
+      group3 = ''
+      if (product.reporting_percentage != 100):
+        group2 = 'type6'
+        group3 = map_group3[str(product.reporting_percentage)]
+
+
+      form = ProductSave(initial={
+        'choices_group1': product.reporting_period ,
+        'choices_group2': group2,
+        'choices_group3': group3
+      })
+      data = { 'product': product, 'form': form }
+      return render(request, 'cron_edit.html', data)
+    return redirect('dashboard')
+  elif request.method == 'POST':
+    form = ProductSave(request.POST)
+    if form.is_valid():
+      reporting_period = form.cleaned_data['choices_group1']
+      percentage_report = select_email_reporting(
+        form.cleaned_data['choices_group2'],  
+        form.cleaned_data['choices_group3']
+      )
+      product.reporting_period = reporting_period
+      product.reporting_percentage = percentage_report
+      product.save()
+      messages.success(request, 'Product Updated')
+    data = { 'product': product, 'form': form }
+    return render(request, 'cron_edit.html', data)
     
+
+
 
 @login_required
 def delete_product(request, pk):

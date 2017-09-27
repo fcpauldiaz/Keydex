@@ -15,8 +15,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.defaults import page_not_found, server_error
+from django.template.response import TemplateResponse
+
+def handler500(request):
+  """500 error handler which includes ``request`` in the context.
+
+  Templates: `500.html`
+  Context: None
+  """
+
+  context = {'request': request}
+  template_name = '500.html'  # You need to create a 500.html template.
+  return TemplateResponse(request, template_name, context, status=500)
+
 
 urlpatterns = [
-  url(r'^admin/', admin.site.urls),
-  url(r'^', include('main.urls'))  
+  url(r'^indexer/', admin.site.urls),
+  url(r'^', include('main.urls')),
+  #url(r"^payments/", include("pinax.stripe.urls")),  
 ]

@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "Colfax Regular";
+    font-style: normal;
+    font-weight: normal;
+    src: local('Colfax Black'), url('#{$roboto-font-path}Colfax-Black.woff') format('woff');
+}
+@font-face {
+    font-family: 'Colfax Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Colfax Light'), url('#{$roboto-font-path}Colfax-Light.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Colfax Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Colfax Medium'), url('#{$roboto-font-path}Colfax-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Colfax Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Colfax Regular'), url('#{$roboto-font-path}Colfax-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Colfax Thin';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Colfax Thin'), url('#{$roboto-font-path}Colfax-Thin.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Black Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Black Italic'), url('#{$roboto-font-path}Colfax-BlackItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Bold';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Bold'), url('#{$roboto-font-path}Colfax-Bold.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Bold Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Bold Italic'), url('#{$roboto-font-path}Colfax-BoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Light Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Light Italic'), url('#{$roboto-font-path}Colfax-LightItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Medium Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Medium Italic'), url('#{$roboto-font-path}Colfax-MediumItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Regular Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Regular Italic'), url('#{$roboto-font-path}Colfax-RegularItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Colfax Thin Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Colfax Thin Italic'), url('#{$roboto-font-path}Colfax-ThinItalic.woff') format('woff');
+}

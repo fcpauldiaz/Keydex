@@ -9,10 +9,39 @@ from django.core import serializers
 from time import sleep, time
 from ..tasks import index_data, paralel_data
 import json
-import multiprocessing as mp
+import billiard as mp
 
 crawl_time = datetime.datetime.now()
 
+def cron_crawler(product, marketplace):
+    final_dict = {}
+    if product.phrases == None:
+        keywords_and_phrases = product.keywords
+    else:
+        keywords_and_phrases = product.keywords + product.phrases
+    for keyword in keywords_and_phrases:
+        res = single_crawl(product, marketplace, keyword, 0)
+        final_dict.update(res)
+    return final_dict
+
+def single_crawl(product, marketplace, keyword, retries):
+    returnDictionary = {}
+    page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
+    if page == None:
+        #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
+        sleep(2)
+        if (retries < 3):
+            print retries
+            return single_crawl(product, marketplace, keyword, retries + 1)
+        #returnDictionary[keyword] = 'Information not available'
+        product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
+        returnDictionary[keyword] = product_indexing
+    else:    
+        item = page
+        product_indexing = get_indexing(item)
+        returnDictionary[keyword] = product_indexing
+    return returnDictionary
+    
 def begin_crawl(product, marketplace, keyword, retries, output):
     returnDictionary = {}
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
@@ -32,12 +61,18 @@ def begin_crawl(product, marketplace, keyword, retries, output):
     output.put(returnDictionary)
 
 def queue_crawl(product, marketplace):
-    keywords_and_phrases = product.keywords + product.phrases
+    if product.phrases == None:
+        keywords_and_phrases = product.keywords
+    else:
+        keywords_and_phrases = product.keywords + product.phrases
     job = paralel_data(product.asin, marketplace.country_host, marketplace.country_code, keywords_and_phrases, 0)
     return job
 
 def parallel_crawl(product, marketplace):
-    keywords_and_phrases = product.keywords + product.phrases
+    if product.phrases == None:
+        keywords_and_phrases = product.keywords
+    else:
+        keywords_and_phrases = product.keywords + product.phrases
     # Define an output queue
     output_queue = mp.Queue()
     # Setup a list of processes that we want to run

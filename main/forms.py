@@ -5,6 +5,11 @@ from main.models import User, ReportingPeriod, Marketplace
 from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm
 from validator import validate_email_unique
+from main.custom_widget import SelectWithDisabled
+
+class MarketPlaceModelField(forms.ModelChoiceField):
+  def label_from_instance(self, obj):
+    return obj.render_css()
 
 class SignUpForm(UserCreationForm):
   first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
@@ -14,8 +19,8 @@ class SignUpForm(UserCreationForm):
       model = User
       fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', )
 class LoginForm(forms.Form):
-  username = forms.CharField(widget=forms.TextInput())
-  password = forms.CharField(widget=forms.PasswordInput())
+  username_or_email = forms.CharField(widget=forms.TextInput())
+  password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'no-margin-bottom'}))
 
 class ResetPasswordForm(forms.Form):
   username_or_email = forms.CharField(widget=forms.TextInput())
@@ -25,7 +30,7 @@ class ChangePasswordForm(forms.Form):
   password_repeated = forms.CharField(widget=forms.PasswordInput)
 
 class AsinForm(forms.Form):
-  select_choices = forms.ModelChoiceField(required=False, queryset=Marketplace.objects.all(), widget=forms.Select(attrs={'required': True}), empty_label="Choose your country Marketplace", initial=1)
+  select_choices = MarketPlaceModelField(required=False, queryset=Marketplace.objects.all(), widget=SelectWithDisabled(attrs={'required': True}), empty_label="Choose your country Marketplace", initial=1)
   asin = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Eg: 3801209'}))
 
 class ProductSave(forms.Form):

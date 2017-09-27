@@ -1,0 +1,125 @@
+.scrollmagic-pin-spacer {
+  background-color: white;
+}
+.container-image {
+  background-image:url('/static/img/dashboard.png'); 
+  display: block !important;
+}
+.image-hide {
+  display: none;
+}
+
+.video-responsive {
+  position: relative;
+  padding-bottom: 25.25% !important;
+  padding-top: 100px !important;
+  margin-bottom: 20px;
+  height: 0;
+  overflow: hidden;
+}
+ 
+.video-responsive iframe,
+.video-responsive object,
+.video-responsive embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+// ---------------------
+// SOCIAL CSS
+.btn.social > :first-child,
+.btn-large.social > :first-child,
+.col.social > :first-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+.btn.social,
+.btn-large.social,
+.col.social {
+  padding: 0 2rem 0 0;
+}
+.btn.social i,
+.btn-large.social i,
+.col.social i {
+  padding: 0 1rem;
+  margin-right: 1rem;
+}
+.btn.social-icon,
+.btn-large.social-icon,
+.col.social-icon {
+  padding: 0;
+}
+.btn.social-icon i,
+.btn-large.social-icon i,
+.col.social-icon i {
+  padding: 0 1rem;
+  margin-right: 0;
+}
+.btn-large.social-icon {
+  padding: 0 1rem;
+}
+.col.social {
+  width: 100%;
+  text-align: left;
+}
+.col.social i.fa-fw {
+  width: 3.2rem;
+}
+.facebook {
+  background-color: #3b5998 !important;
+  color: #fff !important;
+}
+.facebook i {
+  color: #fff !important;
+}
+.facebook:hover {
+  background-color: #4c70ba !important;
+}
+
+.github {
+  background-color: #444444;
+  color: #fff !important;
+}
+.github i {
+  color: #fff !important;
+}
+.github:hover {
+  background-color: #5e5e5e !important;
+}
+.google {
+  background-color: #dd4b39;
+  color: #fff !important;
+}
+.google i {
+  color: #fff !important;
+}
+.google:hover {
+  background-color: #e47365 !important;
+}
+.instagram {
+  background-color: #3f729b;
+  color: #fff !important;
+}
+.instagram i {
+  color: #fff !important;
+}
+.instagram:hover {
+  background-color: #548cb9 !important;
+}
+.
+.twitter {
+  color: #fff !important;
+}
+.twitter-background {
+  background-color: #55acee !important;
+}
+.twitter i {
+  color: #fff !important;
+}
+.twitter:hover {
+  background-color: #83c3f3 !important;
+}

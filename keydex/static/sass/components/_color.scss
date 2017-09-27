@@ -276,11 +276,19 @@ $orange: (
 );
 
 $blue-paypal: (
-  "base":       #177FEF
+  "base":       #4094ED,
+  "hover-state": #238be8,
+  "background": #ecf4fe
 );
 
 $main-grey: (
   "base":     #4D4E4F
+);
+
+$footer :(
+  "base": #333647,
+  "top": #333647,
+  "bottom": #292D3A
 );
 
 $detail-green: (
@@ -292,7 +300,7 @@ $detail-red: (
 );
 
 $detail-blue: (
-  "base": #137DEE
+  "base": #333647
 );
 
 $disabled-text: (
@@ -388,7 +396,8 @@ $colors: (
   "disabled-text": $disabled-text,
   "detail-blue": $detail-blue,
   "detail-red": $detail-red,
-  "detail-green": $detail-green
+  "detail-green": $detail-green,
+  "footer": $footer
 ) !default;
 
 

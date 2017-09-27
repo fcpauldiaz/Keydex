@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Check Keywords | Home </title>
+  {% load static %}
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <!-- Stylesheet -->
+  <link rel="stylesheet" href="{% static 'css/materialize-social.css' %}">
+  <link rel="stylesheet" href="{% static 'css/startup2.css' %}">
+  {% load sass_tags %}
+  {% load static %}
+  {% load raven %}
+
+  <link href="{% sass_src 'sass/materialize.scss' %}" rel="stylesheet" type="text/css" />
+  {% block css %}
+  {% endblock %}
+</head>
+
+  <body class="white">
+
+    <!-- Navbar -->
+<nav class="light-blue lighten-1" role="navigation">
+   
+  <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"></a>
+   <a href="{% url 'main_index' %}">
+    <div class="capa1 hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
+      <a href="{% url 'main_index' %}">
+        <div class="capa2" onclick="location.href='/';" style="cursor: pointer;"></div>
+      </a>
+    </div>
+    <a href="{% url 'main_index' %}">
+    <div class="text-logo hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
+    <a href="{% url 'main_index' %}">CHECK MY KEYWORDS</a></div>
+    </a>
+  </a>
+  
+    <ul class="right hide-on-med-and-down">
+    {% if request.user.is_authenticated %}
+    <li><h7 class="main-grey-text">Welcome, </h7><h7 class="main-grey-text">{{ request.user.first_name }} {{ request.user.last_name }}</h7></li>
+    
+    {% else %}
+    <li>
+      <a class="btn-paypal waves-effect waves-light" href="{% url 'users_login_user' %}">Log In
+      </a>
+    </li>
+    {% endif %}
+    </ul>
+
+    <ul id="nav-mobile" class="side-nav center">
+    {% if request.user.is_authenticated %}
+      <li>
+        <h5 class="main-grey-text inline">Welcome, </h5><h5 class="blue-paypal-text inline">&nbsp; {{ request.user.first_name }} {{ request.user.last_name }}</h5>
+      </li>
+      <li style="cursor: pointer;">
+        <a href="{% url 'main_index' %}">  <h5 class="main-grey-text inline">Home</h5>
+          <i class="material-icons" style="display: inline-block;">home
+          </i>
+        </a>
+      </li>
+      <li style="cursor: pointer;">
+        <a href="{% url 'dashboard_settings' %}">  <h5 class="main-grey-text inline">Settings</h5>
+          <i class="material-icons" style="display: inline-block;">settings
+          </i>
+        </a>
+      </li>
+      <li style="cursor: pointer;">
+        <a href="{% url 'users_logout_user' %}">  <h5 class="main-grey-text inline">Log out</h5>
+          <i class="material-icons" style="display: inline-block;">input
+          </i>
+        </a>
+      </li>
+    {% else %}
+     <li style="cursor: pointer;">
+        <a href="{% url 'users_login_user' %}">  <h5 class="main-grey-text inline">Login</h5>
+          <i class="material-icons" style="display: inline-block;">lock
+          </i>
+        </a>
+      </li>
+      <li style="cursor: pointer;">
+        <a href="{% url 'main_index' %}">  <h5 class="main-grey-text inline">Home</h5>
+          <i class="material-icons" style="display: inline-block;">home
+          </i>
+        </a>
+      </li>
+    {% endif %}
+      
+    </ul>
+    {% if request.user.is_authenticated %}
+    <div class="row col offset-s8 navbar-icons">
+      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="{% url 'dashboard_settings' %}"><i class="material-icons">settings</i></a>
+      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Logout"href="{% url 'users_logout_user' %}"><i class="material-icons">input</i></a>
+    </div>
+    {% endif %}
+    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+  </div>
+</nav>
+
+   <div class="gn ai full-height white">
+      <div class="header-wrapper">
+          <div id="primary" class="container">
+            
+            <h1 class="header center main-grey-text" >Are your keywords indexing</h1>
+            <h1 class="header center main-grey-text">for search results?</h1> 
+            <div class="row center">
+              <h5 class="header col s8 offset-s2 main-grey-text light justify">This tool automatically checks for you every day and sends you a report if they stop indexing so that you can take inmediate action!</h5>
+              <h5 class="header col s8 offset-s2 light justify blue-paypal-text">We are giving Check My Keywords for FREE for the first 500 users. forever.</h5>
+            </div>
+            <div class="row center">
+              <a href="{% url 'users_login_user' %}" class="btn-large waves-effect waves-light blue-paypal">Start checking now</a>
+            </div>
+            <div class="row center">
+              <div class="col s13">
+                <p class="light main-grey-text">Don't have an account yet? <a href="{% url 'users_create_user' %}" style="z-index: 1; position: relative">Sign up now.</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        <br>
+      </div>
+      <div class="laptop-preview-sizer">
+        <div class="laptop-preview">
+          <div id="background" class="image-container et image-hide"></div>
+        </div>
+        
+      </div>
+    </div>
+    
+
+    <!-- Features -->
+  <div class="row light-blue lighten-1">
+    <div class="container">
+      <div class="col l4 m4 s12 margin-features">
+         <div class="center fade-in-out">
+            <h4 class="center"> <i class="large material-icons">autorenew</i></h4>
+            <h5 class="main-grey-text">We check automatically for your products indexation.</h5>
+          </div>
+      </div>
+      <div class="col l4 m4 s12 margin-features ">
+         <div class="center fade-in-out">
+            <h4 class="center"><i class="large material-icons">av_timer</i></h4>
+            <h5 class="main-grey-text">Save time and money by copy and pasting your keywords and phrases.</h5>
+          </div>
+      </div>
+      <div class="col l4 m4 s12 margin-features ">
+         <div class="center fade-in-out">
+            <h4 class="center"><i class="large material-icons">cloud_download</i></h4>
+            <h5 class="main-grey-text">Export your results for each indexation.</h5>
+          </div>
+      </div>
+    </div>
+  </div>
+ 
+
+
+    {% include 'footer.html' %}
+  
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/bin/animation.js' %}"></script>
+    <script src="https://use.fontawesome.com/6781d34411.js"></script>
+    <script>
+    $(document).ready(function(){       
+        var scroll_pos = 0;
+        $(document).scroll(function() { 
+          scroll_pos = $(this).scrollTop();
+          if(scroll_pos > 210) {
+            $('#background').addClass('container-image');
+            $('#primary').addClass('image-hide')
+          } else {
+            $('#background').removeClass('container-image');
+            $('#primary').removeClass('image-hide')
+          }
+        });
+      });
+    </script>
+
+  </body>
+</html>
