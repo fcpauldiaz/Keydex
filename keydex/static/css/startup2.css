@@ -2876,9 +2876,6 @@ input[type=range]:focus::-ms-fill-upper {
     padding-bottom: 84%
 }
 
-.desktop-preview-sizer .desktop-preview {
-    //background-image: url("desktop.png")
-}
 
 .desktop-preview-sizer .image-container {
     width: 94%;
