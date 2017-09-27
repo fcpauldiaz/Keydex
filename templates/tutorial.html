@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %} Tutorial {% endblock %}
+{% block content %}
+<div class="row container">
+  <h4 class="header center main-grey-text justify">Watch this 2-minute video to see how Check My Keywords works!</h4>
+  <div class="col l7 offset-l3 s13 m8 offset-m2 video-responsive">
+    <iframe src="https://www.youtube-nocookie.com/embed/wge5V4olQII?rel=0" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <div class="col l6 offset-l5 s13 m8 offset-m4">
+     <a href="{% url 'products_add_product' %}" class="btn-large waves-effect waves-light blue-paypal btn-block">Add my first product</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s13 l13 m13">
+  </div>
+</div>
+  <br>
+  <br>
+{% endblock %}

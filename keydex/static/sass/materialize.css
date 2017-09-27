@@ -1583,10 +1583,22 @@
   color: #212121 !important; }
 
 .blue-paypal {
-  background-color: #177FEF !important; }
+  background-color: #4094ED !important; }
 
 .blue-paypal-text {
-  color: #177FEF !important; }
+  color: #4094ED !important; }
+
+.blue-paypal.hover-state {
+  background-color: #238be8 !important; }
+
+.blue-paypal-text.text-hover-state {
+  color: #238be8 !important; }
+
+.blue-paypal.background {
+  background-color: #ecf4fe !important; }
+
+.blue-paypal-text.text-background {
+  color: #ecf4fe !important; }
 
 .main-grey {
   background-color: #4D4E4F !important; }
@@ -1601,10 +1613,10 @@
   color: #9298A1 !important; }
 
 .detail-blue {
-  background-color: #137DEE !important; }
+  background-color: #333647 !important; }
 
 .detail-blue-text {
-  color: #137DEE !important; }
+  color: #333647 !important; }
 
 .detail-red {
   background-color: #FA3607 !important; }
@@ -1617,6 +1629,24 @@
 
 .detail-green-text {
   color: #48D48D !important; }
+
+.footer {
+  background-color: #333647 !important; }
+
+.footer-text {
+  color: #333647 !important; }
+
+.footer.top {
+  background-color: #333647 !important; }
+
+.footer-text.text-top {
+  color: #333647 !important; }
+
+.footer.bottom {
+  background-color: #292D3A !important; }
+
+.footer-text.text-bottom {
+  color: #292D3A !important; }
 
 .black {
   background-color: #000000 !important; }
@@ -2252,7 +2282,7 @@ table {
   table.highlight > tbody > tr {
     transition: background-color .25s ease; }
     table.highlight > tbody > tr:hover {
-      background-color: #E7F2FD; }
+      background-color: #a0ccf7; }
   table.centered thead tr th, table.centered tbody tr td {
     text-align: center; }
 
@@ -2570,7 +2600,11 @@ nav ul a span.badge {
     margin-left: 5px;
     margin-right: 5px !important; }
   .button-padding {
-    margin-bottom: 20px; } }
+    margin-bottom: 20px; }
+  .margin-features {
+    margin-left: 5px !important;
+    margin-right: 5px;
+    padding-right: 5px !important; } }
 
 @media only screen and (min-width: 601px) {
   .card-margin {
@@ -2582,37 +2616,52 @@ nav ul a span.badge {
     margin-left: 5px;
     margin-right: 80px !important; }
   .navbar-icons {
-    display: none; } }
+    display: none; }
+  .margin-features {
+    margin-left: 5px !important;
+    margin-right: 5px;
+    padding-right: 5px !important; } }
 
 @media only screen and (min-width: 993px) {
   .card-margin {
     margin-left: 5px;
-    margin-right: 130px !important; } }
+    margin-right: 130px !important; }
+  .margin-features {
+    margin-left: 10px !important;
+    margin-right: 10px;
+    padding-right: 5px !important; } }
 
 @media only screen and (min-width: 1201px) {
   .card-margin {
     margin-left: 5px;
-    margin-right: 130px !important; } }
+    margin-right: 130px !important; }
+  .margin-features {
+    margin-left: 10px !important;
+    margin-right: 10px;
+    padding-right: 5px !important; } }
 
 .capa1 {
   position: absolute;
   transform: rotate(-53deg);
   top: 36px;
-  left: -130px; }
+  left: -130px;
+  z-index: 1; }
 
 .capa2 {
   position: absolute;
   width: 228px;
   height: 160px;
   transform: skewX(20deg);
-  background: linear-gradient(162deg, #32e1da, #32e1da 40%, #208cf0); }
+  background: linear-gradient(162deg, #32e1da, #32e1da 40%, #208cf0);
+  z-index: 1; }
 
 .text-logo {
   position: absolute;
   font-size: 14px;
   color: white;
   top: 5px;
-  left: -86px; }
+  left: -86px;
+  z-index: 1; }
 
 .container {
   margin: 0 auto;
@@ -3381,36 +3430,83 @@ nav {
     height: 64px; } }
 
 @font-face {
-  font-family: "Roboto";
-  src: local(Roboto Thin), url("../fonts/roboto/Roboto-Thin.woff2") format("woff2"), url("../fonts/roboto/Roboto-Thin.woff") format("woff");
-  font-weight: 100; }
+  font-family: "Colfax Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Black"), url("../fonts/colfax/Colfax-Black.woff") format("woff"); }
 
 @font-face {
-  font-family: "Roboto";
-  src: local(Roboto Light), url("../fonts/roboto/Roboto-Light.woff2") format("woff2"), url("../fonts/roboto/Roboto-Light.woff") format("woff");
-  font-weight: 300; }
+  font-family: 'Colfax Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Light"), url("../fonts/colfax/Colfax-Light.woff") format("woff"); }
 
 @font-face {
-  font-family: "Roboto";
-  src: local(Roboto Regular), url("../fonts/roboto/Roboto-Regular.woff2") format("woff2"), url("../fonts/roboto/Roboto-Regular.woff") format("woff");
-  font-weight: 400; }
+  font-family: 'Colfax Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Medium"), url("../fonts/colfax/Colfax-Medium.woff") format("woff"); }
 
 @font-face {
-  font-family: "Roboto";
-  src: local(Roboto Medium), url("../fonts/roboto/Roboto-Medium.woff2") format("woff2"), url("../fonts/roboto/Roboto-Medium.woff") format("woff");
-  font-weight: 500; }
+  font-family: 'Colfax Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Regular"), url("../fonts/colfax/Colfax-Regular.woff") format("woff"); }
 
 @font-face {
-  font-family: "Roboto";
-  src: local(Roboto Bold), url("../fonts/roboto/Roboto-Bold.woff2") format("woff2"), url("../fonts/roboto/Roboto-Bold.woff") format("woff");
-  font-weight: 700; }
+  font-family: 'Colfax Thin';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Thin"), url("../fonts/colfax/Colfax-Thin.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Black Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Black Italic"), url("../fonts/colfax/Colfax-BlackItalic.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Bold"), url("../fonts/colfax/Colfax-Bold.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Bold Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Bold Italic"), url("../fonts/colfax/Colfax-BoldItalic.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Light Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Light Italic"), url("../fonts/colfax/Colfax-LightItalic.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Medium Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Medium Italic"), url("../fonts/colfax/Colfax-MediumItalic.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Regular Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Regular Italic"), url("../fonts/colfax/Colfax-RegularItalic.woff") format("woff"); }
+
+@font-face {
+  font-family: 'Colfax Thin Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local("Colfax Thin Italic"), url("../fonts/colfax/Colfax-ThinItalic.woff") format("woff"); }
 
 a {
   text-decoration: none; }
 
 html {
   line-height: 1.5;
-  font-family: "Roboto", sans-serif;
+  font-family: "Colfax Regular", sans-serif;
   font-weight: normal;
   color: rgba(0, 0, 0, 0.87); }
   @media only screen and (min-width: 0) {
@@ -3568,12 +3664,14 @@ small {
   margin-right: 20px; }
   .card.card-keywords {
     box-shadow: 0 2px 2px 3px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
+  .card.card-hover:hover {
+    box-shadow: 0 2px 15px 10px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); }
   .card .card-title {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 300;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden; }
+    overflow: hidden;
+    height: 125px; }
     .card .card-title.activator {
       cursor: pointer; }
   .card .card-subtitle {
@@ -3641,7 +3739,9 @@ small {
       right: 0;
       top: 0;
       bottom: 0;
-      width: 100%;
+      margin-top: 15px;
+      margin-left: auto;
+      margin-right: auto;
       height: 173px; }
     .card .card-image .card-title {
       color: #fff;
@@ -3658,7 +3758,7 @@ small {
       color: inherit; }
     .card .card-content .card-title {
       display: block;
-      line-height: 32px;
+      line-height: 25px;
       margin-bottom: 8px; }
       .card .card-content .card-title i {
         line-height: 32px; }
@@ -3849,11 +3949,11 @@ small {
 .btn, .btn-large, .btn-small,
 .btn-flat {
   border: none;
-  border-radius: 25px;
+  border-radius: 0px;
   display: inline-block;
   height: 36px;
   line-height: 36px;
-  padding: 0 2rem;
+  padding: 0.2rem 2rem;
   text-transform: uppercase;
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent; }
@@ -3906,6 +4006,7 @@ small {
   .btn-large[disabled]:hover,
   .btn-flat[disabled]:hover {
     background-color: #DFDFDF !important;
+    font-weight: bold;
     color: #9F9F9F !important; }
 
 .btn, .btn-large, .btn-small,
@@ -3934,7 +4035,8 @@ small {
   transition: .2s ease-out;
   cursor: pointer; }
   .btn:hover, .btn-large:hover, .btn-small:hover {
-    background-color: #2bbbad; }
+    background-color: #238be8 !important;
+    font-weight: bold; }
 
 @keyframes MoveLeft {
   0% {
@@ -3950,12 +4052,12 @@ small {
   text-align: center;
   letter-spacing: .5px;
   transition: .2s ease-out;
-  border-radius: 25px;
+  border-radius: 0px;
   cursor: pointer;
   padding: 0px 30px;
   line-height: 32px; }
   .btn-paypal:hover {
-    background-color: #2bbbad; }
+    font-weight: bold; }
 
 .btn-floating {
   display: inline-block;
@@ -4105,12 +4207,19 @@ button.btn-floating {
 
 @media only screen and (max-width: 992px) {
   .btn-block {
+    display: block; }
+  .btn-block-limited {
     display: block; } }
 
 @media only screen and (max-width: 600px) {
   .btn-block {
     display: block;
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px; }
+  .btn-block-limited {
+    display: block;
+    width: 80%;
     margin-top: 5px;
     margin-bottom: 5px; } }
 
@@ -5123,8 +5232,8 @@ form p:last-child {
   top: 0;
   width: 20px;
   height: 20px;
-  border: 2px solid #26a69a;
-  background-color: #26a69a;
+  border: 2px solid #177FEF;
+  background-color: #177FEF;
   z-index: 0; }
 
 [type="checkbox"].filled-in.tabbed:focus + label:after {
@@ -5488,7 +5597,7 @@ input[type=range]:focus::-ms-fill-upper {
   letter-spacing: .4;
   display: inline-block; }
   .table-of-contents a:hover {
-    color: #a8a8a8;
+    color: #01060b;
     padding-left: 19px;
     border-left: 1px solid #ee6e73; }
   .table-of-contents a.active {
@@ -7114,6 +7223,18 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   font-size: 13px; }
 
 .progress_bar {
-  width: 150px;
-  height: 150px;
+  width: 300px;
+  height: 300px;
   position: relative; }
+
+.no-margin-bottom {
+  margin-bottom: 0px !important; }
+
+.show-link {
+  z-index: 1; }
+
+.margin-delete {
+  margin-top: 5px; }
+
+.cursor {
+  cursor: pointer; }

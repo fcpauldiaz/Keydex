@@ -2,6 +2,9 @@
 {% block title %} Overview {% endblock %}
 {% load filter_extras %}
 {% block content %}
+<div class="row container">
+  <h3 class="header center main-grey-text">Activity Log</h3>
+</div>
 <div class="container">
   <div class="row">
     <div class="col s13 l3 m4 offset-s3 offset-m5">
@@ -13,18 +16,16 @@
       <table class="bordered striped highlight">
         <thead class="detail-blue white-text">
           <tr>
-            <th>Last Day Indexed</th>
-            <th>Indexed</th>
-            <th>Detail</th>
+            <th>Date and time</th>
+            <th>Results</th>
           </tr>
         </thead>
 
         <tbody>
           {% for historic in data %}
-          <tr>
-            <td>{{ historic.indexed_date}}</td>
+          <tr class="cursor" onclick="window.document.location='/product/detail/{{product.uuid}}/{{historic.id|product_detail}}'">
+            <td>{{ historic.indexed_date|date:'M d Y - H:i'}}</td>
             <td>{{ historic.indexing_rate }} %</td>
-            <td><a class="btn btn-small green" href="{% url 'products_detail_product' product.uuid historic.id|product_detail %}"> Details </a></td>
           </tr>
           {% endfor %}
         </tbody>
@@ -42,11 +43,16 @@
     </div>
   </div>
   <div class="row">
+    <div class="col l4 m6 s13">
+      <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light blue-paypal btn-block">Check Now</a>
+    </div>
+  </div>
+  <div class="row">
      <div class="col l1 m2 s13">
-        <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light blue-paypal btn-block">Edit</a>
+        <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light green btn-block">Edit</a>
       </div>
-      <div class="col l1 m2 s13">
-        <a href="#modal1" id="delete-hide" class="btn-small modal-trigger waves-effect waves-light red btn-block">Delete</a>
+      <div class="col l1 m2 s13 margin-delete">
+        <a href="#modal1" id="delete-hide" class="red-text waves-effect">Delete</a>
         <div id="loader" class="preloader-wrapper small active" style="display: none;">
           <div class="spinner-layer spinner-red-only">
             <div class="circle-clipper left">
@@ -59,11 +65,6 @@
           </div>
         </div>
       </div>
-  </div>
-  <div class="row">
-    <div class="col l4 m6 s13">
-      <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light green btn-block">Check Now</a>
-    </div>
   </div>
   <div class="row">
     <div class="col l2 m1 s1 ">

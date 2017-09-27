@@ -24,6 +24,11 @@
   .button-padding { 
     margin-bottom: 20px;
   }
+  .margin-features {
+    margin-left: 5px !important;
+    margin-right: 5px;
+    padding-right: 5px !important;
+  }
 }
 @media #{$medium-and-up} {
   .card-margin {
@@ -39,24 +44,43 @@
   .navbar-icons {
     display: none;
   } 
+  .margin-features {
+    margin-left: 5px !important;
+    margin-right: 5px;
+    padding-right: 5px !important;
+  }
 }
 @media #{$large-and-up} {
   .card-margin { 
     margin-left: 5px;
     margin-right:130px !important;
  }
+ .margin-features {
+    margin-left: 10px !important;
+    margin-right: 10px;
+    padding-right: 5px !important;
+  }
 }
 @media #{$extra-large-and-up} {
   .card-margin { 
     margin-left: 5px; 
     margin-right:130px !important;
   }
+  .margin-features {
+    margin-left: 10px !important;
+    margin-right: 10px;
+    padding-right: 5px !important;
+  }
 }
+
+
+
 .capa1 {
   position: absolute;
   transform: rotate(-53deg);
   top: 36px;
   left: -130px;
+  z-index: 1;
 }
 
 .capa2 {
@@ -65,6 +89,7 @@
   height: 160px;
   transform: skewX(20deg);
   background:linear-gradient(162deg , #32e1da,#32e1da 40%, #208cf0);
+  z-index: 1;
 }
 
 .text-logo {
@@ -73,6 +98,7 @@
   color: white;
   top: 5px;
   left: -86px;
+  z-index: 1;
 }
 
 

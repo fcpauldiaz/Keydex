@@ -179,7 +179,7 @@ def product_overview(request, uuid):
   product = Product.objects.get(uuid=uuid)
   #user created this product
   if (product.user_id == request.user.id):
-    historic = ProductHistoricIndexing.objects.filter(product=product)
+    historic = ProductHistoricIndexing.objects.filter(product=product).order_by('-indexed_date')
     data = { 'data': historic, 'product': product, 'job_count': job_count, 'task_id': task_id }
     return render(request, 'product_overview.html', data)
 

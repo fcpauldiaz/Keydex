@@ -16,10 +16,6 @@ class SelectWithDisabled(Select):
         else:
             selected_html = ''
         disabled_html = ''
-        print self
-        print selected_choices
-        print option_value
-        print option_label
         if isinstance(option_label, dict):
             if dict.get(option_label, 'disabled'):
                 disabled_html = u' disabled="disabled"'

@@ -28,6 +28,6 @@ function initProgress() {
     }
   });
   bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-  bar.text.style.fontSize = '2rem';
+  bar.text.style.fontSize = '4rem';
   return bar;
 }

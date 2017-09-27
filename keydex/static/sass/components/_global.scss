@@ -383,7 +383,7 @@ table {
   &.highlight > tbody > tr {
     transition: background-color .25s ease;
     &:hover {
-      background-color: $table-striped-color;
+      background-color: $table-striped-color-hover;
     }
   }
 

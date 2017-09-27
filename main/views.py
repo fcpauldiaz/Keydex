@@ -28,7 +28,15 @@ def index(request):
     return redirect('dashboard')
   return render(
     request,
-    'index.html'
+    'new_index.html'
+  )
+
+def tutorial(request):
+  if request.user.is_authenticated() == False:
+    return redirect('dashboard')
+  return render(
+    request,
+    'tutorial.html'
   )
 
 def loginUser(request):
@@ -50,8 +58,18 @@ def loginUser(request):
     )
   elif request.method == 'POST':
     form = LoginForm(request.POST)
+    try:
+      username_or_email = request.POST['username_or_email'].lower().strip()
+      user_object = User.objects.filter(username = username_or_email) | User.objects.filter(email = username_or_email)
+      user_object = user_object[0]
+    except:
+      errors=form.add_error("password", "Invalid Credentials")
+      return render(
+        request,
+        'login.html', { 'form': form }
+      )
     user = authenticate(
-      username=request.POST['username'].lower().strip(),
+      username=user_object.username.lower().strip(),
       password=request.POST['password'],
     )
     if redirect_to != None:
@@ -254,7 +272,7 @@ def activate(request, uidb64, token):
     customers.create(user=user)
     user.save()
     login(request, user)
-    return redirect('products_add_product')
+    return redirect('tutorial')
   else:
     return render(request, 'account_activation_invalid.html')
 

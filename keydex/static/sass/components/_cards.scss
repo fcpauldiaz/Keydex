@@ -19,16 +19,22 @@
   @extend .z-depth-1;
 
   &.card-keywords {
-     box-shadow: 0 2px 2px 3px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 2px 2px 3px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+  }
+
+  &.card-hover {
+    &:hover {
+      box-shadow: 0 2px 15px 10px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+    }
   }
 
 
   .card-title {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 300;
     text-overflow: ellipsis;
-    white-space: nowrap;
     overflow: hidden;
+    height: $card-height-title;
     &.activator {
       cursor: pointer;
     }
@@ -143,7 +149,9 @@
       right: 0;
       top: 0;
       bottom: 0;
-      width: 100%;
+      margin-top: 15px;
+      margin-left: auto;
+      margin-right: auto;
       height: 173px;
     }
 
@@ -167,7 +175,7 @@
     }
     .card-title {
       display: block;
-      line-height: 32px;
+      line-height: 25px;
       margin-bottom: 8px;
 
       i {

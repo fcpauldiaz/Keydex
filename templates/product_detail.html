@@ -3,7 +3,7 @@
 {% block content %}
 <div class="row">
   <div class="col l6 offset-l3 s12 m8 offset-m2">
-  <h6 class="blue-paypal-text center">Your product was added successfully!</h6>
+  <h6 class="blue-paypal-text center">Your product has been added successfully.</h6>
   <h5 class="main-grey-text center">Here are your results!</h5>
   </div>
 </div>
@@ -12,11 +12,11 @@
       <h3 class="detail-green-text">{{indexing_data.indexed}}%</h3>
       <span class="main-grey-text card-padding"><strong>Indexed ( {{indexing_data.indexed_count}} )</strong></span>
     </div>
-    <div class="col card-panel l3 m3 s12 center offset-l1 offset-m1">
+    <div class="col card-panel l3 m3 s12 center offset-l2 offset-m2">
       <h3 class="detail-red-text">{{indexing_data.not_indexed}}%</h3>
       <span class="main-grey-text card-padding"><strong>Not indexed  ( {{indexing_data.not_indexed_count}} )</strong></span>
     </div>
-    <div class="col card-panel l3 m3 s12 center offset-l1 offset-m1">
+    <div class="col card-panel l3 m3 s12 center offset-l2 offset-m2">
       <h3 class="detail-blue-text">{{indexing_data.count}}</h3>
       <span class="main-grey-text card-padding"><strong>All Keywords</strong></span>
     </div>
@@ -26,7 +26,7 @@
         <thead class="detail-blue white-text">
           <tr>
             <th>#</th>
-            <th>Keywords</th>
+            <th>Keyword or phrase</th>
             <th>Indexed</th>
           </tr>
         </thead>
@@ -52,8 +52,6 @@
       </table>
 </div>
 <div class="row container center">
-  
-    <a href="{% url 'products_export_detail' product.uuid historic_id %}" class="btn waves-effect waves-light green button-padding">Download results to Excel</a>
     
     <a href="{% url 'dashboard' %}" class="btn waves-effect waves-light blue-paypal">Go to dashboard</a>
   

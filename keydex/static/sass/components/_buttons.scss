@@ -47,6 +47,7 @@
 
   &:hover {
     background-color: $button-disabled-background !important;
+    font-weight:bold;
     color: $button-disabled-color !important;
   }
 }
@@ -85,7 +86,8 @@
   cursor: pointer;
 
   &:hover {
-    background-color: $button-raised-background-hover;
+    background-color: $button-raised-background-hover !important;
+    font-weight:bold;
     @extend .z-depth-1-half;
   }
   &.right-move {
@@ -111,13 +113,13 @@
   letter-spacing: .5px;
   @extend .z-depth-1;
   transition: .2s ease-out;
-  border-radius: 25px;
+  border-radius: 0px;
   cursor: pointer;
   padding: 0px 30px;
   line-height: 32px;
 
   &:hover {
-    background-color: $button-raised-background-hover;
+    font-weight: bold;
     @extend .z-depth-1-half;
   }
 }
@@ -343,6 +345,9 @@ button.btn-floating {
   .btn-block {
     display: block;
   }
+  .btn-block-limited {
+    display: block;
+  }
 }
 
 
@@ -350,6 +355,12 @@ button.btn-floating {
   .btn-block {
     display: block;
     width: 100%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  } 
+  .btn-block-limited {
+    display: block;
+    width: 80%;
     margin-top: 5px;
     margin-bottom: 5px;
   } 

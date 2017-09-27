@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="description" content="We check your amazon products keywords automatically every day and sends you a report if they stop indexing so that you can take inmediate action!">
+  <meta name="keywords" content="amazon keyword checker products">
+  <meta name="robots" content="index, follow">
+  <meta name="web_author" content="Keydex Software">
+  <meta name="language" content="en">
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Check Keywords | {% block title %} {% endblock %}</title>
-
+  {% load static %}
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/materialize-social.css' %}">
   {% load sass_tags %}
   {% load static %}
   {% load raven %}
@@ -28,7 +35,8 @@
     {% block content %}
     {% endblock %}
   </div>
-
+  
+  {% include 'footer.html' %}
 
 
 
@@ -36,6 +44,7 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="{% static 'js/bin/materialize.js' %}"></script>
   <script src="{% static 'js/initial.js' %}"></script>
+  <script src="https://use.fontawesome.com/6781d34411.js"></script>
   <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
   <script>Raven.config('{% sentry_public_dsn %}').install()</script>
   <script type="text/javascript">

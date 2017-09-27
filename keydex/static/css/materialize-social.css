@@ -1,3 +1,37 @@
+.scrollmagic-pin-spacer {
+  background-color: white;
+}
+.container-image {
+  background-image:url('/static/img/dashboard.png'); 
+  display: block !important;
+}
+.image-hide {
+  display: none;
+}
+
+.video-responsive {
+  position: relative;
+  padding-bottom: 25.25% !important;
+  padding-top: 100px !important;
+  margin-bottom: 20px;
+  height: 0;
+  overflow: hidden;
+}
+ 
+.video-responsive iframe,
+.video-responsive object,
+.video-responsive embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+// ---------------------
+// SOCIAL CSS
 .btn.social > :first-child,
 .btn-large.social > :first-child,
 .col.social > :first-child {
@@ -78,8 +112,10 @@
 }
 .
 .twitter {
-  background-color: #55acee !important;
   color: #fff !important;
+}
+.twitter-background {
+  background-color: #55acee !important;
 }
 .twitter i {
   color: #fff !important;

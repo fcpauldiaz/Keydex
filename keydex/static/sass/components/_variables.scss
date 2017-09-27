@@ -62,8 +62,8 @@ $button-background-focus: lighten($secondary-color, 4%) !default;
 $button-font-size: 1rem !default;
 $button-icon-font-size: 1.3rem !default;
 $button-height: 36px !default;
-$button-padding: 0 2rem !default;
-$button-radius: 25px;
+$button-padding: 0.2rem 2rem !default;
+$button-radius: 0px;
 
 // Disabled styles
 $button-disabled-background: #DFDFDF !default;
@@ -71,7 +71,7 @@ $button-disabled-color: #9F9F9F !default;
 
 // Raised buttons
 $button-raised-background: $secondary-color !default;
-$button-raised-background-hover: lighten($button-raised-background, 5%) !default;
+$button-raised-background-hover: color("blue-paypal", "hover-state");
 $button-raised-color: #fff !default;
 
 // Paypal buttons
@@ -106,7 +106,7 @@ $card-padding: 24px !default;
 $card-bg-color: #fff !default;
 $card-link-color: color("orange", "accent-2") !default;
 $card-link-color-light: lighten($card-link-color, 20%) !default;
-
+$card-height-title: 125px;
 
 // 5. Collapsible
 // ==========================================================================
@@ -155,7 +155,7 @@ $dropdown-item-height: 50px !default;
 // 9. Fonts
 // ==========================================================================
 
-$roboto-font-path: "../fonts/roboto/" !default;
+$roboto-font-path: "../fonts/colfax/" !default;
 
 
 // 10. Forms
@@ -284,6 +284,7 @@ $tabs-bg-color: #fff !default;
 
 $table-border-color: #d0d0d0 !default;
 $table-striped-color: #E7F2FD !default;
+$table-striped-color-hover: darken(#E7F2FD, 15%) !default;
 
 
 // 19. Toasts

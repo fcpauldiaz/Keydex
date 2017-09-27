@@ -90,7 +90,7 @@ class Product(models.Model):
 class ProductHistoricIndexing(models.Model):
   product = models.ForeignKey(Product)
   indexing_rate = models.DecimalField(max_digits=5, decimal_places=2)
-  indexed_date = models.DateField(auto_now_add=True) 
+  indexed_date = models.DateTimeField(auto_now_add=True) 
   class Meta:
     db_table = 'main_product_historic_indexing'
 

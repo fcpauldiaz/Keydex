@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block title %} Step 3 {% endblock %}
 {% block content %}
-<div class="row">
-  <div class="col l6 offset-l3 s12 m8 offset-m2">
+<div class="row center">
+  <div class="col l6 offset-l4 s13 m8 offset-m2">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
          <li class="step active">
@@ -19,9 +19,12 @@
     </div>
   </div>
 </div>
+<div class="row container">
+  <h3 class="header center main-grey-text">Schedule or run manual report</h3>
+</div>
 <div class="row">
-  <div class="col offset-s2">
-    <h6 class="main-grey-text">How often do you want to check your product for indexation?</h6>
+  <div class="col offset-s2 s10 hide-run">
+    <h6 class="main-grey-text">How often do you want to check your keywords for indexation?</h6>
   </div>
   <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" data-poll-url="{% url 'poll_state'%}">
     {% csrf_token %}
@@ -41,7 +44,7 @@
         <label for="id_choices_group2_{{ forloop.counter0 }}">{{ choice.choice_label }}</label>
       </p>
       {% endfor %}
-      <div style="padding-left: 20px">
+      <div id="group3_choices"style="padding-left: 20px; display: none;">
         {% for choice in form.choices_group3 %}
         <p>
           {{ choice.tag }}
@@ -49,25 +52,15 @@
         </p>
         {% endfor %}
       </div>
+    <div class="row">
+      <div class="col offset-l6">
       <a id="save-button" class="btn waves-effect waves-light blue-paypal button-padding">Save Product
       </a>
-      <a id="saveAndRun" value="saveAndRun" class="btn waves-effect waves-light blue-paypal">Save and run indexation now</a>
-      <div class="row">
-        <div class="col l3 offset-l6 m3 offset-m3 s3 offset-s3">
-          <div id="progress" class="progress_bar center" style="display: none"></div>
-        </div>
-      </div>
-      <div id="loader" class="preloader-wrapper small active" style="display: none; margin-left: 30px;">
-   <div class="spinner-layer spinner-blue-only">
-     <div class="circle-clipper left">
-       <div class="circle"></div>
-     </div><div class="gap-patch">
-       <div class="circle"></div>
-     </div><div class="circle-clipper right">
-       <div class="circle"></div>
-     </div>
-   </div>
-      </div>
+      <input type="checkbox" class="filled-in hide-run" id="filled-in-box"/>
+      <label class="hide-run" for="filled-in-box">Run now</label>
+      </div>  
+    </div>
+    <p>
       {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -85,6 +78,11 @@
         {% endfor %}
       {% endif %}
     </form>
+    <div class="row">
+      <div class="col l3 offset-l4 m3 offset-m3 s3 offset-s1">
+        <div id="progress" class="progress_bar" style="display: none"></div>
+      </div>
+    </div>
   </div>
 {% endblock %}
 {% load static %}
@@ -123,6 +121,7 @@
           if (result.process_percent === null || result.process_percent === undefined) {
               willstop = 1;
               $('#progress').hide();
+              $('#form').show();
               task_total = -1;
               window.location = '/product/detail/'+result.uuid+'/'+(result.historic_id);
 
@@ -143,16 +142,18 @@
   };
 </script>
 <script type="text/javascript">
-  $("#saveAndRun, #save-button").on("click", function (e) {  
+  $("#save-button").on("click", function (e) {  
     e.preventDefault();
-    var idEvent = e.target.id;
-    $('#saveAndRun').hide();
+    var idEvent = '';
+    if ($('#filled-in-box')[0].checked === true) {
+      idEvent = 'saveAndRun';
+    }
+    $('.hide-run').hide();
     $('#save-button').hide();
     
     if (idEvent === 'saveAndRun') {
       $('#progress').show();
-    } else {
-      $('#loader').show();
+      $('#form').hide();
     }
 
     var form = $('#form');
@@ -171,9 +172,9 @@
         }
         else {
           Materialize.toast('Error saving', 3000);
-          $('#saveAndRun').show();
+          $('.hide-run').show();
           $('#save-button').show();
-          $('#loader').hide();
+          $('#form').show();
 
         }
       },

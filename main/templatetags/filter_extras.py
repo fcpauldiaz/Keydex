@@ -16,3 +16,7 @@ def title(title):
 @stringfilter
 def product_detail(id):
   return urlsafe_base64_encode(force_bytes(id))
+
+@register.filter
+def substract(a, b):
+  return a - b

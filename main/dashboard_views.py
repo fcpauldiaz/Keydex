@@ -18,7 +18,7 @@ from keydex.celery_app import app
 @login_required
 def dashboard(request):
   products = Product.objects.filter(user=request.user)
-  data = { 'products': products }
+  data = { 'products': products, 'product_count': len(products) }
   return render(request, 'dashboard.html', data)
 
 @login_required

@@ -100,4 +100,9 @@ urlpatterns = [
     dashboard_views.poll_state,
     name='poll_state'
   ),
+  url(
+    r'^tutorial',
+    main_views.tutorial,
+    name='tutorial'
+  )
 ]

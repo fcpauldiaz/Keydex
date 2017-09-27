@@ -1,87 +1,87 @@
 {% extends 'base.html' %}
 {% block title %} Dashboard {% endblock %}
 {% block content %}
+{% load filter_extras %}
+{% load static %}
 
 
 <div class="row container">
   <div class="col l7 s12">
-    <h2 class="inline">Welcome back,</h2><h2 class="blue-paypal-text inline">&nbsp {{request.user.first_name}}</h2>
+    <h2 class="inline">Welcome back, </h2> 
+    <h2 class="blue-paypal-text inline"> {{request.user.first_name}}</h2>
   </div>
   <div class="col l3 offset-l3 s12" style="line-height: 7">
-    <a href="{% url 'products_add_product' %}"class="btn-large waves-light waves-effect green btn-block btn right-move">
+    <a href="{% url 'products_add_product' %}" class="btn-large waves-light waves-effect green btn-block btn right-move">
       + Add product
     </a>
   </div>
 </div>
 <div class="row container">
   <div class="col l12">
-    <h5 class="inline">You have </h5><h5 class="blue-paypal-text inline">&nbsp {{ products |length}}</h5><h5 class="inline"> &nbsp products</h5>
+    {% if product_count == 1 %}
+    <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp product for indexation</h5>
+    <h5>You have 4 products left on your free trial.</h5>
+    {% elif product_count > 1 and product_count < 5 %}
+     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
+     <div></div>
+    <h5 class="inline">You have</h5>
+    <h5 class="blue-paypal-text inline"> &nbsp{{ 5|substract:product_count }}&nbsp </h5>
+    <h5 class="inline">products left on your free trial.</h5>
+    {% elif product_count == 5 %}
+     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
+    <h5> You don't have any more left on your free trial. Upgrade here to a premium plan for just $5/month and receive unlimited products!</h5>
+    {% elif product_count > 5 %}
+    <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
+    {% endif %}
   </div>
   </div>
 <div class="row container">
+  <div class="col l13">
+    <input type="text" id="search-criteria" onkeyup="search()" placeholder="Search by name or ASIN">
+  </div>
+</div>
+<div class="row container">
   {% for product in products %}
-  <div class="card col l3 m6 s12">
-    <button class="button-card btn-flat waves-light waves-effect detail-green btn-block float">{{product.indexing}} indexing</button>
+  <div id="{{product.pk}}" class="card card-hover col l3 m6 s12">
     <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="{{product.primary_img}}">
+      <a href="{% url 'products_overview_product' product.uuid %}">
+      <img class="responsive-img"  src="{{product.primary_img}}">
+      </a>
     </div>
     <div class="card-content row">
-      <div class="col l10 m10 s10">
-        <span class="card-title activator grey-text text-darken-4">{{product.product_name}}</span>  
-      </div>
-      <div class="col l2 offset-l1 m2 s2">
-        <span class="activator"><i class="material-icons right">more_vert</i></span>
+      <div class="card-title justify">
+        <a href="{% url 'products_overview_product' product.uuid %}">
+        <span data-product="{{product.pk}}" class="grey-text text-darken-4 searchable">{{product.product_name}}</span>  
+        </a>
       </div>
       <div class="col l13 m13 s13">
-        <span class="card-subtitle center grey-text disabled-text-text">Asin: {{product.asin}}</span>
+        <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">Asin: {{product.asin}}</span>
       </div>
-      <p><a  href="{% url 'products_overview_product' product.uuid %}" class="btn-large waves-light waves-effect blue-paypal btn-block">View Details</a></p>
-      <br>
-      <p><a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn-large waves-light waves-effect green btn-block">Check now</a></p>
-    </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Product {{ forloop.counter }}<i class="material-icons right">close</i></span>
-      <p>{{product.product_name}}</p>
-      <a href="#modal{{ forloop.counter }}" class="btn l modal-trigger waves-effect waves-light red btn-block delete-hide">Delete</a>
-       <div class="preloader-wrapper small active dashboard-loader" style="display: none;">
-          <div class="spinner-layer spinner-red-only center">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-          </div>
-        </div>
-    </div>
-  </div>
-    <!-- Modal Structure -->
-  <div id="modal{{ forloop.counter }}" class="modal container">
-    <div class="modal-content">
-      <h4>Delete Product</h4>
-      <p>All keywords and associated indexing information will be deleted</p>
-    </div>
-    <div class="modal-footer">
-      <form method="post" action="{% url 'products_delete_product' product.pk %}">
-       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
-        {% csrf_token %}
-        <button type="submit" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text delete">Yes, Delete all</button>
-      </form>
-    
+      <div class="col l13 m13 s13">
+       <button class="button-card btn-flat waves-light waves-effect detail-green btn-block-limited float">{{product.indexing}} indexing</button>
+      </div>
     </div>
   </div>
   {% endfor %}
+  {% if products|length == 0 %}
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  {% endif %}
 </div>
 {% endblock %}
 {% block js %}
+<script src="{% static 'js/search.js' %}"> </script>
 <script>
  $(document).ready(function(){
     $('.modal').modal();
-    $(".delete").on("click", function (e) {
-      $(".delete-hide").hide();
-      $('.preloader-wrapper').show();
-    });
   });
 </script>
 {% endblock %}
