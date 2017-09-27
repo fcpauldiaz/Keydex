@@ -2964,14 +2964,6 @@ input[type=range]:focus::-ms-fill-upper {
     background: transparent !important
 }
 
-.tablet-preview-sizer.l .tablet-preview {
- //   background-image: url("tablet-white.png")
-}
-
-.tablet-preview-sizer .tablet-preview {
-    //background-image: url("tablet.png")
-}
-
 .tablet-preview-sizer .image-container {
     width: 84%;
     top: 10%;
@@ -3065,9 +3057,6 @@ input[type=range]:focus::-ms-fill-upper {
     padding-bottom: 204%
 }
 
-.phone-preview-sizer.fc .phone-preview {
-    //background-image: url("iphone.png")
-}
 
 .phone-preview-sizer.fc .image-container {
     width: 89%;
@@ -3076,9 +3065,6 @@ input[type=range]:focus::-ms-fill-upper {
     bottom: 11%
 }
 
-.phone-preview-sizer .phone-preview {
-    //background-image: url("nexus5x.png")
-}
 
 .phone-preview-sizer .image-container {
     width: 92%;
