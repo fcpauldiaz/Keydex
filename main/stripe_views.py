@@ -6,6 +6,7 @@ from pinax.stripe.actions import subscriptions, customers
 from django.http import JsonResponse
 from django.dispatch import receiver
 from pinax.stripe.signals import WEBHOOK_SIGNALS
+from datetime import datetime
 
 import stripe
 import json
@@ -37,6 +38,11 @@ def process_charge(request):
     valid = subscriptions.is_valid(subs)
   return JsonResponse({'valid': valid })
 
+
+def xstr(s):
+  if s is None:
+    return 'NA'
+  return str(s)
 @receiver(WEBHOOK_SIGNALS["invoice.payment_succeeded"])
 def handle_payment_succeeded(sender, event, **kwargs):
   print event.kind
@@ -56,7 +62,7 @@ def handle_coupon_created(sender, event, **kwargs):
     print type(data['created'])
     print type(data['percent_off'])
     print type(data['amount_off'])
-    print type(data['currency'])
+    print type(xstr(data['currency']))
     print type(data['duration'])
     print type(data['duration_in_months'])
     print type(data['livemode'])
@@ -66,10 +72,10 @@ def handle_coupon_created(sender, event, **kwargs):
     print type(data['valid'])
     cp = Coupon(
       stripe_id=data['id'],
-      created_at=data['created'],
+      created_at=datetime.fromtimestamp(data['created']),
       percent_off=data['percent_off'],
       amount_off=data['amount_off'],
-      currency=data['currency'],
+      currency=xstr(data['currency']),
       duration=data['duration'],
       duration_in_months=data['duration_in_months'],
       livemode=data['livemode'],
