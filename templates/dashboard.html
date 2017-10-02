@@ -32,10 +32,10 @@
     <h5 class="inline">You have</h5>
     <h5 class="blue-paypal-text inline"> &nbsp{{ 5|substract:product_count }}&nbsp </h5>
     <h5 class="inline">products left on your free trial.</h5>
-    {% elif product_count == 5 %}
+    {% elif product_count >= 5 and valid == False %}
      <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
     <h5> You don't have any more left on your free trial. Upgrade here to a premium plan for just $5/month and receive unlimited products!</h5>
-    {% elif product_count > 5 %}
+    {% elif product_count >= 5 and valid == True %}
     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
     {% endif %}
   </div>
@@ -108,7 +108,7 @@
                 <div class="group">
                   <label>
                     <span>Coupon</span>
-                    <input name="coupon" class="field" placeholder="Coupon" />
+                    <input name="coupon" class="field" placeholder="Coupon Code" />
                   </label>
                 </div>
                 <div class="input-field col s13 m13 l13">
@@ -120,18 +120,23 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="waves-effect waves-green btn-flat green center" style="width: 100%">Subscribe</button>
-    <div class="preloader-wrapper active">
-    <div class="spinner-layer spinner-orange-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
+    <button id="submitbutton" type="submit" class="waves-effect waves-green btn-flat green center" style="width: 100%">Subscribe</button>
+    <div id="loader" class="row hidden">
+      <div class="col center offset-l6">
+         <div class="preloader-wrapper active">
+          <div class="spinner-layer spinner-orange-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+   
   </form>
   </div>
 </div>
@@ -175,8 +180,10 @@ card.addEventListener('change', function(event) {
   var displayError = document.getElementById('card-errors');
   if (event.error) {
     displayError.textContent = event.error.message;
+    $('#submitbutton').addClass('disabled');
   } else {
     displayError.textContent = '';
+    $('#submitbutton').removeClass('disabled');
   }
 });
 
@@ -184,6 +191,8 @@ card.addEventListener('change', function(event) {
 var form = document.getElementById('payment-form');
 form.addEventListener('submit', function(event) {
   event.preventDefault();
+  $('#loader').show();
+  $('#submitbutton').hide();
   var extraDetails = {
     name: form.querySelector('input[name=cardholder-name]').value,
   };
@@ -203,20 +212,23 @@ form.addEventListener('submit', function(event) {
         dataType: 'json',
         success: function (data) {
           if (data.valid === true) {
-            Materialize.toast('Settings updated', 3000);
-            $('#save').show();
+            Materialize.toast('Payment Accepted', 3000);
             $('#loader').hide();
+            $('#submitbutton').show();
+            $('#modal1').closeModal();
+            Materialize.toast('Upgrading Account', 2000);
+            location.reload();
           }
           else {
             Materialize.toast('An error ocurred', 3000);
-            $('#save').show();
             $('#loader').hide();
+            $('#submitbutton').show();
           }
         },
         error: function(request, status, error) {
           Materialize.toast('Server error', 3000);
-          $('#save').show();
           $('#loader').hide();
+          $('#submitbutton').show();
         }
       });
     }
