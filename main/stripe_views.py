@@ -1,4 +1,4 @@
-from pinax.stripe.models import Customer, Card, Plan
+from pinax.stripe.models import Customer, Card, Plan, Coupon
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from pinax.stripe.actions.sources import create_card, update_card
@@ -39,33 +39,42 @@ def process_charge(request):
 
 @receiver(WEBHOOK_SIGNALS["invoice.payment_succeeded"])
 def handle_payment_succeeded(sender, event, **kwargs):
-  print sender
   print event.kind
   print event.livemode
   print event.customer
   print event.webhook_message
-  print event.validated_mesage
+  print event.validated_message
   print event.valid
-  print event.prcessed
-  print event.request
-  print event.pending_webhooks
-  print event.api_version
   print kwargs
   pass  # do what it is you want to do here
 
 @receiver(WEBHOOK_SIGNALS["coupon.created"])
 def handle_coupon_created(sender, event, **kwargs):
-  print sender
-  print event.kind
-  print event.livemode
-  print event.customer
-  print event.webhook_message
-  print event.validated_mesage
-  print event.valid
-  print event.prcessed
-  print event.request
-  print event.pending_webhooks
-  print event.api_version
-  print kwargs
+  if event.valid == True:
+    data = event.validated_message['data']['object']
+    cp = Coupon.objects.create(
+      stripe_id=data['id'],
+      created_at=data['created'],
+      percent_off=data['percent_off'],
+      amount_off=data['amount_off'],
+      currency=data['currency'],
+      duration=['duration'],
+      duration_in_months=['duration_in_months'],
+      livemode=data['livemode'],
+      max_redemptions=data['max_redemptions'],
+      reedem_by=data['reedem_by'],
+      times_redeemed=data['times_redeemed'],
+      valid=data['valid']
+    )
+    cp.save()
   pass  # do what it is you want to do here
 
+@receiver(WEBHOOK_SIGNALS["coupon.deleted"])
+def handle_coupon_deleted(sender, event, **kwargs):
+  if event.valid == True:
+    data = event.validated_message['data']['object']
+    cp = Coupon.objects.get(
+      stripe_id=data['id']
+    )
+    cp.remove()
+  pass  # do what i
