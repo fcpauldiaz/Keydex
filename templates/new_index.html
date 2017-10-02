@@ -20,6 +20,13 @@
 </head>
 
   <body class="white">
+    {% if messages %}
+      <ul class="messages">
+          {% for message in messages %}
+          <li style="display:none" {% if message.tags %} class="{{ message.tags }} message-body"{% endif %}>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
 
     <!-- Navbar -->
 <nav class="light-blue lighten-1" role="navigation">
@@ -159,6 +166,8 @@
   
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/bin/materialize.js' %}"></script>
+   <script src="{% static 'js/initial.js' %}"></script>
     <script src="{% static 'js/bin/animation.js' %}"></script>
     <script src="https://use.fontawesome.com/6781d34411.js"></script>
     <script>

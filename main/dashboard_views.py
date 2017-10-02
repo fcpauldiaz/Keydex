@@ -1,24 +1,37 @@
 from __future__ import absolute_import, unicode_literals
 from django.shortcuts import render, redirect, reverse
-from main.models import Profile, Product, Keywords
+from main.models import Profile, Product, Keywords, Subscription
 from django.contrib.auth.decorators import login_required
 from main.scraper.crawler import parallel_crawl, fetch_listing, queue_crawl
 from main.product_helper import save_product_indexing
-from main.forms import SettingsForm
+from main.forms import SettingsForm, PlanForm
 from django.http import JsonResponse
 from pinax.stripe.actions.sources import create_card, update_card
 from pinax.stripe.models import Customer, Card
 from pinax.stripe.actions import subscriptions
 from celery.result import AsyncResult, ResultSet, GroupResult
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.conf import settings
 from django.utils.encoding import force_bytes, force_text
+from pinax.stripe.actions import subscriptions
 import json
 from keydex.celery_app import app
 
 @login_required
 def dashboard(request):
+  key = settings.PINAX_STRIPE_PUBLIC_KEY
   products = Product.objects.filter(user=request.user)
-  data = { 'products': products, 'product_count': len(products) }
+  customer = Customer.objects.filter(user_id=request.user).first()
+  valid_subscription = False
+  if customer != None:
+    valid_subscription = subscriptions.has_active_subscription(customer=customer)
+  form = PlanForm()
+  data = { 'products': products, 
+    'product_count': len(products), 
+    'valid': valid_subscription, 
+    'form': form,
+    'key': key
+  }
   return render(request, 'dashboard.html', data)
 
 @login_required
@@ -35,7 +48,6 @@ def dashboard_settings(request):
   if request.method == 'GET':
     profile = Profile.objects.get(user_id=request.user)
     initial_dict = dict()
-    
     if profile.billing_address != None:
       initial_dict = { 'billing_address': profile.billing_address }      
         
