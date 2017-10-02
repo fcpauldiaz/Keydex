@@ -20,6 +20,9 @@ import json
 
 @login_required
 def add_product(request):
+  valid_subs = check_valid_subscription(request.user)
+  if (valid_subs == False):
+    return redirect('dashboard')
   if request.method == 'POST':
     form = AsinForm(request.POST)
     if form.is_valid():
@@ -56,6 +59,9 @@ def add_product(request):
 
 @login_required
 def add_keywords(request, code, asin):
+  valid_subs = check_valid_subscription(request.user)
+  if (valid_subs == False):
+    return redirect('dashboard')
   if request.method == 'GET':
     asin = asin.strip()
     marketplace = Marketplace.objects.get(country_code=code)
@@ -83,6 +89,9 @@ def add_keywords(request, code, asin):
 
 @login_required
 def save_product(request):
+  valid_subs = check_valid_subscription(request.user)
+  if (valid_subs == False):
+    return redirect('dashboard')
   try:
     data = {
       'keywords': request.session['keywords'],

@@ -3,17 +3,22 @@
 {% block content %}
 {% load filter_extras %}
 {% load static %}
-
-
 <div class="row container">
   <div class="col l7 s12">
     <h2 class="inline">Welcome back, </h2> 
     <h2 class="blue-paypal-text inline"> {{request.user.first_name}}</h2>
   </div>
   <div class="col l3 offset-l3 s12" style="line-height: 7">
-    <a href="{% url 'products_add_product' %}" class="btn-large waves-light waves-effect green btn-block btn right-move">
+    {% if product_count >= 5 and valid == False %}
+    <a href="#modal1" class="btn-large waves-light waves-effect orange btn-block btn right-move">
+    Upgrade Account
+    </a>
+    {% else %}
+       <a href="{% url 'products_add_product' %}" class="btn-large waves-light waves-effect green btn-block btn right-move">
       + Add product
     </a>
+    {% endif %}
+ 
   </div>
 </div>
 <div class="row container">
@@ -76,12 +81,153 @@
   <br>
   {% endif %}
 </div>
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Upgrade Your Account</h4>
+    
+      <div class="demo-container">
+        <div class="card-wrapper"></div>
+
+        <div class="form-container active">
+            <form method="post" id="payment-form" data-settings-url="{% url 'stripe_charge' %}">
+              {% csrf_token %}
+                <div class="group">
+                  <label>
+                    <span>Name</span>
+                    <input name="cardholder-name" class="field" placeholder="Jane Doe" value="{{request.user.first_name}} {{request.user.last_name}}"/>
+                  </label>
+                </div>
+                <div class="group">
+                  <label>
+                    <span>Card</span>
+                    <div id="card-element" class="field"></div>
+                  </label>
+                </div>
+                <div id="card-errors" class="error-stripe" role="alert"></div>
+                <div class="group">
+                  <label>
+                    <span>Coupon</span>
+                    <input name="coupon" class="field" placeholder="Coupon" />
+                  </label>
+                </div>
+                <div class="input-field col s13 m13 l13">
+                  {{form.plan}}
+                  <label>Plan</label>
+                </div>
+            
+        </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="waves-effect waves-green btn-flat green center" style="width: 100%">Subscribe</button>
+    <div class="preloader-wrapper active">
+    <div class="spinner-layer spinner-orange-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+  </form>
+  </div>
+</div>
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/search.js' %}"> </script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  // Create a Stripe client
+var stripe = Stripe('{{key}}');
+
+// Create an instance of Elements
+var elements = stripe.elements();
+
+// Custom styling can be passed to options when creating an Element.
+var style = {
+  base: {
+    color: '#32325d',
+    lineHeight: '24px',
+    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontSmoothing: 'antialiased',
+    fontSize: '16px',
+    '::placeholder': {
+      color: '#aab7c4'
+    }
+  },
+  invalid: {
+    color: '#fa755a',
+    iconColor: '#fa755a'
+  }
+};
+
+// Create an instance of the card Element
+var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>
+card.mount('#card-element');
+
+// Handle real-time validation errors from the card Element.
+card.addEventListener('change', function(event) {
+  var displayError = document.getElementById('card-errors');
+  if (event.error) {
+    displayError.textContent = event.error.message;
+  } else {
+    displayError.textContent = '';
+  }
+});
+
+// Handle form submission
+var form = document.getElementById('payment-form');
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  var extraDetails = {
+    name: form.querySelector('input[name=cardholder-name]').value,
+  };
+  stripe.createToken(card, extraDetails).then(function(result) {
+    if (result.error) {
+      // Inform the user if there was an error
+      var errorElement = document.getElementById('card-errors');
+      errorElement.textContent = result.error.message;
+    } else {
+      // Send the token to your server
+      
+      form = $('#payment-form');
+      $.ajax({
+        url: form.attr("data-settings-url"),
+        type : "POST",
+        data: form.serialize() + '&token='+ JSON.stringify(result.token),
+        dataType: 'json',
+        success: function (data) {
+          if (data.valid === true) {
+            Materialize.toast('Settings updated', 3000);
+            $('#save').show();
+            $('#loader').hide();
+          }
+          else {
+            Materialize.toast('An error ocurred', 3000);
+            $('#save').show();
+            $('#loader').hide();
+          }
+        },
+        error: function(request, status, error) {
+          Materialize.toast('Server error', 3000);
+          $('#save').show();
+          $('#loader').hide();
+        }
+      });
+    }
+  });
+});
+
+</script>
 <script>
  $(document).ready(function(){
     $('.modal').modal();
+    $('select').material_select();
   });
 </script>
 {% endblock %}

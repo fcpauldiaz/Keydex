@@ -2,6 +2,7 @@ from django.conf.urls import url
 from main import views as main_views
 from main import product_views, dashboard_views
 from main import export_data as export_views
+from main import stripe_views
 
 urlpatterns = [
   url(
@@ -104,5 +105,10 @@ urlpatterns = [
     r'^tutorial',
     main_views.tutorial,
     name='tutorial'
+  ),
+  url(
+    r'^charge',
+    stripe_views.process_charge,
+    name='stripe_charge'
   )
 ]

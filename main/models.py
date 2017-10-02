@@ -102,7 +102,7 @@ class Keywords(models.Model):
 
 class Subscription(models.Model):
   user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
-  valid_payment = models.BooleanField()
+  valid_subscription = models.BooleanField()
   trialUser = models.BooleanField()
   creditCard = models.CharField(max_length=19)
   expiration_card_date = models.CharField(max_length=5)

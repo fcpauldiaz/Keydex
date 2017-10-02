@@ -5,6 +5,7 @@ from main.models import User, ReportingPeriod, Marketplace
 from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm
 from validator import validate_email_unique
+from pinax.stripe.models import Plan
 from main.custom_widget import SelectWithDisabled
 
 class MarketPlaceModelField(forms.ModelChoiceField):
@@ -32,6 +33,9 @@ class ChangePasswordForm(forms.Form):
 class AsinForm(forms.Form):
   select_choices = MarketPlaceModelField(required=False, queryset=Marketplace.objects.all(), widget=SelectWithDisabled(attrs={'required': True}), empty_label="Choose your country Marketplace", initial=1)
   asin = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Eg: 3801209'}))
+
+class PlanForm(forms.Form):
+  plan = forms.ModelChoiceField(queryset=Plan.objects.all(), widget=forms.Select(), initial=1)
 
 class ProductSave(forms.Form):
   CHOICES_GROUP2=[

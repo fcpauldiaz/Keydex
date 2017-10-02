@@ -1,4 +1,16 @@
-from models import  Keywords, ProductHistoricIndexing
+from models import  Keywords, ProductHistoricIndexing, Product
+from pinax.stripe.actions import subscriptions
+from pinax.stripe.models import Customer
+
+def check_valid_subscription(user):
+  products = Product.objects.filter(user=user).count()
+  if (products < 5):
+    return True
+  customer = Customer.objects.filter(user_id=user).first()
+  valid_subscription = False
+  if customer != None:
+    valid_subscription = subscriptions.has_active_subscription(customer=customer)
+  return valid_subscription
 
 def save_product_indexing(result, product):
   indexed = 0.0
