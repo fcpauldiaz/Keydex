@@ -52,6 +52,18 @@ def handle_payment_succeeded(sender, event, **kwargs):
 def handle_coupon_created(sender, event, **kwargs):
   if event.valid == True:
     data = event.validated_message['data']['object']
+    print type(data['id'])
+    print type(data['created'])
+    print type(data['percent_off'])
+    print type(data['amount_off'])
+    print type(data['currency'])
+    print type(data['duration'])
+    print type(data['duration_in_months'])
+    print type(data['livemode'])
+    print type(data['max_redemptions'])
+    print type(data['redeem_by'])
+    print type(data['times_redeemed'])
+    print type(data['valid'])
     cp = Coupon(
       stripe_id=data['id'],
       created_at=data['created'],
