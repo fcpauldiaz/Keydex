@@ -14,7 +14,6 @@ from django.template import loader
 from django.contrib import messages
 import uuid
 from user_helper import validate_email #email validation
-from pinax.stripe.actions import customers
 from django.views.defaults import page_not_found, server_error
 from django.template.response import TemplateResponse
 
