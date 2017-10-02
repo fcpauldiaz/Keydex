@@ -52,21 +52,22 @@ def handle_payment_succeeded(sender, event, **kwargs):
 def handle_coupon_created(sender, event, **kwargs):
   if event.valid == True:
     data = event.validated_message['data']['object']
-    cp = Coupon.objects.create(
+    cp = Coupon(
       stripe_id=data['id'],
       created_at=data['created'],
       percent_off=data['percent_off'],
       amount_off=data['amount_off'],
       currency=data['currency'],
-      duration=['duration'],
-      duration_in_months=['duration_in_months'],
+      duration=data['duration'],
+      duration_in_months=data['duration_in_months'],
       livemode=data['livemode'],
       max_redemptions=data['max_redemptions'],
-      reedem_by=data['reedem_by'],
+      redeem_by=data['redeem_by'],
       times_redeemed=data['times_redeemed'],
       valid=data['valid']
     )
     cp.save()
+    print cp
   pass  # do what it is you want to do here
 
 @receiver(WEBHOOK_SIGNALS["coupon.deleted"])
