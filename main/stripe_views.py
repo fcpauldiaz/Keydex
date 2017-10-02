@@ -40,14 +40,32 @@ def process_charge(request):
 @receiver(WEBHOOK_SIGNALS["invoice.payment_succeeded"])
 def handle_payment_succeeded(sender, event, **kwargs):
   print sender
-  print event
+  print event.kind
+  print event.livemode
+  print event.customer
+  print event.webhook_message
+  print event.validated_mesage
+  print event.valid
+  print event.prcessed
+  print event.request
+  print event.pending_webhooks
+  print event.api_version
   print kwargs
   pass  # do what it is you want to do here
 
 @receiver(WEBHOOK_SIGNALS["coupon.created"])
 def handle_coupon_created(sender, event, **kwargs):
-    print sender
-    print event
-    print kwargs
-    pass  # do what it is you want to do here
+  print sender
+  print event.kind
+  print event.livemode
+  print event.customer
+  print event.webhook_message
+  print event.validated_mesage
+  print event.valid
+  print event.prcessed
+  print event.request
+  print event.pending_webhooks
+  print event.api_version
+  print kwargs
+  pass  # do what it is you want to do here
 
