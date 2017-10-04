@@ -110,5 +110,10 @@ urlpatterns = [
     r'^charge',
     stripe_views.process_charge,
     name='stripe_charge'
+  ),
+  url(
+    r'^coupon/check/',
+    stripe_views.check_valid_coupon,
+    name='stripe_check_coupon'
   )
 ]

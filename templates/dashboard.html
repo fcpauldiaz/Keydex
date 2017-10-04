@@ -90,12 +90,12 @@
         <div class="card-wrapper"></div>
 
         <div class="form-container active">
-            <form method="post" id="payment-form" data-settings-url="{% url 'stripe_charge' %}">
+            <form method="post" id="payment-form" data-settings-url="{% url 'stripe_charge' %}" data-coupon-url="{% url 'stripe_check_coupon' %}">
               {% csrf_token %}
                 <div class="group">
                   <label>
                     <span>Name</span>
-                    <input name="cardholder-name" class="field" placeholder="Jane Doe" value="{{request.user.first_name}} {{request.user.last_name}}"/>
+                    <input name="cardholder-name" class="field black-text" placeholder="Jane Doe" value="{{request.user.first_name}} {{request.user.last_name}}"/>
                   </label>
                 </div>
                 <div class="group">
@@ -108,12 +108,17 @@
                 <div class="group">
                   <label>
                     <span>Coupon</span>
-                    <input name="coupon" class="field" placeholder="Coupon Code" />
+                    <input name="coupon" class="field black-text" placeholder="Coupon Code" />
                   </label>
                 </div>
                 <div class="input-field col s13 m13 l13">
                   {{form.plan}}
                   <label>Plan</label>
+                </div>
+                 <div class="group">
+                  <label>
+                    <h5 id="showTotal" class="black-text hidden">Total: </h5>
+                  </label>
                 </div>
             
         </div>
@@ -201,6 +206,9 @@ form.addEventListener('submit', function(event) {
       // Inform the user if there was an error
       var errorElement = document.getElementById('card-errors');
       errorElement.textContent = result.error.message;
+      $('#loader').hide();
+      $('#submitbutton').show();
+    
     } else {
       // Send the token to your server
       
@@ -240,6 +248,30 @@ form.addEventListener('submit', function(event) {
  $(document).ready(function(){
     $('.modal').modal();
     $('select').material_select();
+    $('input[name=coupon]').change(function(event) {
+      event.preventDefault();
+      form = $('#payment-form');
+       $.ajax({
+        url: form.attr("data-coupon-url"),
+        type : "POST",
+        data: form.serialize(),
+        dataType: 'json',
+        success: function (data) {
+          if (data.valid_coupon === true) {
+            $('#showTotal').text('Total: ' + data.total_amount + ' with discount applied');
+            $('#showTotal').show();
+          }
+          else {
+          }
+        },
+        error: function(request, status, error) {
+          Materialize.toast('Server error', 3000);
+          console.log(error);
+        }
+      });
+
+
+    });
   });
 </script>
 {% endblock %}
