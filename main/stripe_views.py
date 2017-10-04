@@ -3,6 +3,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from pinax.stripe.actions.sources import create_card, update_card
 from pinax.stripe.actions import subscriptions, customers
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.dispatch import receiver
 from pinax.stripe.signals import WEBHOOK_SIGNALS
@@ -11,7 +12,7 @@ from datetime import datetime
 import stripe
 import json
 
-
+@login_required
 def process_charge(request):
   if request.is_ajax():
     card_dict = json.loads(request.POST.get('token'))
@@ -38,11 +39,30 @@ def process_charge(request):
     valid = subscriptions.is_valid(subs)
   return JsonResponse({'valid': valid })
 
+@login_required
+def check_valid_coupon(request):
+  if request.is_ajax():
+    coupon = request.POST['coupon']
+    cp = Coupon.objects.filter(stripe_id=coupon).first()
+    if cp == None:
+      return JsonResponse({ 'valid_coupon': False })
+    if (cp.valid == True):
+      plan = Plan.objects.filter(id=request.POST['plan']).first()
+      if plan == None:
+        return JsonResponse({ 'valid_coupon': False })
+      percent = cp.percent_off/100.0
+      total = float(plan.amount) - (float(plan.amount) * percent)
+      return JsonResponse({ 'valid_coupon': True, 'total_amount': format(total, '.2f') })
+    return JsonResponse({ 'valid_coupon': False })
+
+
+
 
 def xstr(s):
   if s is None:
     return 'NA'
   return str(s)
+
 @receiver(WEBHOOK_SIGNALS["invoice.payment_succeeded"])
 def handle_payment_succeeded(sender, event, **kwargs):
   print event.kind
