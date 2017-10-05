@@ -35,7 +35,7 @@ class AsinForm(forms.Form):
   asin = forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Eg: 3801209'}))
 
 class PlanForm(forms.Form):
-  plan = forms.ModelChoiceField(queryset=Plan.objects.all(), widget=forms.Select(), initial=1)
+  plan = forms.ModelChoiceField(queryset=Plan.objects.all(), widget=forms.Select(), initial=2)
 
 class ProductSave(forms.Form):
   CHOICES_GROUP2=[
@@ -53,8 +53,6 @@ class ProductSave(forms.Form):
   choices_group3 = forms.ChoiceField(required=False, choices=CHOICES_GROUP3, widget=forms.RadioSelect(attrs={'group':'group3', 'class':'with-gap', 'required': False}))
 
 class SettingsForm(forms.ModelForm):
-  billing_address = forms.CharField(widget=forms.TextInput(attrs={'maxlength':100}))
-  credit_card_name = forms.CharField(widget=forms.TextInput(attrs={'maxlength':30}))
   class Meta:
     model = User
     fields = ('first_name', 'last_name', 'username', 'email')

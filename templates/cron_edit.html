@@ -49,9 +49,14 @@
         </p>
         {% endfor %}
       </div>
-      <a href="{% url 'products_edit_product' product.uuid %}" class="btn waves-light waves-effect green btn-block">Go Back</a>
-      <button type="submit" value="update" class="btn waves-effect waves-light blue-paypal">Update</button>
-      <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-light waves-effect green btn-block">Check now</a>
+      <div class="row">
+        <div class="col center offset-l4 offset-m1">
+          <a href="{% url 'products_edit_product' product.uuid %}" class="btn waves-light waves-effect green btn-block">Go Back</a>
+          <button type="submit" value="update" class="btn waves-effect waves-light blue-paypal btn-block">Update</button>
+          <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-light waves-effect green btn-block">Check now</a>
+        </div>
+      </div>
+      
       {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
