@@ -3,8 +3,8 @@
 {% block content %}
 {% load raven %}
 <div class="row container">
-  <div class="col l10 offset-l3 s12 m8 offset-m2">
-  <h3 class=lue-paypal-text center>You've encountered an error, oh noes!</h3>
+  <div class="col l13 offset-l3 s12 m8 offset-m2">
+  <h3 class="center">You've encountered an error, oh noes!</h3>
   {% if request.sentry.id %}
       <p>If you need assistance, you may reference this error as
       <strong>{{ request.sentry.id }}</strong>.</p>
