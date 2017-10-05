@@ -23,26 +23,29 @@ def process_charge(request):
       customer = customers.create(user=request.user)
     plan = Plan.objects.get(id=request.POST['plan'])
     coupon = request.POST['coupon']
-    if coupon == None or coupon == '':
-      subs = subscriptions.create(
-        customer=customer,
-        plan=plan.stripe_id,
-        token=token
-      )
-    else:
-      subs = subscriptions.create(
-        customer=customer,
-        plan=plan.stripe_id,
-        token=token,
-        coupon=coupon
-      )
-    valid = subscriptions.is_valid(subs)
+    try:
+      if coupon == None or coupon == '':
+        subs = subscriptions.create(
+          customer=customer,
+          plan=plan.stripe_id,
+          token=token
+        )
+      else:
+        subs = subscriptions.create(
+          customer=customer,
+          plan=plan.stripe_id,
+          token=token,
+          coupon=coupon
+        )
+      valid = subscriptions.is_valid(subs)
+    except Exception as e:
+      return JsonResponse({ 'valid': False, 'message': e.message })
   return JsonResponse({'valid': valid })
 
 @login_required
 def check_valid_coupon(request):
   if request.is_ajax():
-    coupon = request.POST['coupon']
+    coupon = request.POST['coupon'].strip().upper()
     cp = Coupon.objects.filter(stripe_id=coupon).first()
     if cp == None:
       return JsonResponse({ 'valid_coupon': False })

@@ -34,7 +34,8 @@
     <h5 class="inline">products left on your free trial.</h5>
     {% elif product_count >= 5 and valid == False %}
      <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
-    <h5> You don't have any more left on your free trial. Upgrade here to a premium plan for just $5/month and receive unlimited products!</h5>
+    <h5> You don't have any more left on your free trial.  <a href="#modal1" class="">
+    Upgrade here </a>to a premium plan for just $5/month and receive unlimited products!</h5>
     {% elif product_count >= 5 and valid == True %}
     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
     {% endif %}
@@ -104,11 +105,11 @@
                     <div id="card-element" class="field"></div>
                   </label>
                 </div>
-                <div id="card-errors" class="error-stripe" role="alert"></div>
+                <div id="card-errors" class="error-stripe red-text" role="alert"></div>
                 <div class="group">
                   <label>
                     <span>Coupon</span>
-                    <input name="coupon" class="field black-text" placeholder="Coupon Code" />
+                    <input name="coupon" class="field black-text uppercase" placeholder="Coupon Code" />
                   </label>
                 </div>
                 <div class="input-field col s13 m13 l13">
@@ -211,24 +212,24 @@ form.addEventListener('submit', function(event) {
     
     } else {
       // Send the token to your server
-      
-      form = $('#payment-form');
+      formpay = $('#payment-form');
       $.ajax({
-        url: form.attr("data-settings-url"),
+        url: formpay.attr("data-settings-url"),
         type : "POST",
-        data: form.serialize() + '&token='+ JSON.stringify(result.token),
+        data: formpay.serialize() + '&token='+ JSON.stringify(result.token),
         dataType: 'json',
         success: function (data) {
           if (data.valid === true) {
             Materialize.toast('Payment Accepted', 3000);
             $('#loader').hide();
             $('#submitbutton').show();
-            $('#modal1').closeModal();
-            Materialize.toast('Upgrading Account', 2000);
+            $('#modal1').modal('close');
+            Materialize.toast('Upgrading Account', 3000);
             location.reload();
           }
           else {
-            Materialize.toast('An error ocurred', 3000);
+            var errorElement = document.getElementById('card-errors');
+            errorElement.textContent = data.message;
             $('#loader').hide();
             $('#submitbutton').show();
           }
@@ -249,19 +250,25 @@ form.addEventListener('submit', function(event) {
     $('.modal').modal();
     $('select').material_select();
     $('input[name=coupon]').change(function(event) {
-      event.preventDefault();
-      form = $('#payment-form');
+      console.log('change')
+      $('#loader').show();
+      $('#submitbutton').hide();
+      formpay = $('#payment-form');
        $.ajax({
-        url: form.attr("data-coupon-url"),
+        url: formpay.attr("data-coupon-url"),
         type : "POST",
-        data: form.serialize(),
+        data: formpay.serialize(),
         dataType: 'json',
         success: function (data) {
           if (data.valid_coupon === true) {
             $('#showTotal').text('Total: ' + data.total_amount + ' with discount applied');
             $('#showTotal').show();
+            $('#loader').hide();
+            $('#submitbutton').show();
           }
           else {
+            $('#loader').hide();
+            $('#submitbutton').show();
           }
         },
         error: function(request, status, error) {

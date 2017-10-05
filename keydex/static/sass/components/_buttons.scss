@@ -86,7 +86,6 @@
   cursor: pointer;
 
   &:hover {
-    background-color: $button-raised-background-hover !important;
     font-weight:bold;
     @extend .z-depth-1-half;
   }
@@ -119,6 +118,7 @@
   line-height: 32px;
 
   &:hover {
+    background-color: $button-raised-background-hover !important;
     font-weight: bold;
     @extend .z-depth-1-half;
   }

@@ -51,8 +51,11 @@ def dashboard_settings(request):
     if profile.billing_address != None:
       initial_dict = { 'billing_address': profile.billing_address }      
         
-    c = Customer.objects.get(user_id=request.user)
-    card = Card.objects.filter(customer_id=c.id)
+    c = Customer.objects.filter(user_id=request.user).first()
+    if c == None:
+      card = []
+    else:
+      card = Card.objects.filter(customer_id=c.id)
     data = { 'user': request.user }
     if (len(card) > 0):
       data['last4'] = card[0].last4
