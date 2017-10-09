@@ -12,8 +12,8 @@
   // Gets rid of tap active state
   -webkit-tap-highlight-color: transparent;
   &.float {
-    animation: MoveDown 3s linear;
-    margin-top: 5px;
+    //animation: MoveDown 3s linear;
+    margin-bottom: 5px;
   }
 
   @keyframes MoveDown {
