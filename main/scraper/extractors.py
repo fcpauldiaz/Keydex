@@ -6,6 +6,12 @@ def get_indexing(item):
     product_indexing = item.find('h1', {'id': 'noResultsTitle'}) 
     if product_indexing:
         return False #product is not indexing
+    product_indexing = item.find('h1', {'id': 'noResultsTitle'}) 
+    if product_indexing:
+        return False #product is not indexing
+    product_indexing = item.find('h1', {'id': 'noResultsTitle'}) 
+    if product_indexing:
+        return False #product is not indexing
     return True #product is indexing
 
 def get_title(item):
