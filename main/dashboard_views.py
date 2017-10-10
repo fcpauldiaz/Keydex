@@ -102,8 +102,6 @@ def poll_state(request):
             uuid = request.POST['product_uuid']
             p = Product.objects.get(uuid=uuid)
             historic_id = save_product_indexing(result, p)
-            if request.session.get('saved') != None:
-              del request.session['saved']
             data['historic_id'] = urlsafe_base64_encode(force_bytes(historic_id))
             data['uuid'] = str(p.uuid)
           data['process_percent'] = progress 
