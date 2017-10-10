@@ -15,9 +15,9 @@ def index_data(asin, country_host, country_code, keyword, retries):
       sleep(3)
       if (retries < 3):
        return index_data(asin, country_host, country_code, keyword, retries + 1)
-      #returnDictionary[keyword] = 'Information not available'
-      product_indexing = amazon_product(asin, keyword, country_code)
-      returnDictionary[keyword] = product_indexing
+      returnDictionary[keyword] = 'Information not available'
+      #product_indexing = amazon_product(asin, keyword, country_code)
+      #returnDictionary[keyword] = product_indexing
   else:    
       item = page
       product_indexing = get_indexing(item)
