@@ -11,6 +11,8 @@ def get_indexing(item):
         product_indexing = item.find_all('h1', {'id': 'noResultsTitle'})
         if len(product_indexing) == 1:
             count_false += 1 # product is not indexing
+        elif (len(product_indexing) > 1):
+            return 'WTF'
         else:
             count_true += 1 # product is indexing
         if ((count_true - count_false) > max_count):

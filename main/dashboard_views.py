@@ -14,7 +14,10 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.conf import settings
 from django.utils.encoding import force_bytes, force_text
 from pinax.stripe.actions import subscriptions
+from django.contrib import messages
+
 import json
+import math
 from keydex.celery_app import app
 
 @login_required
@@ -48,9 +51,6 @@ def dashboard_settings(request):
   if request.method == 'GET':
     profile = Profile.objects.get(user_id=request.user)
     initial_dict = dict()
-    if profile.billing_address != None:
-      initial_dict = { 'billing_address': profile.billing_address }      
-        
     c = Customer.objects.filter(user_id=request.user).first()
     if c == None:
       card = []
@@ -67,21 +67,18 @@ def dashboard_settings(request):
   elif request.method == 'POST':
     form = SettingsForm(request.POST, instance=request.user)
     if form.is_valid():
-      form.save()
-      profile = Profile.objects.get(user=request.user)
-      profile.billing_address = form.cleaned_data['billing_address']
-      profile.save()
-      customer = Customer.objects.get(user_id=request.user)
-
-      card_dict = json.loads(request.POST.get('token'))
-      token = card_dict['id']
-      card_user = Card.objects.filter(customer_id=customer.id)
-      #check for previous cards for customer
-      if (len(card_user) >= 1):
-        card_user.delete()
-      create_card(customer, token)
-      return JsonResponse({'data': 'ok'})
-    return JsonResponse({'data': 'not_valid'})
+      try:
+        form.save()
+        data = { 'form': form }
+        messages.success(request, 'Saved Successfully!')
+        return render(request, 'settings.html', data)
+      except:
+        data = { 'form': form }
+        messages.error(request, 'invalid update')
+        return render(request, 'settings.html', data)
+    data = { 'form': form }
+    messages.error(request, 'Invalid form')
+    return render(request, 'settings.html', data)
   raise ValueError('Invalid request type at dashboad settings')
 
 @login_required
@@ -93,7 +90,7 @@ def poll_state(request):
           task_id = request.POST['task_id']
           task_total = request.POST['task_total']
           task = GroupResult.restore(task_id, app=app)
-          progress = task.completed_count()/float(task_total)
+          progress = math.floor(task.completed_count()/float(task_total))
           if progress <= 0:
             progress = 0.01
           data = {}
@@ -105,6 +102,8 @@ def poll_state(request):
             uuid = request.POST['product_uuid']
             p = Product.objects.get(uuid=uuid)
             historic_id = save_product_indexing(result, p)
+            if request.session.get('saved') != None:
+              del request.session['saved']
             data['historic_id'] = urlsafe_base64_encode(force_bytes(historic_id))
             data['uuid'] = str(p.uuid)
           data['process_percent'] = progress 
