@@ -5,7 +5,7 @@ htmlparser = HTMLParser()
 def get_indexing(item):
     count_true = 0
     count_false = 0
-    max_count = 10
+    max_count = 100
     result = 'Information Not Available'
     while (True):
         product_indexing = item.find('h1', {'id': 'noResultsTitle'})
