@@ -33,9 +33,9 @@ def single_crawl(product, marketplace, keyword, retries):
         if (retries < 3):
             print retries
             return single_crawl(product, marketplace, keyword, retries + 1)
-        #returnDictionary[keyword] = 'Information not available'
-        product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
-        returnDictionary[keyword] = product_indexing
+        returnDictionary[keyword] = 'Information not available'
+        #product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
+        #returnDictionary[keyword] = product_indexing
     else:    
         item = page
         product_indexing = get_indexing(item)
