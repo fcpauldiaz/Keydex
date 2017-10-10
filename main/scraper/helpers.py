@@ -31,11 +31,11 @@ def make_request(asin, host, keyword=None, return_soup=True):
 
     #proxies = get_proxy()
     try:
-        url = host+"/s/ref=nb_sb_noss"
+        url = host+"/s/"
         params = asin
         if keyword != None:
             params += " " + keyword.strip()
-        querystring = {"url":"search-alias=aps", "field-keywords": params }
+        querystring = {"field-keywords": params }
 
         headers = {
             'cache-control': "no-cache",
