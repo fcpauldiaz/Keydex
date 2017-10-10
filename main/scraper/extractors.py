@@ -3,16 +3,23 @@ from HTMLParser import HTMLParser
 htmlparser = HTMLParser()
 
 def get_indexing(item):
-    product_indexing = item.find('h1', {'id': 'noResultsTitle'}) 
-    if product_indexing:
-        return False #product is not indexing
-    product_indexing = item.find('h1', {'id': 'noResultsTitle'}) 
-    if product_indexing:
-        return False #product is not indexing
-    product_indexing = item.find('h1', {'id': 'noResultsTitle'}) 
-    if product_indexing:
-        return False #product is not indexing
-    return True #product is indexing
+    count_true = 0
+    count_false = 0
+    max_count = 3
+    result = 'Information Not Available'
+    while (True):
+        product_indexing = item.find('h1', {'id': 'noResultsTitle'})
+        if product_indexing:
+            count_false += 1 # product is not indexing
+        else:
+            count_true += 1 # product is indexing
+        if ((count_true - count_false) >= max_count):
+            result = True
+            break
+        if ((count_false - count_true) >= max_count):
+            result = False
+            break  
+    return result
 
 def get_title(item):
     title = item.find("h2", "s-access-title")
