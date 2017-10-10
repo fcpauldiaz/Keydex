@@ -8,9 +8,8 @@ def get_indexing(item):
     max_count = 100
     result = 'Information Not Available'
     while (True):
-        product_indexing = item.find('h1', {'id': 'noResultsTitle'})
-        fewer = item.find("h1", {"class": "a-size-medium a-spacing-extra-large a-spacing-top-micro a-color-base a-text-normal"})
-        if product_indexing and fewer:
+        product_indexing = item.find_all('h1', {'id': 'noResultsTitle'})
+        if len(product_indexing) == 1:
             count_false += 1 # product is not indexing
         else:
             count_true += 1 # product is indexing
