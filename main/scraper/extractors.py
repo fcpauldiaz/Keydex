@@ -13,10 +13,10 @@ def get_indexing(item):
             count_false += 1 # product is not indexing
         else:
             count_true += 1 # product is indexing
-        if ((count_true - count_false) >= max_count):
+        if ((count_true - count_false) > max_count):
             result = True
             break
-        if ((count_false - count_true) >= max_count):
+        if ((count_false - count_true) > max_count):
             result = False
             break  
     return result
