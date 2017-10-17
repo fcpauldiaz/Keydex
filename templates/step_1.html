@@ -1,56 +1,59 @@
 {% extends 'base.html' %}
 {% block title %} Step 1 {% endblock %}
 {% block content %}
-<div class="row center">
-  <div class="col l6 offset-l4 s13 m8 offset-m2">
+<div class="row center container">
+  <div class="col l6 offset-l4 s13 m8 offset-m2" style="">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
          <li class="step active">
             <!--data-step-label="To step-title!" -->
-            <div class="step-title number-wrap waves-dark">Step 1</div>
+            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 1</span></div>
          </li>
          <li class="step">
-            <div class="step-title number-wrap waves-dark">Step 2</div>
+            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 2</span></div>
          </li>
          <li class="step">
-            <div class="step-title number-wrap waves-dark">Step 3</div>
+            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 3</span></div>
          </li>
       </ul>
     </div>
   </div>
 </div>
 <div class="row container">
-  <h3 class="header center main-grey-text">Choose Amazon Marketplace & ASIN</h3>
+  <div class="col l10 offset-l2 s13 m10 offset-m2" style="position: relative; left: -39px;">
+    <h3 class="header center-align main-grey-text">Choose Amazon Marketplace & ASIN</h3>
+  </div>
 </div>
 
 <div class="row">
   <div class="col s13 l13 m13">
-    <form class="col center s8 l8 offset-l3 offset-s2" method="post">
+    <form class="col center s13 l6 offset-l4 offset-s2" method="post" style="position: relative; left: -60px;">
      {% csrf_token %}
       <div class="input-field col s13 m13 l13">
       {{form.select_choices}}
       <label>MarketPlace</label>
     </div>
       <div class="input-field col s13 l13 ">
-        <label for="asin" class="active">Your product's asin <a class="tooltipped" href="" data-tooltip="Amazon Standard Identification Numbers (ASINs) are unique blocks of 10 letters and/or numbers that identify items. You can find the ASIN on the item's product information page at Amazon.com. For books, the ASIN is the same as the ISBN number, but for all other products a new ASIN is created when the item is uploaded to our catalogue. You will find an item's ASIN on the product detail page alongside further details relating to the item, which may include information such as size, number of pages (if it's a book) or number of discs (if it's a CD).">What's an asin?</a></label>
+       <label for="" class="active">Your product's asin <a class="tooltipped" data-tooltip="Amazon Standard Identification Numbers (ASINs) are unique blocks of 10 letters and/or numbers that identify items. " data-position="bottom" data-delay="10">What's an asin?</a></label><br>
         {{ form.asin }}
       </div>
       <div class="row">
-      <div class="col l13 s13">
+      <div class="col l13 s13" style="position: relative; left: -12px;">
         <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
         </button>
       </div>
     </div>
-      {% if user_form.errors %}
-        {% for field in user_form %}
+      {% if form.errors %}
+        {% for field in form %}
             {% for error in field.errors %}
+                <h1>HOLA</h1>
                 <div class="alert alert-danger">
                     {{field.name}}
                     <strong>{{ error|escape }}</strong>
                 </div>
             {% endfor %}
         {% endfor %}
-        {% for error in user_form.non_field_errors %}
+        {% for error in form.non_field_errors %}
             <div class="alert alert-danger">
                 {{field.name}}
                 <strong>{{ error|escape }}</strong>
@@ -61,11 +64,6 @@
      <br>
   </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
 {% endblock %}
 {% load static %}
 {% block css %}

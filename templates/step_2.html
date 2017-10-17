@@ -2,19 +2,19 @@
 {% load filter_extras %}
 {% block title %} Step 2 {% endblock %}
 {% block content %}
-<div class="row center">
+<div class="row container">
   <div class="col l6 offset-l4 s13 m8 offset-m2">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
-         <li class="step active">
+         <li class="step">
             <!--data-step-label="To step-title!" -->
-            <div class="step-title number-wrap waves-dark">Step 1</div>
+            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 1</span></div>
          </li>
          <li class="step active">
-            <div class="step-title number-wrap waves-dark">Step 2</div>
+            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 2</span></div>
          </li>
          <li class="step">
-            <div class="step-title number-wrap waves-dark">Step 3</div>
+            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 3</span></div>
          </li>
       </ul>
     </div>
@@ -23,11 +23,11 @@
 <div class="row container">
   <div class="col s12 l3 m4 offset-s2 offset-l1 offset-m3">
       <div class="card-image">
-        <img class="responsive-img" src="{{ product.primary_img}}">
+        <img class="responsive-img" src="{{ product.primary_img}}" style="margin-top: 10px;">
       </div>
   </div>
-  <div class="col s12 l6">
-    <h3 class="main-grey-text light overflow">
+  <div class="col s12 l8 justify">
+    <h3 class="main-grey-text light">
       {{product.title | title}}
     </h3>
     <h7 class="disabled-text-text">
@@ -36,61 +36,52 @@
   </div>
 </div>
 <div class="row container">
-
-  <ul class="tabs">
-    <li class="tab col l3 m6 offset-l3 s13"><a href="#keywords" id="tab1" class="active blue-paypal-text">Keywords</a></li>
-    <li class="tab col l3 m6 s13"><a id="tab2"  class="blue-paypal-text" href="#phrases">Phrases</a></li>
-  </ul>
-
-</div>
-  <div class="row center">
-  {% csrf_token %}
-   <form id="chips-form" class="col center s13 l8 offset-l3" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
-
-      <div id="keywords" class="card card-keywords">
-        <div id="div-1" class="chips chips-placeholder overflow-wrap"></div>
-      </div>
-      <div style="text-align: left;" id="div-1-text"><span class="disabled-text-text">Keywords </span><span id="div-1-counter" class="disabled-text-text">0</span></div>
-      <div id="phrases" class="card card-keywords">
-       <div id="div-2" class="chips chips-placeholder overflow-wrap"></div>
-      </div>
-      <div style="text-align: left; display: none" id="div-2-text"><span class="disabled-text-text">Phrases </span><span class="disabled-text-text" id="div-2-counter">0</span></div>
-      <div class="row center">
-   <div class="col l13 s13">
-     <button id="chip-button" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
-     </button>
-   </div>
-   <div id="loader" class="preloader-wrapper small active" style="display: none">
-   <div class="spinner-layer spinner-blue-only">
-     <div class="circle-clipper left">
-       <div class="circle"></div>
-     </div><div class="gap-patch">
-       <div class="circle"></div>
-     </div><div class="circle-clipper right">
-       <div class="circle"></div>
-     </div>
-   </div>
-      </div>
-      </div>
-   {% if user_form.errors %}
-     {% for field in user_form %}
-         {% for error in field.errors %}
-             <div class="alert alert-danger">
-                 {{field.name}}
-                 <strong>{{ error|escape }}</strong>
-             </div>
-         {% endfor %}
-     {% endfor %}
-     {% for error in user_form.non_field_errors %}
-         <div class="alert alert-danger">
-             {{field.name}}
-             <strong>{{ error|escape }}</strong>
-         </div>
-     {% endfor %}
-   {% endif %}
-   </form>
-    </div>
+  <div class="col center s13 l5 offset-l4 offset-m4">
+    <h5 class="left">Enter keywords or phrases</h5>
   </div>
+   <form id="form" data-keywords-url="{% url 'products_add_keywords' marketplace.country_code product.asin %}" method="post">
+    <div class="row">
+      <div class="input-field col l9 s13 m13">
+        <textarea id="textarea" placeholder="Copy paste here your keywords
+One keyword per line
+        " style="height: 125px;"></textarea>
+         <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Add these keywords
+        </button>
+      </div>
+      <div class="input-field col s13 l4">
+        <select id="select_type">
+          <option value="" disabled>Choose your option</option>
+          <option value="keyword" selected>Keyword</option>
+          <option value="phrase">Phrase</option>
+        </select>
+        <label>Type</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col l13 s13 m13">
+        <table  class="bordered striped highlight">
+          <thead class="detail-blue white-text">
+            <tr>
+              <th>Keyword</th>
+              <th>Type</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="table">
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+    <div class="row container">
+      <div class="col s12 l6 m6">
+            <button id="finish" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Save and finish
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
 {% endblock %}
 {% load static %}
 {% block css %}
@@ -98,6 +89,85 @@
 {% endblock %}
 {% block js %}
 <script src="{% static 'js/asins.js' %}"></script>
+<script>
+  var data = [];
+  $('#textarea').keyup(function(event) {
+    var type = $('#select_type').find(":selected").val();
+    if (event.keyCode === 32 && type === 'keyword') {
+      var txt = $('#textarea')
+      txt.val(txt.val() + "\n");
+    }
+
+  });
+  $('form').on('submit', function(event) {
+    event.preventDefault();
+    var lines = this.textarea.value.split('\n');
+    var type = $('select').find(":selected").text();
+    if (lines.length === 0 && this.textarea.value !== '') {
+      var row = table.insertRow(-1);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row .insertCell(2);
+      cell1.innerHTML = this.textarea.value.trim().replace(/[^\x00-\x7F]/g, "");;
+      cell2.innerHTML = type;
+      cell3.innerHTML = "<td><i class='small material-icons'>close</i></td>";
+    }
+    var table = document.getElementById('table');
+    for(var i = 0; i < lines.length; i++) {
+      var text = lines[i].trim().replace(/[^\x00-\x7F]/g, "");;
+      if (text === '' || data.includes(text)) {
+        continue;
+      }
+      
+      var row = table.insertRow(-1);
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row .insertCell(2);
+      cell1.innerHTML = lines[i];
+      cell2.innerHTML = type;
+      cell3.innerHTML = "<td><i class='small material-icons'>close</i></td>";
+      data.push(text);
+    }
+    this.textarea.value = '';
+  });
+  $(document).on('click', '.material-icons', function(event) {
+    var p = $(this).closest('tr');
+    var tds = p[0].getElementsByTagName('td');
+    var index = data.indexOf(tds[0].innerHTML.trim());
+    if (index > -1) {
+      data.splice(index, 1);
+    }
+    var deleteRow = $(this).closest('tr').index()
+    var table = document.getElementById('table');
+    var row = table.deleteRow(deleteRow);
+  });
+  $('select').on('change', function() {
+    var txt = $('#textarea')
+    txt.val('');
+    var type = $('#select_type').find(':selected').val();
+    if (type === 'phrase') {
+      txt.prop('placeholder', "Copy paste here your phrases \nOne phrase per line");
+    } else {
+      txt.prop('placeholder', 'Copy paste here your keywords \nOne keyword per line');
+    }
+  });
+  $('#textarea').bind('paste', function() {
+    setTimeout(function() {
+      var type = $('#select_type').find(':selected').val();
+      if (type === 'keyword') {
+        var txt = $('#textarea');
+        var splitted = txt.val().split(' ');
+        for (i = 0; i < splitted.length; i++) {
+          if (i === 0) {
+            txt.val(splitted[i].toLowerCase().replace(/[^\x00-\x7F]/g, " ") + "\n");
+          } else {
+            txt.val(txt.val() + splitted[i].toLowerCase().replace(/[^\x00-\x7F]/g, " ") + "\n");
+          }
+        }
+      }
+    }, 20);
+  });
+</script>
 <script>
   //For getting CSRF token
 function getCookie(name) {
@@ -117,36 +187,24 @@ function getCookie(name) {
 }
 </script>
 <script>
-  $('#chips-form').on('keyup keypress', function(e) {
-  var keyCode = e.keyCode || e.which;
-  if (keyCode === 13) { 
-    e.preventDefault();
-    return false;
-  }
-});
-  $("#chip-button").on("click", function (e) {  
+  $("#finish").on("click", function (e) {  
     e.preventDefault();
     $('#chip-button').hide();
     $('#loader').show();
-    var form = $('#chips-form');
-    var chips = $('#div-1 .chip');
-    var chips2 = $('#div-2 .chip');
+    table = document.getElementById('table');
     var keywords = [];
-    for (i = 0; i < chips.length; i++) {
-      var chip = chips[i].innerText;
-      var input = chip.slice(0, chip.length-5);
-      if (input !== '') {
-        keywords.push(input);
-      }
-    }
     var phrases = [];
-    for (i = 0; i < chips2.length; i++) {
-      var chip = chips2[i].innerText;
-      var input = chip.slice(0, chip.length-5);
-      if (input !== '') {
-        phrases.push(input);
+    for (var i = 0; i < table.rows.length; i++) {
+      var tds = table.rows[i].getElementsByTagName('td');
+
+      if (tds[1].innerText === 'Keyword' && !keywords.includes(tds[1].innerText)) {
+        keywords.push(tds[0].innerText);
+      }
+      else if (tds[1].innerText === 'Phrase' && !phrases.inclues(tds[1].innerText)) {
+        phrases.push(tds[0].innerText);
       }
     }
+    var form = $('form');
     $.ajax({
       url: form.attr("data-keywords-url"),
       type : "POST",

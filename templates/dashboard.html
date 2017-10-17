@@ -29,9 +29,11 @@
     {% elif product_count > 1 and product_count < 5 %}
      <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
      <div></div>
+    {% with 5|substract:product_count as remaining %} 
     <h5 class="inline">You have</h5>
-    <h5 class="blue-paypal-text inline"> &nbsp{{ 5|substract:product_count }}&nbsp </h5>
-    <h5 class="inline">products left on your free trial.</h5>
+    <h5 class="blue-paypal-text inline"> &nbsp{{ remaining }}&nbsp </h5>
+    <h5 class="inline">product{{ remaining|pluralize:",s" }} left on your free trial.</h5>
+    {% endwith %}
     {% elif product_count >= 5 and valid == False %}
      <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
     <h5> You don't have any more left on your free trial.  <a href="#modal1" class="">
@@ -48,7 +50,7 @@
 </div>
 <div class="row container">
   {% for product in products %}
-  <div id="{{product.pk}}" class="card card-hover col l3 m6 s12">
+  <div class="card card-hover col l3 m6 s12 cursor" onclick="window.document.location='/product/overview/{{product.uuid}}'">
     <div class="card-image waves-effect waves-block waves-light">
       <a href="{% url 'products_overview_product' product.uuid %}">
       <img class="responsive-img"  src="{{product.primary_img}}">
@@ -61,31 +63,22 @@
         </a>
       </div>
       <div class="col l13 m13 s13">
-        <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">Asin: {{product.asin}}</span>
+        <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">ASIN: {{product.asin}}</span>
       </div>
       <div class="col l13 m13 s13">
-       <button class="button-card btn-flat waves-light waves-effect detail-green btn-block-limited float">{{product.indexing}} indexing</button>
+       <p class="button-card btn-flat blue-paypal white-text btn-block-limited float">Indexing: {{product.indexing}}</p>
       </div>
     </div>
   </div>
   {% endfor %}
   {% if products|length == 0 %}
   <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
   {% endif %}
 </div>
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
   <div class="modal-content">
-    <h4>Upgrade Your Account</h4>
+    <h4>Select Your Plan</h4>
     
       <div class="demo-container">
         <div class="card-wrapper"></div>
@@ -95,25 +88,6 @@
             data-stripe-key="{{ key }}"
             >
               {% csrf_token %}
-                <div class="group">
-                  <label>
-                    <span>Name</span>
-                    <input name="cardholder-name" class="field black-text" placeholder="Jane Doe" value="{{request.user.first_name}} {{request.user.last_name}}"/>
-                  </label>
-                </div>
-                <div class="group">
-                  <label>
-                    <span>Card</span>
-                    <div id="card-element" class="field"></div>
-                  </label>
-                </div>
-                <div id="card-errors" class="error-stripe red-text" role="alert"></div>
-                <div class="group">
-                  <label>
-                    <span>Coupon</span>
-                    <input name="coupon" class="field black-text uppercase" placeholder="Coupon Code" />
-                  </label>
-                </div>
                 <div class="input-field col s13 m13 l13">
                   {{form.plan}}
                   <label>Plan</label>
@@ -123,12 +97,11 @@
                     <h5 id="showTotal" class="black-text hidden">Total: </h5>
                   </label>
                 </div>
-            
         </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button id="submitbutton" type="submit" class="waves-effect waves-green btn-flat green center" style="width: 100%">Subscribe</button>
+    <button id="submitbutton" type="submit" class="waves-effect waves-green btn-flat green center" style="width: 100%">Next</button>
     <div id="loader" class="row hidden">
       <div class="col center offset-l6">
          <div class="preloader-wrapper active">
@@ -152,6 +125,76 @@
 {% block js %}
 <script src="{% static 'js/search.js' %}"> </script>
 <script src="https://js.stripe.com/v3/"></script>
-<script src="{% static 'js/bin/stripe-config.js' %}"></script>
-<script src="{% static 'js/bin/stripe-coupon.js' %}"></script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+
+
+document.getElementById('payment-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  formpay = $('#payment-form');
+  var name = 'Yearly Plan ($47 per year)';
+  var value = 1;
+  var charge_value = 47;
+  var data = JSON.parse(JSON.stringify(formpay.serializeArray()));
+
+  for (var i = 0; i < data.length; i++) {
+    if (data[i].name == 'plan') {
+      if (data[i].value == '2') {
+        name = 'Yearly Plan ($47 per year)';
+        value = 2;
+        charge_value = '4700';
+      }
+      else if (data[i].value == '1') {
+        name = 'Monthly Plan ($5 per month)';
+        value = 1;
+        charge_value = '500';
+
+      }
+    }
+  }
+  var handler = StripeCheckout.configure({
+    key: $('#payment-form').attr('data-stripe-key'),
+    image: "https://s3-us-west-2.amazonaws.com/stripe-checkmykeywords/quack-s3.png",
+    name: "Check My Keywords",
+    description: name,
+    panelLabel: "Subscribe",
+    allowRememberMe: false,
+    locale: 'auto',
+    token: function(token) {
+      // Send the token to your server
+      formpay = $('#payment-form');
+      $.ajax({
+        url: formpay.attr("data-settings-url"),
+        type : "POST",
+        data: formpay.serialize() + '&token='+ JSON.stringify(token),
+        dataType: 'json',
+        success: function (data) {
+          if (data.valid === true) {
+            Materialize.toast('Payment Accepted', 3000);
+            $('#loader').hide();
+            $('#submitbutton').show();
+            $('#modal1').modal('close');
+            Materialize.toast('Upgrading Account', 3000);
+            location.reload();
+          }
+          else {
+            var errorElement = document.getElementById('card-errors');
+            errorElement.textContent = data.message;
+            $('#loader').hide();
+            $('#submitbutton').show();
+          }
+        },
+        error: function(request, status, error) {
+          Materialize.toast('Server error', 3000);
+          $('#loader').hide();
+          $('#submitbutton').show();
+        }
+      });
+    }
+  });
+  handler.open();
+})
+</script>
+<script src="{% static 'js/bin/stripe-coupon.js' %}"> </script>
 {% endblock %}

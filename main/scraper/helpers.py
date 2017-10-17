@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from requests.exceptions import RequestException
 
 import settings
+import json
 
 num_requests = 0
 
@@ -18,6 +19,50 @@ def get_proxy():
         "http": "37.48.118.90:13042",
         "https": "37.48.118.90:13042"
     }
+
+def make_request_with_proxy(asin, host, keyword, proxy, retries):
+    if (retries == 1):
+        return None, None
+    try:
+        s = requests.Session()
+        url = host+"/s/"
+        params = asin
+        if keyword != None:
+            params += " " + keyword.strip()
+        querystring = {"field-keywords": params }
+
+        headers = {
+            'cache-control': "no-cache",
+            'user-agent': random.choice(settings.USER_AGENTS)['User-Agent']
+        }
+        r = s.get(url, headers=headers, params=querystring, proxies=proxy)
+        #print r.url
+    except RequestException as e:
+        #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
+        message = str(e.message)
+        # if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
+        #     #use another proxy service
+        #     new_proxy = json.loads(requests.get('https://gimmeproxy.com/api/getProxy').content)
+        #     https = new_proxy['supportsHttps']
+        #     protocol = new_proxy['protocol']
+        #     while (https != True and protocol != 'http'):
+        #         new_proxy = json.loads(requests.get('https://gimmeproxy.com/api/getProxy').content)
+        #         https = new_proxy['supportsHttps']
+        #         protocol = new_proxy['protocol']
+        #     proxy = {
+        #         'http': new_proxy['ipPort'],
+        #         'https': new_proxy['ipPort']
+        #     }
+        #     return make_request_with_proxy(asin, host, keyword, proxy, retries)
+
+        return None, None
+
+    if r.status_code != 200:
+        os.system('say "Got non-200 Response"')
+        log("WARNING: Got a {} status code for URL: {}".format(r.status_code, url))
+        return None, None
+
+    return BeautifulSoup(r.content, 'lxml'), r.content
 
 
 def make_request(asin, host, keyword=None, return_soup=True):
@@ -31,6 +76,7 @@ def make_request(asin, host, keyword=None, return_soup=True):
 
     #proxies = get_proxy()
     try:
+        s = requests.Session()
         url = host+"/s/"
         params = asin
         if keyword != None:
@@ -41,11 +87,27 @@ def make_request(asin, host, keyword=None, return_soup=True):
             'cache-control': "no-cache",
             'user-agent': random.choice(settings.USER_AGENTS)['User-Agent']
         }
-        r = requests.request("GET", url, headers=headers, params=querystring, proxies=get_proxy())
+        
+        r = s.get(url, headers=headers, params=querystring, proxies=get_proxy())
         #print r.url
     except RequestException as e:
         #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
-        #log(e.message)
+        message = str(e.message)
+        # if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
+        #     #use another proxy service
+        #     new_proxy = json.loads(requests.get('https://gimmeproxy.com/api/getProxy').content)
+        #     https = new_proxy['supportsHttps']
+        #     protocol = new_proxy['protocol']
+        #     while (https != True and protocol != 'http'):
+        #         new_proxy = json.loads(requests.get('https://gimmeproxy.com/api/getProxy').content)
+        #         https = new_proxy['supportsHttps']
+        #         protocol = new_proxy['protocol']
+        #     proxy = {
+        #         'http': new_proxy['ipPort'],
+        #         'https': new_proxy['ipPort']
+        #     }
+        #     return make_request_with_proxy(asin, host, keyword, proxy, 0)
+            
         return None, None
         #return make_request(url)  # try request again, recursively
 

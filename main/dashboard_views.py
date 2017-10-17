@@ -17,7 +17,6 @@ from pinax.stripe.actions import subscriptions
 from django.contrib import messages
 
 import json
-import math
 from keydex.celery_app import app
 
 @login_required
@@ -90,7 +89,7 @@ def poll_state(request):
           task_id = request.POST['task_id']
           task_total = request.POST['task_total']
           task = GroupResult.restore(task_id, app=app)
-          progress = math.floor(task.completed_count()/float(task_total))
+          progress = task.completed_count()/float(task_total)
           if progress <= 0:
             progress = 0.01
           data = {}

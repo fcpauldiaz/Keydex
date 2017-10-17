@@ -8,8 +8,8 @@ register = template.Library()
 @register.filter
 @stringfilter
 def title(title):
-  if (len(title) > 35):
-    title = title[:35]
+  if (len(title) > 120):
+    title = title[:120]
   return title
 
 @register.filter
@@ -20,3 +20,4 @@ def product_detail(id):
 @register.filter
 def substract(a, b):
   return a - b
+    

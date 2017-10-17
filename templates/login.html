@@ -8,9 +8,9 @@
        {% for field in form %}
       <div class="input-field col s13 m8 offset-m3 l6 offset-l4">
         {{ field }}
-        {{ field.label_tag }}
+        <label class="active" for="{{ field.name }}">{{ field.label }}</label>
         {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
+          <p style="color: red; margin-top: 0">{{ error }}</p>
         {% endfor %}
         {% if field.help_text %}
           <p><small style="color: grey">{{ field.help_text }}</small></p>
@@ -40,4 +40,14 @@
       </div>
     </div>
   </div>
+{% endblock %}
+{% block js %}
+<script>
+  $("form").submit(function() {
+    $(this).submit(function() {
+        return false;
+    });
+    return true;
+});
+</script>
 {% endblock %}

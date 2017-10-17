@@ -9,10 +9,10 @@
     {% csrf_token %}
     {% for field in user_form %}
       <div class="input-field col s13 l6">
-        {{ field.label_tag }}<br>
         {{ field }}
+        <label class="active" for="id_{{ field.name }}" data-error="invalid input" data-success="valid">{{ field.label }}</label>
         {% for error in field.errors %}
-          <span style="color: red; postition: absolute; top: 0px;">{{ error }}</span>
+          <span class="error-text" style="postition: absolute; top: 0px;">{{ error }}</span>
         {% endfor %}
       </div>
     {% endfor %}

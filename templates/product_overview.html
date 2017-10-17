@@ -8,63 +8,72 @@
 <div class="container">
   <div class="row">
     <div class="col s13 l3 m4 offset-s3 offset-m5">
-      <div class="card-image">
-        <img class="responsive-img" src="{{ product.primary_img}}">
+      <div class="">
+        <div class="card col l13 m13 s13">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="{% url 'products_overview_product' product.uuid %}">
+            <img class="responsive-img"  src="{{product.primary_img}}">
+            </a>
+          </div>
+          <div class="card-content row">
+            <div class="card-title justify">
+              <a href="{% url 'products_overview_product' product.uuid %}">
+              <span data-product="{{product.pk}}" class="grey-text text-darken-4 searchable">{{product.product_name}}</span>  
+              </a>
+            </div>
+            <div class="col l13 m13 s13">
+              <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">ASIN: {{product.asin}}</span>
+            </div>
+            <div class="row">
+              <div class="col l13 m13 s13">
+                <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light blue-paypal btn-block">Check Now</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col l6 m6 s13">
+                <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light green btn-block">Edit</a>
+              </div>
+              <div class="col l1 m2 s13 margin-delete">
+                <a href="#modal1" id="delete-hide" class="red-text waves-effect">Delete</a>
+                <div id="loader" class="preloader-wrapper small active" style="display: none;">
+                  <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col l10 s13">
       <table class="bordered striped highlight">
         <thead class="detail-blue white-text">
           <tr>
-            <th>Date and time</th>
+            <th>Date and time (UTC)</th>
             <th>Results</th>
+            <th>Download</th>
           </tr>
         </thead>
-
         <tbody>
           {% for historic in data %}
           <tr class="cursor" onclick="window.document.location='/product/detail/{{product.uuid}}/{{historic.id|product_detail}}'">
             <td>{{ historic.indexed_date|date:'M d Y - H:i'}}</td>
             <td>{{ historic.indexing_rate }} %</td>
+            <td><a class="cursor" href="{% url 'products_export_detail' product.uuid historic.id|product_detail %}"><i class="material-icons">cloud_download</i></a></td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="row">
-    <div class="col s12 l3">
-      <h3 class="main-grey-text light overflow">
-        {{product.title | title}}
-      </h3>
-      <h7 class="disabled-text-text">
-        ASIN: {{ product.asin }}
-      </h7>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col l4 m6 s13">
-      <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light blue-paypal btn-block">Check Now</a>
-    </div>
-  </div>
-  <div class="row">
-     <div class="col l1 m2 s13">
-        <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light green btn-block">Edit</a>
-      </div>
-      <div class="col l1 m2 s13 margin-delete">
-        <a href="#modal1" id="delete-hide" class="red-text waves-effect">Delete</a>
-        <div id="loader" class="preloader-wrapper small active" style="display: none;">
-          <div class="spinner-layer spinner-red-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-          </div>
-        </div>
-      </div>
   </div>
   <div class="row">
     <div class="col l2 m1 s1 ">
@@ -79,30 +88,29 @@
     </div>
     <div class="modal-footer">
       <form method="post" action="{% url 'products_delete_product' product.pk %}">
-       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
+        <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
         {% csrf_token %}
         <button id="delete" type="submit" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Yes, Delete all</button>
       </form>
-    
     </div>
   </div>
 </div>
 <ul>
-{% for job in jobs %}
-<li style='display: none'>{{job}}</li>
-{% endfor %}
+  {% for job in jobs %}
+  <li style='display: none'>{{job}}</li>
+  {% endfor %}
 </ul>
 {% endblock %}
 {% load static %}
 {% block js %}
 <script>
- $(document).ready(function() {
-    $('.modal').modal();
-    $("#delete").on("click", function (e) {
-      $("#delete-hide").hide();
-      $('#loader').show();
-    });
-  });
+  $(document).ready(function() {
+     $('.modal').modal() ;
+     $('#delete').on('click', function (e) {
+       $('#delete-hide').hide();
+       $('#loader').show();
+     });
+   });
 </script>
 <script src="{% static 'js/progressbar.min.js' %}"></script>
 <script src="{% static 'js/progress-config.js' %}"></script><script>
