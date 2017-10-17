@@ -15,13 +15,13 @@ class MarketPlaceModelField(forms.ModelChoiceField):
 class SignUpForm(UserCreationForm):
   first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
   last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-  email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', validators=[validate_email_unique])
+  email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.', validators=[validate_email_unique], widget=forms.EmailInput(attrs={'class': 'validate'}))
   class Meta:
       model = User
       fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', )
 class LoginForm(forms.Form):
-  username_or_email = forms.CharField(widget=forms.TextInput())
-  password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'no-margin-bottom'}))
+  username_or_email = forms.CharField(widget=forms.TextInput(attrs={'class': 'validate'}))
+  password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'no-margin-bottom validate'}))
 
 class ResetPasswordForm(forms.Form):
   username_or_email = forms.CharField(widget=forms.TextInput())

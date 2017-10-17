@@ -62,7 +62,7 @@ def loginUser(request):
       user_object = User.objects.filter(username = username_or_email) | User.objects.filter(email = username_or_email)
       user_object = user_object[0]
     except:
-      errors=form.add_error("password", "Invalid Credentials")
+      errors=form.add_error("username_or_email", "Username or email not found")
       return render(
         request,
         'login.html', { 'form': form }
@@ -84,6 +84,7 @@ def loginUser(request):
           return redirect('dashboard')
         else:
           logout(request)
+          errors=form.add_error("username_or_email", "Please click on the email we sent you to verify your account.")
           return render(request, 'login.html', { 'form': form })
     errors=form.add_error("password", "Invalid Credentials")
     return render(

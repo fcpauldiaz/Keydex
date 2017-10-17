@@ -77,14 +77,14 @@ class Product(models.Model):
     historic_list = ProductHistoricIndexing.objects.filter(product=self.id)
     keywords = Keywords.objects.filter(historic__in=historic_list)
     if (len(keywords) == 0):
-      return '0.00%'
+      return '0%'
     indexed = 0.0
     indexing_data = {}
     for keyword in keywords:
       if (keyword.indexing == 'True'):
         indexed += 1
     op = (float(indexed)/float(len(keywords)))*100
-    indexing_data = format(op, '.2f')
+    indexing_data = format(op, '.0f')
     return indexing_data+'%'
 
 class ProductHistoricIndexing(models.Model):

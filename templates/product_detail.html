@@ -2,27 +2,75 @@
 {% block title %} Product {% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col l6 offset-l3 s12 m8 offset-m2">
+  <div class="col l6 offset-l4 s12 m8 offset-m4">
   <h6 class="blue-paypal-text center">Your product has been added successfully.</h6>
   <h5 class="main-grey-text center">Here are your results!</h5>
   </div>
 </div>
 <div class="row container">
-    <div class="col card-panel l3 m3 s12 center">
-      <h3 class="detail-green-text">{{indexing_data.indexed}}%</h3>
-      <span class="main-grey-text card-padding"><strong>Indexed ( {{indexing_data.indexed_count}} )</strong></span>
+    <div class="col s13 l3 m4">
+      <div class="">
+        <div class="card col l13 m13 s13">
+          <div class="card-image waves-effect waves-block waves-light">
+            <a href="{% url 'products_overview_product' product.uuid %}">
+            <img class="responsive-img"  src="{{product.primary_img}}">
+            </a>
+          </div>
+          <div class="card-content row">
+            <div class="card-title justify">
+              <a href="{% url 'products_overview_product' product.uuid %}">
+              <span data-product="{{product.pk}}" class="grey-text text-darken-4 searchable">{{product.product_name}}</span>  
+              </a>
+            </div>
+            <div class="col l13 m13 s13">
+              <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">ASIN: {{product.asin}}</span>
+            </div>
+            <div class="row">
+              <div class="col l13 m13 s13">
+                <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-effect waves-light blue-paypal btn-block">Check Now</a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col l6 m6 s13">
+                <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light green btn-block">Edit</a>
+              </div>
+              <div class="col l1 m2 s13 margin-delete">
+                <a href="#modal1" id="delete-hide" class="red-text waves-effect">Delete</a>
+                <div id="loader" class="preloader-wrapper small active" style="display: none;">
+                  <div class="spinner-layer spinner-red-only">
+                    <div class="circle-clipper left">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                      <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                      <div class="circle"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col card-panel l3 m3 s12 center offset-l2 offset-m2">
-      <h3 class="detail-red-text">{{indexing_data.not_indexed}}%</h3>
-      <span class="main-grey-text card-padding"><strong>Not indexed  ( {{indexing_data.not_indexed_count}} )</strong></span>
+    <div class="col l10 m9 s13">
+      <div class="col card-panel l3 m3 s12 center">
+        <h3 class="detail-green-text">{{indexing_data.indexed}}%</h3>
+        <span class="main-grey-text card-padding"><strong>Indexed ( {{indexing_data.indexed_count}} )</strong></span>
+      </div>
+      <div class="col card-panel l3 m4 s12 center offset-l2 offset-m1">
+        <h3 class="detail-red-text">{{indexing_data.not_indexed}}%</h3>
+        <span class="main-grey-text card-padding"><strong>Not indexed  ( {{indexing_data.not_indexed_count}} )</strong></span>
+      </div>
+      <div class="col card-panel l3 m4 s12 center offset-l2 offset-m1">
+        <h3 class="detail-blue-text">{{indexing_data.count}}</h3>
+        <span class="main-grey-text card-padding"><strong>All Keywords</strong></span>
+      </div>
     </div>
-    <div class="col card-panel l3 m3 s12 center offset-l2 offset-m2">
-      <h3 class="detail-blue-text">{{indexing_data.count}}</h3>
-      <span class="main-grey-text card-padding"><strong>All Keywords</strong></span>
-    </div>
-</div>
-<div class="row container">
-   <table class="bordered striped highlight">
+    <div class="col l10 m9 s13">
+         <table class="bordered striped highlight">
         <thead class="detail-blue white-text">
           <tr>
             <th>#</th>
@@ -50,6 +98,7 @@
           {% endfor %}
         </tbody>
       </table>
+    </div>
 </div>
 <div class="row container center">
     

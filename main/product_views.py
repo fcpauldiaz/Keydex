@@ -30,15 +30,14 @@ def add_product(request):
       code = form.cleaned_data['select_choices'].country_code   
       find_repeated = Product.objects.filter(user=request.user, asin=asin).first()
       if find_repeated != None:
-        messages.error(request, 'Product already added on dashboard')
+        errors=form.add_error('asin', 'Product already added on dashboard')
         marketplace = Marketplace.objects.all()
         data = { 'form': form, 'urls': marketplace }
         return render(request, 'step_1.html', data) 
-
       try:
         return redirect('products_add_keywords', asin=asin, code=code)
       except:
-        messages.error(request, 'Invalid ASIN')
+        errors=form.add_error('asin', 'ASIN not found')
         marketplace = Marketplace.objects.all()
         data = { 'form': form, 'urls': marketplace }
         return render(request, 'step_1.html', data) 
@@ -50,6 +49,9 @@ def add_product(request):
     form = AsinForm()
     marketplace = Marketplace.objects.all()
     product_count = Product.objects.filter(user=request.user).count()
+    state = request.GET.get('state', '')
+    if (state == '404'):
+      messages.error(request, 'Product not found, try again.')
     if (product_count >= 500):
       messages.error(request, 'You have reached your product limit')
       return redirect('dashboard')
@@ -69,7 +71,7 @@ def add_keywords(request, code, asin):
     
     if (product == None): #not parseable or not found
       print 'Product not found ' + asin
-      return redirect('products_add_product')
+      return redirect( reverse('products_add_product') + "?state=404")
     request.session['product'] = json.dumps(product.__dict__, default=datetime_handler)
     dictionary = marketplace.__dict__
     del dictionary['_state'] #delete object from dictionary to serialize

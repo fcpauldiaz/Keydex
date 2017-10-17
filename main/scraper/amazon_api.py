@@ -21,9 +21,9 @@ def amazon_api(asin, url, marketplace = 'US'):
       asin=asin.upper()
     )
     return model_product
-  except:
+  except Exception as e:
+    print e
     return None
-
 
 #function to retrieve if a product is indexing
 #on a given marketplace with a keyword
@@ -37,6 +37,7 @@ def amazon_product(asin, keyword, marketplace = 'US'):
         return 'Information Not Available'
       return True
     return False
-  except:
+  except Exception as e:
+    if str(e) == 'HTTP Error 503: Service Unavailable':
+      return 'Information Not Available'
     return False
-
