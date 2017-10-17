@@ -39,5 +39,18 @@ def amazon_product(asin, keyword, marketplace = 'US'):
     return False
   except Exception as e:
     if str(e) == 'HTTP Error 503: Service Unavailable':
-      return 'Information Not Available'
+      try:
+        amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+        search_item = asin + ' ' + keyword
+        products = amazon.search_n(1, Keywords=search_item, SearchIndex='All')
+        if len(products) != 0:
+          if (products[0].asin != asin):
+            return 'information Not Available'
+          return True
+        return False
+      except Exception as e:
+        if str(e) == 'HTTP Error 503: Service Unavailable':
+          return 'Information Not Available'
+        return False
+      return 'information Not Available'
     return False
