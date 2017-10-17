@@ -132,6 +132,8 @@
 
 document.getElementById('payment-form').addEventListener('submit', function(event) {
   event.preventDefault();
+  $('#loader').show();
+  $('#submitbutton').hide();
   formpay = $('#payment-form');
   var name = 'Yearly Plan ($47 per year)';
   var value = 1;
@@ -162,6 +164,8 @@ document.getElementById('payment-form').addEventListener('submit', function(even
     allowRememberMe: false,
     locale: 'auto',
     token: function(token) {
+      $('#loader').hide();
+      $('#submitbutton').show();
       // Send the token to your server
       formpay = $('#payment-form');
       $.ajax({
