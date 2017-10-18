@@ -124,6 +124,21 @@
   }
 }
 
+.btn-transparent {
+  text-decoration: none;
+  border:  $button-paypal-border;
+  color: $button-paypal-color;
+  background-color: $button-paypal-background;
+  text-align: center;
+  letter-spacing: .5px;
+  @extend .z-depth-1;
+  transition: .2s ease-out;
+  border-radius: 0px;
+  cursor: pointer;
+  padding: 0px 30px;
+  line-height: 32px;
+}
+
 // Floating button
 .btn-floating {
   &:hover {

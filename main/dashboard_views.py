@@ -76,7 +76,7 @@ def dashboard_settings(request):
         messages.error(request, 'invalid update')
         return render(request, 'settings.html', data)
     data = { 'form': form }
-    messages.error(request, 'Invalid form')
+    messages.error(request, 'Invalid data submitted')
     return render(request, 'settings.html', data)
   raise ValueError('Invalid request type at dashboad settings')
 

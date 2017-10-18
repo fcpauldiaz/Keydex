@@ -50,7 +50,7 @@
 </div>
 <div class="row container">
   {% for product in products %}
-  <div class="card card-hover col l3 m6 s12 cursor" onclick="window.document.location='/product/overview/{{product.uuid}}'">
+  <div id="{{product.pk}}" class="card card-hover col l3 m6 s12 cursor" onclick="window.document.location='/product/overview/{{product.uuid}}'">
     <div class="card-image waves-effect waves-block waves-light">
       <a href="{% url 'products_overview_product' product.uuid %}">
       <img class="responsive-img"  src="{{product.primary_img}}">

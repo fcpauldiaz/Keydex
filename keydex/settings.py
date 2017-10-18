@@ -26,6 +26,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 PINAX_STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC')
 PINAX_STRIPE_SECRET_KEY = env('STRIPE_PRIVATE')
+PINAX_STRIPE_INVOICE_FROM_EMAIL = 'invoice@mail.checkmykeywords.com'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 

@@ -50,7 +50,7 @@
     
     {% else %}
     <li>
-      <a class="btn-paypal waves-effect waves-light" href="{% url 'users_login_user' %}">Log In
+      <a class="btn-transparent waves-effect waves-light" href="{% url 'users_login_user' %}">Log In
       </a>
     </li>
     {% endif %}
@@ -156,7 +156,16 @@
  
 
 
-    {% include 'footer.html' %}
+  <div class="page-footer-index footer top">
+   <div class="row container">
+    </div>
+    <div class="footer-copyright footer bottom">
+      <div class="container">
+      Powered by <a class="" href="#">Keydex Software</a> &copy; {% now "Y" %}
+      </div>
+    </div>
+  </div>
+
   
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
