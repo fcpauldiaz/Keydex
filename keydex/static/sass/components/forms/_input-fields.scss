@@ -173,12 +173,16 @@ textarea.materialize-textarea {
   label {
     color: $input-border-color;
     position: absolute;
-    top: 0.9rem;
+    top: 0;
     left: 0;
-    font-size: 1.2rem;
+    height: 100%;
+    font-size: 1rem;
     cursor: text;
-    transition: .2s ease-out;
+    transition: transform .2s ease-out;
+    transform-origin: 0% 100%;
     text-align: initial;
+    transform: translateY(12px);
+    pointer-events: none;
 
     &:not(.label-icon).active {
       transform: translateY(-14px) scale(.8);
