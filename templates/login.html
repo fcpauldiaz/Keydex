@@ -6,18 +6,18 @@
     <form class="col l13 m13 s13 center" method="post">
      {% csrf_token %}
        {% for field in form %}
-      <div class="input-field col s13 m8 offset-m3 l5 offset-l4">
+      <div class="input-field col s13 m8 offset-m3 l5 offset-l4 login-center">
         {{ field }}
-        <label class="active" for="{{ field.name }}">{{ field.label }}</label>
+        <label class="" for="{{ field.name }}">{{ field.label }}</label>
         {% for error in field.errors %}
-          <p style="color: red; margin-top: 0">{{ error }}</p>
+          <p class="error-text" style="margin-top: 0">{{ error }}</p>
         {% endfor %}
         {% if field.help_text %}
           <p><small style="color: grey">{{ field.help_text }}</small></p>
         {% endif %}
       </div>
       {% if field.name == 'password' %}
-       <div class="col offset-l7 l3 offset-m8 m4 s7 offset-s6">
+       <div class="col offset-l7 l3 offset-m8 m4 s7 offset-s6 login-center">
         <p class="show-link"><a href="{% url 'users_reset_password' %}">Recover your password</a></p>
         </div>
        {% endif %}
