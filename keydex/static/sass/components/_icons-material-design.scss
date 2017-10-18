@@ -60,6 +60,10 @@
     margin-right: 10px;
     padding-right: 5px !important;
   }
+  .login-center {
+    left: 20px !important;
+    position: relative !important;
+  }
 }
 @media #{$extra-large-and-up} {
   .card-margin { 
