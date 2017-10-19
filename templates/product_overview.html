@@ -11,15 +11,11 @@
       <div class="">
         <div class="card col l13 m13 s13">
           <div class="card-image waves-effect waves-block waves-light">
-            <a href="{% url 'products_overview_product' product.uuid %}">
             <img class="responsive-img"  src="{{product.primary_img}}">
-            </a>
           </div>
           <div class="card-content row">
             <div class="card-title justify">
-              <a href="#">
               <span data-product="{{product.pk}}" class="grey-text text-darken-4 searchable">{{product.product_name}}</span>  
-              </a>
             </div>
             <div class="col l13 m13 s13">
               <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">ASIN: {{product.asin}}</span>
