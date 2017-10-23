@@ -175,24 +175,8 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="{% static 'js/bin/materialize.js' %}"></script>
-   <script src="{% static 'js/initial.js' %}"></script>
+    <script src="{% static 'js/initial.js' %}"></script>
     <script src="{% static 'js/bin/animation.js' %}"></script>
     <script src="https://use.fontawesome.com/6781d34411.js"></script>
-    <script>
-    $(document).ready(function(){       
-        var scroll_pos = 0;
-        $(document).scroll(function() { 
-          scroll_pos = $(this).scrollTop();
-          if(scroll_pos > 210) {
-            $('#background').addClass('container-image');
-            $('#primary').addClass('image-hide')
-          } else {
-            $('#background').removeClass('container-image');
-            $('#primary').removeClass('image-hide')
-          }
-        });
-      });
-    </script>
-
   </body>
 </html>
