@@ -2143,7 +2143,8 @@ input[type=range]:focus::-ms-fill-upper {
 .cs {
     background: #ffffff;
     display: table-cell;
-    vertical-align: middle
+    vertical-align: middle;
+    padding: 0;
 }
 
 @media (min-height: 28.875em) {
@@ -2203,9 +2204,6 @@ input[type=range]:focus::-ms-fill-upper {
     }
 }
 
-.cs {
-    padding: 0 1em
-}
 
 .go {
     text-align: center;
@@ -2414,10 +2412,6 @@ input[type=range]:focus::-ms-fill-upper {
 .picker__year-display {
     font-size: 1.8rem;
     color: rgba(255, 255, 255, 0.4)
-}
-
-.cs {
-    padding: 0
 }
 
 .picker__calendar-container {
@@ -2884,10 +2878,6 @@ input[type=range]:focus::-ms-fill-upper {
     bottom: 32%
 }
 
-.c .d.phone-preview-sizer {
-    padding: 0
-}
-
 .laptop-preview-sizer {
     position: relative;
     width: 100%
@@ -2936,9 +2926,6 @@ input[type=range]:focus::-ms-fill-upper {
     bottom: 12%
 }
 
-.c .d.phone-preview-sizer {
-    padding: 0
-}
 
 .tablet-preview-sizer {
     position: relative;
@@ -3070,9 +3057,6 @@ input[type=range]:focus::-ms-fill-upper {
     bottom: 10%
 }
 
-.c .d.phone-preview-sizer {
-    padding: 0
-}
 
 .phone-preview-halfway {
     position: relative

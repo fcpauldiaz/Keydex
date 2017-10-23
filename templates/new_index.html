@@ -3,13 +3,16 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta name="description" content="We check your amazon products keywords automatically every day and sends you a report if they stop indexing so that you can take inmediate action!">
+  <meta name="keywords" content="amazon keyword checker products">
+  <meta name="robots" content="index, follow">
+  <meta name="web_author" content="Keydex Software">
+  <meta name="language" content="en">
   <title>Check Keywords | Home </title>
   {% load static %}
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <!-- Stylesheet -->
-  <link rel="stylesheet" href="{% static 'css/materialize-social.css' %}">
-  <link rel="stylesheet" href="{% static 'css/startup2.css' %}">
   {% load sass_tags %}
   {% load static %}
   {% load raven %}
@@ -128,6 +131,8 @@
         <br>
       </div>
     </div>
+  <br>
+  <br>
     
 
     <!-- Features -->
@@ -156,7 +161,7 @@
  
 
 
-  <div class="page-footer-index footer top">
+  <div class="page-footer footer top">
    <div class="row container">
     </div>
     <div class="footer-copyright footer bottom">
@@ -170,24 +175,8 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="{% static 'js/bin/materialize.js' %}"></script>
-   <script src="{% static 'js/initial.js' %}"></script>
+    <script src="{% static 'js/initial.js' %}"></script>
     <script src="{% static 'js/bin/animation.js' %}"></script>
     <script src="https://use.fontawesome.com/6781d34411.js"></script>
-    <script>
-    $(document).ready(function(){       
-        var scroll_pos = 0;
-        $(document).scroll(function() { 
-          scroll_pos = $(this).scrollTop();
-          if(scroll_pos > 210) {
-            $('#background').addClass('container-image');
-            $('#primary').addClass('image-hide')
-          } else {
-            $('#background').removeClass('container-image');
-            $('#primary').removeClass('image-hide')
-          }
-        });
-      });
-    </script>
-
   </body>
 </html>
