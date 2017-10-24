@@ -50,7 +50,7 @@ def amazon_product(asin, keyword, marketplace = 'US'):
         return False
       except Exception as e:
         if str(e) == 'HTTP Error 503: Service Unavailable':
-          return 'Information Not Available'
+          return 'information Not Available'
         return False
       return 'information Not Available'
     return False
