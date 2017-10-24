@@ -24,8 +24,6 @@ def get_indexing(item):
         if ((count_false - count_true) > max_count):
             result = False
             break  
-    if result == True:
-        print item.prettify()
     return result
 
 def get_title(item):
