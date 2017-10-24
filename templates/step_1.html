@@ -46,17 +46,16 @@
       {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
-                <h1>HOLA</h1>
                 <div class="alert alert-danger">
-                    {{field.name}}
-                    <strong>{{ error|escape }}</strong>
+                    <p>{{field.name}}</p>
+                    <p class="error-text"></p><strong>{{ error|escape }}</strong>
                 </div>
             {% endfor %}
         {% endfor %}
         {% for error in form.non_field_errors %}
             <div class="alert alert-danger">
-                {{field.name}}
-                <strong>{{ error|escape }}</strong>
+                <p>{{field.name}}</p>
+                <p class="error-text"></p><strong>{{ error|escape }}</strong>
             </div>
         {% endfor %}
       {% endif %}
