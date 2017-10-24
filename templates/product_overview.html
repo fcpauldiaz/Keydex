@@ -69,6 +69,11 @@
           {% endfor %}
         </tbody>
       </table>
+      {% if not historic %}
+      <div class="center-justify center">
+        <h4 class="disabled-text-text">There is no data, yet.</h4>
+      </div>
+      {% endif %}
     </div>
   </div>
   <div class="row">
