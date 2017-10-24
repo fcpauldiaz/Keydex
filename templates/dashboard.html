@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block title %} Dashboard {% endblock %}
+
 {% block content %}
 {% load filter_extras %}
 {% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/pricing.css' %}">
+{% endblock %}
 <div class="row container">
   <div class="col l7 s12">
     <h2 class="inline">Welcome back, </h2> 
@@ -78,7 +82,7 @@
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
   <div class="modal-content">
-    <h4>Select Your Plan</h4>
+    <h4 class="center center-justify">Select Your Plan</h4>
     
       <div class="demo-container">
         <div class="card-wrapper"></div>
@@ -88,24 +92,161 @@
             data-stripe-key="{{ key }}"
             >
               {% csrf_token %}
-                <div class="input-field col s13 m13 l13">
-                  {{form.plan}}
-                  <label>Plan</label>
+            <div class="row">
+              <div id="DIV_1" class="data-monthly">
+              <div id="DIV_3">
+                <div id="DIV_4">
+                  <div id="DIV_5">
+                  </div>
+                  <div id="DIV_6">
+                    <div id="DIV_7">
+                      <h2 id="H2_8">
+                        <span id="SPAN_9"><span id="SPAN_10">$5 Monthly</span></span>
+                      </h2>
+                    </div>
+                    <div id="DIV_11">
+                      <h6 id="H6_12">
+                        <span id="SPAN_13">Plan</span>
+                      </h6>
+                    </div>
+                  </div>
                 </div>
-                 <div class="group">
-                  <label>
-                    <h5 id="showTotal" class="black-text hidden">Total: </h5>
-                  </label>
+                <div id="DIV_14">
+                  <h6 id="H6_15">
+                    <span id="SPAN_16">Unlimited ASINs</span>
+                  </h6>
+                  <h6 id="H6_17">
+                    <span id="SPAN_18"><span id="SPAN_19"></span></span>
+                  </h6>
+                  <h6 id="H6_20">
+                    <span id="SPAN_21">Daily listing notifications</span>
+                  </h6>
+                  <h6 id="H6_22">
+                    <span id="SPAN_23"><span id="SPAN_24"></span></span>
+                  </h6>
+                  <h6 id="H6_25">
+                    <span id="SPAN_26">Free setup guidance</span>
+                  </h6>
+                  <h6 id="H6_27">
+                    <span id="SPAN_28"><span id="SPAN_29"></span></span>
+                  </h6>
+                  <h6 id="H6_30">
+                    <span id="SPAN_31">Eligible for promotions</span>
+                  </h6>
+                  <h6 id="H6_32">
+                    <span id="SPAN_33"><span id="SPAN_34"></span></span>
+                  </h6>
+                  <h6 id="H6_35">
+                    <span id="SPAN_36">No expiration period</span>
+                  </h6>
                 </div>
+                <div id="DIV_37">
+                  <div id="DIV_38">
+                  </div>
+                </div>
+                <div id="DIV_39">
+                  <div id="DIV_40">
+                  </div>
+                </div>
+                <div id="DIV_41">
+                  <div id="DIV_42">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="pricing_DIV_1" class="data-yearly">
+              <div id="pricing_DIV_3">
+                <div id="pricing_DIV_4">
+                  <div id="pricing_DIV_5">
+                  </div>
+                  <div id="pricing_DIV_6">
+                    <div id="pricing_DIV_7">
+                      <h2 id="pricing_H2_8">
+                        <span id="pricing_SPAN_9"><span id="pricing_SPAN_10">$50 Anually</span></span>
+                      </h2>
+                    </div>
+                    <div id="pricing_DIV_11">
+                      <h6 id="pricing_H6_12">
+                        <span id="pricing_SPAN_13">Plan</span>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div id="pricing_DIV_14">
+                  <h6 id="pricing_H6_15">
+                    <span id="pricing_SPAN_16">Unlimited ASINs</span>
+                  </h6>
+                  <h6 id="pricing_H6_17">
+                    <span id="pricing_SPAN_18"><span id="pricing_SPAN_19">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_20">
+                    <span id="pricing_SPAN_21">Daily listing notifications</span>
+                  </h6>
+                  <h6 id="pricing_H6_22">
+                    <span id="pricing_SPAN_23"><span id="pricing_SPAN_24">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_25">
+                    <span id="pricing_SPAN_26">Free setup guidance</span>
+                  </h6>
+                  <h6 id="pricing_H6_27">
+                    <span id="pricing_SPAN_28"><span id="pricing_SPAN_29">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_30">
+                    <span id="pricing_SPAN_31">Elegible for promotions</span>
+                  </h6>
+                  <h6 id="pricing_H6_32">
+                    <span id="pricing_SPAN_33"><span id="pricing_SPAN_34">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_35">
+                    <span id="pricing_SPAN_36">Save Anually</span>
+                  </h6>
+                </div>
+                <div id="pricing_DIV_37">
+                  <div id="pricing_DIV_38">
+                  </div>
+                </div>
+                <div id="pricing_DIV_39">
+                  <div id="pricing_DIV_40">
+                  </div>
+                </div>
+                <div id="pricing_DIV_41">
+                  <div id="pricing_DIV_42">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button id="submitbutton" type="submit" class="waves-effect waves-green btn-flat green center" style="width: 100%">Next</button>
+    <div class="row">
+      <div class="col l6">
+          <a class="waves-effect waves-green btn-flat blue center data-monthly" style="width: 100%">Monthly</a>
+      </div>
+        <div class="col l6 offset-l1">
+          <a  class="waves-effect waves-green btn-flat blue center data-yearly" style="width: 100%">Anually</a>
+      </div>
+    </div>
     <div id="loader" class="row hidden">
       <div class="col center offset-l6">
          <div class="preloader-wrapper active">
-          <div class="spinner-layer spinner-orange-only">
+          <div class="spinner-layer spinner-blue-only">
             <div class="circle-clipper left">
               <div class="circle"></div>
             </div><div class="gap-patch">
@@ -130,34 +271,30 @@
 <script>
 
 
-document.getElementById('payment-form').addEventListener('submit', function(event) {
+$('.data-yearly, .data-monthly').on('click', function(event) {
   event.preventDefault();
   $('#loader').show();
-  $('#submitbutton').hide();
+  $('.data-yearly').hide();
+  $('.data-monthly').hide();
   setInterval(function(){
     $('#loader').hide();
-    $('#submitbutton').show();
+      $('.data-yearly').show();
+      $('.data-monthly').show();
   }, 4000);
   formpay = $('#payment-form');
   var name = 'Yearly Plan ($47 per year)';
   var value = 1;
   var charge_value = 47;
-  var data = JSON.parse(JSON.stringify(formpay.serializeArray()));
-
-  for (var i = 0; i < data.length; i++) {
-    if (data[i].name == 'plan') {
-      if (data[i].value == '2') {
-        name = 'Yearly Plan ($47 per year)';
-        value = 2;
-        charge_value = '4700';
-      }
-      else if (data[i].value == '1') {
-        name = 'Monthly Plan ($5 per month)';
-        value = 1;
-        charge_value = '500';
-
-      }
-    }
+  var data = $(this).attr('class');
+  if (data === 'data-yearly') {
+    name = 'Yearly Plan ($47 per year)';
+    value = 2;
+    charge_value = '4700';
+  }
+  else if (data === 'data-monthly') {
+    name = 'Monthly Plan ($5 per month)';
+    value = 1;
+    charge_value = '500';
   }
   var handler = StripeCheckout.configure({
     key: $('#payment-form').attr('data-stripe-key'),
@@ -202,6 +339,7 @@ document.getElementById('payment-form').addEventListener('submit', function(even
     }
   });
   handler.open();
+  $('#modal1').modal('close');
 })
 </script>
 <script src="{% static 'js/bin/stripe-coupon.js' %}"> </script>
