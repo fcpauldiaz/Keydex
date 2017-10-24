@@ -269,38 +269,10 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
 
 <script>
-
-
-$('.data-yearly, .data-monthly').on('click', function(event) {
-  event.preventDefault();
-  $('#loader').show();
-  $('.data-yearly').hide();
-  $('.data-monthly').hide();
-  setInterval(function(){
-    $('#loader').hide();
-      $('.data-yearly').show();
-      $('.data-monthly').show();
-  }, 4000);
-  formpay = $('#payment-form');
-  var name = 'Yearly Plan ($47 per year)';
-  var value = 1;
-  var charge_value = 47;
-  var data = $(this).attr('class');
-  if (data === 'data-yearly') {
-    name = 'Yearly Plan ($47 per year)';
-    value = 2;
-    charge_value = '4700';
-  }
-  else if (data === 'data-monthly') {
-    name = 'Monthly Plan ($5 per month)';
-    value = 1;
-    charge_value = '500';
-  }
   var handler = StripeCheckout.configure({
     key: $('#payment-form').attr('data-stripe-key'),
     image: "https://s3-us-west-2.amazonaws.com/stripe-checkmykeywords/quack-s3.png",
     name: "Check My Keywords",
-    description: name,
     panelLabel: "Subscribe",
     allowRememberMe: false,
     locale: 'auto',
@@ -338,8 +310,37 @@ $('.data-yearly, .data-monthly').on('click', function(event) {
       });
     }
   });
-  handler.open();
-  $('#modal1').modal('close');
+
+$('.data-yearly, .data-monthly').on('click', function(event) {
+  event.preventDefault();
+  $('#loader').show();
+  $('.data-yearly').hide();
+  $('.data-monthly').hide();
+  setInterval(function(){
+    $('#loader').hide();
+      $('.data-yearly').show();
+      $('.data-monthly').show();
+  }, 4000);
+  formpay = $('#payment-form');
+  var name = 'Yearly Plan ($47 per year)';
+  var value = 1;
+  var charge_value = 4700;
+  var data = $(this).attr('class');
+  if (data === 'data-yearly') {
+    name = 'Yearly Plan ($47 per year)';
+    value = 2;
+    charge_value = 4700;
+  }
+  else if (data === 'data-monthly') {
+    name = 'Monthly Plan ($5 per month)';
+    value = 1;
+    charge_value = 500;
+  }
+  handler.open({
+    description: name,
+    zipCode: true,
+    amount: charge_value
+  });
 })
 </script>
 <script src="{% static 'js/bin/stripe-coupon.js' %}"> </script>
