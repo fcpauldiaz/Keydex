@@ -1,15 +1,19 @@
+{% load static %}
 <nav class="light-blue lighten-1" role="navigation">
    
   <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"></a>
    <a href="{% url 'main_index' %}">
     <div class="capa1 hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
       <a href="{% url 'main_index' %}">
-        <div class="capa2" onclick="location.href='/';" style="cursor: pointer;"></div>
+        <div class="capa2" onclick="location.href='/';" style="cursor: pointer;">
+        </div>
       </a>
     </div>
     <a href="{% url 'main_index' %}">
     <div class="text-logo hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
-    <a href="{% url 'main_index' %}">CHECK MY KEYWORDS</a></div>
+       <img  height="15" src="{% static 'img/duck-white.png' %}" alt="" class="logo-header"/>
+       <a href="{% url 'main_index' %}">CHECK MY KEYWORDS</a>
+    </div>
     </a>
   </a>
   
