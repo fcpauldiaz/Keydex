@@ -1,15 +1,15 @@
 #DIV_1 {
-    bottom: 246px;
     height: 319px;
-    left: 5%;
+    left: -2%;
     position: absolute;
     right: 552px;
-    top: 126px;
+    top: 15%;
     width: 269px;
     perspective-origin: 134.5px 159.5px;
     transform-origin: 134.5px 159.5px;
     font: normal normal normal normal 10px / normal Arial, Helvetica, sans-serif;
     cursor: pointer;
+    box-shadow:  0 1px 15px 1px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 
 }/*#DIV_1*/
 
@@ -308,17 +308,17 @@
 
 
 #pricing_DIV_1 {
-    bottom: 246px;
     height: 319px;
-    left: 55%;
+    left: 47%;
     position: absolute;
     right: 552px;
-    top: 126px;
+    top: 15%;
     width: 269px;
     perspective-origin: 134.5px 159.5px;
     transform-origin: 134.5px 159.5px;
     font: normal normal normal normal 10px / normal Arial, Helvetica, sans-serif;
     cursor: pointer;
+    box-shadow:  0 1px 15px 1px rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }/*#pricing_DIV_1*/
 
 #pricing_DIV_1:hover{
