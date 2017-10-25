@@ -5,7 +5,7 @@
     <h2>Settings</h2>
   </div>
   <div class="row container">
-    <form class="" method="post" id="payment-form" data-settings-url="{% url 'dashboard_settings' %}" data-last-4="{{last4}}">
+    <form class="" method="post" id="payment-form" data-settings-url="{% url 'dashboard_settings' %}">
     {% csrf_token %}
     {% for field in form %}
       <div class="input-field col s13 l6">
@@ -42,6 +42,20 @@
       </div>
     </div>
   </form>
+  </div>
+  <div class="row container">
+    {% if subs|length > 0 %}
+    <div class="col l13 m13 s13">
+      <h2> Subscriptions</h2>
+      <ul>
+        {% for s in subs %}
+        <li><p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} <a class="btn waves-effect waves-light btn-small red" href="#">Cancel Subscription
+        </a><p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
   </div>
   <br>
   <br>
