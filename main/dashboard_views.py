@@ -14,7 +14,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.conf import settings
 from django.utils.encoding import force_bytes, force_text
 from pinax.stripe.actions import subscriptions
+from pinax.stripe.models import Subscription
 from django.contrib import messages
+import uuid
 
 import json
 from keydex.celery_app import app
@@ -53,13 +55,14 @@ def dashboard_settings(request):
     c = Customer.objects.filter(user_id=request.user).first()
     if c == None:
       card = []
+      valid_subscription = False
     else:
       card = Card.objects.filter(customer_id=c.id)
-    data = { 'user': request.user }
-    if (len(card) > 0):
-      data['last4'] = card[0].last4
-      initial_dict['credit_card_name'] = card[0].name
-
+      valid_subscription = subscriptions.has_active_subscription(customer=c)
+    data = { 'user': request.user}
+    if (valid_subscription == True):
+      subs = Subscription.objects.filter(customer_id=c)
+      data['subs'] = subs
     form = SettingsForm(initial=initial_dict, instance=request.user)
     data['form'] = form 
     return render(request, 'settings.html', data)
@@ -79,6 +82,10 @@ def dashboard_settings(request):
     messages.error(request, 'Invalid data submitted')
     return render(request, 'settings.html', data)
   raise ValueError('Invalid request type at dashboad settings')
+
+@login_required
+def upgrade_account(request):
+  return render(request, 'upgrade.html', {})
 
 @login_required
 def poll_state(request):

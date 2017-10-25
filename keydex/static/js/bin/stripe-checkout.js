@@ -14,7 +14,9 @@ function getCookie(name) {
     }
   return cookieValue;
 }
-  $(document).ready(function(){
+$(document).ready(function() {
+    $('.modal').modal();
+    $('select').material_select();
     var handler = StripeCheckout.configure({
       key: $('#payment-form').attr('data-stripe-key'),
       image: "https://s3-us-west-2.amazonaws.com/stripe-checkmykeywords/quack-s3.png",
@@ -29,8 +31,7 @@ function getCookie(name) {
         formpay = $('#payment-form');
         var data = formpay.serializeArray();
         data.push(
-          { name:   'plan',  value: 1 },
-          { name:  'coupon', value: ''},
+          { name:   'plan',  value: formpay.data('subscription_plan') },
         );
         data = jQuery.param(data);
         $.ajax({
@@ -55,7 +56,7 @@ function getCookie(name) {
             }
           },
           error: function(request, status, error) {
-            Materialize.toast('Server error', 3000);
+            Materialize.toast('Request error', 3000);
             $('#loader').hide();
             $('#submitbutton').show();
           }
@@ -81,11 +82,12 @@ function getCookie(name) {
       var dataClass = $(this).attr('class').split(' ')[0].trim();
       if (dataClass === 'data-yearly') {
         name = 'Yearly Plan ($50 per year)';
-        value = 2;
+        formpay.data('subscription_plan', 'Yearly');
         charge_value = 5000;
       }
       else if (dataClass === 'data-monthly') {
         name = 'Monthly Plan ($5 per month)';
+        formpay.data('subscription_plan', 'Monthly');
         value = 1;
         charge_value = 500;
       }

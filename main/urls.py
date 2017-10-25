@@ -92,6 +92,11 @@ urlpatterns = [
     name='dashboard_product_indexing'
   ),
   url(
+    r'^dashboard/upgrade/',
+    dashboard_views.upgrade_account,
+    name='dashboard_upgrade'
+  ),
+  url(
     r'^settings',
     dashboard_views.dashboard_settings,
     name='dashboard_settings'
