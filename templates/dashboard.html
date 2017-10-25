@@ -93,68 +93,68 @@
             >
               {% csrf_token %}
             <div class="row">
-              <div id="DIV_1" class="data-monthly">
-              <div id="DIV_3">
-                <div id="DIV_4">
-                  <div id="DIV_5">
-                  </div>
-                  <div id="DIV_6">
-                    <div id="DIV_7">
-                      <h2 id="H2_8">
-                        <span id="SPAN_9"><span id="SPAN_10">$5 Monthly</span></span>
-                      </h2>
+              <div id="DIV_1" class="data-monthly col l6 offset-l1">
+                <div id="DIV_3">
+                  <div id="DIV_4">
+                    <div id="DIV_5">
                     </div>
-                    <div id="DIV_11">
-                      <h6 id="H6_12">
-                        <span id="SPAN_13">Plan</span>
-                      </h6>
+                    <div id="DIV_6">
+                      <div id="DIV_7">
+                        <h2 id="H2_8">
+                          <span id="SPAN_9"><span id="SPAN_10">$5 Monthly</span></span>
+                        </h2>
+                      </div>
+                      <div id="DIV_11">
+                        <h6 id="H6_12">
+                          <span id="SPAN_13">Plan</span>
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="DIV_14">
+                    <h6 id="H6_15">
+                      <span id="SPAN_16">Unlimited ASINs</span>
+                    </h6>
+                    <h6 id="H6_17">
+                      <span id="SPAN_18"><span id="SPAN_19"></span></span>
+                    </h6>
+                    <h6 id="H6_20">
+                      <span id="SPAN_21">Daily listing notifications</span>
+                    </h6>
+                    <h6 id="H6_22">
+                      <span id="SPAN_23"><span id="SPAN_24"></span></span>
+                    </h6>
+                    <h6 id="H6_25">
+                      <span id="SPAN_26">Free setup guidance</span>
+                    </h6>
+                    <h6 id="H6_27">
+                      <span id="SPAN_28"><span id="SPAN_29"></span></span>
+                    </h6>
+                    <h6 id="H6_30">
+                      <span id="SPAN_31">Eligible for promotions</span>
+                    </h6>
+                    <h6 id="H6_32">
+                      <span id="SPAN_33"><span id="SPAN_34"></span></span>
+                    </h6>
+                    <h6 id="H6_35">
+                      <span id="SPAN_36">No expiration period</span>
+                    </h6>
+                  </div>
+                  <div id="DIV_37">
+                    <div id="DIV_38">
+                    </div>
+                  </div>
+                  <div id="DIV_39">
+                    <div id="DIV_40">
+                    </div>
+                  </div>
+                  <div id="DIV_41">
+                    <div id="DIV_42">
                     </div>
                   </div>
                 </div>
-                <div id="DIV_14">
-                  <h6 id="H6_15">
-                    <span id="SPAN_16">Unlimited ASINs</span>
-                  </h6>
-                  <h6 id="H6_17">
-                    <span id="SPAN_18"><span id="SPAN_19"></span></span>
-                  </h6>
-                  <h6 id="H6_20">
-                    <span id="SPAN_21">Daily listing notifications</span>
-                  </h6>
-                  <h6 id="H6_22">
-                    <span id="SPAN_23"><span id="SPAN_24"></span></span>
-                  </h6>
-                  <h6 id="H6_25">
-                    <span id="SPAN_26">Free setup guidance</span>
-                  </h6>
-                  <h6 id="H6_27">
-                    <span id="SPAN_28"><span id="SPAN_29"></span></span>
-                  </h6>
-                  <h6 id="H6_30">
-                    <span id="SPAN_31">Eligible for promotions</span>
-                  </h6>
-                  <h6 id="H6_32">
-                    <span id="SPAN_33"><span id="SPAN_34"></span></span>
-                  </h6>
-                  <h6 id="H6_35">
-                    <span id="SPAN_36">No expiration period</span>
-                  </h6>
-                </div>
-                <div id="DIV_37">
-                  <div id="DIV_38">
-                  </div>
-                </div>
-                <div id="DIV_39">
-                  <div id="DIV_40">
-                  </div>
-                </div>
-                <div id="DIV_41">
-                  <div id="DIV_42">
-                  </div>
-                </div>
-              </div>
             </div>
-            <div id="pricing_DIV_1" class="data-yearly">
+            <div id="pricing_DIV_1" class="data-yearly col l6 offset-l1">
               <div id="pricing_DIV_3">
                 <div id="pricing_DIV_4">
                   <div id="pricing_DIV_5">
@@ -229,8 +229,6 @@
             <br>
             <br>
             <br>
-            <br>
-            <br>
         </div>
     </div>
   </div>
@@ -269,9 +267,24 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
 
 <script>
-  var handler;
+    //For getting CSRF token
+function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie != '') {
+    var cookies = document.cookie.split(';');
+    for (var i = 0; i < cookies.length; i++) {
+         var cookie = jQuery.trim(cookies[i]);
+    // Does this cookie string begin with the name we want?
+    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+       }
+      }
+    }
+  return cookieValue;
+}
   $(document).ready(function(){
-    handler = StripeCheckout.configure({
+    var handler = StripeCheckout.configure({
       key: $('#payment-form').attr('data-stripe-key'),
       image: "https://s3-us-west-2.amazonaws.com/stripe-checkmykeywords/quack-s3.png",
       name: "Check My Keywords",
@@ -283,10 +296,16 @@
         $('#submitbutton').show();
         // Send the token to your server
         formpay = $('#payment-form');
+        var data = formpay.serializeArray();
+        data.push(
+          { name:   'plan',  value: 1 },
+          { name:  'coupon', value: ''},
+        );
+        data = jQuery.param(data);
         $.ajax({
           url: formpay.attr("data-settings-url"),
           type : "POST",
-          data: formpay.serialize() + '&token='+ JSON.stringify(token),
+          data: data + '&token='+ JSON.stringify(token),
           dataType: 'json',
           success: function (data) {
             if (data.valid === true) {
@@ -312,7 +331,9 @@
         });
       }
     });
-    $('.data-yearly, .data-monthly').on('click', function(event) {
+    var button = $('.data-monthly, .data-yearly');
+    for (var i = 0; i < button.length; i++) {
+     button[i].addEventListener("click", function(event) {
       event.preventDefault();
       $('#loader').show();
       $('.data-yearly').hide();
@@ -325,12 +346,12 @@
       formpay = $('#payment-form');
       var name = 'Yearly Plan ($47 per year)';
       var value = 1;
-      var charge_value = 4700;
+      var charge_value = 5000;
       var data = $(this).attr('class');
       if (data === 'data-yearly') {
-        name = 'Yearly Plan ($47 per year)';
+        name = 'Yearly Plan ($50 per year)';
         value = 2;
-        charge_value = 4700;
+        charge_value = 5000;
       }
       else if (data === 'data-monthly') {
         name = 'Monthly Plan ($5 per month)';
@@ -342,7 +363,9 @@
         zipCode: true,
         amount: charge_value
       });
+
     });
+   }
   });
 </script>
 <script src="{% static 'js/bin/stripe-coupon.js' %}"> </script>
