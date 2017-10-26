@@ -110,6 +110,7 @@ def poll_state(request):
             historic_id = save_product_indexing(result, p)
             data['historic_id'] = urlsafe_base64_encode(force_bytes(historic_id))
             data['uuid'] = str(p.uuid)
+            del request.session['saved']
           data['process_percent'] = progress 
       else:
           data = 'No task_id in the request'
