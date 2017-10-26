@@ -38,7 +38,7 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
     if (retries >= 6 and retries < 8):
       amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API4, region=marketplace)
     if (retries >= 8):
-      return 'information Not Available'
+      return 'Information Not Available'
 
     search_item = asin + ' ' + keyword
     products = amazon.search_n(1, Keywords=search_item, SearchIndex='All')
@@ -49,5 +49,5 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
     return False
   except Exception as e:
     if str(e) == 'HTTP Error 503: Service Unavailable':
-      amazon_product(asin, keyword, marketplace, retries+1)
+      return amazon_product(asin, keyword, marketplace, retries+1)
     return False
