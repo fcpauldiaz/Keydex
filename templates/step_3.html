@@ -24,7 +24,7 @@
 </div>
 <div class="row">
   <div class="col offset-s2 s10 hide-run">
-    <h6 class="main-grey-text">How often do you want to check your keywords for indexation?</h6>
+    <h6 class="main-grey-text">How often do you want to check your keywords for indexation? (UTC timezone)</h6>
   </div>
   <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" data-poll-url="{% url 'poll_state'%}">
     {% csrf_token %}
