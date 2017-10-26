@@ -27,9 +27,19 @@ def amazon_api(asin, url, marketplace = 'US'):
 
 #function to retrieve if a product is indexing
 #on a given marketplace with a keyword
-def amazon_product(asin, keyword, marketplace = 'US'):  
+def amazon_product(asin, keyword, marketplace = 'US', retries=0):  
   try:
-    amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+    if (retries < 2):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+    if (retries >= 2 and retries < 4):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API2, region=marketplace)
+    if (retries >= 4 and retries < 6):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API3, region=marketplace)
+    if (retries >= 6 and retries < 8):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API4, region=marketplace)
+    if (retries >= 8):
+      return 'information Not Available'
+
     search_item = asin + ' ' + keyword
     products = amazon.search_n(1, Keywords=search_item, SearchIndex='All')
     if len(products) != 0:
@@ -39,18 +49,5 @@ def amazon_product(asin, keyword, marketplace = 'US'):
     return False
   except Exception as e:
     if str(e) == 'HTTP Error 503: Service Unavailable':
-      try:
-        amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
-        search_item = asin + ' ' + keyword
-        products = amazon.search_n(1, Keywords=search_item, SearchIndex='All')
-        if len(products) != 0:
-          if (products[0].asin != asin):
-            return 'information Not Available'
-          return True
-        return False
-      except Exception as e:
-        if str(e) == 'HTTP Error 503: Service Unavailable':
-          return 'information Not Available'
-        return False
-      return 'information Not Available'
+      amazon_product(asin, keyword, marketplace, retries+1)
     return False

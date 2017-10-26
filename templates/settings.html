@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %} Settings {% endblock %}
+{% load filter_extras %}
 {% block content %}
   <div class="row container">
     <h2>Settings</h2>
@@ -49,9 +50,14 @@
       <h2> Subscriptions</h2>
       <ul>
         {% for s in subs %}
-        <li><p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} <a class="btn waves-effect waves-light btn-small red" href="#">Cancel Subscription
+        {% if s.status == 'active' %}
+        <li><p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} <a class="btn waves-effect waves-light btn-small red" href="{% url 'cancel_subscription' s.id|product_detail %}">Cancel Subscription
         </a><p>
         </li>
+        {% else %}
+         <li><p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}}<p>
+        </li>
+        {% endif %}
         {% endfor %}
       </ul>
     </div>

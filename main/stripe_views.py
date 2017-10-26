@@ -1,3 +1,4 @@
+from django.shortcuts import render, redirect, reverse
 from pinax.stripe.models import Customer, Card, Plan, Coupon
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
@@ -7,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.dispatch import receiver
 from pinax.stripe.signals import WEBHOOK_SIGNALS
+from pinax.stripe.models import Subscription
+from pinax.stripe.actions.subscriptions import cancel
 from datetime import datetime
 
 import stripe
@@ -52,13 +55,16 @@ def check_valid_coupon(request):
 
 
 @login_required
-def cancel_subscription(request):
-  if request.is_ajax():
-    customer = Customer.objects.filter(user_id=user).first()
+def cancel_subscription(request, uuid):
+  if request.method == 'GET':
+    customer = Customer.objects.filter(user_id=request.user).first()
     valid_subscription = False
     if (customer != None):
       valid_subscription = subscriptions.has_active_subscription(customer=customer)
-    return valid_subscription
+    if (valid_subscription == True):
+      subscription = Subscription.objects.get(id=urlsafe_base64_decode(force_text(uuid)))
+      cancel(subscription=subscription, at_period_end=False)
+    return redirect('dashboard_settings')
 
 
 def xstr(s):

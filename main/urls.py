@@ -97,6 +97,11 @@ urlpatterns = [
     name='dashboard_upgrade'
   ),
   url(
+    r'^subscription/(?P<uuid>[0-9A-Za-z-]+)/cancel',
+    stripe_views.cancel_subscription,
+    name='cancel_subscription'
+  ),
+  url(
     r'^settings',
     dashboard_views.dashboard_settings,
     name='dashboard_settings'
