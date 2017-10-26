@@ -14,7 +14,7 @@ def get_indexing(item):
         else:
             captcha = item.find('input', {'id': 'captchacharacters'})
             if (captcha != None):
-                return 'Information Not Available'
+                return None
                 # captcha found!
 
             count_true += 1 # product is indexing
