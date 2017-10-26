@@ -130,7 +130,7 @@ One keyword per line
     event.preventDefault();
     var lines = this.textarea.value.split('\n');
     var type = $('select').find(":selected").text();
-    if (lines.length === 0 && this.textarea.value !== '') {
+    if (lines.length === 0 && this.textarea.value !== '' && data.length <= 250 && !data.includes(this.textarea.value.toLowerCase())) {
       var row = table.insertRow(-1);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
@@ -143,7 +143,11 @@ One keyword per line
     var table = document.getElementById('table');
     for(var i = 0; i < lines.length; i++) {
       var text = lines[i].trim();
-      if (text === '' || data.includes(text)) {
+      if (text === '' || data.includes(text.toLowerCase())) {
+        continue;
+      }
+      if (data.length > 250) {
+        Materialize.toast('Reached maximum 250 keywords for a product', 3000);
         continue;
       }
       
@@ -154,7 +158,7 @@ One keyword per line
       cell1.innerHTML = text;
       cell2.innerHTML = type;
       cell3.innerHTML = "<td><i class='small material-icons'>close</i></td>";
-      data.push(text);
+      data.push(text.toLowerCase());
     }
     this.textarea.value = '';
   });
@@ -227,7 +231,7 @@ function getCookie(name) {
       if (tds[1].innerText === 'Keyword' && keywords.includes(tds[0].innerText.trim()) === false) {
         keywords.push(tds[0].innerText.trim());
       }
-      else if (tds[1].innerText === 'Phrase' && !phrases.inclues(tds[0].innerText.trim())) {
+      else if (tds[1].innerText === 'Phrase' && !phrases.includes(tds[0].innerText.trim())) {
         phrases.push(tds[0].innerText.trim());
       }
     }
