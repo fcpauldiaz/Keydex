@@ -21,6 +21,8 @@ def index_data(asin, country_host, country_code, keyword, retries):
   else:    
       item = page
       product_indexing = get_indexing(item)
+      if (product_indexing == None):
+        product_indexing = amazon_product(asin, keyword, country_code)
       returnDictionary[keyword] = product_indexing
     #print returnDictionary
   return returnDictionary
