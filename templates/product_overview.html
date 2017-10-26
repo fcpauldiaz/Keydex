@@ -75,9 +75,11 @@
       </div>
       {% endif %}
     </div>
-    <div class="col l2 offset-l3 m1 offset-m2 s1 offset-s1">
-      <div id="progress" class="progress_bar center" style="display: none"></div>
+    <div class="col l1 offset-l3 m1 offset-m2 s1 offset-s1">
+      <div id="progress" class="progress_bar center" style="display: none">
+      </div>
     </div>
+      <h4 id="helptext" class="text-loader disabled-text-text center center-justify" style="display: none;">Do not close this window or change url.</h4>
   </div>
   <!-- Modal Structure -->
   <div id="modal1" class="modal container" data-poll-url="{% url 'poll_state'%}" data-product-id="{{ product.uuid }}">
@@ -127,6 +129,7 @@
       else {
         $('table').hide();
         $('#progress').show()
+        $('#helptext').show();
         poll_xhr = $.ajax({
           url: form.attr("data-poll-url"),
           type: 'POST',
@@ -141,6 +144,7 @@
           if (result.process_percent === null || result.process_percent === undefined) {
               willstop = 1;
               $('#progress').hide();
+              $('#helptext').hide();
               $('table').show();
               task_total = -1;
               location.reload(true);
