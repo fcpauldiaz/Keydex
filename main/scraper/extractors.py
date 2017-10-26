@@ -5,7 +5,7 @@ htmlparser = HTMLParser()
 def get_indexing(item):
     count_true = 0
     count_false = 0
-    max_count = 3
+    max_count = 5
     result = 'Information Not Available'
     while (True):
         product_indexing = item.find_all('h1', {'id': 'noResultsTitle'})
@@ -16,7 +16,6 @@ def get_indexing(item):
             if (captcha != None):
                 return None
                 # captcha found!
-
             count_true += 1 # product is indexing
         if ((count_true - count_false) > max_count):
             result = True
