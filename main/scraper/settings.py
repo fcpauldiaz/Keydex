@@ -71,4 +71,5 @@ AWS_API = "keydex-20"
 AWS_API2 = "keyed-20"
 AWS_API3 = "keyex-20"
 AWS_API4 = "gobhash-20"
+AWS_API5 = "check046-20"
 
