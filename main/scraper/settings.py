@@ -68,4 +68,7 @@ export_dir = "/tmp"
 AWS_KEY = "AKIAI5MZQK32FPKK35TA"
 AWS_SECRET = "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"
 AWS_API = "keydex-20"
+AWS_API2 = "keyed-20"
+AWS_API3 = "keyex-20"
+AWS_API4 = "gobhash-20"
 

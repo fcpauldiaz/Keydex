@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% block title %} Upgrade Account {% endblock %}
+
+{% block content %}
+{% load filter_extras %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/pricing.css' %}">
+{% endblock %}
+<div class="row container">
+  <div class="col l13 s12">
+    <h2 class="inline">Upgrade your account, </h2> 
+    <h2 class="blue-paypal-text inline"> {{request.user.first_name}}</h2>
+  </div>
+</div>
+<div class="row container">
+  <div class="col l4 offset-l2 s13 offset-s1">
+    <div id="DIV_1_upgrade" class="data-monthly">
+      <div id="DIV_3">
+        <div id="DIV_4">
+          <div id="DIV_5">
+          </div>
+          <div id="DIV_6">
+            <div id="DIV_7">
+              <h2 id="H2_8">
+                <span id="SPAN_9"><span id="SPAN_10">$5 Monthly</span></span>
+              </h2>
+            </div>
+            <div id="DIV_11">
+              <h6 id="H6_12">
+                <span id="SPAN_13">Plan</span>
+              </h6>
+            </div>
+          </div>
+        </div>
+        <div id="DIV_14">
+          <h6 id="H6_15">
+            <span id="SPAN_16">Unlimited ASINs</span>
+          </h6>
+          <h6 id="H6_17">
+            <span id="SPAN_18"><span id="SPAN_19"></span></span>
+          </h6>
+          <h6 id="H6_20">
+            <span id="SPAN_21">Daily listing notifications</span>
+          </h6>
+          <h6 id="H6_22">
+            <span id="SPAN_23"><span id="SPAN_24"></span></span>
+          </h6>
+          <h6 id="H6_25">
+            <span id="SPAN_26">Free setup guidance</span>
+          </h6>
+          <h6 id="H6_27">
+            <span id="SPAN_28"><span id="SPAN_29"></span></span>
+          </h6>
+          <h6 id="H6_30">
+            <span id="SPAN_31">Eligible for promotions</span>
+          </h6>
+          <h6 id="H6_32">
+            <span id="SPAN_33"><span id="SPAN_34"></span></span>
+          </h6>
+          <h6 id="H6_35">
+            <span id="SPAN_36">No expiration period</span>
+          </h6>
+        </div>
+        <div id="DIV_37">
+          <div id="DIV_38">
+          </div>
+        </div>
+        <div id="DIV_39">
+          <div id="DIV_40">
+          </div>
+        </div>
+        <div id="DIV_41">
+          <div id="DIV_42">
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+  <div class="col l4 s2">
+      <div id="pricing_DIV_1_upgrade" class="data-yearly">
+              <div id="pricing_DIV_3">
+                <div id="pricing_DIV_4">
+                  <div id="pricing_DIV_5">
+                  </div>
+                  <div id="pricing_DIV_6">
+                    <div id="pricing_DIV_7">
+                      <h2 id="pricing_H2_8">
+                        <span id="pricing_SPAN_9"><span id="pricing_SPAN_10">$50 Anually</span></span>
+                      </h2>
+                    </div>
+                    <div id="pricing_DIV_11">
+                      <h6 id="pricing_H6_12">
+                        <span id="pricing_SPAN_13">Plan</span>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                <div id="pricing_DIV_14">
+                  <h6 id="pricing_H6_15">
+                    <span id="pricing_SPAN_16">Unlimited ASINs</span>
+                  </h6>
+                  <h6 id="pricing_H6_17">
+                    <span id="pricing_SPAN_18"><span id="pricing_SPAN_19">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_20">
+                    <span id="pricing_SPAN_21">Daily listing notifications</span>
+                  </h6>
+                  <h6 id="pricing_H6_22">
+                    <span id="pricing_SPAN_23"><span id="pricing_SPAN_24">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_25">
+                    <span id="pricing_SPAN_26">Free setup guidance</span>
+                  </h6>
+                  <h6 id="pricing_H6_27">
+                    <span id="pricing_SPAN_28"><span id="pricing_SPAN_29">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_30">
+                    <span id="pricing_SPAN_31">Elegible for promotions</span>
+                  </h6>
+                  <h6 id="pricing_H6_32">
+                    <span id="pricing_SPAN_33"><span id="pricing_SPAN_34">​</span></span>
+                  </h6>
+                  <h6 id="pricing_H6_35">
+                    <span id="pricing_SPAN_36">Save Anually</span>
+                  </h6>
+                </div>
+                <div id="pricing_DIV_37">
+                  <div id="pricing_DIV_38">
+                  </div>
+                </div>
+                <div id="pricing_DIV_39">
+                  <div id="pricing_DIV_40">
+                  </div>
+                </div>
+                <div id="pricing_DIV_41">
+                  <div id="pricing_DIV_42">
+                  </div>
+                </div>
+              </div>
+            </div>
+  </div>
+</div>
+<div class="row container">
+    <div class="input-field col s13 m13 l9 offset-l2">
+      <input placeholder="Coupon" id="coupon" type="text" class="validate">
+      <label class="active" for="coupon">Coupon Code</label>
+    </div>
+    <div class="col s13 m13 l9 offset-l2">
+      <label>
+        <h5 id="showTotal" class="black-text">Total: </h5>
+      </label>
+    </div>
+</div>
+<div class="center center-justify">
+   <a href="{% url 'users_login_user' %}" class="btn-large waves-effect waves-light blue-paypal">Subscribe</a>
+</div>
+<br>
+<br>
+{% endblock %}
+{% block js %}
+<script src="https://js.stripe.com/v3/"></script>
+<script src="https://checkout.stripe.com/checkout.js"></script>
+<script>
+  $('.data-yearly').on('click', function(e){
+    e.preventDefault();
+    $(this).css('border', 'solid 4px blue');
+    $('#pricing_DIV_5').css('width', '261px');
+    $('#DIV_5').css('width', '269px');
+    $('#DIV_1_upgrade').css('border', 'none');
+    $('#showTotal').text('Total:' + ' $50')
+  });
+  $('.data-monthly').on('click', function(e){
+    e.preventDefault();
+    $(this).css('border', 'solid 4px blue');
+    $('#DIV_5').css('width', '261px');
+    $('#pricing_DIV_5').css('width', '269px');
+    $('#pricing_DIV_1_upgrade').css('border', 'none');
+    $('#showTotal').text('Total:' + ' $5')
+  });
+</script>
+<script src="{% static 'js/bin/stripe-checkout.js' %}"></script>
+<script src="{% static 'js/bin/stripe-coupon.js' %}"> </script>
+{% endblock %}
