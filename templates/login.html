@@ -8,7 +8,7 @@
        {% for field in form %}
       <div class="input-field col s13 m8 offset-m3 l5 offset-l4 login-center">
         {{ field }}
-        <label class="" for="{{ field.name }}">{{ field.label }}</label>
+        <label class="active" for="{{ field.name }}">{{ field.label }}</label>
         {% for error in field.errors %}
           <p class="error-text" style="margin-top: 0">{{ error }}</p>
         {% endfor %}

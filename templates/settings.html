@@ -51,8 +51,23 @@
       <ul>
         {% for s in subs %}
         {% if s.status == 'active' %}
-        <li><p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} <a class="btn waves-effect waves-light btn-small red" href="{% url 'cancel_subscription' s.id|product_detail %}">Cancel Subscription
-        </a><p>
+        <li>
+          <p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} 
+            <a class="btn waves-effect waves-light btn-small red" href="#modal{{s.id}}">Cancel Subscription
+            </a>
+          <p>
+          <!-- Modal Structure -->
+            <div id="modal{{s.id}}" class="modal container">
+              <div class="modal-content">
+                <h4>Cancel Subscription</h4>
+                <p>The subscription will be immediately canceled.</p>
+              </div>
+              <div class="modal-footer">
+                  <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
+                  {% csrf_token %}
+                  <a href="{% url 'cancel_subscription' s.id|product_detail %}" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Yes, cancel </a>
+              </div>
+            </div>
         </li>
         {% else %}
          <li><p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} - {{s.status}}<p>
@@ -71,4 +86,7 @@
 {% load static %}
 {% block css %}
 <link href="{% static 'css/stripe.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block js %}
+<script>$('.modal').modal();</script>
 {% endblock %}

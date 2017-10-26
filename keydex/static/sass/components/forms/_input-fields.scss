@@ -182,12 +182,58 @@ textarea.materialize-textarea {
     transform-origin: 0% 100%;
     text-align: initial;
     transform: translateY(12px);
+    pointer-events: none;
 
     &:not(.label-icon).active {
       transform: translateY(-14px) scale(.8);
       transform-origin: 0 0;
     }
   }
+
+  @media #{$small-and-down} {
+      .label-pointer {
+        color: $input-border-color;
+        position: relative;
+        top: 0;
+        left: -40px !important;
+        height: 100%;
+        font-size: 1rem !important;
+        cursor: text;
+        transition: transform .2s ease-out;
+        transform-origin: 0% 100%;
+        text-align: initial;
+        transform: translateY(12px);
+        pointer-events: all !important;
+
+        &:not(.label-icon).active {
+          transform: translateY(-14px) scale(.8);
+          transform-origin: 0 0;
+        }
+      }
+  }
+
+  @media #{$medium-and-up} {
+    .label-pointer {
+      color: $input-border-color;
+      position: relative;
+      top: 0;
+      left: -140px !important;
+      height: 100%;
+      font-size: 1rem !important;
+      cursor: text;
+      transition: transform .2s ease-out;
+      transform-origin: 0% 100%;
+      text-align: initial;
+      transform: translateY(12px);
+      pointer-events: all !important;
+
+      &:not(.label-icon).active {
+        transform: translateY(-14px) scale(.8);
+        transform-origin: 0 0;
+      }
+    }
+  }
+
 
   // Prefix Icons
   .prefix {
