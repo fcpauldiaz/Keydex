@@ -126,7 +126,7 @@ def createUser(request):
       user.username = user.username.lower().strip()
       user.save()
       send_confirmation_email(request, user)
-      return redirect('account_activation_sent')      
+      return render(request, 'account_activation_sent.html', { 'email': email })
     return render(
       request,
       'sign_up.html',
