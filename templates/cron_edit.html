@@ -2,7 +2,7 @@
 {% block title %} Step 3 Edit{% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col l6 offset-l3 s12 m8 offset-m2">
+  <div class="col l6 offset-l4 s13 m8 offset-m2">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
          <li class="step active">
@@ -21,7 +21,7 @@
 </div>
 <div class="row">
   <div class="col offset-s2">
-    <h6 class="main-grey-text">How often do you want to check your product for indexation?</h6>
+    <h6 class="main-grey-text">How often do you want to check your product for indexation? (UTC timezone)</h6>
   </div>
   <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" data-poll-url="{% url 'poll_state'%}">
     {% csrf_token %}
