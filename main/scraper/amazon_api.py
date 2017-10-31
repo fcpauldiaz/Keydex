@@ -22,7 +22,6 @@ def amazon_api(asin, url, marketplace = 'US'):
     )
     return model_product
   except Exception as e:
-    print e
     return None
 
 #function to retrieve if a product is indexing
