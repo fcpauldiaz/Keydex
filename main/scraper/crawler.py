@@ -31,9 +31,9 @@ def single_crawl(product, marketplace, keyword, retries):
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
         sleep(1)
         if (retries < 2):
-            return single_crawl(product.asin, marketplace, keyword, retries + 1)
+            return single_crawl(product.asin, marketplace.country_host, keyword, retries + 1)
          #returnDictionary[keyword] = 'Information not available'
-        product_indexing = amazon_product(product.asin, keyword, country_code)
+        product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
         returnDictionary[keyword] = product_indexing
     else:    
         item = page
@@ -58,7 +58,7 @@ def begin_crawl(product, marketplace, keyword, retries, output):
         item = page
         product_indexing = get_indexing(item)
         if (product_indexing == None):
-            product_indexing = amazon_product(product.asin, keyword, country_code)
+            product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
         returnDictionary[keyword] = product_indexing
     #return returnDictionary
     output.put(returnDictionary)
