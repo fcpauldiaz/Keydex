@@ -74,13 +74,13 @@ def xstr(s):
 
 @receiver(WEBHOOK_SIGNALS["invoice.payment_succeeded"])
 def handle_payment_succeeded(sender, event, **kwargs):
-  print event.kind
-  print event.livemode
-  print event.customer
-  print event.webhook_message
-  print event.validated_message
-  print event.valid
-  print kwargs
+  # print event.kind
+  # print event.livemode
+  # print event.customer
+  # print event.webhook_message
+  # print event.validated_message
+  # print event.valid
+  # print kwargs
   pass  # do what it is you want to do here
 
 @receiver(WEBHOOK_SIGNALS["coupon.created"])
