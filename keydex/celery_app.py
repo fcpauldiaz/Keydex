@@ -107,7 +107,6 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
       reporting_percentage = product.reporting_percentage
       today = datetime.date.today()
       asin = product.asin
-      rate = product.reporting_percentage
       if (periodicity == 'monthly'):
         #check if today is endof month
         monthly = last_day_month(today)
