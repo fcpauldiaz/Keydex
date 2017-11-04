@@ -137,5 +137,4 @@ def fetch_listing(ASIN, marketplace):
 def datetime_handler(x):
   if isinstance(x, datetime.datetime):
       return x.isoformat()
-  print x
   raise TypeError("Unknown type")
