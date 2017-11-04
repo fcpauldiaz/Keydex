@@ -15,8 +15,10 @@ $(document).ready(function() {
       }
     return cookieValue;
   }
-  $('#coupon').on('keyup', function(e) {
+  document.getElementById('coupon').addEventListener('keyup', function(e) {
     e.preventDefault();
+    $('#coupon').removeClass('valid');
+    $('#coupon').removeClass('invalid');
     if (selected === undefined) {
       Materialize.toast('Please click a plan to select', 3000);
       $('#coupon').addClass('invalid');
