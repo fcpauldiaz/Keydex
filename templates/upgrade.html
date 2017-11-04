@@ -142,9 +142,9 @@
   </div>
 </div>
 <div class="row container">
-    <div class="input-field col s13 m13 l9 offset-l2">
+    <div class="input-field col s13 m13 l9 offset-l2" id="payment-form" data-settings-url="{% url 'stripe_check_coupon' %}" data-stripe-key="{{ key }}" data-upgrade-url="{% url 'stripe_upgrade_coupon' %}">
       <input placeholder="Coupon" id="coupon" type="text" class="validate">
-      <label class="active" for="coupon">Coupon Code</label>
+      <label class="active" for="coupon" data-error="Invalid coupon" data-success="Valid coupon">Coupon Code</label>
     </div>
     <div class="col s13 m13 l9 offset-l2">
       <label>
@@ -153,8 +153,19 @@
     </div>
 </div>
 <div class="center center-justify">
-   <a href="{% url 'users_login_user' %}" class="btn-large waves-effect waves-light blue-paypal">Subscribe</a>
-</div>
+   <a id="subscribe" class="btn-large waves-effect waves-light blue-paypal">Subscribe</a>
+  <div id="loader" class="preloader-wrapper big active" style="display: none">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 <br>
 <br>
 {% endblock %}
@@ -162,13 +173,28 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
+  var selected = undefined;
+  var discount = undefined;
+  var total = undefined;
+  var name = undefined;
   $('.data-yearly').on('click', function(e){
     e.preventDefault();
     $(this).css('border', 'solid 4px blue');
     $('#pricing_DIV_5').css('width', '261px');
     $('#DIV_5').css('width', '269px');
     $('#DIV_1_upgrade').css('border', 'none');
-    $('#showTotal').text('Total:' + ' $50')
+    if (discount == undefined) {
+      $('#showTotal').text('Total:' + ' $50');
+      total = 50;
+    } 
+    else {
+      total = 50-(50*parseFloat(discount));
+      $('#showTotal').text('Total:' + ' $'+total);
+    }
+    selected = 'Yearly';
+    name = 'Yearly ($50)';
+    
+    $('#coupon').removeClass('valid');
   });
   $('.data-monthly').on('click', function(e){
     e.preventDefault();
@@ -176,9 +202,19 @@
     $('#DIV_5').css('width', '261px');
     $('#pricing_DIV_5').css('width', '269px');
     $('#pricing_DIV_1_upgrade').css('border', 'none');
-    $('#showTotal').text('Total:' + ' $5')
+    if (discount == undefined) {
+      $('#showTotal').text('Total:' + ' $5');
+      total = 5;
+    }
+    else {
+      total = 5-(5*parseFloat(discount));
+      $('#showTotal').text('Total:' + ' $'+total);
+    }
+    selected = 'Monthly';
+    name = 'Montlhy ($5)';
+    $('#coupon').removeClass('valid');
   });
 </script>
-<script src="{% static 'js/bin/stripe-checkout.js' %}"></script>
+<script src="{% static 'js/bin/coupon-checkout.js' %}"></script>
 <script src="{% static 'js/bin/stripe-coupon.js' %}"> </script>
 {% endblock %}
