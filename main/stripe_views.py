@@ -37,6 +37,36 @@ def process_charge(request):
   return JsonResponse({'valid': valid })
 
 @login_required
+def upgrade(request):
+  if request.is_ajax():
+
+    token = request.POST.get('token_id')
+    # Charge the user's card:
+    customer = Customer.objects.filter(user_id=request.user).first()
+    if customer == None:
+      customer = customers.create(user=request.user)
+    plan = Plan.objects.get(stripe_id=request.POST['plan'])
+    coupon = request.POST['coupon']
+    try:
+      if coupon == '':
+        subs = subscriptions.create(
+          customer=customer,
+          plan=plan.stripe_id,
+          token=token
+        )
+      else:
+        subs = subscriptions.create(
+          customer=customer,
+          plan=plan.stripe_id,
+          coupon=coupon,
+          token=token
+        )
+      valid = subscriptions.is_valid(subs)
+    except Exception as e:
+      return JsonResponse({ 'valid': False, 'message': e.message })
+  return JsonResponse({'valid': valid })
+
+@login_required
 def check_valid_coupon(request):
   if request.is_ajax():
     coupon = request.POST['coupon'].strip().upper()
@@ -44,12 +74,12 @@ def check_valid_coupon(request):
     if cp == None:
       return JsonResponse({ 'valid_coupon': False })
     if (cp.valid == True):
-      plan = Plan.objects.filter(id=request.POST['plan']).first()
+      plan = Plan.objects.filter(stripe_id=request.POST['plan']).first()
       if plan == None:
         return JsonResponse({ 'valid_coupon': False })
       percent = cp.percent_off/100.0
       total = float(plan.amount) - (float(plan.amount) * percent)
-      return JsonResponse({ 'valid_coupon': True, 'total_amount': format(total, '.2f') })
+      return JsonResponse({ 'valid_coupon': True, 'total_amount': format(total, '.2f'), 'discount': percent })
     return JsonResponse({ 'valid_coupon': False })
 
 

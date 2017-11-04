@@ -85,7 +85,8 @@ def dashboard_settings(request):
 
 @login_required
 def upgrade_account(request):
-  return render(request, 'upgrade.html', {})
+  key = settings.PINAX_STRIPE_PUBLIC_KEY
+  return render(request, 'upgrade.html', { 'key': key })
 
 @login_required
 def poll_state(request):
