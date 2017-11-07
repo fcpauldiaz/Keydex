@@ -177,7 +177,10 @@
         }
       },
       error: function(request, status, error) {
-        console.log(error);
+        Materialize.toast('Error saving product', 3000);
+        $('.hide-run').show();
+        $('#save-button').show();
+        $('#form').show();
       }
     });
 
