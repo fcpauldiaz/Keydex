@@ -11,7 +11,7 @@
     event.preventDefault();
     var lines = this.textarea.value.split('\n');
     var type = $('select').find(":selected").text();
-    if (lines.length === 0 && this.textarea.value !== '' && data.length <= 250 && !data.includes(this.textarea.value.toLowerCase())) {
+    if (lines.length <= 500 && lines.length === 0 && this.textarea.value !== '' && data.length <= 300 && !data.includes(this.textarea.value.toLowerCase())) {
       var row = table.insertRow(-1);
       var cell1 = row.insertCell(0);
       var cell2 = row.insertCell(1);
@@ -20,14 +20,21 @@
       cell2.innerHTML = type;
       cell3.innerHTML = "<td><i class='small material-icons'>close</i></td>";
     }
+    if (lines.length > 500) {
+      Materialize.toast('Maximum legnth 500 per keyword or phrase reached', 3000);
+    }
     var table = document.getElementById('table');
     for(var i = 0; i < lines.length; i++) {
       var text = lines[i].trim().replace(/[^\x00-\x7F]/g, "");;
       if (text === '' || data.includes(text.toLowerCase())) {
         continue;
       }
-      if (data.length > 250) {
-        Materialize.toast('Reached maximum 250 keywords for a product', 3000);
+      if (text.length > 500) {
+        Materialize.toast('Maximum length of 500 per keyword or phrase reached', 3000);
+        continue;
+      }
+      if (data.length > 300) {
+        Materialize.toast('Reached maximum 300 keywords for a product', 3000);
         continue;
       }
       
