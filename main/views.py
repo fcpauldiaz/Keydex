@@ -205,6 +205,7 @@ def change_password(request, token):
   else:  # request.method == 'POST'
     if (request.POST['password'] != request.POST['password_repeated']):
       # passwords dont match
+      form = ChangePasswordForm(request.POST)
       messages.error(request, 'Password does not match')
       return render(request, 'change_password.html', { 'form': form })
     profile = Profile.objects.get(password_reset_token=token)
