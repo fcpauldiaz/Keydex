@@ -205,7 +205,8 @@ def change_password(request, token):
   else:  # request.method == 'POST'
     if (request.POST['password'] != request.POST['password_repeated']):
       # passwords dont match
-      return redirect('users_reset_password') 
+      messages.error(request, 'Password does not match')
+      return render(request, 'change_password.html', { 'form': form })
     profile = Profile.objects.get(password_reset_token=token)
     if profile == None:
       # token not valid
@@ -216,7 +217,8 @@ def change_password(request, token):
     user.profile.password_reset_token = None
     user.profile.password_reset_token_expiration = None
     user.profile.save()
-    return redirect('main_index')
+    messages.success(request, 'Password has been updated')
+    return redirect('users_login_user')
 
 
 def send_confirmation_email(request, user):
