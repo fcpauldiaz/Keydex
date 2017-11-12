@@ -14,6 +14,7 @@ import datetime
 import requests
 import time
 import os
+import sys
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'keydex.settings')
@@ -133,7 +134,7 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
           #save in memory for email later
           asins_to_email.append(asin)
     except Exception, e:
-      failed = e.message
+      failed = e.message + ' ' + str(sys.exc_traceback.tb_lineno)
   if len(asins_to_email) != 0:
     #print 'Sending email ' + user_email
     send_email(asins_to_email, user_first_name, user_last_name, user_email)
