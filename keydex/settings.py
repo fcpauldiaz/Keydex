@@ -73,7 +73,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
-
 ]
 
 ROOT_URLCONF = 'keydex.urls'
@@ -192,6 +191,14 @@ DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
 LOGIN_URL='/user/login'
 LOGIN_REDIRECT_URL='/user/login'
 
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+
 CELERY_BROKER_URL = env('BROKER_URL')
 CELERY_RESULT_BACKEND = env('REDIS_URL')
 
@@ -207,6 +214,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = env('FACEBOOK_SECRET')
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
+
 
 LOGGING = {
     'version': 1,
