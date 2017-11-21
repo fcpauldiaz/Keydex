@@ -19,6 +19,7 @@ from django.views.defaults import page_not_found, server_error
 from django.template.response import TemplateResponse
 from django.views.generic import TemplateView
 
+
 def handler500(request):
   """500 error handler which includes ``request`` in the context.
 
@@ -35,6 +36,6 @@ urlpatterns = [
   url(r'^indexer/', admin.site.urls),
   url(r'^', include('main.urls')),
   url(r"^payments/", include("pinax.stripe.urls")),  
-   url(r'^oauth/', include('social_django.urls', namespace='social')),
+  url(r'^oauth/', include('social_django.urls', namespace='social')),
   url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_file")
 ]

@@ -130,5 +130,7 @@ urlpatterns = [
     r'^account/upgrade/',
     stripe_views.upgrade,
     name='stripe_upgrade_coupon'
-  )
+  ),
+  url(r'^email/$', main_views.require_email, name='require_email'),
+  url(r'^email-sent/', main_views.validation_sent)
 ]

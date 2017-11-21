@@ -12,10 +12,15 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.sites.shortcuts import get_current_site
 from django.template import loader
 from django.contrib import messages
+from django.core.urlresolvers import reverse
+
 import uuid
 from user_helper import validate_email #email validation
 from django.views.defaults import page_not_found, server_error
 from django.template.response import TemplateResponse
+
+from social_core.backends.utils import load_backends
+from social_django.utils import psa, load_strategy
 
 from models import Profile, Product
 from tokens import account_activation_token
@@ -27,7 +32,7 @@ def index(request):
     return redirect('dashboard')
   return render(
     request,
-    'new_index.html'
+    'keywords/index.html'
   )
 
 def tutorial(request):
@@ -289,3 +294,42 @@ def server_error(request, template_name='500.html'):
             raise
         return http.HttpResponseServerError('<h1>Server Error (500)</h1>', content_type='text/html')
     return http.HttpResponseServerError(template.render(None, request, status=500))
+
+def save_profile(backend, user, response, *args, **kwargs):
+    if backend.name == 'facebook':
+      profile = user.get_profile()
+      if profile is None:
+          profile = Profile(user_id=user.id)
+      print profile
+
+
+
+def send_validation(strategy, backend, code, partial_token):
+    url = '{}?verification_code={}&partial_token={}'.format(
+        reverse('social:complete', args=(backend.name,)),
+        code.code,
+        partial_token
+    )
+    url = strategy.request.build_absolute_uri(url)
+    from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
+    send_mail('Validate your account', 'Validate your account {}'.format(url),
+      from_email, [code.email], fail_silently=False)
+
+def require_email(request):
+  """Email required page"""
+  strategy = load_strategy()
+  partial_token = request.GET.get('partial_token')
+  partial = strategy.partial_load(partial_token)
+  return render(request, 'require_email.html', {
+      'email_required': True,
+      'partial_backend_name': partial.backend,
+      'partial_token': partial_token
+  })
+
+def validation_sent(request):
+  """Email validation sent confirmation page"""
+  return render(request, 'account_activation_sent.html', {
+      'validation_sent': True,
+      'email': request.session.get('email_validation_address')
+  })
+      
