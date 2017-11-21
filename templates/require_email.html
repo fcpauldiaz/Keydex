@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %} Require Email{% endblock %}
+{% block content %}
+<div class="row">
+    <h2 class="center">Email Required</h2>
+    <form class="center center-align" action="{% url 'social:complete' 'facebook' %}" method="post" role="form">
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+        <input type="hidden" name="partial_token" value="{{ partial_token }}">
+        <div class="input-field col s13 m8 offset-m3 l5 offset-l4 login-center">
+            <input placeholder="Email Required" id="email" type="email" name="email" class="validate">
+            <label class="active" for="email">Email</label>
+        </div>
+        <div class="row">
+            <div class="col l13 s13">
+                <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Continue</button>
+            </div>
+        </div>
+        
+    </form>
+  </div>
+{% endblock %}
+{% block js %}
+<script>
+  $("form").submit(function() {
+    $(this).submit(function() {
+        return false;
+    });
+    return true;
+});
+</script>
+{% endblock %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/materialize-social.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
