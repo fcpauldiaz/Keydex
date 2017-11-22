@@ -22,6 +22,7 @@ environ.Env.read_env() # reading .env file
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+T_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
 PINAX_STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC')
@@ -57,7 +58,10 @@ INSTALLED_APPS = [
     'celery',
     'raven.contrib.django.raven_compat',
     'django_celery_beat',
-    'social_django'
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook'  # enabled by configure
 ]
 
 SITE_ID = 1
@@ -71,7 +75,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
     'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
 ]
 
@@ -80,16 +83,17 @@ ROOT_URLCONF = 'keydex.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [
+            os.path.join(T_DIR, 'templates', 'allauth'),
+            os.path.join(BASE_DIR, 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect'
+                'django.contrib.messages.context_processors.messages'
             ],
             'debug': DEBUG,
         },
@@ -125,7 +129,7 @@ PASSWORD_HASHERS = (
 )
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'social_core.backends.facebook.FacebookOAuth2'
+    'allauth.account.auth_backends.AuthenticationBackend'
     
 )
 AUTH_PASSWORD_VALIDATORS = [
@@ -185,6 +189,7 @@ ANYMAIL = {
     "MAILGUN_API_KEY": env('MAILGUN_KEY'),
     "MAILGUN_SENDER_DOMAIN": 'mail.checkmykeywords.com',  # your Mailgun domain, if needed
 }
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
 DEFAULT_FROM_EMAIL = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'  # if you don't already have this in settings
 
@@ -208,35 +213,22 @@ CELERY_ACCEPT_CONTENT = ['json', 'pickle']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_IGNORE_RESULT = True
 
-SOCIAL_AUTH_FACEBOOK_KEY = env('FACEBOOK_KEY')
-SOCIAL_AUTH_FACEBOOK_SECRET = env('FACEBOOK_SECRET')
-SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
-SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-    'fields': 'id,name,email', 
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # testing...
+#ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+SOCIALACCOUNT_AUTO_SIGNUP = True 
+SOCIALACCOUNT_STORE_TOKENS = True
+# For custom sign-up form:
+# http://stackoverflow.com/questions/12303478/how-to-customize-user-profile-when-using-django-allauth
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'SCOPE': ['email', 'public_profile'],  #, 'publish_stream'],
+        'METHOD': 'oauth2'  # 'js_sdk'  # instead of 'oauth2'
+    }
 }
-SOCIAL_AUTH_FORCE_EMAIL_VALIDATION = True
-SOCIAL_AUTH_EMAIL_FORM_HTML = 'email_signup.html'
-SOCIAL_AUTH_EMAIL_VALIDATION_FUNCTION = 'main.views.send_validation'
-SOCIAL_AUTH_EMAIL_VALIDATION_URL = '/account_activation_sent/'
-SOCIAL_AUTH_USERNAME_FORM_HTML = 'username_signup.html'
-
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
-    'social_core.pipeline.social_auth.social_user',
-    'main.pipeline.require_email',
-    'social_core.pipeline.user.get_username',
-    'social_core.pipeline.mail.mail_validation',
-    'social_core.pipeline.user.create_user',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details'
-    #'main.save_profile',  # <--- set the path to the function
-  
-    
-)
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
