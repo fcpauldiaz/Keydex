@@ -93,7 +93,15 @@
             >
               {% csrf_token %}
             <div class="row">
-              <div id="DIV_1" class="data-monthly col l6 offset-l1">
+              <div class="show-on-small hide-on-med-and-up">
+                <select id="mobile-stripe" class="browser-default">
+                  <option value="" disabled selected>Choose your Plan</option>
+                  <option value="Monthly">Monthly ($5) </option>
+                  <option value="Yearly">Yearly ($50)</option>
+                </select>
+              <a id="mobile-signup" class="show-on-small btn-large waves-effect waves-light blue-paypal btn-block">Next</a>
+              </div>
+              <div id="DIV_1" class="data-monthly col l6 offset-l1 hide-on-small-only">
                 <div id="DIV_3">
                   <div id="DIV_4">
                     <div id="DIV_5">
@@ -154,7 +162,7 @@
                   </div>
                 </div>
             </div>
-            <div id="pricing_DIV_1" class="data-yearly col l6 offset-l1">
+            <div id="pricing_DIV_1" class="data-yearly col l6 offset-l1 hide-on-small-only">
               <div id="pricing_DIV_3">
                 <div id="pricing_DIV_4">
                   <div id="pricing_DIV_5">
@@ -233,7 +241,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <div class="row">
+    <div class="row hide-on-small-only">
       <div class="col l6">
           <a class="data-monthly waves-effect waves-green btn-flat blue center" style="width: 100%">Monthly</a>
       </div>

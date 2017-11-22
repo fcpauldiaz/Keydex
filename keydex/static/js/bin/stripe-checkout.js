@@ -64,6 +64,33 @@ $(document).ready(function() {
       }
     });
     var button = $('.data-monthly, .data-yearly');
+    var mobile = $('#mobile-signup');
+    mobile.on('click', function (event) {
+      event.preventDefault();
+      $('#loader').show();
+      $('#mobile-signup').hide();
+      var value = $('#mobile-stripe option:selected').val();
+      if (value !== null && value !== undefined && value !== '') {
+        formpay = $('#payment-form');
+        formpay.data('subscription_plan', value);
+        var charge_value = 5000;
+        var name = 'Invalid option';
+        if (value == 'Monthly') {
+          name = 'Monthly ($5)';
+          charge_value = 500;
+        }
+        if (value == 'Yearly') {
+          charge_value = 5000;
+          name = 'Yearly ($50)'
+        }
+        handler.open({
+          description: name,
+          zipCode: true,
+          amount: charge_value
+        });
+      }
+      // get selected
+    })
     for (var i = 0; i < button.length; i++) {
      button[i].addEventListener("click", function(event) {
       event.preventDefault();
