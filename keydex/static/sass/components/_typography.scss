@@ -2,7 +2,7 @@
 a {
   text-decoration: none;
 }
-
+@import url('https://fonts.googleapis.com/css?family=Raleway');
 html{
   line-height: 1.5;
 
@@ -18,7 +18,7 @@ html{
     font-size: 15px;
   }
 
-  font-family: "Colfax Regular", sans-serif;
+  font-family: "raleway", sans-serif;
   font-weight: normal;
   color: $off-black;
 }

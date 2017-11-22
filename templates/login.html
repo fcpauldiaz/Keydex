@@ -29,7 +29,8 @@
       </div>
       <br>
       <div class="col l13 s13">
-        <a  href="{% url 'social:begin' 'facebook' %}" class="waves-effect waves-light btn social facebook">
+        {% load socialaccount %}
+        <a  href="{% provider_login_url "facebook" method="oauth2" %}" class="waves-effect waves-light btn social facebook">
         <i class="fa fa-facebook"></i> Log in with facebook</a>
       </div>
     </div>
