@@ -24,9 +24,18 @@ function initProgress() {
   from: {color: '#FFEA82'},
   to: {color: '#ED6A5A'},
   step: (state, bar) => {
-    bar.setText(Math.round(bar.value() * 100) + ' %');
+      bar.path.setAttribute('stroke', state.color);
+      bar.path.setAttribute('stroke-width', state.width);
+
+      var value = Math.round(bar.value() * 100);
+      if (value === 0) {
+        bar.setText('');
+      } else {
+        bar.setText(value);
+      }
   }
   });
-
-  bar.animate(1.0); 
+  bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+  bar.text.style.fontSize = '2rem';
+  return bar;
 }
