@@ -3,7 +3,7 @@ function initProgress() {
   var bar = new ProgressBar.Line(container, {
   strokeWidth: 4,
   easing: 'easeInOut',
-  duration: 1400,
+  duration: 0,
   color: '#4094ED',
   trailColor: '#eee',
   trailWidth: 0,
@@ -21,8 +21,8 @@ function initProgress() {
     },
     autoStyleContainer: false
   },
-  from: {color: '#FFEA82'},
-  to: {color: '#ED6A5A'},
+  from: {color: '#e51c23'},
+  to: {color: '#177FEF'},
   step: (state, bar) => {
       bar.path.setAttribute('stroke', state.color);
       bar.path.setAttribute('stroke-width', state.width);
