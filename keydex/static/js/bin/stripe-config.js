@@ -58,35 +58,7 @@ form.addEventListener('submit', function(event) {
       $('#submitbutton').show();
     
     } else {
-      // Send the token to your server
-      formpay = $('#payment-form');
-      $.ajax({
-        url: formpay.attr("data-settings-url"),
-        type : "POST",
-        data: formpay.serialize() + '&token='+ JSON.stringify(result.token),
-        dataType: 'json',
-        success: function (data) {
-          if (data.valid === true) {
-            Materialize.toast('Payment Accepted', 3000);
-            $('#loader').hide();
-            $('#submitbutton').show();
-            $('#modal1').modal('close');
-            Materialize.toast('Upgrading Account', 3000);
-            location.reload();
-          }
-          else {
-            var errorElement = document.getElementById('card-errors');
-            errorElement.textContent = data.message;
-            $('#loader').hide();
-            $('#submitbutton').show();
-          }
-        },
-        error: function(request, status, error) {
-          Materialize.toast('Server error', 3000);
-          $('#loader').hide();
-          $('#submitbutton').show();
-        }
-      });
+    
     }
   });
 });
