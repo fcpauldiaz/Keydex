@@ -74,10 +74,10 @@ class Product(models.Model):
 
   @property
   def indexing(self):
-    historic_list = ProductHistoricIndexing.objects.filter(product=self.id)
-    rate = historic_list.indexing_rate
-    if (rate == None):
+    historic_list = ProductHistoricIndexing.objects.filter(product=self.id).last()
+    if (historic_list == None):
       return '0%'
+    rate = historic_list.indexing_rate
     indexing_data = format(rate, '.0f')
     return indexing_data+'%'
 
