@@ -28,11 +28,11 @@ $('#DIV_5').css('width', '261px');
 $('#pricing_DIV_5').css('width', '269px');
 $('#pricing_DIV_1_upgrade').css('border', 'none');
 if (discount == undefined) {
-  $('#showTotal').text('Total:' + ' $5');
-  total = 5;
+  $('#showTotal').text('Total:' + ' $10');
+  total = 10;
 }
 else {
-  total = 5-(5*parseFloat(discount));
+  total = 10-(10*parseFloat(discount));
   $('#showTotal').text('Total:' + ' $'+total);
 }
 selected = 'Monthly';
