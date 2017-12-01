@@ -9,15 +9,15 @@ $('#pricing_DIV_5').css('width', '261px');
 $('#DIV_5').css('width', '269px');
 $('#DIV_1_upgrade').css('border', 'none');
 if (discount == undefined) {
-  $('#showTotal').text('Total:' + ' $50');
-  total = 50;
+  $('#showTotal').text('Total:' + ' $100');
+  total = 100;
 } 
 else {
-  total = 50-(50*parseFloat(discount));
+  total = 100-(100*parseFloat(discount));
   $('#showTotal').text('Total:' + ' $'+total);
 }
 selected = 'Yearly';
-name = 'Yearly ($50)';
+name = 'Yearly ($100)';
 
 $('#coupon').removeClass('valid');
 });
@@ -36,6 +36,6 @@ else {
   $('#showTotal').text('Total:' + ' $'+total);
 }
 selected = 'Monthly';
-name = 'Monthly ($5)';
+name = 'Monthly ($10)';
 $('#coupon').removeClass('valid');
     });
