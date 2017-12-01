@@ -123,8 +123,7 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.CryptPasswordHasher',
 )
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend'
-    
+    'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_PASSWORD_VALIDATORS = [
     {
