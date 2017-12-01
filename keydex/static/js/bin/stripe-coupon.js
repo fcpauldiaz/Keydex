@@ -43,11 +43,11 @@ $(document).ready(function() {
           else {
             $('#coupon').addClass('invalid');
             if (selected == 'Yearly') {
-              $('#showTotal').text('Total:' + ' $50');
+              $('#showTotal').text('Total:' + ' $100');
               discount = 0;
             }
             if (selected == 'Monthly') {
-              $('#showTotal').text('Total:' + ' $5');
+              $('#showTotal').text('Total:' + ' $10');
               discount = 0;
             }
           }
