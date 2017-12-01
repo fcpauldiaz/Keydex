@@ -36,6 +36,5 @@ urlpatterns = [
   url(r'^indexer/', admin.site.urls),
   url(r'^', include('main.urls')),
   url(r"^payments/", include("pinax.stripe.urls")),  
-  url(r'^accounts/', include('allauth.urls')),
   url(r'^robots.txt$', TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots_file")
 ]
