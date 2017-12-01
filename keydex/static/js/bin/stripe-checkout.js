@@ -76,12 +76,12 @@ $(document).ready(function() {
         var charge_value = 5000;
         var name = 'Invalid option';
         if (value == 'Monthly') {
-          name = 'Monthly ($5)';
-          charge_value = 500;
+          name = 'Monthly ($10)';
+          charge_value = 1000;
         }
         if (value == 'Yearly') {
-          charge_value = 5000;
-          name = 'Yearly ($50)'
+          charge_value = 10000;
+          name = 'Yearly ($100)'
         }
         handler.open({
           description: name,
@@ -103,20 +103,20 @@ $(document).ready(function() {
           $('.data-monthly').show();
       }, 2000);
       formpay = $('#payment-form');
-      var name = 'Yearly Plan ($50 per year)';
+      var name = 'Yearly Plan ($100 per year)';
       var value = 1;
-      var charge_value = 5000;
+      var charge_value = 10000;
       var dataClass = $(this).attr('class').split(' ')[0].trim();
       if (dataClass === 'data-yearly') {
-        name = 'Yearly Plan ($50 per year)';
+        name = 'Yearly Plan ($100 per year)';
         formpay.data('subscription_plan', 'Yearly');
-        charge_value = 5000;
+        charge_value = 10000;
       }
       else if (dataClass === 'data-monthly') {
-        name = 'Monthly Plan ($5 per month)';
+        name = 'Monthly Plan ($10 per month)';
         formpay.data('subscription_plan', 'Monthly');
         value = 1;
-        charge_value = 500;
+        charge_value = 1000;
       }
       handler.open({
         description: name,
