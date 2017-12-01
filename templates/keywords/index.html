@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -7,6 +7,7 @@
         <meta name="description" content="We check your Amazon products keywords automatically every day and we send you a report if they stop indexing so that you can take inmediate action!">
         <meta name="keywords" content="amazon keyword checker products">
         <meta name="robots" content="index, follow">
+
         <meta name="web_author" content="Keydex Software">
         <meta name="language" content="en">
         <meta property="og:title" content="Check My Keywords" />
@@ -14,14 +15,13 @@
         <meta property="og:url" content="https://www.checkmykeywords.com" />
         <meta property="og:image" content="https://s3-us-west-2.amazonaws.com/stripe-checkmykeywords/quack-s3.png" />
         <title>Check Keywords | Home </title>
-        
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {% load static %}
-		<link rel="shortcut icon" type="image/png" href="{% static 'img/quack.ico' %}"/>
-		
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/quack.ico' %}"/>
+    
         
-		<link rel="stylesheet" href="{% static 'css/animate.css' %}">
-		<link rel="stylesheet" href="{% static 'css/flipclock.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flipclock.css' %}" />
         <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet'">
@@ -31,6 +31,7 @@
         {% load raven %}
     </head>
     <body id="myPage" data-spy="scroll" data-target="#nav3" data-offset="0">
+      <div class="b-body">
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -38,12 +39,13 @@
         <!-- Add your site or application content here -->
         
         
+        
         <!-- Modal -->
 <div class="modal fade text-center" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 60px;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-      	<img src="{% static 'img/f_icon.png' %}" />
+        <img src="{% static 'img/f_icon.png' %}" />
         <h5 class="modal-title" id="exampleModalLabel">TRY IT OUT TODAY FOR FREE</h5>
         <button type="button" class="close cls1" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -52,22 +54,22 @@
       <div class="modal-body">
         <p>Try an unlimited time FREE membership! No risk, full benefits! Now that's Quacktastic!</p>
         <ul class="m-ul">
-        	<li></li>
-        	<li style="position: relative; height:35px;">
-        		<div id="DIV_1">
-	<a tabindex="0" title="Share" id="A_2"></a>
-	<div id="DIV_3">
-		<span id="SPAN_4"></span><span id="SPAN_5">Share</span>
-	</div>
+          <li></li>
+          <li style="position: relative; height:35px;">
+            <div id="DIV_1">
+  <a tabindex="0" title="Share" id="A_2"></a>
+  <div id="DIV_3">
+    <span id="SPAN_4"></span><span id="SPAN_5">Share</span>
+  </div>
 </div>
-        	</li>
-        	<li>
-        		<div title="Twitter Tweet" aria-label="Twitter Tweet" tabindex="0" class="twt1" id="comp-j8852h8e" style=" height: 20px;"><iframe allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="" width="60" height="20" title="Twitter Tweet" aria-label="Twitter Tweet" id="comp-j8852h8eiframe" class="twt1iframe" src="https://static.parastorage.com/services/santa/1.2590.9/static/external/twitter.html?compId=comp-j8852h8e&amp;href=https%3A%2F%2Ftwitter.com%2Fshare&amp;lang=en&amp;origin=https%3A%2F%2Fwww.checkmykeywords.com&amp;related&amp;text&amp;url=http%3A%2F%2Fwww.checkmykeywords.co%2Fcopy-of-home-1&amp;widgetType=TWEET"></iframe></div>
-        	</li>
+        </li>
+          <li>
+            <div title="Twitter Tweet" aria-label="Twitter Tweet" tabindex="0" class="twt1" id="comp-j8852h8e" style=" height: 20px;"><iframe allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="" width="60" height="20" title="Twitter Tweet" aria-label="Twitter Tweet" id="comp-j8852h8eiframe" class="twt1iframe" src="https://static.parastorage.com/services/santa/1.2590.9/static/external/twitter.html?compId=comp-j8852h8e&amp;href=https%3A%2F%2Ftwitter.com%2Fshare&amp;lang=en&amp;origin=https%3A%2F%2Fwww.checkmykeywords.com&amp;related&amp;text&amp;url=http%3A%2F%2Fwww.checkmykeywords.co%2Fcopy-of-home-1&amp;widgetType=TWEET"></iframe></div>
+          </li>
         </ul>
       </div>
       <div class="modal-footer">
-      	<button type="button" class="btn btn-primary button"><a href="{% url 'users_login_user' %}">Start Checking</a></button>
+        <button type="button" class="btn btn-primary button"><a href="{% url 'users_login_user' %}">Start Checking</a></button>
 
         <button type="button" class="btn btn-secondary button" data-dismiss="modal">Close</button>
               </div>
@@ -75,104 +77,126 @@
   </div>
 </div>
         
-        
+
         
         
         <div id="hh" class="no">
         <nav id="nav3" class="container header-nav">
-        		<ul id="nav33" class="nav fixed">
-        			<li class="nav-item"><a class="nav-link active" href="#myPage"></a></li>
-        			<li class="nav-item"><a class="nav-link" href="#about"></a></li>
-        			<li class="nav-item"><a class="nav-link" href="#how"></a></li>
-        			<li class="nav-item"><a class="nav-link" href="#press"></a></li>
-        			<li class="nav-item"><a class="nav-link" href="#price"></a></li>
-        		</ul>
-        	</nav>
+            <ul id="nav33" class="nav fixed">
+              <li class="nav-item"><a class="nav-link active" href="#myPage"></a></li>
+              <li class="nav-item"><a class="nav-link" href="#about"></a></li>
+              <li class="nav-item"><a class="nav-link" href="#how"></a></li>
+              <li class="nav-item"><a class="nav-link" href="#press"></a></li>
+              <li class="nav-item"><a class="nav-link" href="#price"></a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'users_login_user' %}">Sign In</a></li>
+            </ul>
+          </nav>
         </div>
         
-       
-       <div> <header>
-        	<div class="f-h">
-        		<img src="{% static 'img/header_bg.jpg' %}" />
-        	</div>
-        	<div class="container">  
-        	<nav id="nav1" class="navbar fixed-top navbar-default navbar-expand-lg navbar-light">
-        		<a class="navbar-brand" href="#"><img class="" src="{% static 'img/logo.png' %}" /></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-        		<ul id="nav" class="navbar-nav mr-auto">
-        			<li class="nav-item"><a class="nav-link active" href="#myPage">Home</a></li>
-        			<li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        			<li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
-        			<li class="nav-item"><a class="nav-link" href="#press">Press</a></li>
-        			<li class="nav-item"><a class="nav-link" href="#price">Pricing</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'users_login_user' %}">Sign In</a></li>
-        		</ul>
-                </div>
-        	</nav>
+        <div id="bb" class="">
+        <nav id="nav3" class="container header-nav">
+          
+          </nav>
         </div>
-        	
+        
+       <div> <header>
+          <div class="f-h">
+           <img src="{% static 'img/header_bg.jpg' %}" />
+          </div>
+ <div class="container">  
+ <nav id="nav1" class="navbar fixed-top navbar-default navbar-expand-lg navbar-light">
+  <a class="navbar-brand" href="#"><img src="{% static 'img/logo.png' %}" /></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul id="nav" class="navbar-nav mr-auto">
+     
+              <li class="nav-item"><a class="nav-link active" href="#myPage">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
+              <li class="nav-item"><a class="nav-link" href="#press">Press</a></li>
+              <li class="nav-item"><a class="nav-link" href="#price">Pricing</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'users_login_user' %}">Sign In</a></li>
+            
+    </ul>
+    
+  </div>
+</nav></div>  
+          
+          
+          
+          <!--<nav id="nav1" class="container header-nav">
+            <a href="#"><img class="logo" src="img/logo.png" /></a>
+            <ul id="nav" class="nav nav-pills nn fixed">
+              <li class="nav-item"><a class="nav-link active" href="#myPage">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
+              <li class="nav-item"><a class="nav-link" href="#press">Press</a></li>
+              <li class="nav-item"><a class="nav-link" href="#price">Pricing</a></li>
+            </ul>
+          </nav>-->
+          
+          
         </header>  </div>  
         
      <div>
     <div class="sec-1">
-    	
-    	
-    	
-    	
-    	
-    	<div class="bg11">
-    	
-    	<div class="container text-center">
-    		
+      
+      
+      
+      
+      
+      <div class="bg11">
+      
+      <div class="container text-center">
+        
 
 
-    		
-    		<div class="l-1 animated fadeInDown">
-    		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="3.000001907348633 3.500001907348633 193.00001525878906 193.00001525878906" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 28px; height: 27px;"><g><path class="st0" d="M149.8,80l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3s-21.9-8.3-30.3,0l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3
-		S141.4,88.3,149.8,80z"></path><path class="st0" d="M49.2,120l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3s21.9,8.3,30.3,0l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3
-		S57.6,111.7,49.2,120z"></path><path class="st0" d="M149.8,120c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3l37.8,37.8c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3
-		L149.8,120z"></path><path class="st0" d="M41.7,12c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3L49.2,80c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3L41.7,12
-		z"></path></g></svg>
-    	</div>
-    	
-    	<div class="l-2 animated fadeInDown">
-    		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="1 1 198 198" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 31px; height: 44px;"><g><path class="st0" d="M181.9,83H117V18.1C117,8.7,109.4,1,100,1c-9.4,0-17,7.7-17,17.1V83H18.1C8.7,83,1,90.6,1,100
-	c0,9.4,7.7,17,17.1,17H83v64.9c0,9.4,7.6,17.1,17,17.1c9.4,0,17-7.7,17-17.1V117h64.9c9.4,0,17.1-7.6,17.1-17
-	C199,90.6,191.3,83,181.9,83z"></path></g></svg>
-    	</div>
-    	
-    	<div class="l-3 animated fadeInDown">
-    		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 36px; height: 31px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9
-	C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4
-	C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg>
-    	</div>
-    	
-    	<div class="l-4 slideanim">
-    		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 46px; height: 55px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9
-	C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4
-	C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg>
-    	</div>
-    	
-    	<div class="l-5 slideanim">
-    		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="3.000001907348633 3.500001907348633 193.00001525878906 193.00001525878906" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 24px; height: 22px;"><g><path class="st0" d="M149.8,80l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3s-21.9-8.3-30.3,0l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3
-		S141.4,88.3,149.8,80z"></path><path class="st0" d="M49.2,120l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3s21.9,8.3,30.3,0l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3
-		S57.6,111.7,49.2,120z"></path><path class="st0" d="M149.8,120c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3l37.8,37.8c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3
-		L149.8,120z"></path><path class="st0" d="M41.7,12c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3L49.2,80c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3L41.7,12
-		z"></path></g></svg>
-    	</div>
-    		
-    		
-    		<h4>The smartest way to keep</h4>
-    		<h4 style="margin-bottom: 30px;">track of your keyword indexation</h4>
-    		<p class="animated fadeInUp">Are your keywords indexing? We'll check every day for you!</p>
-    		<p class="animated fadeInUp" style="margin-bottom: 40px;">Just add your ASIN and keywords and relax, we'll do the rest.</p>
-    		<div class="animated fadeInUp "><a class="button" href="{% url 'users_login_user' %}">Start Checking</a></div>
-    	
-    	
-    	
+        
+        <div class="l-1 animated fadeInDown">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="3.000001907348633 3.500001907348633 193.00001525878906 193.00001525878906" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 28px; height: 27px;"><g><path class="st0" d="M149.8,80l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3s-21.9-8.3-30.3,0l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3
+    S141.4,88.3,149.8,80z"></path><path class="st0" d="M49.2,120l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3s21.9,8.3,30.3,0l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3
+    S57.6,111.7,49.2,120z"></path><path class="st0" d="M149.8,120c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3l37.8,37.8c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3
+    L149.8,120z"></path><path class="st0" d="M41.7,12c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3L49.2,80c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3L41.7,12
+    z"></path></g></svg>
+      </div>
+      
+      <div class="l-2 animated fadeInDown">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="1 1 198 198" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 31px; height: 44px;"><g><path class="st0" d="M181.9,83H117V18.1C117,8.7,109.4,1,100,1c-9.4,0-17,7.7-17,17.1V83H18.1C8.7,83,1,90.6,1,100
+  c0,9.4,7.7,17,17.1,17H83v64.9c0,9.4,7.6,17.1,17,17.1c9.4,0,17-7.7,17-17.1V117h64.9c9.4,0,17.1-7.6,17.1-17
+  C199,90.6,191.3,83,181.9,83z"></path></g></svg>
+      </div>
+      
+      <div class="l-3 animated fadeInDown">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 36px; height: 31px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9
+  C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4
+  C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg>
+      </div>
+      
+      <div class="l-4 slideanim">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 46px; height: 55px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9
+  C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4
+  C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg>
+      </div>
+      
+      <div class="l-5 slideanim">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="3.000001907348633 3.500001907348633 193.00001525878906 193.00001525878906" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 24px; height: 22px;"><g><path class="st0" d="M149.8,80l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3s-21.9-8.3-30.3,0l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3
+    S141.4,88.3,149.8,80z"></path><path class="st0" d="M49.2,120l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3s21.9,8.3,30.3,0l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3
+    S57.6,111.7,49.2,120z"></path><path class="st0" d="M149.8,120c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3l37.8,37.8c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3
+    L149.8,120z"></path><path class="st0" d="M41.7,12c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3L49.2,80c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3L41.7,12
+    z"></path></g></svg>
+      </div>
+        
+        
+        <h4>The smartest way to keep</h4>
+        <h4 style="margin-bottom: 30px;">track of your keyword indexation</h4>
+        <p class="animated fadeInUp">Are your keywords indexing? We'll check every day for you!</p>
+        <p class="animated fadeInUp" style="margin-bottom: 40px;">Just add your ASIN and keywords and relax, we'll do the rest.</p>
+        <div class="animated fadeInUp "><a class="button" href="{% url 'users_login_user' %}">Start Checking</a></div>
+      
+      
+      
   <div id="carouselExampleControls" class="carousel slide cl1 none" data-ride="carousel" data-interval="false" >
   <div class="carousel-inner" role="listbox">
     <div class="carousel-item active">
@@ -192,206 +216,226 @@
     <span class="sr-only">Next</span>
   </a>
 </div></div>
-    	
-    	
-    	
-    	
-    	</div>
-    	
+      
+      
+      
+      
+      </div>
+      
     </div>
     
     
     <!-- try beta -->
     <div id="beta" class="container text-center" style="padding: 200px 0 80px;position: relative;">
-    	<h1>We’re giving the first 200 users FREE lifetime access! Try it out NOW before the offer expires!</h1>
-    	<div class="clock" style="margin:2em;"></div>
-    	<div class="non" style="margin-top: 100px;"><a href="{% url 'users_login_user' %}" class="button" style="color:white;">TRY IT OUT</a></div>
+      <h1>We’re giving the first 200 users FREE lifetime access! Try it out NOW before the offer expires!</h1>
+      <div class="clock" style="margin:2em;"></div>
+      <div id="counter" class="animated fadeInUp"></div>
+      <div class="non" style="margin-top: 100px;"><a href="{% url 'users_login_user' %}" class="button" style="color:white;">TRY IT OUT</a></div>
     </div>
     
     
     <!-- about -->
     <div id="about" class="container-fluid text-center no" style="background:white;">
-    	<div class="row">
-    		<div class="col-sm-4">
-    			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="3.000001907348633 3.500001907348633 193.00001525878906 193.00001525878906" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 44px; height: 42px;fill:#4094ED;margin-bottom:20px"><g><path class="st0" d="M149.8,80l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3s-21.9-8.3-30.3,0l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3S141.4,88.3,149.8,80z"></path><path class="st0" d="M49.2,120l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3s21.9,8.3,30.3,0l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3S57.6,111.7,49.2,120z"></path><path class="st0" d="M149.8,120c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3l37.8,37.8c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3
-		L149.8,120z"></path><path class="st0" d="M41.7,12c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3L49.2,80c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3L41.7,12
-		z"></path></g></svg>
-		<h5>Our Story</h5>
-		<p>As online sellers and IT professionals from Guatemala, we were tired of having to manually check if our products were indexing properly. We decided to fix the problem for ourselves along all the Amazon seller community.</p>
-    		</div>
-    		
-    		<div class="col-sm-4">
-    			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 48px; height: 56px;fill:#4094ED;margin-bottom:20px"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg>
-	<h5>Our Vision</h5>
-	<p>We wish to bring peace of mind to sellers from all over the world when it comes to the validity of their keywords.</p>
-    		</div>
-    		
-    		
-    	<div class="col-sm-4">
-    		<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="1 1 198 198" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 50px; height: 55px;fill:#4094ED; margin-bottom:20px">
-    			<g><path class="st0" d="M181.9,83H117V18.1C117,8.7,109.4,1,100,1c-9.4,0-17,7.7-17,17.1V83H18.1C8.7,83,1,90.6,1,100c0,9.4,7.7,17,17.1,17H83v64.9c0,9.4,7.6,17.1,17,17.1c9.4,0,17-7.7,17-17.1V117h64.9c9.4,0,17.1-7.6,17.1-17C199,90.6,191.3,83,181.9,83z"></path></g></svg>
-	<h5>Technology</h5>
-	<p>We use the latest and most efficient bot technology to bring you the highest quality service available in the marketplace.</p>
-    	</div>
-    	</div>
+      <div class="row">
+        <div class="col-md-4">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="3.000001907348633 3.500001907348633 193.00001525878906 193.00001525878906" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 44px; height: 42px;fill:#4094ED;margin-bottom:20px"><g><path class="st0" d="M149.8,80l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3s-21.9-8.3-30.3,0l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3S141.4,88.3,149.8,80z"></path><path class="st0" d="M49.2,120l-37.8,37.8c-8.3,8.3-8.3,21.9,0,30.3s21.9,8.3,30.3,0l37.8-37.8c8.3-8.3,8.3-21.9,0-30.3S57.6,111.7,49.2,120z"></path><path class="st0" d="M149.8,120c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3l37.8,37.8c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3
+    L149.8,120z"></path><path class="st0" d="M41.7,12c-8.3-8.3-21.9-8.3-30.3,0s-8.3,21.9,0,30.3L49.2,80c8.3,8.3,21.9,8.3,30.3,0s8.3-21.9,0-30.3L41.7,12
+    z"></path></g></svg>
+    <h5>Our Story</h5>
+    <p>As online sellers and IT professionals from Guatemala, we were tired of having to manually check if our products were indexing properly. We decided to fix the problem for ourselves along all the Amazon seller community.</p>
+        </div>
+        
+        <div class="col-md-4">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 48px; height: 56px;fill:#4094ED;margin-bottom:20px"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg>
+  <h5>Our Vision</h5>
+  <p>We wish to bring peace of mind to sellers from all over the world when it comes to the validity of their keywords.</p>
+        </div>
+        
+        
+      <div class="col-md-4">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="1 1 198 198" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 50px; height: 55px;fill:#4094ED; margin-bottom:20px">
+          <g><path class="st0" d="M181.9,83H117V18.1C117,8.7,109.4,1,100,1c-9.4,0-17,7.7-17,17.1V83H18.1C8.7,83,1,90.6,1,100c0,9.4,7.7,17,17.1,17H83v64.9c0,9.4,7.6,17.1,17,17.1c9.4,0,17-7.7,17-17.1V117h64.9c9.4,0,17.1-7.6,17.1-17C199,90.6,191.3,83,181.9,83z"></path></g></svg>
+  <h5>Technology</h5>
+  <p>We use the latest and most efficient bot technology to bring you the highest quality service available in the marketplace.</p>
+      </div>
+      </div>
     </div>
     
     <!-- how it works -->
     <div id="how" class="how-it-work text-center">
-    	<h4>How It Works</h4>
-    	
-    	<iframe allowfullscreen="" frameborder="0" title="External YouTube" aria-label="External YouTube" src="http://www.youtube.com/embed/PWTfpGzFasM?wmode=transparent&amp;autoplay=0&amp;theme=dark&amp;controls=1&amp;autohide=1&amp;loop=0&amp;showinfo=0&amp;rel=0&amp;playlist=false&amp;enablejsapi=0"></iframe>
+      <h4>How It Works</h4>
+      
+      <iframe allowfullscreen="" frameborder="0" title="External YouTube" aria-label="External YouTube" src="http://www.youtube.com/embed/PWTfpGzFasM?wmode=transparent&amp;autoplay=0&amp;theme=dark&amp;controls=1&amp;autohide=1&amp;loop=0&amp;showinfo=0&amp;rel=0&amp;playlist=false&amp;enablejsapi=0"></iframe>
     </div>
     
-     <!-- press -->     
-    <div id="press" class="container-fluid" style="background: rgb(86,155,227); width:100%; height:520px;">       
-    <div class="container" style="position: relative;">       
-      <div id="comp-irqduxhyinlineContent" class="style-irqduxi11inlineContent" style="left: 185px; width: 980px;"><div class="txtNew" id="comp-irqduxi4" style="left: 164px; width: 652px; position: absolute; top: 152px;">     
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height: 360px;">     
-  <ol class="carousel-indicators">        
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>       
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>      
-  </ol>       
-  <div class="carousel-inner" role="listbox">     
-    <div class="carousel-item active">        
-      <h3 class="font_3" style="line-height:1.4em; text-align:center;"><span class="color_11">"The smartest product<br>       
- in the market"</span></h3>        
-    </div>        
-    <div class="carousel-item">       
-     <h3 class="font_3" style="line-height:1.4em; text-align:center;">        
-      "Most comfortable way<br>       
-to keep track of<br> indexation"      
-     </h3>        
-    </div>        
-          
-  </div>      
-          
-          
-</div>        
-</div><div class="txtNew" id="comp-irqduxi8" style="left: 296px; width: 389px; position: absolute; top: 93px;"><h6 class="font_6" style="text-align:center;"><span class="color_11"></span></h6></div><div class="style-irqduxif1" id="comp-irqduxie" style="left: 462px; width: 53px; position: absolute; top: 126px; height: 5px;"><div id="comp-irqduxieline" class="style-irqduxif1line"></div></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j8810dp31" id="comp-isen9lv3" style="left: 130px; width: 41px; position: absolute; top: 40px; height: 49px;"><style type="text/css">.style-j8810dp31 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}      
-.style-j8810dp31 svg * {vector-effect:non-scaling-stroke;}        
-.style-j8810dp31 a {display:block;height:100%;}</style>       
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 41px; height: 49px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j88118p71" data-angle="270" id="comp-isenckdb" style="left: 28px; width: 50px; position: absolute; transform: rotate(270deg) translateZ(0px); top: 159px; height: 54px;"><style type="text/css">.style-j88118p71 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}       
-.style-j88118p71 svg * {vector-effect:non-scaling-stroke;}        
-.style-j88118p71 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-1.0999975204467773 -0.8999996185302734 202.29998779296875 202" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 50px; height: 54px;">       
-   <g><path class="st0" d="M188.5,11.8c-12.7-12.7-33.4-12.7-46.2,0c-10.1,10.1-12.2,25.3-6.2,37.5L49.4,136c-12.2-6.2-27.6-4.2-37.8,6.1c-12.7,12.7-12.7,33.4,0,46.2s33.4,12.7,46.2,0c10.2-10.2,12.2-25.6,6-37.9l86.5-86.5c12.3,6.4,27.8,4.5,38.2-5.9C201.2,45.2,201.2,24.6,188.5,11.8z M43.4,173.8c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C48.3,161.2,48.3,169,43.4,173.8z M174.1,43.6c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C178.9,31,178.9,38.8,174.1,43.6z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j88108rh1" data-angle="270" id="comp-isenegh8" style="left: 686px; width: 50px; position: absolute; transform: rotate(270deg) translateZ(0px); top: 67px; height: 54px;"><style type="text/css">.style-j88108rh1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}       
-.style-j88108rh1 svg * {vector-effect:non-scaling-stroke;}        
-.style-j88108rh1 a {display:block;height:100%;}</style>       
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-1.0999975204467773 -0.8999996185302734 202.29998779296875 202" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 50px; height: 54px;"><g><path class="st0" d="M188.5,11.8c-12.7-12.7-33.4-12.7-46.2,0c-10.1,10.1-12.2,25.3-6.2,37.5L49.4,136c-12.2-6.2-27.6-4.2-37.8,6.1c-12.7,12.7-12.7,33.4,0,46.2s33.4,12.7,46.2,0c10.2-10.2,12.2-25.6,6-37.9l86.5-86.5c12.3,6.4,27.8,4.5,38.2-5.9C201.2,45.2,201.2,24.6,188.5,11.8z M43.4,173.8c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C48.3,161.2,48.3,169,43.4,173.8z M174.1,43.6c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C178.9,31,178.9,38.8,174.1,43.6z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j8810ync1" id="comp-isenexd1" style="left: 364px; width: 42px; position: absolute; top: 374px; height: 45px;"><style type="text/css">.style-j8810ync1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}        
-.style-j8810ync1 svg * {vector-effect:non-scaling-stroke;}        
-.style-j8810ync1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-1.0999975204467773 -0.8999996185302734 202.29998779296875 202" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 42px; height: 45px;"><g><path class="st0" d="M188.5,11.8c-12.7-12.7-33.4-12.7-46.2,0c-10.1,10.1-12.2,25.3-6.2,37.5L49.4,136c-12.2-6.2-27.6-4.2-37.8,6.1c-12.7,12.7-12.7,33.4,0,46.2s33.4,12.7,46.2,0c10.2-10.2,12.2-25.6,6-37.9l86.5-86.5c12.3,6.4,27.8,4.5,38.2-5.9C201.2,45.2,201.2,24.6,188.5,11.8z M43.4,173.8c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C48.3,161.2,48.3,169,43.4,173.8z M174.1,43.6c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C178.9,31,178.9,38.8,174.1,43.6z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j88113qo1" id="comp-iseng1vk" style="left: 710px; width: 28px; position: absolute; top: 413px; height: 29px;"><style type="text/css">.style-j88113qo1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}     
-.style-j88113qo1 svg * {vector-effect:non-scaling-stroke;}        
-.style-j88113qo1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 28px; height: 29px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg></div><div data-strokewidth="1" tabindex="0" role="image" class="style-j8810ncp" data-angle="186.16100449730425" id="comp-isehzfde" style="left: 836px; width: 94px; position: absolute; transform: rotate(186.161deg) translateZ(0px); top: 196px; height: 111px;"><style type="text/css">.style-j8810ncp svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:1px;}     
-.style-j8810ncp svg * {vector-effect:non-scaling-stroke;}     
-.style-j8810ncp a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="6.497311827956992 -11.298394726168723 188.50537634408602 222.59677419354838" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 1px; width: 94px; height: 111px;"><g><path class="st0" d="M187.7,34.3c-5-5-12.6-6-18.6-3c-17.9-17.2-41.2-26.7-66.1-26.7C50.3,4.6,7.5,47.4,7.5,100c0,22.6,8.1,44.6,22.7,61.8c18.2,21.4,44.7,33.6,72.7,33.6c2.9,0,5.2-2.3,5.2-5.2s-2.3-5.2-5.2-5.2c-25,0-48.6-10.9-64.7-29.9c-13-15.3-20.2-34.9-20.2-55c0-46.9,38.1-85,85-85c22.2,0,42.9,8.4,58.8,23.6c-2.9,6-1.9,13.5,3.1,18.5c6.3,6.3,16.6,6.3,22.9,0C194,50.9,194,40.6,187.7,34.3z M180.6,50.1c-2.4,2.4-6.3,2.4-8.6,0c-2.4-2.4-2.4-6.3,0-8.6c2.4-2.4,6.3-2.4,8.6,0C183,43.8,183,47.7,180.6,50.1z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j8810s5p1" id="comp-isenkhwl" style="left: 888px; width: 28px; position: absolute; top: 40px; height: 29px;"><style type="text/css">.style-j8810s5p1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}       
- .style-j8810s5p1 svg * {vector-effect:non-scaling-stroke;}        
- .style-j8810s5p1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 28px; height: 29px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg></div><div data-strokewidth="1" tabindex="0" role="image" class="style-j8810inf1" data-angle="297.3047520121039" id="comp-isenm3m4" style="left: 104px; width: 94px; position: absolute; transform: rotate(297.305deg) translateZ(0px); top: 318px; height: 111px;"><style type="text/css">.style-j8810inf1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:1px;}        
-.style-j8810inf1 svg * {vector-effect:non-scaling-stroke;}        
-.style-j8810inf1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="6.497311827956992 -11.298394726168723 188.50537634408602 222.59677419354838" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 1px; width: 94px; height: 111px;"><g><path class="st0" d="M187.7,34.3c-5-5-12.6-6-18.6-3c-17.9-17.2-41.2-26.7-66.1-26.7C50.3,4.6,7.5,47.4,7.5,100c0,22.6,8.1,44.6,22.7,61.8c18.2,21.4,44.7,33.6,72.7,33.6c2.9,0,5.2-2.3,5.2-5.2s-2.3-5.2-5.2-5.2c-25,0-48.6-10.9-64.7-29.9c-13-15.3-20.2-34.9-20.2-55c0-46.9,38.1-85,85-85c22.2,0,42.9,8.4,58.8,23.6c-2.9,6-1.9,13.5,3.1,18.5c6.3,6.3,16.6,6.3,22.9,0C194,50.9,194,40.6,187.7,34.3z M180.6,50.1c-2.4,2.4-6.3,2.4-8.6,0c-2.4-2.4-2.4-6.3,0-8.6c2.4-2.4,6.3-2.4,8.6,0C183,43.8,183,47.7,180.6,50.1z"></path></g></svg></div></div>       
+    <!-- press -->
+    <div id="press" class="container-fluid" style="background: rgb(86,155,227); width:100%; height:520px;">
+    <div class="container" style="position: relative;">
+      <div id="comp-irqduxhyinlineContent" class="style-irqduxi11inlineContent" style="left: 185px; width: 980px;"><div class="txtNew" id="comp-irqduxi4" style="left: 164px; width: 652px; position: absolute; top: 152px;">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="height: 360px;">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+  </ol>
+  <div class="carousel-inner" role="listbox">
+    <div class="carousel-item active">
+      <h3 class="font_3" style="line-height:1.4em; text-align:center;"><span class="color_11">"The smartest product<br>
+in the market"</span></h3>
+    </div>
+    <div class="carousel-item">
+     <h3 class="font_3" style="line-height:1.4em; text-align:center;">
+      "Most comfortable way<br>
+to keep track of<br> indexation"
+     </h3>
+    </div>
+   
+  </div>
+  
+  
+</div>
+</div><div class="style-irqduxif1" id="comp-irqduxie" style="left: 462px; width: 53px; position: absolute; top: 126px; height: 5px;"><div id="comp-irqduxieline" class="style-irqduxif1line"></div></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j8810dp31" id="comp-isen9lv3" style="left: 15%; width: 41px; position: absolute; top: 40px; height: 49px;"><style type="text/css">.style-j8810dp31 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}
+.style-j8810dp31 svg * {vector-effect:non-scaling-stroke;}
+.style-j8810dp31 a {display:block;height:100%;}</style>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 41px; height: 49px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j88118p71" data-angle="270" id="comp-isenckdb" style="left: 5%; width: 50px; position: absolute; transform: rotate(270deg) translateZ(0px); top: 159px; height: 54px;"><style type="text/css">.style-j88118p71 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}
+.style-j88118p71 svg * {vector-effect:non-scaling-stroke;}
+.style-j88118p71 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-1.0999975204467773 -0.8999996185302734 202.29998779296875 202" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 50px; height: 54px;">
+  <g><path class="st0" d="M188.5,11.8c-12.7-12.7-33.4-12.7-46.2,0c-10.1,10.1-12.2,25.3-6.2,37.5L49.4,136c-12.2-6.2-27.6-4.2-37.8,6.1c-12.7,12.7-12.7,33.4,0,46.2s33.4,12.7,46.2,0c10.2-10.2,12.2-25.6,6-37.9l86.5-86.5c12.3,6.4,27.8,4.5,38.2-5.9C201.2,45.2,201.2,24.6,188.5,11.8z M43.4,173.8c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C48.3,161.2,48.3,169,43.4,173.8z M174.1,43.6c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C178.9,31,178.9,38.8,174.1,43.6z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j88108rh1" data-angle="270" id="comp-isenegh8" style="left: 73%; width: 50px; position: absolute; transform: rotate(270deg) translateZ(0px); top: 67px; height: 54px;"><style type="text/css">.style-j88108rh1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}
+.style-j88108rh1 svg * {vector-effect:non-scaling-stroke;}
+.style-j88108rh1 a {display:block;height:100%;}</style>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-1.0999975204467773 -0.8999996185302734 202.29998779296875 202" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 50px; height: 54px;"><g><path class="st0" d="M188.5,11.8c-12.7-12.7-33.4-12.7-46.2,0c-10.1,10.1-12.2,25.3-6.2,37.5L49.4,136c-12.2-6.2-27.6-4.2-37.8,6.1c-12.7,12.7-12.7,33.4,0,46.2s33.4,12.7,46.2,0c10.2-10.2,12.2-25.6,6-37.9l86.5-86.5c12.3,6.4,27.8,4.5,38.2-5.9C201.2,45.2,201.2,24.6,188.5,11.8z M43.4,173.8c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C48.3,161.2,48.3,169,43.4,173.8z M174.1,43.6c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C178.9,31,178.9,38.8,174.1,43.6z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j8810ync1" id="comp-isenexd1" style="left: 40%; width: 42px; position: absolute; top: 374px; height: 45px;"><style type="text/css">.style-j8810ync1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}
+.style-j8810ync1 svg * {vector-effect:non-scaling-stroke;}
+.style-j8810ync1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="-1.0999975204467773 -0.8999996185302734 202.29998779296875 202" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 42px; height: 45px;"><g><path class="st0" d="M188.5,11.8c-12.7-12.7-33.4-12.7-46.2,0c-10.1,10.1-12.2,25.3-6.2,37.5L49.4,136c-12.2-6.2-27.6-4.2-37.8,6.1c-12.7,12.7-12.7,33.4,0,46.2s33.4,12.7,46.2,0c10.2-10.2,12.2-25.6,6-37.9l86.5-86.5c12.3,6.4,27.8,4.5,38.2-5.9C201.2,45.2,201.2,24.6,188.5,11.8z M43.4,173.8c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C48.3,161.2,48.3,169,43.4,173.8z M174.1,43.6c-4.8,4.8-12.6,4.8-17.4,0c-4.8-4.8-4.8-12.6,0-17.4c4.8-4.8,12.6-4.8,17.4,0C178.9,31,178.9,38.8,174.1,43.6z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j88113qo1" id="comp-iseng1vk" style="left: 68%; width: 28px; position: absolute; top: 413px; height: 29px;"><style type="text/css">.style-j88113qo1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}
+.style-j88113qo1 svg * {vector-effect:non-scaling-stroke;}
+.style-j88113qo1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 28px; height: 29px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg></div><div data-strokewidth="1" tabindex="0" role="image" class="style-j8810ncp" data-angle="186.16100449730425" id="comp-isehzfde" style="left: 90%; width: 94px; position: absolute; transform: rotate(186.161deg) translateZ(0px); top: 196px; height: 111px;"><style type="text/css">.style-j8810ncp svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:1px;}
+.style-j8810ncp svg * {vector-effect:non-scaling-stroke;}
+.style-j8810ncp a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="6.497311827956992 -11.298394726168723 188.50537634408602 222.59677419354838" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 1px; width: 94px; height: 111px;"><g><path class="st0" d="M187.7,34.3c-5-5-12.6-6-18.6-3c-17.9-17.2-41.2-26.7-66.1-26.7C50.3,4.6,7.5,47.4,7.5,100c0,22.6,8.1,44.6,22.7,61.8c18.2,21.4,44.7,33.6,72.7,33.6c2.9,0,5.2-2.3,5.2-5.2s-2.3-5.2-5.2-5.2c-25,0-48.6-10.9-64.7-29.9c-13-15.3-20.2-34.9-20.2-55c0-46.9,38.1-85,85-85c22.2,0,42.9,8.4,58.8,23.6c-2.9,6-1.9,13.5,3.1,18.5c6.3,6.3,16.6,6.3,22.9,0C194,50.9,194,40.6,187.7,34.3z M180.6,50.1c-2.4,2.4-6.3,2.4-8.6,0c-2.4-2.4-2.4-6.3,0-8.6c2.4-2.4,6.3-2.4,8.6,0C183,43.8,183,47.7,180.6,50.1z"></path></g></svg></div><div data-strokewidth="0" tabindex="0" role="image" class="style-j8810s5p1" id="comp-isenkhwl" style="left: 93%; width: 28px; position: absolute; top: 40px; height: 29px;"><style type="text/css">.style-j8810s5p1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:0px;}
+.style-j8810s5p1 svg * {vector-effect:non-scaling-stroke;}
+.style-j8810s5p1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="5.099999904632568 5.099999904632568 189.79998779296875 189.79998779296875" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 0px; width: 28px; height: 29px;"><g><path class="st0" d="M100,5.1C47.6,5.1,5.1,47.6,5.1,100c0,52.4,42.5,94.9,94.9,94.9c52.4,0,94.9-42.5,94.9-94.9C194.9,47.6,152.4,5.1,100,5.1z M100,160.4c-33.3,0-60.4-27-60.4-60.4c0-33.3,27-60.4,60.4-60.4c33.3,0,60.4,27,60.4,60.4C160.4,133.3,133.3,160.4,100,160.4z"></path></g></svg></div><div data-strokewidth="1" tabindex="0" role="image" class="style-j8810inf1" data-angle="297.3047520121039" id="comp-isenm3m4" style="left: 13%; width: 94px; position: absolute; transform: rotate(297.305deg) translateZ(0px); top: 318px; height: 111px;"><style type="text/css">.style-j8810inf1 svg {width:100%;height:100%;position:absolute;top:0;right:0;bottom:0;left:0;margin:auto;fill:#FFFFFF;fill-opacity:1;stroke:transparent;stroke-width:1px;}
+.style-j8810inf1 svg * {vector-effect:non-scaling-stroke;}
+.style-j8810inf1 a {display:block;height:100%;}</style><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="6.497311827956992 -11.298394726168723 188.50537634408602 222.59677419354838" role="img" preserveAspectRatio="xMidYMid meet" style="stroke-width: 1px; width: 94px; height: 111px;"><g><path class="st0" d="M187.7,34.3c-5-5-12.6-6-18.6-3c-17.9-17.2-41.2-26.7-66.1-26.7C50.3,4.6,7.5,47.4,7.5,100c0,22.6,8.1,44.6,22.7,61.8c18.2,21.4,44.7,33.6,72.7,33.6c2.9,0,5.2-2.3,5.2-5.2s-2.3-5.2-5.2-5.2c-25,0-48.6-10.9-64.7-29.9c-13-15.3-20.2-34.9-20.2-55c0-46.9,38.1-85,85-85c22.2,0,42.9,8.4,58.8,23.6c-2.9,6-1.9,13.5,3.1,18.5c6.3,6.3,16.6,6.3,22.9,0C194,50.9,194,40.6,187.7,34.3z M180.6,50.1c-2.4,2.4-6.3,2.4-8.6,0c-2.4-2.4-2.4-6.3,0-8.6c2.4-2.4,6.3-2.4,8.6,0C183,43.8,183,47.7,180.6,50.1z"></path></g></svg></div></div>
     </div></div>
     
     
+    <div id="image" class="container-fluid" style="background:white; padding: 90px 0;">
+      <div class="row">
+      <div class="col-sm-6 col-md text-center">
+        <img src="img/b1.png" />
+      </div>
+      <div class="col-sm-6 col-md text-center">
+        <img src="img/b2.png" />
+      </div>
+      <div class="col-sm-6 col-md text-center">
+        <img src="img/b3.png" />
+      </div>
+    <div class="col-sm-6 col-md text-center">
+      <img src="img/b4.png" />
+    </div>
+    <div class="col-sm-12 col-md text-center">
+      <img src="img/b5.png" />
+    </div></div>
+
+
+    </div>
+    
     
     <!-- pricing -->
+   <!-- pricing -->
     <div id="price" class="pc text-center">
-    	<div class="bg11">
-    	<h4 class="font_4" style="text-align:center;"><span style="color:#FFFFFF;">Pricing</span></h4>
-    		
-    		
-    		<div class="col-t">
-    			<div class="p-table">
-    				<header>
-    					<h2 class="font_2" style="font-size:45px;"><span style="font-size:45px;"><span style="color:rgb(255, 255, 255);">Free</span></span></h2>
-    					<p>Plan</p>
-    				</header>
-    				<div class="p-t-b">
-    					<ul>
-    						<li>Up to 3 ASINs</li>
-    						<li>Daily listing notifications</li>
-    						<li>Free setup guidance</li>
-    						<li>Uneligible for promotions</li>
-    						<li>No expiration period</li>
-    					</ul>
-    				</div><a href="{% url 'users_login_user' %}">
-    				<div class="p-t-f">
-    						Select Plan
-    				</div></a>
-    			</div>
-    		</div>
-    		
-    		<div class="col-t">
-    			<div class="p-table">
-    				<header>
-    					<h2 class="font_2" style="font-size:45px;"><span style="font-size:45px;"><span style="color:rgb(255, 255, 255);">$10</span></span><span style="font-size:20px;"><span style="color:rgb(255, 255, 255);"> monthly</span></span></h2>
-    					<p>Plan</p>
-    				</header>
-    				<div class="p-t-b">
-    					<ul>
-    						<li>Unlimited ASINs</li>
-    						<li>Daily listing notifications</li>
-    						<li>Free setup guidance
+      <div class="bg11">
+      <h4 class="font_4" style="text-align:center;"><span style="color:#FFFFFF;">Pricing</span></h4>
+        
+        
+        <div class="col-t">
+          <div class="p-table">
+            <header>
+              <h2 class="font_2" style="font-size:45px;"><span style="font-size:45px;"><span style="color:rgb(255, 255, 255);">Free</span></span></h2>
+              <p>Plan</p>
+            </header>
+            <div class="p-t-b">
+              <ul>
+                <li>Up to 3 ASINs</li>
+                <li>Daily listing notifications</li>
+                <li>Free setup guidance</li>
+                <li>Uneligible for promotions</li>
+                <li>No expiration period</li>
+              </ul>
+            </div><a href="{% url 'users_login_user' %}">
+            <div class="p-t-f">
+                Select Plan
+            </div></a>
+          </div>
+        </div>
+        
+        <div class="col-t">
+          <div class="p-table">
+            <header>
+              <h2 class="font_2" style="font-size:45px;"><span style="font-size:45px;"><span style="color:rgb(255, 255, 255);">$10</span></span><span style="font-size:20px;"><span style="color:rgb(255, 255, 255);"> monthly</span></span></h2>
+              <p>Plan</p>
+            </header>
+            <div class="p-t-b">
+              <ul>
+                <li>Unlimited ASINs</li>
+                <li>Daily listing notifications</li>
+                <li>Free setup guidance
 </li>
-    						<li>Eligible for promotions</li>
-    						<li>No expiration period</li>
-    					</ul>
-    				</div><a href="{% url 'users_login_user' %}">
-    				<div class="p-t-f">
-    						Select Plan
-    				</div></a>
-    			</div>
-    		</div>
-    		
-    		
-    		
-    		<div class="col-t">
-    			<div class="p-table">
-    				<header>
-    					<h2 class="font_2" style="font-size:45px;"><span style="font-size:40px;"><span style="color:rgb(255, 255, 255);">$100&nbsp;</span></span><span style="font-size:20px;"><span style="color:rgb(255, 255, 255);">yearly</span></span></h2>
-    					<p>Plan</p>
-    				</header>
-    				<div class="p-t-b">
-    					<ul>
-    						<li>Unlimited ASINs</li>
-    						<li>Daily listing notifications</li>
-    						<li>​Free setup guidance</li>
-    						<li>Eligible for promotions</li>
-    						<li>No expiration period</li>
-    					</ul>
-    				</div><a href="{% url 'users_login_user' %}">
-    				<div class="p-t-f">
-    						Select Plan
-    				</div></a>
-    			</div>
-    		</div>
-    		
-    		
-    		<ul id="nav2">
-    			<li><a href="mailto:support@checkmykeywords.com" target="_self" data-content="support@checkmykeywords.com" data-type="mail">support@checkmykeywords.com</a></li>
-    			<li><a href="{% url 'users_login_user' %}"><img class="f-i" src="{% static 'img/icon2.png' %}" /></a></li>
-    			<li><span class="color_11">Founded in Guatemala City</span></li>
-    		</ul>
-    		
-    		
-    	</div>
-    	</div>
+                <li>Eligible for promotions</li>
+                <li>No expiration period</li>
+              </ul>
+            </div><a href="{% url 'users_login_user' %}">
+            <div class="p-t-f">
+                Select Plan
+            </div></a>
+          </div>
+        </div>
+        
+        
+        
+        <div class="col-t">
+          <div class="p-table">
+            <header>
+              <h2 class="font_2" style="font-size:45px;"><span style="font-size:40px;"><span style="color:rgb(255, 255, 255);">$100&nbsp;</span></span><span style="font-size:20px;"><span style="color:rgb(255, 255, 255);">yearly</span></span></h2>
+              <p>Plan</p>
+            </header>
+            <div class="p-t-b">
+              <ul>
+                <li>Unlimited ASINs</li>
+                <li>Daily listing notifications</li>
+                <li>​Free setup guidance</li>
+                <li>Eligible for promotions</li>
+                <li>No expiration period</li>
+              </ul>
+            </div><a href="{% url 'users_login_user' %}">
+            <div class="p-t-f">
+                Select Plan
+            </div></a>
+          </div>
+        </div>
+        
+        
+        
+       <ul id="nav2">
+          <li><a href="mailto:support@checkmykeywords.com" target="_self" data-content="support@checkmykeywords.com" data-type="mail">support@checkmykeywords.com</a></li>
+          <li><a href="{% url 'users_login_user' %}"><img class="f-i" src="{% static 'img/icon2.png' %}" /></a></li>
+          <li><span class="color_11">Founded in Guatemala City</span></li>
+        </ul>
+        
+        
+      </div>
+      </div>
     
 
 
 <footer>
-	<ul class="social">
-		<li><a href="i"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-		<li><a href="i"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-		<li><a href="i"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-		<li><a href="i"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-		<li><a href="i"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-		
-	</ul>
+  <ul class="social">
+    <li><a href="i"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+    
+  </ul>
 </footer>
 
 <div class="footer-up"  data-toggle="modal" data-target="#exampleModal">
-	<a href="#myPage">
-		<i class="fa fa-angle-up fa-2x" aria-hidden="true"></i>
-	</a>
+  <a href="#myPage">
+    <i class="fa fa-angle-up fa-2x" aria-hidden="true"></i>
+  </a>
 </div>
 
 </div>
@@ -399,34 +443,32 @@ to keep track of<br> indexation"
 
    
         
-        
-        
-        <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
-        <script
-          src="https://code.jquery.com/jquery-3.2.1.min.js"
-          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-          crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'js/plugins.js' %}"></script>
-        <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/vendor/modernizr-3.5.0.min.js' %}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 
          <!--  Scripts-->
-  <script src="{% static 'js/bin/materialize.min.js' %}"></script>
-  <script src="{% static 'js/initial.js' %}"></script>
-  <script src="https://use.fontawesome.com/6781d34411.js"></script>
-  <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
-  <script>Raven.config('{% sentry_public_dsn %}').install()</script>
-  <script type="text/javascript">
-    (function(e,r){function n(e,r){e[r]=function(){e.push([r].concat(Array.prototype.slice.call(arguments,0)))}}function o(){var e=r.location.hostname.match(/[a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6}$/i),n=e?e[0]:null,o="; domain=."+n+"; path=/; expires=" + new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toUTCString();r.cookie=r.referrer&&-1===r.referrer.indexOf(n)?"jaco_referer="+r.referrer+o:"jaco_referer="+t+o}var a="JacoRecorder",t="none";!function(e,r,t,i){if(!t.__VERSION){e[a]=t;for(var c=["init","identify","startRecording","stopRecording","removeUserTracking","setUserInfo","trackEvent"],s=0;s<c.length;s++)n(t,c[s]);o(),t.__VERSION=2.1,t.__INIT_TIME=1*new Date;var f=r.createElement("script");f.async=!0,f.setAttribute("crossorigin","anonymous"),f.src=i;var d=r.getElementsByTagName("head")[0];d.appendChild(f)}}(e,r,e[a]||[],"https://recorder-assets.getjaco.com/recorder_v2.js")}).call(window,window,document);
-    window.JacoRecorder.init("f6588c33-6f46-4f40-bdfe-c448f50a5cc7");
-    </script>
-    {% if request.user.is_authenticated %}
-    <script>
-      window.JacoRecorder.identify('{{request.user.username}}', function(){});
-    </script>
-    {% endif %}
-      {% block js %}
-  {% endblock js %}
-    </body>
+    <script src="{% static 'js/bin/materialize.min.js' %}"></script>
+    <script src="{% static 'js/initial.js' %}"></script>
+    <script src="https://use.fontawesome.com/6781d34411.js"></script>
+    <script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
+    <script>Raven.config('{% sentry_public_dsn %}').install()</script>
+    <script type="text/javascript">
+      (function(e,r){function n(e,r){e[r]=function(){e.push([r].concat(Array.prototype.slice.call(arguments,0)))}}function o(){var e=r.location.hostname.match(/[a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6}$/i),n=e?e[0]:null,o="; domain=."+n+"; path=/; expires=" + new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toUTCString();r.cookie=r.referrer&&-1===r.referrer.indexOf(n)?"jaco_referer="+r.referrer+o:"jaco_referer="+t+o}var a="JacoRecorder",t="none";!function(e,r,t,i){if(!t.__VERSION){e[a]=t;for(var c=["init","identify","startRecording","stopRecording","removeUserTracking","setUserInfo","trackEvent"],s=0;s<c.length;s++)n(t,c[s]);o(),t.__VERSION=2.1,t.__INIT_TIME=1*new Date;var f=r.createElement("script");f.async=!0,f.setAttribute("crossorigin","anonymous"),f.src=i;var d=r.getElementsByTagName("head")[0];d.appendChild(f)}}(e,r,e[a]||[],"https://recorder-assets.getjaco.com/recorder_v2.js")}).call(window,window,document);
+      window.JacoRecorder.init("f6588c33-6f46-4f40-bdfe-c448f50a5cc7");
+      </script>
+      {% if request.user.is_authenticated %}
+      <script>
+        window.JacoRecorder.identify('{{request.user.username}}', function(){});
+      </script>
+      {% endif %}
+    {% block js %}
+    {% endblock js %}
+</body>
 </html>
