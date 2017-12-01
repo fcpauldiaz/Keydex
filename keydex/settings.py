@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'celery',
     'raven.contrib.django.raven_compat',
     'django_celery_beat'
+]
 
 SITE_ID = 1
 
