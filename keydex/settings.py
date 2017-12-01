@@ -57,12 +57,7 @@ INSTALLED_APPS = [
     'pinax.stripe',
     'celery',
     'raven.contrib.django.raven_compat',
-    'django_celery_beat',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.facebook'  # enabled by configure
-]
+    'django_celery_beat'
 
 SITE_ID = 1
 
@@ -85,7 +80,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(T_DIR, 'templates', 'allauth'),
             os.path.join(BASE_DIR, 'templates')
         ],
         'APP_DIRS': True,
@@ -129,8 +123,7 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.CryptPasswordHasher',
 )
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend'
+    'django.contrib.auth.backends.ModelBackend'
     
 )
 AUTH_PASSWORD_VALIDATORS = [
@@ -207,22 +200,8 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'US/Pacific'
 CELERY_IGNORE_RESULT = True
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_MIN_LENGTH = 3
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # testing...
-#ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-SOCIALACCOUNT_AUTO_SIGNUP = True 
-SOCIALACCOUNT_STORE_TOKENS = True
-# For custom sign-up form:
-# http://stackoverflow.com/questions/12303478/how-to-customize-user-profile-when-using-django-allauth
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'SCOPE': ['email', 'public_profile'],  #, 'publish_stream'],
-        'METHOD': 'oauth2'  # 'js_sdk'  # instead of 'oauth2'
-    }
-}
+
+
 
 FILE_UPLOAD_HANDLERS = ("django_excel.ExcelMemoryFileUploadHandler",
                         "django_excel.TemporaryExcelFileUploadHandler")
