@@ -128,7 +128,16 @@ var clock;
   
 
  
-})
+});
+
+ $(function () {
+            
+            // $('#counter').mbComingsoon({ expiryDate: new Date(2017, 11, 9, 0, 0), speed:100 });
+            // setTimeout(function () {
+            //     $(window).resize();
+            // }, 200);
+        });
+        
 
 
 
