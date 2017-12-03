@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'pinax.stripe',
     'celery',
     'raven.contrib.django.raven_compat',
-    'django_celery_beat'
+    'django_celery_beat',
+    'pinax.referrals'
 ]
 
 SITE_ID = 1
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'pinax.referrals.middleware.SessionJumpingMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
