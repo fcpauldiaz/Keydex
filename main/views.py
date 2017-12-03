@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 
 import uuid
+from pinax.referrals.models import Referral
 from user_helper import validate_email #email validation
 from django.views.defaults import page_not_found, server_error
 from django.template.response import TemplateResponse
@@ -129,6 +130,7 @@ def createUser(request):
       user.is_active = False
       user.username = user.username.lower().strip()
       user.save()
+      referral_response = Referral.record_response(request, "SIGN_UP", target=user)
       send_confirmation_email(request, user)
       return render(request, 'account_activation_sent.html', { 'email': email })
     return render(
