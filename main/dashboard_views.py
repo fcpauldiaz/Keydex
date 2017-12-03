@@ -6,6 +6,7 @@ from main.scraper.crawler import parallel_crawl, fetch_listing, queue_crawl
 from main.product_helper import save_product_indexing
 from main.forms import SettingsForm, PlanForm
 from django.http import JsonResponse
+from django.contrib.auth.models import User
 from pinax.stripe.actions.sources import create_card, update_card
 from pinax.stripe.models import Customer, Card
 from pinax.stripe.actions import subscriptions
@@ -20,7 +21,7 @@ import uuid
 
 import json
 from keydex.celery_app import app
-
+from pinax.referrals.models import ReferralResponse, Referral
 @login_required
 def dashboard(request):
   key = settings.PINAX_STRIPE_PUBLIC_KEY
@@ -51,6 +52,15 @@ def check_product_indexing(request, uuid):
 def dashboard_settings(request):
   if request.method == 'GET':
     profile = Profile.objects.get(user_id=request.user)
+    referral = Referral.objects.filter(user_id=request.user).first()
+    if (referral != None):
+      responses = ReferralResponse.objects.filter(referral_id=referral)
+    else:
+      responses = []
+    cant_referrals = 0
+    for response in responses:
+      if (response.action == 'SIGN_UP'):
+        cant_referrals += 1
     initial_dict = dict()
     c = Customer.objects.filter(user_id=request.user).first()
     if c == None:
@@ -59,7 +69,7 @@ def dashboard_settings(request):
     else:
       card = Card.objects.filter(customer_id=c.id)
       valid_subscription = subscriptions.has_active_subscription(customer=c)
-    data = { 'user': request.user}
+    data = { 'user': request.user, 'referrals': cant_referrals}
     if (valid_subscription == True):
       subs = Subscription.objects.filter(customer_id=c)
       data['subs'] = subs
