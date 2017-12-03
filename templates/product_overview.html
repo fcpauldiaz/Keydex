@@ -79,9 +79,10 @@
       <div id="progress" class="center" style=" display: none">
         {% load static %}
         <img class="responsive-img" height="350" src="{% static 'img/loader.gif' %}"/>
+         <h4 id="helptext" class="disabled-text-text center center-justify">Do not close this window or change url.</h4>
       </div>
     </div>
-      <h4 id="helptext" class="disabled-text-text center center-justify" style="display: none;">Do not close this window or change url.</h4>
+     
   </div>
   <!-- Modal Structure -->
   <div id="modal1" class="modal container" data-poll-url="{% url 'poll_state'%}" data-product-id="{{ product.uuid }}">
