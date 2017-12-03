@@ -96,7 +96,7 @@ def process_free_charge(request):
       subs = subscriptions.create(
         customer=customer,
         plan=plan.stripe_id,
-        coupon=coupon
+        coupon=coupon.upper()
       )
       valid = subscriptions.is_valid(subs)
     except Exception as e:
