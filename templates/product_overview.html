@@ -8,7 +8,7 @@
 <div class="container">
   <div class="row">
     <div class="col s13 l3 m4">
-      <div class="">
+      <div class="disappear">
         <div class="card col l13 m13 s13">
           <div class="card-image waves-effect waves-block waves-light">
             <img class="responsive-img"  src="{{product.primary_img}}">
@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="col l10 s13 m8">
-      <table class="bordered striped highlight">
+      <table class="bordered striped highlight disappear" style="display: none;">
         <thead class="detail-blue white-text">
           <tr>
             <th>Date and time (UTC)</th>
@@ -75,9 +75,10 @@
       </div>
       {% endif %}
     </div>
-    <div class="col l1 offset-l3 m1 offset-m2 s1 offset-s1">
-      <div id="progress" class="progress_bar center" style="display: none;">
-        <img src="https://s3-us-west-2.amazonaws.com/stripe-checkmykeywords/loader+cut.png" style="display: inline-block; position: absolute;   opacity: 1.0;"/>
+    <div class="col l8 offset-l1 m8 offset-m1 s13">
+      <div id="progress" class="center" style=" display: none">
+        {% load static %}
+        <img class="responsive-img" height="350" src="{% static 'img/loader.gif' %}"/>
       </div>
     </div>
       <h4 id="helptext" class="text-loader disabled-text-text center center-justify" style="display: none;">Do not close this window or change url.</h4>
@@ -114,21 +115,19 @@
      });
    });
 </script>
-<script src="{% static 'js/progressbar.min.js' %}"></script>
-<script src="{% static 'js/progress-config.js' %}"></script><script>
+<script>
   var poll_xhr;
   var willstop = 0;
   (function() {
     var task_total = "{{ job_count | safe }}";
     var task_id = "{{ task_id | safe }}";
-    var bar = initProgress();
     var poll = function() {
       form = $('#modal1');
       if (task_id === 'None' || task_total === -1) {
         willstop = 1;
       }
       else {
-        $('table').hide();
+        $('.disappear').hide();
         $('#progress').show()
         $('#helptext').show();
         poll_xhr = $.ajax({
@@ -146,12 +145,10 @@
               willstop = 1;
               $('#progress').hide();
               $('#helptext').hide();
-              $('table').show();
+              $('.disappear').show();
               task_total = -1;
               location.reload(true);
-           } else {
-            bar.set(result.process_percent);
-           };
+           }
           }
         });
       };
