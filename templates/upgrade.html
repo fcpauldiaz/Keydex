@@ -13,7 +13,14 @@
   
 </div>
 <div class="row container">
-  <div class="col l4 offset-l2 s13 offset-s1">
+   <div class="show-on-small hide-on-med-and-up">
+        <select id="mobile-stripe" class="browser-default">
+          <option value="" disabled selected>Choose your Plan</option>
+          <option value="Monthly">Monthly ($10) </option>
+          <option value="Yearly">Yearly ($100)</option>
+        </select>
+      </div>
+  <div class="col l4 offset-l2 s13 offset-s1 hide-on-small-only">
     <div id="DIV_1_upgrade" class="data-monthly">
       <div id="DIV_3">
         <div id="DIV_4">
@@ -76,7 +83,7 @@
       </div>
   </div>
   </div>
-  <div class="col l4 s2">
+  <div class="col l4 s2 hide-on-small-only">
       <div id="pricing_DIV_1_upgrade" class="data-yearly">
               <div id="pricing_DIV_3">
                 <div id="pricing_DIV_4">
@@ -151,8 +158,8 @@
       </label>
     </div>
 </div>
-<div class="center center-justify">
-   <a id="subscribe" class="btn-large waves-effect waves-light blue-paypal">Next</a>
+<div class="center center-justify container">
+   <a id="subscribe" class="btn-large waves-effect waves-light blue-paypal btn-block">Next</a>
   <div id="loader" class="preloader-wrapper big active" style="display: none">
       <div class="spinner-layer spinner-blue-only">
         <div class="circle-clipper left">
