@@ -62,14 +62,50 @@
 
     document.getElementById('subscribe').addEventListener('click', function (event) {
       event.preventDefault();
+      
       if (total == undefined && name == 'undefined') {
         Materialize.toast('Please select a plan', 3000);
       }
-      else {
+      else if (total >= 1){
         handler.open({
           description: name,
           zipCode: true,
           amount: total*100
+        });
+      }
+      else {
+        $('#loader').show();
+        $('#subscribe').hide();
+        formpay = $('#payment-form');
+        $.ajax({
+          url: formpay.attr("data-free-url"),
+          type : "POST",
+          data: { 
+            csrfmiddlewaretoken : getCookie('csrftoken'), 
+            coupon: $('#coupon').val(),
+            plan: selected
+          },
+          dataType: 'json',
+          success: function (data) {
+            if (data.valid === true) {
+              Materialize.toast('Payment Accepted', 3000);
+              $('#loader').hide();
+              $('#subscribe').show();
+              Materialize.toast('Upgrading Account', 3000);
+              window.location = '/';
+            }
+            else { 
+              console.log(data);
+              Materialize.toast('Invalid transaction', 3000);
+              $('#loader').hide();
+              $('#subscribe').show();
+            }
+          },
+          error: function(request, status, error) {
+            Materialize.toast('Request error', 3000);
+            $('#loader').hide();
+            $('#subscribe').show();
+          }
         });
       }
      
