@@ -82,7 +82,32 @@ def check_valid_coupon(request):
       return JsonResponse({ 'valid_coupon': True, 'total_amount': format(total, '.2f'), 'discount': percent })
     return JsonResponse({ 'valid_coupon': False })
 
+@login_required
+def process_free_charge(request):
+  if request.is_ajax():
 
+    # Charge the user's card:
+    customer = Customer.objects.filter(user_id=request.user).first()
+    if customer == None:
+      customer = customers.create(user=request.user)
+    plan = Plan.objects.get(stripe_id=request.POST['plan'])
+    coupon = request.POST['coupon']
+    try:
+      if coupon == '':
+        subs = subscriptions.create(
+          customer=customer,
+          plan=plan.stripe_id,
+        )
+      else:
+        subs = subscriptions.create(
+          customer=customer,
+          plan=plan.stripe_id,
+          coupon=coupon,
+        )
+      valid = subscriptions.is_valid(subs)
+    except Exception as e:
+      return JsonResponse({ 'valid': False, 'message': e.message })
+  return JsonResponse({'valid': valid })
 
 @login_required
 def cancel_subscription(request, uuid):
