@@ -93,17 +93,11 @@ def process_free_charge(request):
     plan = Plan.objects.get(stripe_id=request.POST['plan'])
     coupon = request.POST['coupon']
     try:
-      if coupon == '':
-        subs = subscriptions.create(
-          customer=customer,
-          plan=plan.stripe_id,
-        )
-      else:
-        subs = subscriptions.create(
-          customer=customer,
-          plan=plan.stripe_id,
-          coupon=coupon,
-        )
+      subs = subscriptions.create(
+        customer=customer,
+        plan=plan.stripe_id,
+        coupon=coupon
+      )
       valid = subscriptions.is_valid(subs)
     except Exception as e:
       return JsonResponse({ 'valid': False, 'message': e.message })
