@@ -77,8 +77,12 @@
       {% endif %}
     </form>
     <div class="row">
-      <div class="col l3 offset-l5 m3 offset-m3 s3 offset-s1">
-        <div id="progress" class="progress_bar" style="display: none"></div>
+      <div class="col l8 offset-l3 m8 offset-m3 s13">
+        <div id="progress" class="" style="display: none;">
+          {% load static %}
+          <img class="responsive-img" height="350" src="{% static 'img/loader.gif' %}"/>
+          <h4 id="helptext" class="disabled-text-text center center-justify">Do not close this window or change url.</h4>
+        </div>
       </div>
     </div>
   </div>
@@ -88,15 +92,12 @@
 <link href="{% static 'css/materialize-stepper.min.css' %}" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block js %}
-<script src="{% static 'js/progressbar.min.js' %}"></script>
-<script src="{% static 'js/progress-config.js' %}"></script>
 <script>
   var poll_xhr;
   var willstop = 0;
   function pollData(job_count, task_id, uuid) {
     var task_total = job_count;
     var task_id = task_id;
-    var bar = initProgress();
     var poll = function() {
       form = $('#form');
       if (task_id === 'None' || task_total === -1) {
@@ -114,7 +115,7 @@
               csrfmiddlewaretoken: "{{csrf_token}}",
           },
           success: function(result) {
-            console.log(result);
+            
           var result = JSON.parse(result);
           if (result.process_percent === null || result.process_percent === undefined) {
               willstop = 1;
@@ -123,9 +124,7 @@
               task_total = -1;
               window.location = '/product/detail/'+result.uuid+'/'+(result.historic_id);
 
-           } else {
-            bar.set(result.process_percent);
-           };
+           }
           }
         });
       };
