@@ -237,6 +237,7 @@ def send_confirmation_email(request, user):
       'domain': request.META['HTTP_HOST'],
       'uid': uid,
       'token': token,
+      'referral_link': user.profile.referral.url
     }
   )
   

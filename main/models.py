@@ -6,13 +6,22 @@ from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.exceptions import ValidationError
+from django.shortcuts import render, redirect, reverse
 import uuid
+
+from pinax.referrals.models import Referral
 
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
   if created:
-    Profile.objects.create(user=instance)
+    profile = Profile.objects.create(user=instance)
+    referral = Referral.create(
+      user=instance,
+      redirect_to=reverse('users_create_user')
+    )
+    profile.referral = referral
+
   instance.profile.save()
 
 class Profile(models.Model):
@@ -20,7 +29,8 @@ class Profile(models.Model):
   account_confirmed = models.BooleanField(default=False)
   password_reset_token = models.CharField(max_length=150, null=True)
   password_reset_token_expiration = models.DateTimeField(null=True) 
-  billing_address = models.CharField(max_length=120, null=True)
+  referral = models.ForeignKey(Referral, null=True)
+
 
 
 class ReportingPeriod(models.Model):
