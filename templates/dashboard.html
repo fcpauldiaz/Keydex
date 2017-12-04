@@ -14,7 +14,7 @@
   </div>
   <div class="col l3 offset-l3 s12" style="line-height: 7">
     {% if product_count >= 5 and valid == False %}
-    <a href="#modal1" class="btn-large waves-light waves-effect orange btn-block btn right-move">
+    <a href="{% url 'dashboard_upgrade' %}" class="btn-large waves-light waves-effect orange btn-block btn right-move">
     Upgrade Account
     </a>
     {% else %}
@@ -30,7 +30,7 @@
     {% if product_count == 1 and valid == False %}
     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp product for indexation</h5>
 
-    <h5><a href="#modal1" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
+    <h5><a href="{% url 'dashboard_upgrade' %}" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
     
     <h5>You have 4 products left on your free trial.</h5>
     {% elif product_count == 1 and valid == True %}
@@ -45,7 +45,7 @@
     <h5 class="inline">You have</h5>
     <h5 class="blue-paypal-text inline"> &nbsp{{ remaining }}&nbsp </h5>
     <h5 class="inline">product{{ remaining|pluralize:",s" }} left on your free trial.</h5>
-    <h5><a href="#modal1" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
+    <h5><a href="{% url 'dashboard_upgrade' %}" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
     {% endwith %}
     
     {% elif product_count > 1 and product_count < 5 and valid == True %}
@@ -56,7 +56,7 @@
     {% elif product_count >= 5 and valid == False %}
 
      <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
-    <h5> You don't have any more left on your free trial.  <a href="#modal1" class="">
+    <h5> You don't have any more left on your free trial.  <a href="{% url 'dashboard_upgrade' %}" class="">
     Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
     {% elif product_count >= 5 and valid == True %}
     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
