@@ -58,7 +58,7 @@ def upgrade(request):
         subs = subscriptions.create(
           customer=customer,
           plan=plan.stripe_id,
-          coupon=coupon,
+          coupon=coupon.upper(),
           token=token
         )
       valid = subscriptions.is_valid(subs)
@@ -92,6 +92,8 @@ def process_free_charge(request):
       customer = customers.create(user=request.user)
     plan = Plan.objects.get(stripe_id=request.POST['plan'])
     coupon = request.POST['coupon']
+    #should check that it is actually free before processing
+    
     try:
       subs = subscriptions.create(
         customer=customer,

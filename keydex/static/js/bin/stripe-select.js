@@ -1,7 +1,13 @@
-var selected = undefined;
+var selected = 'Monthly';
 var discount = undefined;
-var total = undefined;
+var total = 10;
 var name = undefined;
+$('.data-monthly').css('border', 'solid 4px blue');
+$('#DIV_5').css('width', '261px');
+$('#pricing_DIV_5').css('width', '269px');
+$('#pricing_DIV_1_upgrade').css('border', 'none');
+$('#showTotal').text('Total:' + ' $'+total);
+
 $('.data-yearly').on('click', function(e){
   e.preventDefault();
   $(this).css('border', 'solid 4px blue');
