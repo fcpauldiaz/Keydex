@@ -31,7 +31,7 @@
                 <a href="{% url 'products_edit_product' product.uuid %}" class="btn-small waves-effect waves-light green btn-block">Edit</a>
               </div>
               <div class="col l1 m2 s13 margin-delete">
-                <a href="#modal1" id="delete-hide" class="red-text waves-effect">Delete</a>
+                <a href="#modal2" id="delete-hide" class="red-text waves-effect">Delete</a>
                 <div id="loader" class="preloader-wrapper small active" style="display: none;">
                   <div class="spinner-layer spinner-red-only">
                     <div class="circle-clipper left">
@@ -101,4 +101,29 @@
     <a href="{% url 'dashboard' %}" class="btn waves-effect waves-light blue-paypal">Go to dashboard</a>
   
 </div>
+ <!-- Modal Structure -->
+<div id="modal2" class="modal container" data-product-id="{{ product.uuid }}">
+    <div class="modal-content">
+      <h4>Delete Product</h4>
+      <p>All keywords and associated indexing information will be deleted</p>
+    </div>
+    <div class="modal-footer">
+      <form method="post" action="{% url 'products_delete_product' product.pk %}">
+        <a href="#" class="modal-action modal-close waves-effect waves-green btn-flat black-text">Cancel</a>
+        {% csrf_token %}
+        <button id="delete" type="submit" value="submit" class="modal-action modal-close waves-effect waves-green btn-flat red-text">Yes, Delete all</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+{% block js %}
+<script>
+  $(document).ready(function() {
+     $('.modal').modal() ;
+     $('#delete').on('click', function (e) {
+       $('#delete-hide').hide();
+       $('#loader').show();
+     });
+   });
+</script>
 {% endblock %}
