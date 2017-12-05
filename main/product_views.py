@@ -144,10 +144,10 @@ def save_product(request):
         
         total_job = len(job.results)
         #delete session variables not longer used
-        delete_session(request)
+        #delete_session(request)
         return JsonResponse({ 'uuid': product.uuid, 'job_id': job.id, 'total_job': total_job})
         #return redirect('products_detail_product', uuid=product.uuid, id=urlsafe_base64_encode(force_bytes(historic_id))) 
-      delete_session(request)
+      #delete_session(request)
       return JsonResponse({'saved': True})
 
     else:
