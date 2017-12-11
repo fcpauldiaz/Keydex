@@ -146,4 +146,5 @@ def cron_parallel():
   users = User.objects.filter(profile__account_confirmed=True)
   tasks = group(cron_job.s(user.id, user.first_name, user.last_name, user.email) for user in users)
   group_task = tasks.apply_async()
+  tasks.forget()
   return group_task
