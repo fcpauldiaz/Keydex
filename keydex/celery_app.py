@@ -95,54 +95,53 @@ def save_product_indexing(result, product):
     entity.save()
   return indexing_rate
 
+
 @app.task(rate_limit=100)
-def cron_job():
-  users = User.objects.filter(profile__account_confirmed=True)
-  for user in users:
-    user_id, user_first_name, user_last_name, user_email =  user.id, user.first_name, user.last_name, user.email
-    asins_to_email = []
-    id_user = user_id
-    products = Product.objects.filter(user=id_user)
-    failed = 'False'
-    for product in products:
-      #print product.id
-      try:
-        periodicity = product.reporting_period.periodicity
-        reporting_percentage = product.reporting_percentage
-        today = datetime.date.today()
-        asin = product.asin
-        if (periodicity == 'monthly'):
-          #check if today is endof month
-          monthly = last_day_month(today)
-          if (monthly == False):
-              continue
-        elif (periodicity == 'weekly'):
-            #check if today is sunday
-            sunday = weekend(today)
-            if (sunday == False):
-                continue
-        elif (periodicity == 'every_two_days'):
-          #check every two days
-          check_two_days = two_days(today)
-          if (check_two_days == False):
-            continue
-        elif (periodicity == '-1'):
-            continue
-        rDict = cron_crawler(product, product.marketplace)
-        rate =  save_product_indexing(rDict, product)
-        if reporting_percentage >= 100:
-            #save in memory for email later
-            asins_to_email.append(asin)
-        elif reporting_percentage >= rate:
-            #save in memory for email later
-            asins_to_email.append(asin)
-      except Exception, e:
-        failed = e.message + ' ' + str(sys.exc_traceback.tb_lineno)
-    if len(asins_to_email) != 0:
-      #print 'Sending email ' + user_email
-      send_email(asins_to_email, user_first_name, user_last_name, 'decanoudv@gmail.com')
-      asins_to_email = []  
-    return failed
+def cron_job(user_id, user_first_name, user_last_name, user_email):
+  return user_id + user_email
+  # asins_to_email = []
+  # id_user = user_id
+  # products = Product.objects.filter(user=id_user)
+  # failed = 'False'
+  # for product in products:
+  #   #print product.id
+  #   try:
+  #     periodicity = product.reporting_period.periodicity
+  #     reporting_percentage = product.reporting_percentage
+  #     today = datetime.date.today()
+  #     asin = product.asin
+  #     if (periodicity == 'monthly'):
+  #       #check if today is endof month
+  #       monthly = last_day_month(today)
+  #       if (monthly == False):
+  #           continue
+  #     elif (periodicity == 'weekly'):
+  #         #check if today is sunday
+  #         sunday = weekend(today)
+  #         if (sunday == False):
+  #             continue
+  #     elif (periodicity == 'every_two_days'):
+  #       #check every two days
+  #       check_two_days = two_days(today)
+  #       if (check_two_days == False):
+  #         continue
+  #     elif (periodicity == '-1'):
+  #         continue
+  #     rDict = cron_crawler(product, product.marketplace)
+  #     rate =  save_product_indexing(rDict, product)
+  #     if reporting_percentage >= 100:
+  #         #save in memory for email later
+  #         asins_to_email.append(asin)
+  #     elif reporting_percentage >= rate:
+  #         #save in memory for email later
+  #         asins_to_email.append(asin)
+  #   except Exception, e:
+  #     failed = e.message + ' ' + str(sys.exc_traceback.tb_lineno)
+  # if len(asins_to_email) != 0:
+  #   #print 'Sending email ' + user_email
+  #   send_email(asins_to_email, user_first_name, user_last_name, 'decanoudv@gmail.com')
+  #   asins_to_email = []  
+  # return failed
 
 @app.task
 def cron_parallel():
