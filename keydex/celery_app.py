@@ -95,7 +95,7 @@ def save_product_indexing(result, product):
     entity.save()
   return indexing_rate
 
-@app.task
+@app.task(rate_limit=100)
 def cron_job(user_id, user_first_name, user_last_name, user_email):
   asins_to_email = []
   id_user = user_id
@@ -137,11 +137,10 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
       failed = e.message + ' ' + str(sys.exc_traceback.tb_lineno)
   if len(asins_to_email) != 0:
     #print 'Sending email ' + user_email
-    send_email(asins_to_email, user_first_name, user_last_name, user_email)
+    send_email(asins_to_email, user_first_name, user_last_name, 'decanoudv@gmail.com')
     asins_to_email = []  
   return failed
 
-@app.task(rate_limit=100)
 def cron_parallel():
   users = User.objects.filter(profile__account_confirmed=True)
   tasks = group(cron_job.s(user.id, user.first_name, user.last_name, user.email) for user in users)
