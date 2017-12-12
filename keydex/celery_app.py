@@ -140,7 +140,8 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
     send_email(asins_to_email, user_first_name, user_last_name, 'decanoudv@gmail.com')
     asins_to_email = []  
   return failed
-
+  
+@app.task
 def cron_parallel():
   users = User.objects.filter(profile__account_confirmed=True)
   tasks = group(cron_job.s(user.id, user.first_name, user.last_name, user.email) for user in users)
