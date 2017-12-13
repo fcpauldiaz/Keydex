@@ -96,7 +96,7 @@ def save_product_indexing(result, product):
   return indexing_rate
 
 
-@app.task(rate_limit=100)
+@app.task(rate_limit=10)
 def cron_job(user_id, user_first_name, user_last_name, user_email):
   asins_to_email = []
   id_user = user_id
