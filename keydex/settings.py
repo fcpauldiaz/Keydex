@@ -146,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'US/Pacific'
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -206,7 +206,7 @@ CELERY_RESULT_BACKEND = env('REDIS_URL')
 #: from unwanted access (see userguide/security.html)
 CELERY_ACCEPT_CONTENT = ['json', 'pickle']
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'US/Pacific'
+CELERY_TIMEZONE = 'UTC'
 #CELERY_IGNORE_RESULT = True
 
 
