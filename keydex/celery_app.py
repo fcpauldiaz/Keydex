@@ -138,7 +138,7 @@ def cron_job(user_id, user_first_name, user_last_name, user_email):
       failed = e.message + ' ' + str(sys.exc_traceback.tb_lineno)
   if len(asins_to_email) != 0:
     #print 'Sending email ' + user_email
-    send_email(asins_to_email, user_first_name, user_last_name, 'decanoudv@gmail.com')
+    send_email(asins_to_email, user_first_name, user_last_name, user_email)
     asins_to_email = []  
   return failed
 
