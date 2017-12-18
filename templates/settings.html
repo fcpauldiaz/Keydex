@@ -46,7 +46,7 @@
         {% for s in subs %}
         {% if s.status == 'active' %}
         <li>
-          <p style="font-size: 18px;">{{s.current_period_end}} - ${{s.plan.amount}} - {{s.plan.name}} 
+          <p style="font-size: 18px;">{{s.current_period_end}} - {{s.plan.name}} 
             <a class="btn waves-effect waves-light btn-small red" href="#modal{{s.id}}">Cancel Subscription
             </a>
           <p>
