@@ -150,7 +150,7 @@
 <div class="row container">
     <div class="input-field col s13 m13 l9 offset-l2" id="payment-form" data-settings-url="{% url 'stripe_check_coupon' %}" data-stripe-key="{{ key }}" data-upgrade-url="{% url 'stripe_upgrade_coupon' %}" data-free-url="{% url 'stripe_charge_free' %}">
       <input placeholder="Coupon" id="coupon" type="text" class="validate" style="text-transform: uppercase">
-      <label class="active" for="coupon" data-error="Invalid coupon" data-success="Valid coupon">Coupon Code</label>
+      <label class="active" for="coupon" data-error="Invalid coupon" data-success="Valid coupon" style="font-size: 22px; color: black;">Coupon Code</label>
     </div>
     <div class="col s13 m13 l9 offset-l2">
       <label>
