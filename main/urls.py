@@ -24,6 +24,11 @@ urlpatterns = [
     main_views.loginUser,
     name='users_login_user'),
   url(
+    r'^user/check$',
+    main_views.check_username,
+    name='users_check_username'
+  ),
+  url(
     r'^user/logout$',
     main_views.logout_view,
     name='users_logout_user'),

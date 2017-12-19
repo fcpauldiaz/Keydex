@@ -5,12 +5,21 @@
     <h2>Sign up</h2>
   </div>
   <div class="row container">
-    <form class="" method="post">
+    <form class="form" method="post" data-username-url="{% url 'users_check_username' %}">
     {% csrf_token %}
     {% for field in user_form %}
       <div class="input-field col s13 l6">
         {{ field }}
-        <label class="active" for="id_{{ field.name }}" data-error="invalid input" data-success="valid">{{ field.label }}</label>
+        {% if field.name == 'username' %}
+          <label class="active" for="id_{{ field.name }}" data-error="username is taken" data-success="username is available">{{ field.label }}</label>
+        {% elif field.name == 'password' %}
+          <label class="active" for="id_{{ field.name }}" data-error="password doesn't match" data-success="valid">{{ field.label }}</label>
+        {% elif field.name == 'password2' %}
+          <label class="active" for="id_{{ field.name }}" data-error="password doesn't match" data-success="valid">{{ field.label }}</label>
+        {% else %}
+           <label class="active" for="id_{{ field.name }}" data-error="invalid input" data-success="valid">{{ field.label }}</label>
+        {% endif %}
+       
         {% for error in field.errors %}
           <span class="error-text" style="postition: absolute; top: 0px;">{{ error }}</span>
         {% endfor %}
@@ -24,4 +33,47 @@
     </div>
   </form>
   </div>
+{% endblock %}
+{% block js %}
+  <script>
+   document.getElementsByName('username')[0].addEventListener('keyup', function(e) {
+    e.preventDefault();
+    var formpay = $('.form');
+    $.ajax({
+        url: formpay.attr("data-username-url"),
+        type : "POST",
+        data: formpay.serialize(),
+        dataType: 'json',
+        success: function (data) {
+          console.log(data);
+          if (data === true) {
+            $('#id_username').removeClass('invalid');
+            $('#id_username').addClass('valid');
+            
+          }
+          else {
+            $('#id_username').removeClass('valid');
+            $('#id_username').addClass('invalid');
+            
+          }
+        },
+        error: function(request, status, error) {
+          console.error('request error');
+        }
+      });
+  });
+  $('#id_password2').on('change', function() {
+    var val1 = $('#id_password2').val();
+    var val2 = $('#id_password1').val();
+    if (val1 !== val2) {
+      $('#id_password2').addClass('invalid');
+      $('#id_password1').addClass('invalid');
+    } else {
+      $('#id_password2').removeClass('invalid');
+      $('#id_password1').removeClass('invalid');
+      $('#id_password2').addClass('valid');
+      $('#id_password1').addClass('valid');
+    }
+  });
+  </script>
 {% endblock %}
