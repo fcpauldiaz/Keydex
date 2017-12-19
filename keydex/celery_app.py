@@ -8,6 +8,7 @@ from main.scraper.crawler import cron_crawler, parallel_crawl
 from django.core.mail import send_mail
 from django.template import loader
 from raven.contrib.celery import register_signal, register_logger_signal
+from django.core.mail import EmailMultiAlternatives
 
 import unicodedata 
 import datetime
@@ -65,7 +66,25 @@ def send_email(asin_list, user_first_name, user_last_name, user_email):
   message = 'Your keywords report'
   subject = "Your Keyword's Report"
   from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
-  send_mail(subject,message,from_email,[email_format],fail_silently=True,html_message=html_message)
+  msg = EmailMultiAlternatives(
+    subject=subject,
+    body=message,
+    from_email=from_email,
+    to=[email_format],
+    reply_to=["Support <support@checkmykeywords.com>"])
+
+  # Include an inline image in the html:
+  
+  html = html_message
+  msg.attach_alternative(html, "text/html")
+
+  # Optional Anymail extensions:
+  msg.metadata = {"user_id": request.user.id }
+  msg.tags = ["schedule_email"]
+  msg.track_clicks = True
+
+  # Send it:
+  msg.send()
 
 def save_product_indexing(result, product):
   indexed = 0.0

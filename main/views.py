@@ -13,6 +13,9 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template import loader
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from django.core.mail import EmailMultiAlternatives
+from anymail.message import attach_inline_image_file
+from django.http import JsonResponse
 
 import uuid
 from pinax.referrals.models import Referral
@@ -246,11 +249,32 @@ def send_confirmation_email(request, user):
   message = 'http://' + request.META['HTTP_HOST'] + '/activate/' + str(uid) + '/' + str(token)
   subject = 'Thank you for signing up! '
   from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
-  send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
+  msg = EmailMultiAlternatives(
+    subject=subject,
+    body=message,
+    from_email=from_email,
+    to=[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],
+    reply_to=["Support <support@checkmykeywords.com>"])
+
+  # Include an inline image in the html:
+
+  html = html_message
+  msg.attach_alternative(html, "text/html")
+
+  # Optional Anymail extensions:
+  msg.metadata = {"user_id": request.user.id }
+  msg.tags = ["confirmation_email"]
+  msg.track_clicks = True
+  # Send it:
+  msg.send()
+
 
 def send_reset_email(request, user):
   current_site = get_current_site(request).domain
-  reset_url = 'http://'+ request.META['HTTP_HOST'] + '/user/change/password/' + str(user.profile.password_reset_token)
+  reset_url = 'https://'+ 'checkmykeywords.com' + '/user/change/password/' + str(user.profile.password_reset_token)
+  message = reset_url
+  subject = 'Reset your password'
+  from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
   html_message = loader.render_to_string(
     'account_reset_email.html',
     {
@@ -258,10 +282,28 @@ def send_reset_email(request, user):
       'reset_url': reset_url
     }
   )
-  message = reset_url
-  subject = 'Reset your password'
-  from_email = 'Check My Keywords <do-not-reply@mail.checkmykeywords.com>'
-  send_mail(subject,message,from_email,[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],fail_silently=True,html_message=html_message)
+  msg = EmailMultiAlternatives(
+    subject=subject,
+    body=message,
+    from_email=from_email,
+    to=[user.first_name + ' ' + user.last_name + '<' + user.email +'>'],
+    reply_to=["Support <support@checkmykeywords.com>"])
+
+  # Include an inline image in the html:
+  
+  html = html_message
+  msg.attach_alternative(html, "text/html")
+
+  # Optional Anymail extensions:
+  msg.metadata = {"user_id": request.user.id }
+  msg.tags = ["reset_email"]
+  msg.track_clicks = True
+
+  # Send it:
+  msg.send()
+ 
+  
+  
 
 
 def account_activation_sent(request):
@@ -285,6 +327,14 @@ def activate(request, uidb64, token):
   else:
     return render(request, 'account_activation_invalid.html')
 
+def check_username(request):
+  if request.is_ajax():
+    username_to_check = request.POST['username']
+    print username_to_check
+    exists = User.objects.filter(username=username_to_check).first()
+    if (exists == None):
+      return JsonResponse(True, safe=False) #valid
+    return JsonResponse(False, safe=False) #not valid
 
 def server_error(request, template_name='500.html'):
     """500 error handler using RequestContext."""
