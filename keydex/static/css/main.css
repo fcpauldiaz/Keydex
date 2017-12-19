@@ -146,7 +146,7 @@ header{position: relative; z-index: 9999;}
 
 .home1{position: fixed;z-index: -1;height: 600px;width:100%;}
 .sec-1{
-	    background:url("../img/home1.jpg") no-repeat fixed;
+	    background:url("../img/home1.png") no-repeat fixed;
     /* height: 500px; */
     width: 100%;
      margin-top:34px;
