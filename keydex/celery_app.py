@@ -79,7 +79,6 @@ def send_email(asin_list, user_first_name, user_last_name, user_email):
   msg.attach_alternative(html, "text/html")
 
   # Optional Anymail extensions:
-  msg.metadata = {"user_id": request.user.id }
   msg.tags = ["schedule_email"]
   msg.track_clicks = True
 
