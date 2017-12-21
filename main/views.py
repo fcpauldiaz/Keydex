@@ -330,7 +330,6 @@ def activate(request, uidb64, token):
 def check_username(request):
   if request.is_ajax():
     username_to_check = request.POST['username']
-    print username_to_check
     exists = User.objects.filter(username=username_to_check).first()
     if (exists == None):
       return JsonResponse(True, safe=False) #valid
