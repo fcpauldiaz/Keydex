@@ -143,18 +143,17 @@ header{position: relative; z-index: 9999;}
 }
 }
 
-
 .home1{position: fixed;z-index: -1;height: 600px;width:100%;}
 .sec-1{
-	background:url("../img/home1.png") no-repeat fixed;
+	background:url("../img/home1-compressed.jpg") no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     width: 100%;
-     margin-top:34px;
-     height:970px;
-     background-size: cover;
-     position: relative;
+    margin-top:34px;
+    height:970px;
+    background-size: cover;
+    position: relative;
 }
 
 .bg11{background:rgba(64, 148, 237, 0.5);height:100%; }
