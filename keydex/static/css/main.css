@@ -145,7 +145,7 @@ header{position: relative; z-index: 9999;}
 
 .home1{position: fixed;z-index: -1;height: 600px;width:100%;}
 .sec-1{
-	background:url("../img/home1-compressed.jpg") no-repeat fixed;
+	background:url("../img/home1-compressed.jpg") no-repeat scroll;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
