@@ -62,7 +62,7 @@
 
     document.getElementById('subscribe').addEventListener('click', function (event) {
       event.preventDefault();
-      ga('send', 'event', 'subscription', 'confirm subscription');
+      
       if (total == undefined && name == 'undefined') {
         Materialize.toast('Please select a plan', 3000);
       }
@@ -88,6 +88,7 @@
           dataType: 'json',
           success: function (data) {
             if (data.valid === true) {
+              ga('send', 'event', 'subscription', 'confirm subscription');
               Materialize.toast('Payment Accepted', 3000);
               $('#loader').hide();
               $('#subscribe').show();
@@ -95,6 +96,7 @@
               window.location = '/';
             }
             else { 
+              ga('send', 'event', 'subscription', 'invalid subscription');
               console.log(data);
               Materialize.toast('Invalid transaction', 3000);
               $('#loader').hide();
