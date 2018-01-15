@@ -62,7 +62,7 @@
 
     document.getElementById('subscribe').addEventListener('click', function (event) {
       event.preventDefault();
-      ga('send', 'event', 'upgrade', 'Upgrade account');
+      ga('send', 'event', 'subscription', 'confirm subscription');
       if (total == undefined && name == 'undefined') {
         Materialize.toast('Please select a plan', 3000);
       }
