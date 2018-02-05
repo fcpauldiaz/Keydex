@@ -8,18 +8,16 @@ import settings
 #on a given marketplace
 def amazon_api(asin, url, marketplace = 'US', retries=0):
   try:
-    if (retries < 2):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+   if (retries < 2):
+      amazon = AmazonAPI(settings.AWS_KEY_1, settings.AWS_SECRET_1, settings.AWS_API_1, region=marketplace)
     if (retries >= 2 and retries < 4):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API2, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_2, settings.AWS_SECRET_2, settings.AWS_API_2, region=marketplace)
     if (retries >= 4 and retries < 6):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API3, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_3, region=marketplace)
     if (retries >= 6 and retries < 8):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API4, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_4, region=marketplace)
     if (retries >= 8 and retries < 10):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API5, region=marketplace)
-    if (retries >= 10):
-      return 'Information Not Available'
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_5, region=marketplace)
     product = amazon.lookup(ItemId=asin)
     model_product = ProductRecord(
       title=product.title,
@@ -42,15 +40,15 @@ def amazon_api(asin, url, marketplace = 'US', retries=0):
 def amazon_product(asin, keyword, marketplace = 'US', retries=0):  
   try:
     if (retries < 2):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_1, settings.AWS_SECRET_1, settings.AWS_API_1, region=marketplace)
     if (retries >= 2 and retries < 4):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API2, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_2, settings.AWS_SECRET_2, settings.AWS_API_2, region=marketplace)
     if (retries >= 4 and retries < 6):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API3, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_3, region=marketplace)
     if (retries >= 6 and retries < 8):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API4, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_4, region=marketplace)
     if (retries >= 8 and retries < 10):
-      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API5, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_5, region=marketplace)
     if (retries >= 10):
       return 'Information Not Available'
 
