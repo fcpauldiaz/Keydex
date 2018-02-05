@@ -6,9 +6,20 @@ import settings
 
 #function to retrieve a product information
 #on a given marketplace
-def amazon_api(asin, url, marketplace = 'US'):
+def amazon_api(asin, url, marketplace = 'US', retries=0):
   try:
-    amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+    if (retries < 2):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API, region=marketplace)
+    if (retries >= 2 and retries < 4):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API2, region=marketplace)
+    if (retries >= 4 and retries < 6):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API3, region=marketplace)
+    if (retries >= 6 and retries < 8):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API4, region=marketplace)
+    if (retries >= 8 and retries < 10):
+      amazon = AmazonAPI(settings.AWS_KEY, settings.AWS_SECRET, settings.AWS_API5, region=marketplace)
+    if (retries >= 10):
+      return 'Information Not Available'
     product = amazon.lookup(ItemId=asin)
     model_product = ProductRecord(
       title=product.title,
@@ -22,6 +33,8 @@ def amazon_api(asin, url, marketplace = 'US'):
     )
     return model_product
   except Exception as e:
+    if (retries <= 10):
+      return amazon_api(asin, url, marketplace, retries+1)
     return None
 
 #function to retrieve if a product is indexing
@@ -52,3 +65,4 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
     if str(e) == 'HTTP Error 503: Service Unavailable':
       return amazon_product(asin, keyword, marketplace, retries+1)
     return False
+
