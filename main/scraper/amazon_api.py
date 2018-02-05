@@ -8,7 +8,7 @@ import settings
 #on a given marketplace
 def amazon_api(asin, url, marketplace = 'US', retries=0):
   try:
-   if (retries < 2):
+    if (retries < 2):
       amazon = AmazonAPI(settings.AWS_KEY_1, settings.AWS_SECRET_1, settings.AWS_API_1, region=marketplace)
     if (retries >= 2 and retries < 4):
       amazon = AmazonAPI(settings.AWS_KEY_2, settings.AWS_SECRET_2, settings.AWS_API_2, region=marketplace)
