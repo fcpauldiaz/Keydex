@@ -16,8 +16,8 @@ num_requests = 0
 def get_proxy():
     # choose a proxy server to use for this request, if we need one
     return {
-        "http": "37.48.118.90:13042",
-        "https": "37.48.118.90:13042"
+        "http": "37.48.118.90:13041",
+        "https": "37.48.118.90:13041"
     }
 
 def make_request_with_proxy(asin, host, keyword, proxy, retries):
