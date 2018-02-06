@@ -35,12 +35,12 @@ def single_crawl(product, marketplace, keyword, retries):
          #returnDictionary[keyword] = 'Information not available'
         product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
         returnDictionary[keyword] = product_indexing
-        log("WARNING: ENTRA API 1")
+        #log("WARNING: ENTRA API 1")
     else:    
         item = page
         product_indexing = get_indexing(item)
         if (product_indexing == None):
-            log("WARNING: ENTRA API 2")
+            #log("WARNING: ENTRA API 2")
             product_indexing = amazon_product(product.asin, keyword, marketplace.country_code)
         returnDictionary[keyword] = product_indexing
     return returnDictionary
