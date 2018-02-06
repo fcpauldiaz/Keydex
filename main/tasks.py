@@ -17,14 +17,14 @@ def index_data(asin, country_host, country_code, keyword, retries):
        return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'
       product_indexing = amazon_product(asin, keyword, country_code)
-      log("WARNING: ENTRA API 1 {}", (product_indexing))
+      #log("WARNING: ENTRA API 1 {}", (product_indexing))
       returnDictionary[keyword] = product_indexing
   else:    
       item = page
       product_indexing = get_indexing(item)
       if (product_indexing == None):
         product_indexing = amazon_product(asin, keyword, country_code)
-        log("WARNING: ENTRA API 2 {}", (product_indexing))
+        #log("WARNING: ENTRA API 2 {}", (product_indexing))
       returnDictionary[keyword] = product_indexing
     #print returnDictionary
   return returnDictionary
