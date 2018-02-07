@@ -29,6 +29,8 @@ def amazon_api(asin, url, marketplace = 'US', retries=0):
       crawl_time=datetime.now(),
       asin=asin.upper()
     )
+    if (product.asin != asin):
+      return None
     return model_product
   except Exception as e:
     if (retries <= 10):
@@ -63,4 +65,6 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
     if str(e) == 'HTTP Error 503: Service Unavailable':
       return amazon_product(asin, keyword, marketplace, retries+1)
     return False
+
+#print amazon_product('B00OQVZDJM', 'kindle')
 
