@@ -217,8 +217,9 @@ def change_password(request, token):
       form = ChangePasswordForm(request.POST)
       messages.error(request, 'Password does not match')
       return render(request, 'change_password.html', { 'form': form })
-    profile = Profile.objects.get(password_reset_token=token)
+    profile = Profile.objects.filter(password_reset_token=token).first()
     if profile == None:
+      messages.error(request, 'Token not found, try again.')
       # token not valid
       return redirect('users_reset_password') 
     user = User.objects.get(profile=profile)
