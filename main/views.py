@@ -166,7 +166,7 @@ def reset_password(request):
       user = User.objects.filter(username = username_or_email) | User.objects.filter(email = username_or_email)
       user = user[0]
     except:
-      errors=form.add_error("", "User " + request.POST['username_or_email'].lower().strip() + " not found")
+      errors=form.add_error("", "User not found")
       data = { 'form': form }
       return render(request, 'reset_password.html', data) 
 
