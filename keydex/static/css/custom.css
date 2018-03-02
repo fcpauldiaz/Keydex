@@ -1,0 +1,171 @@
+/*Custom*/
+a:hover,
+a:focus,
+a:active{
+    text-decoration: none;
+}
+.fixed-top{ max-width: 100%; width: auto; }
+.f-h img {
+    width: 100%;
+}
+.sec-1{
+    background-attachment: fixed;
+    background-position: top;
+}
+.cl1 {
+    margin-top: 75px;
+    margin-left: 0;
+    z-index: 1;
+}
+.carousel-item img{ width: 100%; }
+.pc{ margin-top: 0; }
+#nav a{ color: #fff; }
+
+#nav li.active a, #nav li:hover a{ color: #333; }
+
+.p-table {
+    border-radius: 5px;
+    overflow: hidden;
+    padding-bottom: 30px;
+}
+.p-table header{ color: inherit; }
+.p-table a{
+    display: inline-block;
+    min-width: 80%;
+}
+.pc .col-t {
+    width: 300px;
+    display: inline-block;
+    margin: 50px 10px 0 10px;
+}
+.pc .col-t:nth-child(3){
+    position: relative;
+    top: -15px;
+}
+.pc .col-t:nth-child(3) .p-table{
+    background: #61e0db;
+    background: -moz-linear-gradient(-45deg, #61e0db 0%, #3ca4ea 100%);
+    background: -webkit-linear-gradient(-45deg, #61e0db 0%,#3ca4ea 100%);
+    background: linear-gradient(135deg, #61e0db 0%,#3ca4ea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#61e0db', endColorstr='#3ca4ea',GradientType=1 );
+    color: #FFF;
+}
+.p-table header, .p-t-f{
+    background: inherit;
+    color: inherit;
+}
+.p-t-f{
+    border: 1px solid #222;
+    border-radius: 30px;
+    background: #222;
+    color: #fff;
+    letter-spacing: 1px;
+    padding: 10px 30px;
+    text-align: center;
+    margin: 30px auto 0;
+    -webkit-transition: all .5s;
+    transition: all .5s;
+}
+.pc .col-t:nth-child(3) .p-table .p-t-f{
+    background: #FFF;
+    border-color: #FFF;
+    color: #222;
+}
+.pc .col-t:nth-child(3) .p-table .p-t-f:hover{
+    border: 1px solid #222;
+    background: #222;
+    color: #FFF;
+}
+.p-t-b li{
+    color: inherit;
+    padding: 2px 0;
+    font-size: 14px;
+    line-height: 3em;
+    border: none;    
+}
+.p-table header{
+    border-bottom: 1px solid rgba(155,155,155,0.4);
+    padding: 30px 0;
+}
+.p-t-f:hover{
+    background: rgb(50,225,218);
+    border-color: rgb(50,225,218);
+}
+.youtube-link{ display: inline-block; position: relative; z-index: 3; }
+.youtube-link img{  display: inline-block; max-width: 125px; }
+
+#how{
+    background-image: url('../img/video-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+#how:after{
+    display: block;
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1;
+}
+#how h4{ position: relative;z-index: 2; color: #FFF; }
+#nav li.active a, #nav li:hover a{ color: #222 !important }
+
+#try-it-out .non{ display: block; }
+
+@media all and (max-width: 1200px) {
+	#nav li{ width: 110px; }
+	.f-h img{ min-height: 77px; }
+}
+
+@media all and (max-width: 979px) {
+	.navbar-light .navbar-toggler{ background: #fff; }
+	#nav li{ width: unset; top: 0; background: none; border: none;}
+	.fixed-top{ padding: 0; }
+	.navbar-brand {
+    	margin-left: 20px;
+    	margin-top: 10px;
+	}
+	.navbar-light .navbar-toggler {
+	    background: #fff;
+	    right: 20px;
+	    top: 10px;
+	    position: relative;
+	}
+	.mr-auto{
+		background: rgba(97,224,220,1);
+		background: -moz-linear-gradient(left, rgba(97,224,220,1) 0%, rgba(60,164,234,1) 100%);
+		background: -webkit-gradient(left top, right top, color-stop(0%, rgba(97,224,220,1)), color-stop(100%, rgba(60,164,234,1)));
+		background: -webkit-linear-gradient(left, rgba(97,224,220,1) 0%, rgba(60,164,234,1) 100%);
+		background: -o-linear-gradient(left, rgba(97,224,220,1) 0%, rgba(60,164,234,1) 100%);
+		background: -ms-linear-gradient(left, rgba(97,224,220,1) 0%, rgba(60,164,234,1) 100%);
+		background: linear-gradient(to right, rgba(97,224,220,1) 0%, rgba(60,164,234,1) 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#61e0dc', endColorstr='#3ca4ea', GradientType=1 );
+	}
+	#nav3{ display: none; }
+	.pc .col-t{ 
+		width: 50%;
+	    margin: 20px auto 30px;
+	    display: block;}
+	.pc .col-t:nth-child(3){
+		top: 0
+	}
+    #nav2 li{ display: block; }
+    .f-i{ margin-top: 0;  }
+}
+
+@media all and (max-width: 767px) {
+	
+}
+
+@media all and (max-width: 479px) {}
+@media screen and (max-width: 650px){}
+    #nav2 {
+        display: block;
+        margin-top: 50px;
+    }
+}
