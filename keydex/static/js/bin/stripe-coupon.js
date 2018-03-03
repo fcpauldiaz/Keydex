@@ -17,6 +17,7 @@ $(document).ready(function() {
   }
   document.getElementById('coupon').addEventListener('keyup', function(e) {
     e.preventDefault();
+    var value = $(this).val().toUpperCase();
     $('#coupon').removeClass('valid');
     $('#coupon').removeClass('invalid');
     if (selected === undefined) {
@@ -29,7 +30,7 @@ $(document).ready(function() {
         type : "POST",
         data: { 
           csrfmiddlewaretoken : getCookie('csrftoken'), 
-          coupon: $(this).val().toUpperCase(),
+          coupon: value,
           plan: selected
         },
         dataType: 'json',

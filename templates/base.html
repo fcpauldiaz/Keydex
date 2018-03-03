@@ -32,7 +32,7 @@
 </head>
 <body>
   {% include 'navbar.html' %}
-  {% if request.get_full_path == "/dashboard/" %}
+  {% if request.get_full_path == "/dashboard/" or "product" in request.get_full_path or "upgrade" in request.get_full_path or "settings" in request.get_full_path %}
   <div class="no-pad-bot" id="index-banner">
     
   {% else %}

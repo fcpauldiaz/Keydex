@@ -2,9 +2,11 @@
 {% block title %} Settings {% endblock %}
 {% load filter_extras %}
 {% block content %}
-  <div class="row container">
-    <h2>Settings</h2>
-  </div>
+<div class="page-title-wrap">
+  <div class="container">
+      <h1 class="page-title">Settings</h1>
+  </div>  
+</div>
   <div class="row container">
     <form class="" method="post" id="payment-form" data-settings-url="{% url 'dashboard_settings' %}">
     {% csrf_token %}

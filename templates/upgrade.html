@@ -5,149 +5,77 @@
 {% load filter_extras %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/pricing.css' %}">
 {% endblock %}
-<div class="center center-justify container">
-  
-    <h2 class="inline">Click to select your plan </h2> 
-  
+ <div class="page-title-wrap">
+    <div class="container">
+        <h1 class="page-title">Plan Upgrade</h1>
+    </div>
 </div>
-<div class="row container">
-   <div class="show-on-small hide-on-med-and-up">
-        <select id="mobile-stripe" class="browser-default">
-          <option value="" disabled>Choose your Plan</option>
-          <option value="Monthly" selected>Monthly ($10) </option>
-          <option value="Yearly">Yearly ($100)</option>
-        </select>
-      </div>
-  <div class="col l4 offset-l2 s13 offset-s1 hide-on-small-only">
-    <div id="DIV_1_upgrade" class="data-monthly">
-      <div id="DIV_3">
-        <div id="DIV_4">
-          <div id="DIV_5">
-          </div>
-          <div id="DIV_6">
-            <div id="DIV_7">
-              <h2 id="H2_8">
-                <span id="SPAN_9"><span id="SPAN_10">$10 Monthly</span></span>
-              </h2>
-            </div>
-            <div id="DIV_11">
-              <h6 id="H6_12">
-                <span id="SPAN_13">Plan</span>
-              </h6>
-            </div>
-          </div>
-        </div>
-        <div id="DIV_14">
-          <h6 id="H6_15">
-            <span id="SPAN_16">Unlimited ASINs</span>
-          </h6>
-          <h6 id="H6_17">
-            <span id="SPAN_18"><span id="SPAN_19"></span></span>
-          </h6>
-          <h6 id="H6_20">
-            <span id="SPAN_21">Daily listing notifications</span>
-          </h6>
-          <h6 id="H6_22">
-            <span id="SPAN_23"><span id="SPAN_24"></span></span>
-          </h6>
-          <h6 id="H6_25">
-            <span id="SPAN_26">Free setup guidance</span>
-          </h6>
-          <h6 id="H6_27">
-            <span id="SPAN_28"><span id="SPAN_29"></span></span>
-          </h6>
-          <h6 id="H6_30">
-            <span id="SPAN_31">Eligible for promotions</span>
-          </h6>
-          <h6 id="H6_32">
-            <span id="SPAN_33"><span id="SPAN_34"></span></span>
-          </h6>
-          <h6 id="H6_35">
-            <span id="SPAN_36">No expiration period</span>
-          </h6>
-        </div>
-        <div id="DIV_37">
-          <div id="DIV_38">
-          </div>
-        </div>
-        <div id="DIV_39">
-          <div id="DIV_40">
-          </div>
-        </div>
-        <div id="DIV_41">
-          <div id="DIV_42">
-          </div>
-        </div>
-      </div>
+<div class="section no-pad-bot container plan-upgrade" id="index-banner">
+      
+  <div class="row">
+    <div class="col l12 m12 s12 center">
+      <h4>Click to select your plan </h4>
+    </div>
   </div>
-  </div>
-  <div class="col l4 s2 hide-on-small-only">
-      <div id="pricing_DIV_1_upgrade" class="data-yearly">
-              <div id="pricing_DIV_3">
-                <div id="pricing_DIV_4">
-                  <div id="pricing_DIV_5">
-                  </div>
-                  <div id="pricing_DIV_6">
-                    <div id="pricing_DIV_7">
-                      <h2 id="pricing_H2_8">
-                        <span id="pricing_SPAN_9"><span id="pricing_SPAN_10">$100 Anually</span></span>
-                      </h2>
+  <div class="row">
+    <div class="show-on-small hide-on-med-and-up">
+      <select id="mobile-stripe" class="browser-default">
+        <option value="" disabled>Choose your Plan</option>
+        <option value="Monthly" selected>Monthly ($10) </option>
+        <option value="Yearly">Yearly ($100)</option>
+      </select>
+    </div>
+    <div class="col l4 offset-l2 m6 hide-on-small-only">
+        <div id="DIV_1_upgrade" class="data-monthly">
+            <div class="plan-table z-depth-1">
+                <header>
+                    <h2 class="font_2">
+                    <span style="font-size:45px;"><span>$10</span></span><span style="font-size: 18px">/m</span>
+                    </h2>
+                </header>
+                <div class="p-t-b">
+                    <ul>
+                        <li>Unlimited ASINs</li>
+                        <li>Daily listing notifications</li>
+                        <li>Free setup guidance</li>
+                        <li>Eligible for promotions</li>
+                        <li>No expiration period</li>
+                    </ul>
+                </div>
+                <div class="plan-select">
+                    <span>Select Plan</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col l4 m6 hide-on-small-only">
+        <div id="pricing_DIV_1_upgrade" class="data-yearly" style="border: none;">
+            <div id="pricing_DIV_3">           
+                <div class="plan-table z-depth-1">
+                    <header>
+                        <h2 class="font_2">
+                        <span style="font-size:45px;"><span>$100</span></span><span style="font-size: 18px">/yr</span>
+                        </h2>
+                    </header>
+                    <div class="p-t-b">
+                        <ul>
+                            <li>Unlimited ASINs</li>
+                            <li>Daily listing notifications</li>
+                            <li>​Free setup guidance</li>
+                            <li>Eligible for promotions</li>
+                            <li>No expiration period</li>
+                        </ul>
                     </div>
-                    <div id="pricing_DIV_11">
-                      <h6 id="pricing_H6_12">
-                        <span id="pricing_SPAN_13">Plan</span>
-                      </h6>
+                    <div class="plan-select">
+                        <span>Select Plan</span>
                     </div>
-                  </div>
                 </div>
-                <div id="pricing_DIV_14">
-                  <h6 id="pricing_H6_15">
-                    <span id="pricing_SPAN_16">Unlimited ASINs</span>
-                  </h6>
-                  <h6 id="pricing_H6_17">
-                    <span id="pricing_SPAN_18"><span id="pricing_SPAN_19">​</span></span>
-                  </h6>
-                  <h6 id="pricing_H6_20">
-                    <span id="pricing_SPAN_21">Daily listing notifications</span>
-                  </h6>
-                  <h6 id="pricing_H6_22">
-                    <span id="pricing_SPAN_23"><span id="pricing_SPAN_24">​</span></span>
-                  </h6>
-                  <h6 id="pricing_H6_25">
-                    <span id="pricing_SPAN_26">Free setup guidance</span>
-                  </h6>
-                  <h6 id="pricing_H6_27">
-                    <span id="pricing_SPAN_28"><span id="pricing_SPAN_29">​</span></span>
-                  </h6>
-                  <h6 id="pricing_H6_30">
-                    <span id="pricing_SPAN_31">Elegible for promotions</span>
-                  </h6>
-                  <h6 id="pricing_H6_32">
-                    <span id="pricing_SPAN_33"><span id="pricing_SPAN_34">​</span></span>
-                  </h6>
-                  <h6 id="pricing_H6_35">
-                    <span id="pricing_SPAN_36">Save Anually</span>
-                  </h6>
-                </div>
-                <div id="pricing_DIV_37">
-                  <div id="pricing_DIV_38">
-                  </div>
-                </div>
-                <div id="pricing_DIV_39">
-                  <div id="pricing_DIV_40">
-                  </div>
-                </div>
-                <div id="pricing_DIV_41">
-                  <div id="pricing_DIV_42">
-                  </div>
-                </div>
-              </div>
             </div>
-  </div>
+        </div>
+    </div>
 </div>
-<div class="row container">
+  <div class="row coupon-row">
     <div class="input-field col s13 m13 l9 offset-l2" id="payment-form" data-settings-url="{% url 'stripe_check_coupon' %}" data-stripe-key="{{ key }}" data-upgrade-url="{% url 'stripe_upgrade_coupon' %}" data-free-url="{% url 'stripe_charge_free' %}">
       <input placeholder="Coupon" id="coupon" type="text" class="validate" style="text-transform: uppercase">
       <label class="active" for="coupon" data-error="Invalid coupon" data-success="Valid coupon" style="font-size: 22px; color: black;">Coupon Code</label>
@@ -172,6 +100,7 @@
       </div>
     </div>
   </div>
+</div>
 <br>
 <br>
 {% endblock %}

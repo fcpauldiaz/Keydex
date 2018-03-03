@@ -97,7 +97,6 @@
             }
             else { 
               ga('send', 'event', 'subscription', 'invalid subscription');
-              console.log(data);
               Materialize.toast('Invalid transaction', 3000);
               $('#loader').hide();
               $('#subscribe').show();
