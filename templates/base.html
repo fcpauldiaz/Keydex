@@ -16,21 +16,28 @@
   <title>Check Keywords | {% block title %} {% endblock %}</title>
   {% load static %}
   <link rel="shortcut icon" type="image/png" href="{% static 'img/quack.ico' %}"/>
-
+  
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/materialize-social.css' %}">
+
   {% load sass_tags %}
   {% load static %}
   {% load raven %}
 
   <link href="{% sass_src 'sass/materialize.scss' %}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{% static 'css/custom_base.css' %}">
   {% block css %}
   {% endblock %}
 </head>
 <body>
   {% include 'navbar.html' %}
-  <div class="section no-pad-bot" id="index-banner">
+  {% if request.get_full_path == "/dashboard/" %}
+  <div class="no-pad-bot" id="index-banner">
+    
+  {% else %}
+  <div class="section no-pad-bot container form-section" id="index-banner">
+  {% endif %}
     {% if messages %}
       <ul class="messages">
           {% for message in messages %}

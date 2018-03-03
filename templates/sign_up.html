@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Sign Up {% endblock %}
 {% block content %}
-  <div class="row container">
-    <h2>Sign up</h2>
-  </div>
-  <div class="row container">
-    <form class="form" id="signup-form" method="post" data-username-url="{% url 'users_check_username' %}">
+   <div class="row">
+      <div class="col l5 offset-l4 s12 m6 offset-m3 card">
+        <div class="card-content">
+          <h5 class="center form-title"><i class="material-icons" style="color:white;">perm_identity</i> Sign up</h5>
+          <form  id="signup-form" method="post" data-username-url="{% url 'users_check_username' %}">
     {% csrf_token %}
     {% for field in user_form %}
-      <div class="input-field col s13 l6">
+      <div class="input-field">
         {{ field }}
         {% if field.name == 'username' %}
           <label class="active" for="id_{{ field.name }}" data-error="username is taken" data-success="username is available">{{ field.label }}</label>
@@ -25,14 +25,14 @@
         {% endfor %}
       </div>
     {% endfor %}
-    <div class="row">
-      <div class="col l12 s12 m12 center">
+    <div class="input-field">
         <button onClick="ga('send', 'event', 'account', 'Create account')" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Sign Up
         </button>
-      </div>
     </div>
   </form>
   </div>
+</div>
+</div>
 {% endblock %}
 {% block js %}
   <script>

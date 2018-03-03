@@ -7,86 +7,89 @@
 {% block css %}
   <link rel="stylesheet" href="{% static 'css/pricing.css' %}">
 {% endblock %}
-<div class="row container">
-  <div class="col l7 s12">
-    <h2 class="inline">Welcome back, </h2> 
-    <h2 class="blue-paypal-text inline"> {{request.user.first_name}}</h2>
+<div class="page-title-wrap">
+    <div class="container">
+        <h1 class="page-title">Dashboard</h1>
+    </div>  
   </div>
-  <div class="col l3 offset-l3 s12" style="line-height: 7">
-    {% if product_count >= 5 and valid == False %}
-    <a href="{% url 'dashboard_upgrade' %}" class="btn-large waves-light waves-effect orange btn-block btn right-move">
-    Upgrade Account
-    </a>
-    {% else %}
-       <a href="{% url 'products_add_product' %}" class="btn-large waves-light waves-effect green btn-block btn right-move">
-      + Add product
-    </a>
-    {% endif %}
- 
+<div class="container dashboard-intro">
+  <div class="row card-panel">
+   <div class="col l4 m4 s12">
+      <h6>Welcome back, </h6>
+      <h5 class="blue-paypal-text"> {{request.user.first_name}} {{request.user.last_name}}</h5>
   </div>
-</div>
-<div class="row container">
-  <div class="col l12">
+  <div class="col l5 m5 s12">
     {% if product_count == 1 and valid == False %}
-    <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp product for indexation</h5>
-
-    <h5><a href="{% url 'dashboard_upgrade' %}" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
+    <h6 class="inline">You are currently checking <span class="count"> {{product_count}}</span> product for indexation</h6>
     
-    <h5>You have 4 products left on your free trial.</h5>
+    <h6>You have 4 products left on your free trial.</h6>
+
+    <h6><a href="{% url 'dashboard_upgrade' %}" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h6>
     {% elif product_count == 1 and valid == True %}
 
-    <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp product for indexation</h5>
+    <h6 class="inline">You are currently checking <span class="count"> {{product_count}}</span> product for indexation</h6>
 
     {% elif product_count > 1 and product_count < 5 and valid == False %}
 
-     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
-     <div></div>
+     <h6 class="inline">You are currently checking<span class="count"> {{product_count}}</span> products for indexation</h6>
     {% with 5|substract:product_count as remaining %} 
-    <h5 class="inline">You have</h5>
-    <h5 class="blue-paypal-text inline"> &nbsp{{ remaining }}&nbsp </h5>
-    <h5 class="inline">product{{ remaining|pluralize:",s" }} left on your free trial.</h5>
-    <h5><a href="{% url 'dashboard_upgrade' %}" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
+    <h6 class="inline">You have</h6>
+    <h6 class="blue-paypal-text inline"> &nbsp{{ remaining }}&nbsp </h6>
+    <h6 class="inline">product{{ remaining|pluralize:",s" }} left on your free trial.</h6>
+    <h6><a href="{% url 'dashboard_upgrade' %}" class="">Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h6>
     {% endwith %}
     
     {% elif product_count > 1 and product_count < 5 and valid == True %}
 
-     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
-     <div></div>
+    <h6 class="inline">You are currently checking<span class="count"> {{product_count}}</span> products for indexation</h6>
 
     {% elif product_count >= 5 and valid == False %}
 
-     <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
-    <h5> You don't have any more left on your free trial.  <a href="{% url 'dashboard_upgrade' %}" class="">
-    Upgrade here </a>to a premium plan for just $10/month and receive unlimited products!</h5>
+     <h6 class="inline">You are currently checking <span class="count"> {{product_count}} </span> products for indexation</h6>
+    <h6> You don't have any more left on your free trial. 
     {% elif product_count >= 5 and valid == True %}
-    <h5 class="inline">You are currently checking </h5><h5 class="blue-paypal-text inline">&nbsp {{product_count}}</h5><h5 class="inline"> &nbsp products for indexation</h5>
+    <h6 class="inline">You are currently checking </h6><h6 class="blue-paypal-text inline">&nbsp {{product_count}}</h6><h6 class="inline"> &nbsp products for indexation</h6>
     {% endif %}
-  </div>
-  </div>
-<div class="row container">
-  <div class="col l13">
     <input type="text" id="search-criteria" onkeyup="search()" placeholder="Search by name or ASIN">
+    </div>  
+    <div class="col l3 m3 s12 offset-l1 offset-m1">
+      <div class="add-product">
+      {% if product_count >= 5 and valid == False %}
+      <a href="{% url 'dashboard_upgrade' %}" class="btn-large waves-light waves-effect orange btn-block btn right-move">
+      Upgrade Account
+      </a>
+      {% else %}
+         <a href="{% url 'products_add_product' %}" class="btn-large waves-light waves-effect green btn-block btn right-move">
+        + Add product
+      </a>
+      {% endif %}
+   
+      </div>
+    </div>
   </div>
 </div>
-<div class="row container">
+<div class="products-wrapper">
+  <div class="container">
+      <div class="row products-title">
+          <h3>Products</h3>
+      </div>
+  <div class="row products">
   {% for product in products %}
-  <div id="{{product.pk}}" class="card card-hover col l3 m6 s12 cursor" onclick="window.document.location='/product/overview/{{product.uuid}}'">
-    <div class="card-image waves-effect waves-block waves-light">
+  <div id="{{product.pk}}" class="product col s12 m6 l3 cursor" onclick="window.document.location='/product/overview/{{product.uuid}}'">
+    <div class="product-image waves-effect waves-block waves-light">
       <a href="{% url 'products_overview_product' product.uuid %}">
       <img class="responsive-img"  src="{{product.primary_img}}">
       </a>
     </div>
-    <div class="card-content row">
-      <div class="card-title justify">
+    <div class="product-content">
+      <div class="card-title">
         <a href="{% url 'products_overview_product' product.uuid %}">
-        <span data-product="{{product.pk}}" class="grey-text text-darken-4 searchable">{{product.product_name}}</span>  
+        <span data-product="{{product.pk}}" class="searchable">{{product.product_name}}</span>  
         </a>
       </div>
-      <div class="col l13 m13 s13">
-        <span data-product="{{product.pk}}" class="card-subtitle center grey-text disabled-text-text searchable">ASIN: {{product.asin}}</span>
-      </div>
-      <div class="col l13 m13 s13">
-       <p class="button-card btn-flat blue-paypal white-text btn-block-limited float">Indexing: {{product.indexing}}</p>
+      <div class="product-indexing center">
+        <span data-product="{{product.pk}}" class="center searchable product-asin">ASIN: {{product.asin}}</span>
+         <p class="btn-flat blue-paypal white-text">Indexing: {{product.indexing}}</p>
       </div>
     </div>
   </div>
@@ -94,6 +97,8 @@
   {% if products|length == 0 %}
   <br>
   {% endif %}
+</div>
+</div>
 </div>
 <!-- Modal Structure -->
 <div id="modal1" class="modal">
