@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Step 1 {% endblock %}
 {% block content %}
-<div class="row center container">
-  <div class="col l6 offset-l4 s13 m8 offset-m2" style="">
+<div class="page-title-wrap">
+    <div class="container">
+        <h1 class="page-title">Add Product</h1>
+    </div>
+</div>
+<div class="section no-pad-bot container add-product" id="index-banner">
+<div class="row center">
+  <div class="col l6 offset-l3 m9 offset-m2 s12">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
          <li class="step active">
@@ -19,28 +25,29 @@
     </div>
   </div>
 </div>
-<div class="row container">
-  <div class="col l10 offset-l2 s13 m10 offset-m2" style="position: relative; left: -39px;">
-    <h3 class="header center-align main-grey-text">Choose Amazon Marketplace & ASIN</h3>
+<div class="row">
+  <div class="col l6 offset-l3 m8 offset-m2 s12">
+      <h4 class="header center-align main-grey-text">Choose Amazon Marketplace &amp; ASIN</h4>
   </div>
 </div>
 
 <div class="row">
-  <div class="col s13 l13 m13">
-    <form class="col center s13 l6 offset-l4 offset-s2" method="post" style="position: relative; left: -60px;">
+  <div class="col l6 offset-l3 m8 offset-m2 s12">    
+    <form class="center" method="post">
      {% csrf_token %}
-      <div class="input-field col s13 m13 l13">
+      <div class="input-field">
       {{form.select_choices}}
       <label style="margin-top: -10px;">MarketPlace</label>
     </div>
-      <div class="input-field col s13 l13 ">
-       <label style="margin-top: 12px; font-size: 1.2rem;" class="label-pointer" style="font-size: 1.2rem;">Your product's asin <a class="tooltipped" data-tooltip="Amazon Standard Identification Numbers (ASINs) are unique blocks of 10 letters and/or numbers that identify items. " data-position="bottom" data-delay="10">What's an asin?</a></label><br>
+    <div class="input-field">
+       <label style="margin-top: 12px; font-size: 1.2rem; height: 10px;" class="label-pointer">Your product's asin <a class="tooltipped" data-tooltip="Amazon Standard Identification Numbers (ASINs) are unique blocks of 10 letters and/or numbers that identify items. " data-position="bottom" data-delay="10">What's an asin?</a></label><br>
         {{ form.asin }}
       </div>
       <div class="row">
-      <div class="col l13 s13" style="position: relative; left: -12px;">
-        <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Next
-        </button>
+        <div class="col l12 s12">
+            <button class="btn waves-effect waves-light blue-paypal btn-large" type="submit" name="action">Next
+            </button>
+          </div>
       </div>
     </div>
       {% if form.errors %}
@@ -60,6 +67,7 @@
     </form>
      <br>
   </div>
+</div>
 </div>
 {% endblock %}
 {% load static %}

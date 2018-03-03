@@ -1,8 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Step 3 {% endblock %}
 {% block content %}
-<div class="row center">
-  <div class="col l6 offset-l4 s13 m8 offset-m2">
+ <div class="page-title-wrap">
+    <div class="container">
+        <h1 class="page-title">Save Product</h1>
+    </div>
+</div>
+<div class="section no-pad-bot add-product container" id="index-banner">
+  <div class="row center">
+   <div class="col l6 offset-l3 m8 offset-m2 s12">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
           <li class="step">
@@ -19,14 +25,15 @@
     </div>
   </div>
 </div>
-<div class="row container">
-  <h3 class="header center main-grey-text">Schedule or run manual report</h3>
-</div>
-<div class="row">
-  <div class="col offset-s2 s10 hide-run">
-    <h6 class="main-grey-text">How often do you want to check your keywords for indexation? (UTC timezone)</h6>
+  <div class="row">
+    <div class="col l6 offset-l3 m8 offset-m2 s12">
+        <h3 class="header center main-grey-text">Schedule or run manual report</h3>
+    </div>
   </div>
-  <form id="form" class="col center s8 offset-s2" method="POST" data-save-url="{% url 'products_save_product' %}" data-poll-url="{% url 'poll_state'%}">
+ <div class="row">
+    <div class="col l6 offset-l3 m8 offset-m2 s12 hide-run">
+    <h6 class="main-grey-text">How often do you want to check your keywords for indexation? (UTC timezone)</h6>
+    <form id="form" class="" method="POST" data-save-url="{% url 'products_save_product' %}" data-poll-url="{% url 'poll_state'%}">
     {% csrf_token %}
       {% for choice in form.choices_group1 %}
       <p>
@@ -52,15 +59,17 @@
         </p>
         {% endfor %}
       </div>
-    <div class="row">
-      <div class="col offset-l6">
-      <a onClick="ga('send', 'event', 'product', 'Save Product')" id="save-button" class="btn waves-effect waves-light blue-paypal button-padding">Save Product
-      </a>
-      <input type="checkbox" class="filled-in hide-run" id="filled-in-box" checked="checked" />
-      <label class="hide-run" for="filled-in-box">Run now</label>
-      </div>  
+    <div class="row step-3-submit">
+      <div class="col l12 m12 s12 center">
+        <input type="checkbox" class="filled-in hide-run" id="filled-in-box" checked="checked" />
+        <label class="hide-run" for="filled-in-box">Run now</label>
+        
+        <div class="step-3-submit-button">
+          <a onClick="ga('send', 'event', 'product', 'Save Product')" id="save-button" class="btn waves-effect waves-light blue-paypal button-padding">Save Product
+          </a>
+        </div>
+      </div>
     </div>
-    <p>
       {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -86,6 +95,7 @@
       </div>
     </div>
   </div>
+</div>
 {% endblock %}
 {% load static %}
 {% block css %}
