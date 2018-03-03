@@ -2,7 +2,7 @@
 {% block title %} Step 3 Edit{% endblock %}
 {% block content %}
 <div class="row">
-  <div class="col l6 offset-l4 s13 m8 offset-m2">
+  <div class="col l6 offset-l3 m9 offset-m2 s12">
     <div class="card-content">
       <ul class="stepper horizontal" id="horizontal">
          <li class="step active">
@@ -49,13 +49,18 @@
         </p>
         {% endfor %}
       </div>
-      <div class="row">
-        <div class="col center offset-l4 offset-m1">
-          <a href="{% url 'products_edit_product' product.uuid %}" class="btn waves-light waves-effect green btn-block">Go Back</a>
+      <div class="row center">
+        <div class="col offset-l2 l2 m12 s12">
+          <a href="{% url 'products_edit_product' product.uuid %}" class="btn waves-light waves-effect green btn-block">Back</a>
+        </div>
+        <div class="col l3  m4 offset-m4 s12">
           <button type="submit" value="update" class="btn waves-effect waves-light blue-paypal btn-block">Update</button>
+        </div>
+        <div class="col l3 m12 s12">
           <a href="{% url 'dashboard_product_indexing' product.uuid %}" class="btn waves-light waves-effect green btn-block">Check now</a>
         </div>
       </div>
+    </div>
       
       {% if form.errors %}
         {% for field in form %}

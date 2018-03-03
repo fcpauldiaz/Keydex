@@ -2,65 +2,80 @@
 {% block title %} Step 2 {% endblock %}
 {% load filter_extras %}
 {% block content %}
-<div class="row container">
-  <div class="col l6 offset-l4 s13 m8 offset-m2">
-    <div class="card-content">
-      <ul class="stepper horizontal" id="horizontal">
-        <li class="step">
-            <!--data-step-label="To step-title!" -->
-            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 1</span></div>
-         </li>
-         <li class="step active">
-            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 2</span></div>
-         </li>
-         <li class="step">
-            <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 3</span></div>
-         </li>
-      </ul>
+ <div class="page-title-wrap">
+    <div class="container">
+        <h1 class="page-title">Product Edit</h1>
+    </div>
+</div>
+<div class="section no-pad-bot container add-product" id="index-banner">
+  <div class="row">
+      <div class="col l6 offset-l3 m8 offset-m2 s12">
+        <div class="card-content">
+        <ul class="stepper horizontal" id="horizontal">
+          <li class="step">
+              <!--data-step-label="To step-title!" -->
+              <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 1</span></div>
+           </li>
+           <li class="step active">
+              <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 2</span></div>
+           </li>
+           <li class="step">
+              <div class="step-title number-wrap waves-dark"><span class="hide-on-small-only">Step 3</span></div>
+           </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
-<div class="row container">
-  <div class="col s12 l3 m4 offset-s2 offset-l1 offset-m3">
-      <div class="card-image">
-        <img class="responsive-img" src="{{ product.primary_img}}" style="margin-top: 10px;">
+  <div class="row valign-wrapper">
+    <div class="col l4 m4 s12">
+        <div class="card-image">
+          <img class="responsive-img" src="{{ product.primary_img}}" style="margin-top: 10px;">
       </div>
+    </div>
+    <div class="col l8 m8 s12 left-align">
+      <h3 class="main-grey-text light">
+        {{product.product_name | title}}
+      </h3>
+      <h7 class="disabled-text-text">
+        ASIN: {{ product.asin }}
+      </h7>
+    </div>
   </div>
-  <div class="col s12 l8 justify">
-    <h3 class="main-grey-text light">
-      {{product.product_name | title}}
-    </h3>
-    <h7 class="disabled-text-text">
-      ASIN: {{ product.asin }}
-    </h7>
-  </div>
-</div>
-<div class="row container">
-  <div class="col center s13 l5 offset-l4 offset-m4">
-    <h5 class="left">Enter keywords or phrases</h5>
-  </div>
-   <form id="form" data-keywords-url="{% url 'products_edit_product' product.uuid %}" method="post">
-    <div class="row">
-      <div class="input-field col l9 s13 m13">
-       <textarea id="textarea" placeholder="Copy paste here your keywords
-One keyword per line
-        " style="height: 125px; white-space: nowrap;"></textarea>
-         <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Add these keywords
-        </button>
-      </div>
-      <div class="input-field col s13 l4">
+  <div class="row">
+    <div class="col l4 m12 s12 add-keywords">
+      <h5 class="left">Enter keywords or phrases</h5>
+    <form id="form" data-keywords-url="{% url 'products_edit_product' product.uuid %}" method="post">
+      <div class="input-field">
+        <div class="select-wrapper">
         <select id="select_type">
           <option value="" disabled>Choose your option</option>
           <option value="keyword" selected>Keyword</option>
           <option value="phrase">Phrase</option>
         </select>
         <label>Type</label>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col l13 s13 m13">
-        <table  class="bordered striped highlight">
-          <thead class="detail-blue white-text">
+     <div class="input-field">
+      <textarea id="textarea" placeholder="Copy paste here your keywords
+      One keyword per line"></textarea>
+     </div>
+     <div class="input-field">
+        <button class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Add these keywords
+        </button>
+      </div>
+      <div class="input-field">
+
+     <button id="finish" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Update and finish
+     </button>
+       </a>
+     <a href="{% url 'products_edit_cron' product.uuid %}" class="btn waves-effect waves-light green btn-block">next
+     </a>
+      </div>
+    </form>
+  </div>
+   <div class="col l8 m12 s12">
+      <table class="striped keywords-table">
+        <thead class="blue-grey lighten-2 white-text">
             <tr>
               <th>Keyword</th>
               <th>Type</th>
@@ -108,7 +123,7 @@ One keyword per line
     </div>
   </form>
 </div>
-
+</div>
 {% endblock %}
 {% load static %}
 {% block css %}
