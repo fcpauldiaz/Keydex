@@ -1,79 +1,70 @@
 {% load static %}
-<nav class="light-blue lighten-1" role="navigation">
-   
-  <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"></a>
-   <a href="{% url 'main_index' %}">
-    <div class="capa1 hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
-      <a href="{% url 'main_index' %}">
-        <div class="capa2" onclick="location.href='/';" style="cursor: pointer;">
+<nav class="header-bg" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="/" class="brand-logo">
+            <img src="{% static 'img/logo_white.png' %}">
+        </a>
+        <ul class="right hide-on-med-and-down">
+             {% if request.user.is_authenticated %}
+                <li><h7 class="white-text">{{ request.user.first_name }} {{request.user.last_name}}</h7></li>
+            {% else %}
+            <li>
+                <a class="" href="{% url 'users_login_user' %}">Log In
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+        <ul id="nav-mobile" class="side-nav center" style="transform: translateX(-100%);">
+            <li style="cursor: pointer;">
+                <a href="{% url 'users_login_user' %}">
+                    <h5 class="main-grey-text inline">Login</h5>
+                    <i class="material-icons" style="display: inline-block;">lock
+                    </i>
+                </a>
+            </li>
+           <li>
+            {% if request.user.is_authenticated %}
+            <h5 class="main-grey-text inline">Welcome, </h5><h5 class="blue-paypal-text inline">&nbsp; {{ request.user.first_name }} {{ request.user.last_name }}</h5>
+          </li>
+          <li style="cursor: pointer;">
+            <a href="{% url 'main_index' %}">  <h5 class="main-grey-text inline">Home</h5>
+              <i class="material-icons" style="display: inline-block;">home
+              </i>
+            </a>
+          </li>
+          <li style="cursor: pointer;">
+            <a href="{% url 'dashboard_settings' %}">  <h5 class="main-grey-text inline">Settings</h5>
+              <i class="material-icons" style="display: inline-block;">settings
+              </i>
+            </a>
+          </li>
+          <li style="cursor: pointer;">
+            <a href="{% url 'users_logout_user' %}">  <h5 class="main-grey-text inline">Log out</h5>
+              <i class="material-icons" style="display: inline-block;">input
+              </i>
+            </a>
+          </li>
+        {% else %}
+         <li style="cursor: pointer;">
+            <a href="{% url 'users_login_user' %}">  <h5 class="main-grey-text inline">Login</h5>
+              <i class="material-icons" style="display: inline-block;">lock
+              </i>
+            </a>
+          </li>
+          <li style="cursor: pointer;">
+            <a href="{% url 'main_index' %}">  <h5 class="main-grey-text inline">Home</h5>
+              <i class="material-icons" style="display: inline-block;">home
+              </i>
+            </a>
+          </li>
+        {% endif %}
+        </ul>
+        {% if request.user.is_authenticated %}
+        <div class="row col offset-s8 navbar-icons">
+          <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="{% url 'dashboard_settings' %}"><i class="material-icons">settings</i></a>
+          <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Logout"href="{% url 'users_logout_user' %}"><i class="material-icons">input</i></a>
         </div>
-      </a>
+        {% endif %}
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
-    <a href="{% url 'main_index' %}">
-    <div class="text-logo hide-on-med-and-down" onclick="location.href='/';" style="cursor: pointer;">
-       <img  height="15" src="{% static 'img/duck-white.png' %}" alt="" class="logo-header"/>
-       <a href="{% url 'main_index' %}">CHECK MY KEYWORDS</a>
-    </div>
-    </a>
-  </a>
-  
-    <ul class="right hide-on-med-and-down">
-    {% if request.user.is_authenticated %}
-    <li><h7 class="main-grey-text">Welcome, </h7><h7 class="main-grey-text">{{ request.user.first_name }} {{ request.user.last_name }}</h7></li>
-    
-    {% else %}
-    <li>
-      <a class="main-grey-text" href="{% url 'users_login_user' %}">Log In
-      </a>
-    </li>
-    {% endif %}
-    </ul>
-
-    <ul id="nav-mobile" class="side-nav center">
-    {% if request.user.is_authenticated %}
-      <li>
-        <h5 class="main-grey-text inline">Welcome, </h5><h5 class="blue-paypal-text inline">&nbsp; {{ request.user.first_name }} {{ request.user.last_name }}</h5>
-      </li>
-      <li style="cursor: pointer;">
-        <a href="{% url 'main_index' %}">  <h5 class="main-grey-text inline">Home</h5>
-          <i class="material-icons" style="display: inline-block;">home
-          </i>
-        </a>
-      </li>
-      <li style="cursor: pointer;">
-        <a href="{% url 'dashboard_settings' %}">  <h5 class="main-grey-text inline">Settings</h5>
-          <i class="material-icons" style="display: inline-block;">settings
-          </i>
-        </a>
-      </li>
-      <li style="cursor: pointer;">
-        <a href="{% url 'users_logout_user' %}">  <h5 class="main-grey-text inline">Log out</h5>
-          <i class="material-icons" style="display: inline-block;">input
-          </i>
-        </a>
-      </li>
-    {% else %}
-     <li style="cursor: pointer;">
-        <a href="{% url 'users_login_user' %}">  <h5 class="main-grey-text inline">Login</h5>
-          <i class="material-icons" style="display: inline-block;">lock
-          </i>
-        </a>
-      </li>
-      <li style="cursor: pointer;">
-        <a href="{% url 'main_index' %}">  <h5 class="main-grey-text inline">Home</h5>
-          <i class="material-icons" style="display: inline-block;">home
-          </i>
-        </a>
-      </li>
-    {% endif %}
-      
-    </ul>
-    {% if request.user.is_authenticated %}
-    <div class="row col offset-s8 navbar-icons">
-      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Settings" href="{% url 'dashboard_settings' %}"><i class="material-icons">settings</i></a>
-      <a class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Logout"href="{% url 'users_logout_user' %}"><i class="material-icons">input</i></a>
-    </div>
-    {% endif %}
-    <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-  </div>
 </nav>
