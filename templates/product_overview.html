@@ -51,8 +51,8 @@
       </div>
     </div>
    <div class="col s12 l8 m8">
-    <table class="striped">
-          <thead class="blue-grey lighten-2 white-text">
+      <table class="striped disappear">
+        <thead class="blue-grey lighten-2 white-text">
           <tr>
             <th>Date and time (UTC)</th>
             <th>Results</th>
@@ -70,18 +70,19 @@
         </tbody>
       </table>
       {% if not data %}
-      <div class="center-justify center">
+      <div class="center-justify center disappear">
         <h4 class="disabled-text-text">There is no data, yet.</h4>
       </div>
       {% endif %}
-    </div>
-    <div class="col l8 offset-l3 m8 offset-m1 s13">
-      <div id="progress" class="center" style=" display: none">
-        {% load static %}
-        <img class="responsive-img" height="350" src="{% static 'img/loader.gif' %}"/>
-         <h4 id="helptext" class="disabled-text-text center center-justify">Do not close this window or change url.</h4>
+      <div class="col l12 m12 s12">
+        <div id="progress" class="center" style=" display: none">
+          {% load static %}
+          <img class="responsive-img" height="350" src="{% static 'img/loader.gif' %}"/>
+           <h4 id="helptext" class="disabled-text-text center center-justify">Do not close this window or change url.</h4>
+        </div>
       </div>
     </div>
+    
   </div>
 </div>
   <!-- Modal Structure -->

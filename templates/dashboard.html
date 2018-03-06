@@ -47,7 +47,7 @@
     {% elif product_count >= 5 and valid == True %}
     <h6 class="inline">You are currently checking </h6><h6 class="blue-paypal-text inline">&nbsp {{product_count}}</h6><h6 class="inline"> &nbsp products for indexation</h6>
     {% endif %}
-    <input type="text" id="search-criteria" onkeyup="search()" placeholder="Search by name or ASIN">
+    <input type="text" id="search-criteria" onkeyup="search()" placeholder="Filter products by name or ASIN">
     </div>  
     <div class="col l3 m3 s12">
       <div class="add-product">
@@ -67,7 +67,7 @@
 </div>
 <div class="products-wrapper">
   <div class="container">
-      <div class="row products-title">
+      <div class="products-title">
           <h3>Products</h3>
       </div>
   <div class="row products">
