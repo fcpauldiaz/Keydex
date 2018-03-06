@@ -120,7 +120,7 @@ input:not([type]):focus:not([readonly])+label,input[type=text]:not(.browser-defa
 nav ul li.user-name{
     padding: 0 15px;
 }
-.dashboard-intro{ margin-bottom: 50px; }
+.dashboard-intro{ margin-bottom: 5px; }
 .add-product{ text-align: right; }
 .container .row.products { margin: 0; }
 .products .card-panel .count{
@@ -129,9 +129,9 @@ nav ul li.user-name{
     margin: 0 5px;
 }
 
-.products-wrapper{ background: #fafafa; padding: 50px 0;}
+.products-wrapper{ background: #fafafa; padding: 5px 0;}
 .products-title{
-    padding-bottom: 30px;
+    padding-bottom: 0px;
     text-align: center;
 }
 .products{
