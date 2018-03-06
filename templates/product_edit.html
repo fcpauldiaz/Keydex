@@ -64,7 +64,7 @@
       </div>
       <div class="input-field">
 
-     <button id="finish" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Update and finish
+     <button class="btn waves-effect waves-light blue-paypal btn-block finish-button" type="submit" name="action">Update and finish
      </button>
        </a>
      <a href="{% url 'products_edit_cron' product.uuid %}" class="btn waves-effect waves-light green btn-block">next
@@ -111,7 +111,7 @@
       <div class="col s12 l13 m13">
       <a href="{% url 'products_overview_product' product.uuid %}" class="btn waves-effect waves-light green btn-block">Back
       </a>
-     <button id="finish" class="btn waves-effect waves-light blue-paypal btn-block" type="submit" name="action">Update and finish
+     <button class="btn waves-effect waves-light blue-paypal btn-block finish-button" type="submit" name="action">Update and finish
      </button>
        </a>
      <a href="{% url 'products_edit_cron' product.uuid %}" class="btn waves-effect waves-light green btn-block">next
@@ -233,7 +233,7 @@ function getCookie(name) {
 }
 </script>
 <script>
-  $("#finish").on("click", function (e) {  
+  $(".finish-button").on("click", function (e) {  
     e.preventDefault();
     $('#chip-button').hide();
     $('#loader').show();
