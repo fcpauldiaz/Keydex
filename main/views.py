@@ -130,7 +130,7 @@ def createUser(request):
       
 
       user = user_form.save(commit=False)
-      user.is_active = False
+      user.is_active = True
       user.username = user.username.lower().strip()
       user.save()
       referral_response = Referral.record_response(request, "SIGN_UP", target=user)
