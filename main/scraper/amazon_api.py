@@ -48,10 +48,12 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
     if (retries >= 4 and retries < 6):
       amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_3, region=marketplace)
     if (retries >= 6 and retries < 8):
-      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_4, region=marketplace)
+      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_3, region=marketplace)
     if (retries >= 8 and retries < 10):
-      amazon = AmazonAPI(settings.AWS_KEY_3, settings.AWS_SECRET_3, settings.AWS_API_5, region=marketplace)
-    if (retries >= 10):
+      amazon = AmazonAPI(settings.AWS_KEY_4, settings.AWS_SECRET_4, settings.AWS_API_4, region=marketplace)
+    if (retries >= 10 and retries < 12):
+      amazon = AmazonAPI(settings.AWS_KEY_4, settings.AWS_SECRET_4, settings.AWS_API_5, region=marketplace)
+    if (retries >= 12):
       return 'Information Not Available'
 
     search_item = asin + ' ' + keyword
@@ -64,7 +66,9 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
   except Exception as e:
     if str(e) == 'HTTP Error 503: Service Unavailable':
       return amazon_product(asin, keyword, marketplace, retries+1)
+    if str(e) == 'HTTP Error 403: Forbidden':
+      return amazon_product(asin, keyword, marketplace, retries+1)
     return False
 
-#print amazon_product('B00OQVZDJM', 'kindle')
+print amazon_product('B00OQVZDJM', 'kindle', 'US', 10)
 
