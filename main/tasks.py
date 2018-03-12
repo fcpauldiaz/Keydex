@@ -13,7 +13,7 @@ def index_data(asin, country_host, country_code, keyword, retries):
   if page == None:
       #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
       #sleep(1)
-      if (retries < 1):
+      if (retries < 2):
        return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'
       product_indexing = amazon_product(asin, keyword, country_code)
