@@ -3,6 +3,8 @@ from amazon.api import AmazonAPI
 from models import ProductRecord
 from datetime import datetime
 import settings
+from time import sleep, time
+from random import uniform
 
 #function to retrieve a product information
 #on a given marketplace
@@ -65,10 +67,12 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
     return False
   except Exception as e:
     if str(e) == 'HTTP Error 503: Service Unavailable':
+      sleep(1 + uniform(0, retries))
       return amazon_product(asin, keyword, marketplace, retries+1)
     if str(e) == 'HTTP Error 403: Forbidden':
+      sleep(1)
       return amazon_product(asin, keyword, marketplace, retries+1)
-    return False
+    return False  
 
-print amazon_product('B00OQVZDJM', 'kindle', 'US', 10)
+#print amazon_product('B00OQVZDJM', 'kindle', 'US', 10)
 
