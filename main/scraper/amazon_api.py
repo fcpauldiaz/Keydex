@@ -55,7 +55,9 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
       amazon = AmazonAPI(settings.AWS_KEY_4, settings.AWS_SECRET_4, settings.AWS_API_4, region=marketplace)
     if (retries >= 10 and retries < 12):
       amazon = AmazonAPI(settings.AWS_KEY_4, settings.AWS_SECRET_4, settings.AWS_API_5, region=marketplace)
-    if (retries >= 12):
+    if (retries >= 12 and retries < 16):
+      amazon = AmazonAPI(settings.AWS_KEY_6, settings.AWS_SECRET_6, settings.AWS_API_6, region=marketplace)
+    if (retries >= 16):
       return 'Information Not Available'
 
     search_item = asin + ' ' + keyword
@@ -74,5 +76,5 @@ def amazon_product(asin, keyword, marketplace = 'US', retries=0):
       return amazon_product(asin, keyword, marketplace, retries+1)
     return False  
 
-#print amazon_product('B00OQVZDJM', 'kindle', 'US', 10)
+#print amazon_product('B00OQVZDJM', 'kindle', 'US', 15)
 
