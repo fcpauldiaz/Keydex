@@ -53,8 +53,8 @@ def loginUser(request):
   redirect_to = None
   if (next in request.GET):
     redirect_to = request.GET['next']
-
-  if request.method == 'GET':
+  # allow head type request for cache purposes
+  if request.method == 'GET' or request.method == 'HEAD':
     form = LoginForm()
     return render(
       request,
