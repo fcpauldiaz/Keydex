@@ -40,20 +40,15 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
     except RequestException as e:
         #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
         message = str(e.message)
-        # if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
-        #     #use another proxy service
-        #     new_proxy = json.loads(requests.get('https://gimmeproxy.com/api/getProxy').content)
-        #     https = new_proxy['supportsHttps']
-        #     protocol = new_proxy['protocol']
-        #     while (https != True and protocol != 'http'):
-        #         new_proxy = json.loads(requests.get('https://gimmeproxy.com/api/getProxy').content)
-        #         https = new_proxy['supportsHttps']
-        #         protocol = new_proxy['protocol']
-        #     proxy = {
-        #         'http': new_proxy['ipPort'],
-        #         'https': new_proxy['ipPort']
-        #     }
-        #     return make_request_with_proxy(asin, host, keyword, proxy, retries)
+        if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
+            #use another proxy service
+            new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsCookies=1&allowsHttps=1').content)
+            new_proxy =
+            proxy = {
+                'http': new_proxy['ip'] + ':' + new_proxy['port'],
+                'https': new_proxy['ip'] + ':' + new_proxy['port'],
+            }
+            return make_request_with_proxy(asin, host, keyword, proxy, retries)
 
         return None, None
 
