@@ -87,8 +87,6 @@ def make_request(asin, host, keyword=None, return_soup=True):
     except RequestException as e:
         #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
         message = str(e.message)
-        log("WARNING: Request for {} {} failed, trying again.".format(url, message))
-       message = str(e.message)
         if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
             #use another proxy service
             new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsCookies=1&allowsHttps=1').content)
