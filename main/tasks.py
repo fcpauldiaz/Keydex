@@ -9,7 +9,6 @@ from random import randint
 @shared_task
 def index_data(asin, country_host, country_code, keyword, retries):
   returnDictionary = {}  
-  sleep(randint(1, 5))
   page, html = helpers.make_request(asin=asin, host=country_host, keyword=keyword)
   if page == None:
       #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))

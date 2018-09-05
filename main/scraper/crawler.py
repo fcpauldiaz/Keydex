@@ -27,7 +27,6 @@ def cron_crawler(product, marketplace):
 
 def single_crawl(product, marketplace, keyword, retries):
     returnDictionary = {}
-    sleep(randint(1, 5))
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
@@ -49,7 +48,6 @@ def single_crawl(product, marketplace, keyword, retries):
     
 def begin_crawl(product, marketplace, keyword, retries, output):
     returnDictionary = {}
-    sleep(randint(1, 5))
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
