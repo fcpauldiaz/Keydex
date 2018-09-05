@@ -10,6 +10,7 @@ from time import sleep, time
 from ..tasks import index_data, paralel_data
 import json
 import billiard as mp
+from random import randint
 
 crawl_time = datetime.datetime.now()
 
@@ -26,10 +27,11 @@ def cron_crawler(product, marketplace):
 
 def single_crawl(product, marketplace, keyword, retries):
     returnDictionary = {}
+    sleep(randint(1, 10))
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-        sleep(1)
+        sleep(randint(1, 10))
         if (retries < 2):
             return single_crawl(product, marketplace, keyword, retries + 1)
          #returnDictionary[keyword] = 'Information not available'
@@ -47,10 +49,11 @@ def single_crawl(product, marketplace, keyword, retries):
     
 def begin_crawl(product, marketplace, keyword, retries, output):
     returnDictionary = {}
+    sleep(randint(1, 10))
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-        sleep(2)
+        sleep(randint(1, 10))
         if (retries < 3):
             return begin_crawl(product, marketplace, keyword, retries + 1, output)
         #returnDictionary[keyword] = 'Information not available'
