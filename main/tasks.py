@@ -4,15 +4,16 @@ from main.scraper import helpers   #make_request
 from main.scraper.extractors import get_title, get_url, get_price, get_primary_img, get_indexing
 from main.scraper.amazon_api import amazon_product
 from time import sleep
+from random import randint
 
 @shared_task
 def index_data(asin, country_host, country_code, keyword, retries):
   returnDictionary = {}  
-  
+  sleep(randint(1, 10))
   page, html = helpers.make_request(asin=asin, host=country_host, keyword=keyword)
   if page == None:
       #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-      #sleep(1)
+      sleep(randint(1, 10))
       if (retries < 2):
        return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'
