@@ -43,7 +43,7 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
         if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
             #use another proxy service
             new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1').content)
-                proxy={
+            proxy={
             'http': new_proxy['ip'] + ':' + new_proxy['port'],
             'https': new_proxy['ip'] + ':' + new_proxy['port']
             }
