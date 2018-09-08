@@ -32,7 +32,7 @@ def index_data(asin, country_host, country_code, keyword, retries):
 
 def paralel_data(asin, country_host, country_code, keywords_and_phrases, retries):
   tasks = group(index_data.s(asin, country_host, country_code, keyword, retries) for keyword in keywords_and_phrases)
-  group_task = tasks.apply_async()
+  group_task = tasks.apply_async(time_limit=60)
   group_task.save()
   return group_task
 
