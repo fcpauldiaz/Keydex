@@ -6,13 +6,12 @@ from main.scraper.amazon_api import amazon_product
 from time import sleep
 from random import randint
 
-@shared_task
+@shared_task(time_limit=60)
 def index_data(asin, country_host, country_code, keyword, retries):
   returnDictionary = {}  
   page, html = helpers.make_request(asin=asin, host=country_host, keyword=keyword)
   if page == None:
       #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-      sleep(randint(1, 5))
       if (retries < 3):
        return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'

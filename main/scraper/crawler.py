@@ -30,7 +30,6 @@ def single_crawl(product, marketplace, keyword, retries):
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-        sleep(randint(1, 10))
         if (retries < 2):
             return single_crawl(product, marketplace, keyword, retries + 1)
          #returnDictionary[keyword] = 'Information not available'
@@ -51,7 +50,6 @@ def begin_crawl(product, marketplace, keyword, retries, output):
     page, html = make_request(asin=product.asin, host=marketplace.country_host, keyword=keyword)
     if page == None:
         #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
-        sleep(randint(1, 10))
         if (retries < 3):
             return begin_crawl(product, marketplace, keyword, retries + 1, output)
         #returnDictionary[keyword] = 'Information not available'
