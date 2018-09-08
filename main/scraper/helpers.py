@@ -42,7 +42,8 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
         message = str(e.message)
         if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
             #use another proxy service
-            new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1').content)
+            new_proxy = json.loads(requests.get(
+                'https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=b5186c3d9838d776e59af7092516740d983b0b0b').content)
             if ('ip' in new_proxy):
                 proxy={
                 'http': new_proxy['ip'] + ':' + new_proxy['port'],
@@ -92,7 +93,8 @@ def make_request(asin, host, keyword=None, return_soup=True):
         if (message.find('Connection aborted') != 1 or message.find('BadStatusLine') != -1):
             log("USING ANOTHER PROXY")
             #use another proxy service
-            new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1').content)
+            new_proxy = json.loads(requests.get(
+                'https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=b5186c3d9838d776e59af7092516740d983b0b0b').content)
             if ('ip' in new_proxy):
                 proxy = {
                     'http': new_proxy['ip'] + ':' + new_proxy['port'],
