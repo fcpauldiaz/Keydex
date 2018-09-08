@@ -46,8 +46,8 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
                 'https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=b5186c3d9838d776e59af7092516740d983b0b0b').content)
             if ('ip' in new_proxy):
                 proxy={
-                'http': new_proxy['ip'] + ':' + new_proxy['port'],
-                'https': new_proxy['ip'] + ':' + new_proxy['port']
+                'http': str(new_proxy['ip']) + ':' + str(new_proxy['port']),
+                'https': str(new_proxy['ip']) + ':' + str(new_proxy['port'])
                 }
                 return make_request_with_proxy(asin, host, keyword, proxy, retries)
 
@@ -97,8 +97,8 @@ def make_request(asin, host, keyword=None, return_soup=True):
                 'https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=b5186c3d9838d776e59af7092516740d983b0b0b').content)
             if ('ip' in new_proxy):
                 proxy = {
-                    'http': new_proxy['ip'] + ':' + new_proxy['port'],
-                    'https': new_proxy['ip'] + ':' + new_proxy['port']
+                    'http': str(new_proxy['ip']) + ':' + str(new_proxy['port']),
+                    'https': str(new_proxy['ip']) + ':' + str(new_proxy['port'])
                 }
                 return make_request_with_proxy(asin, host, keyword, proxy, 0)
             
