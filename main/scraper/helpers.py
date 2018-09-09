@@ -84,7 +84,7 @@ def make_request(asin, host, keyword=None, return_soup=True):
         }
         
         r = s.get(url, headers=headers, params=querystring, proxies=get_proxy())
-        #print r.url
+        print r.url
     except RequestException as e:
         #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
         message = str(e.message)
