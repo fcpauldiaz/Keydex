@@ -59,6 +59,7 @@ max_details_per_listing = 9999
 
 # Threads
 max_threads = 200
+PROXY_API_KEY = "1f95e2c773760aad6eb5c50953798bd171038bca"
 
 # Logging & Storage
 log_stdout = True

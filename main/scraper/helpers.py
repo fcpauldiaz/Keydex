@@ -15,10 +15,14 @@ num_requests = 0
 
 def get_proxy():
     # choose a proxy server to use for this request, if we need one
-    return {
-        "http": "37.48.118.90:13041",
-        "https": "37.48.118.90:13041"
-    }
+    new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=' + settings.PROXY_API_KEY).content)
+    if ('ip' in new_proxy):
+        proxy = {
+            'http': str(new_proxy['ip']) + ':' + str(new_proxy['port']),
+            'https': str(new_proxy['ip']) + ':' + str(new_proxy['port'])
+        }
+        return proxy
+    return None
 
 def make_request_with_proxy(asin, host, keyword, proxy, retries):
     if (retries == 1):
@@ -42,13 +46,8 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
         message = str(e.message)
         if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
             #use another proxy service
-            new_proxy = json.loads(requests.get(
-                'https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=b5186c3d9838d776e59af7092516740d983b0b0b').content)
-            if ('ip' in new_proxy):
-                proxy={
-                'http': str(new_proxy['ip']) + ':' + str(new_proxy['port']),
-                'https': str(new_proxy['ip']) + ':' + str(new_proxy['port'])
-                }
+            proxy = get_proxy()
+            if (proxy != None):
                 return make_request_with_proxy(asin, host, keyword, proxy, retries)
 
         return None, None
@@ -93,13 +92,8 @@ def make_request(asin, host, keyword=None, return_soup=True):
         if (message.find('Connection aborted') != 1 or message.find('BadStatusLine') != -1):
             log("USING ANOTHER PROXY")
             #use another proxy service
-            new_proxy = json.loads(requests.get(
-                'https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=b5186c3d9838d776e59af7092516740d983b0b0b').content)
-            if ('ip' in new_proxy):
-                proxy = {
-                    'http': str(new_proxy['ip']) + ':' + str(new_proxy['port']),
-                    'https': str(new_proxy['ip']) + ':' + str(new_proxy['port'])
-                }
+            proxy = get_proxy()
+            if (proxy != None):
                 return make_request_with_proxy(asin, host, keyword, proxy, 0)
             
         return None, None
