@@ -15,7 +15,7 @@ num_requests = 0
 
 def get_proxy():
     # choose a proxy server to use for this request, if we need one
-    new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?allowsHttps=1&allowsCookies=1&apiKey=' + settings.PROXY_API_KEY).content)
+    new_proxy = json.loads(requests.get('https://api.getproxylist.com/proxy?protocol=http&allowsCookies=1&apiKey=' + settings.PROXY_API_KEY).content)
     if ('ip' in new_proxy):
         proxy = {
             'http': str(new_proxy['ip']) + ':' + str(new_proxy['port']),
