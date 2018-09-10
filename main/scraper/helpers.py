@@ -48,7 +48,7 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
             #use another proxy service
             proxy = get_proxy()
             if (proxy != None):
-                return make_request_with_proxy(asin, host, keyword, proxy, retries)
+                return make_request_with_proxy(asin, host, keyword, proxy, retries+1)
 
         return None, None
 
