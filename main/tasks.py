@@ -14,7 +14,7 @@ def index_data(asin, country_host, country_code, keyword, retries):
       sleep(2)
       helpers.log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
       if (retries < 3):
-       return index_data(asin, country_host, country_code, keyword, retries + 1)
+        return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'
       product_indexing = amazon_product(asin, keyword, country_code)
       #log("WARNING: ENTRA API 1 {}", (product_indexing))
