@@ -32,7 +32,7 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
         return None, None
     try:
         s = requests.Session()
-        url = host+"/s/"
+        url = host+"/s/ref=nb_sb_noss_2?url=search-alias%3Daps&"
         params = asin
         if keyword != None:
             params += " " + keyword.strip()
