@@ -11,7 +11,8 @@ def index_data(asin, country_host, country_code, keyword, retries):
   returnDictionary = {}  
   page, html = helpers.make_request(asin=asin, host=country_host, keyword=keyword)
   if page == None:
-      #log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
+      sleep(2)
+      log("WARNING: Error in {} found in the extraction. keyword {}".format(product.asin, keyword))
       if (retries < 3):
        return index_data(asin, country_host, country_code, keyword, retries + 1)
       #returnDictionary[keyword] = 'Information not available'
