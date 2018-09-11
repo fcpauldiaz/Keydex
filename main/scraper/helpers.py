@@ -22,7 +22,7 @@ def get_proxy():
             'https': str(new_proxy['ip']) + ':' + str(new_proxy['port'])
         }
         return proxy
-    return proxy = {
+    return {
         'http': '108.59.14.208:13041',
         'https': '108.59.14.208:13041'
     }
