@@ -47,7 +47,7 @@ def make_request_with_proxy(asin, host, keyword, proxy, retries):
     except RequestException as e:
         #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
         message = str(e.message)
-        if (message.find('Connection aborted') != 1 or message.find('BadStatusLine')):
+        if (message.find('Connection aborted') != 1 or message.find('BadStatusLine') != -1):
             #use another proxy service
             proxy = get_proxy()
             if (proxy != None):
@@ -92,7 +92,7 @@ def make_request(asin, host, keyword=None, return_soup=True):
         #log("WARNING: Request for {} {} failed, trying again.".format(url, querystring))
         message = str(e.message)
         log("WARNING: Request for {} {} {} failed, trying again.".format(url, querystring, message))
-        if (message.find('Connection aborted') != 1 or message.find('BadStatusLine') != -1):
+        if (message.find('Connection aborted') != 1 or message.find('BadStatusLine') != -1 or message.find('bad handshake') != -1):
             log("USING ANOTHER PROXY")
             #use another proxy service
             proxy = get_proxy()
