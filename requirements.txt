@@ -18,7 +18,7 @@ cssselect==1.0.3
 cssutils==1.0.2
 dj-database-url==0.4.1
 Django==1.10.7
-django-anymail==0.10
+django-anymail==1.2.1
 django-appconf==1.0.2
 django-celery-beat==1.1.1
 django-compressor==2.1.1
@@ -53,7 +53,7 @@ pytz==2018.5
 raven==6.9.0
 rcssmin==1.0.6
 redis==2.10.5
-requests==2.18.1
+requests==2.20.0
 rjsmin==1.0.12
 s3transfer==0.1.13
 singledispatch==3.4.0.3
@@ -61,7 +61,7 @@ six==1.10.0
 stripe==2.6.0
 tornado==5.1
 toronado==0.0.11
-urllib3==1.21.1
+urllib3==1.23.1
 vine==1.1.4
 whitenoise==3.2
 xlrd==1.1.0
