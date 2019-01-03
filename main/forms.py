@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 
 import django.forms as forms
 from main.models import User, ReportingPeriod, Marketplace
-from registration.forms import RegistrationForm
+#from registration.forms import RegistrationForm
 from django.contrib.auth.forms import UserCreationForm
 from validator import validate_email_unique
 from pinax.stripe.models import Plan
