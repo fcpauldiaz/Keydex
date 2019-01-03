@@ -2,7 +2,7 @@ venv
 .vscode/*
 *.pyc
 staticfiles
-.env
+
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
