@@ -1,1 +1,1 @@
-web: gunicorn keydex.wsgi
+web: gunicorn keydex.wsgi --log-file -
