@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
 import os
-import raven
 import environ
 
 
@@ -56,7 +55,6 @@ INSTALLED_APPS = [
     'anymail',
     'pinax.stripe',
     'celery',
-    'raven.contrib.django.raven_compat',
     'django_celery_beat',
     'pinax.referrals'
 ]
@@ -73,7 +71,6 @@ MIDDLEWARE = [
     'pinax.referrals.middleware.SessionJumpingMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
 ]
 
 ROOT_URLCONF = 'keydex.urls'
@@ -151,13 +148,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-RAVEN_CONFIG = {
-    'dsn': env('SENTRY_URL'),
-    # If you are using git, you can also automatically configure the
-    # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-}
-
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -182,7 +172,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ANYMAIL = {
     # (exact settings here depend on your ESP...)
     "MAILGUN_API_KEY": env('MAILGUN_KEY'),
-    "MAILGUN_SENDER_DOMAIN": 'mail.checkmykeywords.com',  # your Mailgun domain, if needed
+    "MAILGUN_SENDER_DOMAIN": 'mail.checkmykeywords.com',  # your ailgun domain, if needed
 }
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"  # or sendgrid.EmailBackend, or...
@@ -223,7 +213,7 @@ LOGGING = {
     'disable_existing_loggers': True,
     'root': {
         'level': 'WARNING',
-        'handlers': ['sentry'],
+        'handlers': [],
     },
     'formatters': {
         'verbose': {
@@ -232,11 +222,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'sentry': {
-            'level': 'ERROR', # To capture more than ERROR, change to WARNING, INFO, etc.
-            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-            'tags': {'custom-tag': 'x'},
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -246,16 +231,6 @@ LOGGING = {
     'loggers': {
         'django.db.backends': {
             'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'raven': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
-        'sentry.errors': {
-            'level': 'DEBUG',
             'handlers': ['console'],
             'propagate': False,
         },

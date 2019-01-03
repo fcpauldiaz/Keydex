@@ -7,7 +7,7 @@ from main.models import Product, Keywords, ProductHistoricIndexing
 from main.scraper.crawler import cron_crawler, parallel_crawl
 from django.core.mail import send_mail
 from django.template import loader
-from raven.contrib.celery import register_signal, register_logger_signal
+#from raven.contrib.celery import register_signal, register_logger_signal
 from django.core.mail import EmailMultiAlternatives
 
 import unicodedata 
