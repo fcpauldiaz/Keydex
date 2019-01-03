@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'anymail',
     'pinax.stripe',
     'celery',
-    'raven.contrib.django.raven_compat',
+    #'raven.contrib.django.raven_compat',
     'django_celery_beat',
     'pinax.referrals'
 ]
@@ -73,7 +73,7 @@ MIDDLEWARE = [
     'pinax.referrals.middleware.SessionJumpingMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
+    #'raven.contrib.django.raven_compat.middleware.SentryResponseErrorIdMiddleware'
 ]
 
 ROOT_URLCONF = 'keydex.urls'
@@ -151,12 +151,12 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-RAVEN_CONFIG = {
-    'dsn': env('SENTRY_URL'),
-    # If you are using git, you can also automatically configure the
-    # release based on the git info.
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-}
+# RAVEN_CONFIG = {
+#     'dsn': env('SENTRY_URL'),
+#     # If you are using git, you can also automatically configure the
+#     # release based on the git info.
+#     'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+# }
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
