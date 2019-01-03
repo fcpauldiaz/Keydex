@@ -25,6 +25,7 @@ django-compressor==2.1.1
 django-sass-processor==0.5.4
 dnspython==1.15.0
 docutils==0.14
+environ==1.0
 enum-compat==0.0.2
 enum34==1.1.6
 eventlet==0.21.0
