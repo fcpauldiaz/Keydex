@@ -47,7 +47,7 @@ jsonfield==2.0.2
 kombu==4.2.1
 libsass==0.14.2
 lml==0.0.7
-lxml==3.8.0
+lxml==4.6.3
 meld3==1.0.2
 oauthlib==2.1.0
 olefile==0.44
