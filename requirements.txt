@@ -75,7 +75,7 @@ stripe==2.6.0
 texttable==1.5.0
 tornado==5.1
 toronado==0.0.11
-urllib3==1.24.1
+urllib3==1.26.5
 vine==1.1.4
 whitenoise==3.2
 xlrd==1.1.0
